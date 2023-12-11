@@ -21,9 +21,9 @@ function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="admin" element={<Admin />}>
-          <Route path="exam" element={<Exam />}>
+          {/* <Route path="exam" element={<Exam />}>
             <Route path="add-exam" element={<AddExam />} />
-          </Route>
+          </Route> */}
           <Route path="topic" element={<Topics />}>
             <Route path="add-topic" element={<Addtopic />} />
           </Route>
