@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import { useAuth } from "../auth";
-import { useData } from "./data";
+import { useExamContext } from "./examData";
+
 
 const AddExam = () => {
   const auth= useAuth();
-  const store= useData();
+  const{exams,setExams} =useExamContext();
+
+ 
   const authToken=auth.authToken;
 
   const [examId, setExamId] = useState("");
@@ -46,31 +49,17 @@ const AddExam = () => {
     then((response) => response.json()).
     then(data=>{
       console.log(data);
-      getExams();
-     
-    });
 
-  }
+      const newExam = data.result
+      setExams([...exams,newExam])
 
-  const getExams =()=>{
-    fetch("https://localhost:8443/onlineexam/control/findAllExams", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        "Authorization" :`Bearer ${authToken}`
-      },
-      body: JSON.stringify( examId ),
-    }).
-    then((response) => response.json()).
-    then(data=>{
-      console.log(data);
-      console.log(data.examList);
     
-      store.addData(data.examList)
      
     });
 
   }
+
+ 
 
   const onSubmit = (e) => {
     e.preventDefault();

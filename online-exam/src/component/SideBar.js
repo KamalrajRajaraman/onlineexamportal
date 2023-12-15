@@ -20,6 +20,9 @@ const SideBar = () => {
         <Link to="questions" className="list-group-item list-group-item-action">
           Questions
         </Link>
+        <Link to="user" className="list-group-item list-group-item-action">
+          Add User
+        </Link>
       </div>
     </>
   );

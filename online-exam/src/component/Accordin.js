@@ -1,10 +1,13 @@
 import { useState } from "react";
 
-const Accordin = ({ object ,name }) => {
+const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
+  
   const [toggle, setToggle] = useState(true);
   const onClick = () => {
     setToggle(!toggle);
   };
+
+ 
   return (
     <div className=" bg-white border">
       <div className="accordion accordion-flush">
@@ -19,8 +22,8 @@ const Accordin = ({ object ,name }) => {
               <p></p>
             </button>
             <div className="  row z-3 position-absolute end-0 me-5  top-0 mt-3 ">
-              <a href="#" className="btn btn-outline-success  btn-sm me-4 col">Update</a>
-              <a href="#" className="btn btn-outline-danger btn-sm me-3 col ">Delete</a>
+              <button   onClick={()=>onEdit(object[id])} className="btn btn-outline-success  btn-sm me-4 col">Edit</button>
+              <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger btn-sm me-3 col ">Delete</button>
             </div>
           </h2>
           <div className={`accordion-collapse ${toggle && "collapse"}`}>

@@ -1,35 +1,48 @@
 import React, { useEffect, useState } from "react";
 import MainContent from "./MainContent";
 import AccordinMaker from "./AccordinMaker";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useData } from "./data";
+import { useExamContext } from "./examData";
+import { useNavigate } from "react-router-dom";
+
 
 const Exam = () => {
-  const store =useData();
-  const [exams, setExams] = useState([
-    {
-      examId: "1",
-      description: "Java",
-    },
-    {
-      examId: "2",
-      description: "Css",
-    },
-  ]);
+  const navigate =useNavigate();
+  const {exams,setExams,onDelete} = useExamContext();
 
-  useEffect(()=>{
-    const examList =store.getData();
-    setExams([...exams,...examList]) 
+  useEffect(()=>{   
+    fetchExam();
+    return ()=>{
+      setExams([]);
+    }
+
   },[]);
 
-  const getExams =()=>{
-    console.log("getExams Called")
-
+  const fetchExam = async()=>{
+    const result = await getExams();
+    const examList= result.examList;
+     setExams([...exams,...examList])
   }
+  
+
+  const getExams =async()=>{
+    const res= await fetch("https://localhost:8443/onlineexam/control/findAllExams");
+    const data = await res.json();
+    return data;
+ }
+
+ const onEdit =(id)=>{
+  navigate(`edit/examId/${id}`);
+
+ }
+ const text ={
+  header:"Exam",
+  btnText:"Exam"
+ }
+ 
   return (
     <>
-      <MainContent text={"Exam"} to="add-exam" back="/admin/exam" />
-      <AccordinMaker objects={exams} id={"examId"} name={"description"} />
+      <MainContent text={text} to="add-exam" back="/admin/exam" />
+      <AccordinMaker objects={exams} id={"examId"} name={"examName"} onDelete={onDelete} onEdit={onEdit}/>
     </>
   );
 };
