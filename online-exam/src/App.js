@@ -21,7 +21,7 @@ function App() {
     <AuthProvider>  
       <Header />
       <Routes>
-      <Route path="login" element={<Topics />}/>
+        <Route path="/" element={<Admin/>}/>
         <Route path="login" element={<Login />} />
         <Route path="admin" element={<Admin />}>
           <Route path="exam" element={<Exam />}>
