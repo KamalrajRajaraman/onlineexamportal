@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import TableRowMaker from './TableRowMaker'
+import { EditExamContext } from './EditExam';
 
-const ExamTopicTable = ({examId,examTopicMap,setExamTopicMap}) => {
+const ExamTopicTable = () => {
     
-    
+    const {examId,examTopicMap,setExamTopicMap} = useContext(EditExamContext);
     useEffect(()=>{
         getExamTopicMappingRecords();
     },[])
@@ -16,12 +17,11 @@ const ExamTopicTable = ({examId,examTopicMap,setExamTopicMap}) => {
         }
 
     }
+    
     const fetchExamTopicMappingRecords=async ()=>{
         const res =await fetch(`https://localhost:8443/onlineexam/control/findAllExamTopicMappingMasterRecordByExamId?examId=${examId}`);
         const data = await res.json();
-        console.log(data);
         const{examTopicMappingRecordList}=data;
-        console.log(examTopicMappingRecordList);
         return examTopicMappingRecordList;
     }
 

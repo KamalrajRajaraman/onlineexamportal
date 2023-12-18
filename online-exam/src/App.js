@@ -16,6 +16,8 @@ import User from "./component/user/User";
 import NoMatch from "./component/NoMatch";
 import EditUser from "./component/user/EditUser";
 import AddExamToUser from "./component/user/AddExamToUser";
+import ExamTopicTable from "./component/edit-exam/ExamTopicTable";
+import QuestionTable from "./component/edit-exam/QuestionTable";
 
 function App() {
   return (
@@ -28,7 +30,10 @@ function App() {
             <Route path="add-exam" element={<AddExam />} />
           </Route>
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
-            <Route path="Topic to Exam" element={<AddTopicToExam />} />
+          <Route index element={<ExamTopicTable/>} />
+            <Route path="view-all" element={<ExamTopicTable/>} />
+            <Route path="add-topic-to-exam" element={<AddTopicToExam />} />
+            <Route path="questions" element={<QuestionTable />} />
           </Route>
           <Route path="topic" element={<Topics />}>
             <Route path="add-topic" element={<Addtopic />} />
