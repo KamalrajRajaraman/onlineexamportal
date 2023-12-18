@@ -4,8 +4,11 @@ import { useNavigate, Outlet } from "react-router-dom";
 const MainContent = ({ text, to, back }) => {
 
   const{header,btnText}=text;
+
   const [show, setShow] = useState(false);
+
   const navigate = useNavigate();
+  
   const onClick = () => {
     show ? navigate(back) : navigate(to);
     setShow(!show);

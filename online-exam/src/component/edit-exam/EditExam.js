@@ -6,7 +6,6 @@ import AccordinMaker from "./AccordinMaker";
 
 export const EditExamContext = createContext();
 const EditExam = () => {
-
   const [examList, setExamList] = useState([]);
 
   const [examTopicMap, setExamTopicMap] = useState([]);
@@ -53,21 +52,20 @@ const EditExam = () => {
 
   const topicList = (examList) => {
     let unique = [];
-    let topic=[];
+    let topic = [];
     examList.forEach((element) => {
-      if (!unique.includes(element.topicId)){
+      if (!unique.includes(element.topicId)) {
         unique.push(element.topicId);
-        topic.push({ 
-          examId:element.examId,
-          examName:element.examName,
-          topicId: element.topicId, 
+        topic.push({
+          examId: element.examId,
+          examName: element.examName,
+          topicId: element.topicId,
           topicName: element.topicName,
-          percentage:element.percentage,
-          topicPassPercentage:element.topicPassPercentage,
-          questionPerExam:element.questionPerExam
+          percentage: element.percentage,
+          topicPassPercentage: element.topicPassPercentage,
+          questionPerExam: element.questionPerExam,
         });
       }
-       
     });
     return topic;
   };
@@ -76,7 +74,39 @@ const EditExam = () => {
     <EditExamContext.Provider
       value={{ examId, onCreateExamTopicMappingMaster }}
     >
-      <MainContent
+      <div className="row">
+        <div className="col p-0 border-bottom border-3 border-dark">
+          <h2 className="p-2">{"Exam Topic Mapping"}</h2>
+        </div>
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">
+           View All
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            Add Topic To Exam
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            Link
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link disabled"
+            href="#"
+            tabindex="-1"
+            aria-disabled="true"
+          >
+            Disabled
+          </a>
+        </li>
+      </ul>
+      {/* <MainContent
         text={text}
         to="Topic to Exam"
         back={`/admin/exam/edit/examId/${examId}`}
@@ -89,7 +119,7 @@ const EditExam = () => {
         onDelete={""}
         onEdit={""}
         questions={examList}
-      />
+      /> */}
     </EditExamContext.Provider>
   );
 };
