@@ -26,7 +26,6 @@ function App() {
         <Route path="admin" element={<Admin />}>
           <Route path="exam" element={<Exam />}>
             <Route path="add-exam" element={<AddExam />} />
-          
           </Route>
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
           <Route path="Topic to Exam" element={<AddTopicToExam />} />
