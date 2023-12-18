@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Input from "../../Input";
-import { useTopicContext } from "../../topicData";
-import { EditExamContext } from "../../EditExam";
+import Input from "../Input";
+import { useTopicContext } from "../topic/topicData";
+import { EditExamContext } from "./EditExam";
 
 const AddTopicToExam = () => {
   const{examId,onCreateExamTopicMappingMaster} = useContext(EditExamContext);

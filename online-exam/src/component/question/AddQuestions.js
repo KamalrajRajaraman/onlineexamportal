@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Input from "./Input";
-import { useTopicContext } from "./topicData";
+import Input from "../Input";
+import { useTopicContext } from "../topic/topicData";
 import { useQuestionContext } from "./questionData";
 
 const AddQuestions = () => {

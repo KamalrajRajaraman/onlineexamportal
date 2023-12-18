@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Input from "./Input";
+
 import { useTopicContext } from "./topicData";
+import Input from "../Input";
 
 const Addtopic = () => {
   const{topics,setTopics} =useTopicContext();

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import Input from './Input';
+import React, { useContext, useState } from 'react'
+import Input from '../Input';
+import { UserContext } from './User';
+
 
 const UserRegister = () => {
-
+    const {users,setUsers} = useContext(UserContext);
     const [firstName,setFirstName]=useState("");
     const [lastName,setLastName]=useState("");
     const [userLoginId,setUserLoginId]=useState("");

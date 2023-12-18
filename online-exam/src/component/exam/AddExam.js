@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Input from "./Input";
-import { useAuth } from "../auth";
+import Input from "../Input";
+import { useAuth } from "../../auth";
 import { useExamContext } from "./examData";
 
 
