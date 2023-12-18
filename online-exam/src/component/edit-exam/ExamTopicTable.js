@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import TableRowMaker from './TableRowMaker'
 
 const ExamTopicTable = ({examId,examTopicMap,setExamTopicMap}) => {
@@ -31,7 +31,9 @@ const ExamTopicTable = ({examId,examTopicMap,setExamTopicMap}) => {
       <thead>
         <tr>
           <th scope="col">Exam Id</th>
+          <th scope="col">Exam Name</th>
           <th scope="col">Topic Id</th>
+          <th scope="col">Topic Name</th>
           <th scope="col">Percentage</th>
           <th scope="col">Topic Pass Percentage</th>
           <th scope="col">Question Per Exam</th>

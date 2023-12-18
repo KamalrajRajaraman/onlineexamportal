@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import MainContent from "./MainContent";
-import AccordinMaker from "./AccordinMaker";
+import MainContent from "../common/MainContent";
+import AccordinMaker from "../common/AccordinMaker";
 import { useTopicContext } from "./topicData";
 
 const Topics = () => {
