@@ -29,7 +29,7 @@ const EditExam = () => {
     );
     const { examList } = await res.json();
     setExamList(examList);
-    
+    return;
   };
 
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
@@ -52,7 +52,7 @@ const EditExam = () => {
  
   return (
     <EditExamContext.Provider
-      value={{examList, examId, onCreateExamTopicMappingMaster,examTopicMap,setExamTopicMap }}
+      value={{examList, examId, onCreateExamTopicMappingMaster,examTopicMap,setExamTopicMap,setExamList,fetchExamList }}
     >
       <div className="row">
         <div className="col p-0 border-bottom border-3 border-dark">

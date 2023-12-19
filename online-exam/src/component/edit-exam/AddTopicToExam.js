@@ -4,17 +4,23 @@ import { useTopicContext } from "../topic/topicData";
 import { EditExamContext } from "./EditExam";
 
 const AddTopicToExam = () => {
-  const{examId,onCreateExamTopicMappingMaster} = useContext(EditExamContext);
+  const { examId, onCreateExamTopicMappingMaster } =
+    useContext(EditExamContext);
   const { topics, setTopics, fetchTopic } = useTopicContext();
   const [topicId, setTopicId] = useState("00");
   const [percentage, setPercentage] = useState("");
   const [topicPassPercentage, setTopicPassPercentage] = useState("");
   const [questionsPerExam, setQuestionsPerExam] = useState("");
-  
 
   const onSubmit = (e) => {
     e.preventDefault();
-    onCreateExamTopicMappingMaster({examId,topicId,percentage,topicPassPercentage,questionsPerExam});
+    onCreateExamTopicMappingMaster({
+      examId,
+      topicId,
+      percentage,
+      topicPassPercentage,
+      questionsPerExam,
+    });
     setTopicId("00");
     setPercentage("");
     setTopicPassPercentage("");
@@ -22,9 +28,7 @@ const AddTopicToExam = () => {
   };
 
   useEffect(() => {
-    
     getTopics();
-    
 
     return () => {
       setTopics([]);
@@ -37,17 +41,16 @@ const AddTopicToExam = () => {
   };
 
   return (
+    <> 
     <div className="container-fluid border mt-2">
+     
       <form onSubmit={onSubmit}>
         <div className="row">
           <div className="col-2">
-          <div className="mb-3">
-            <label className="form-label">
-                Exam Id
-                </label>
-                <div className="form-control ">{examId}</div>
-          </div>
-            
+            <div className="mb-3">
+              <label className="form-label">Exam Id</label>
+              <div className="form-control ">{examId}</div>
+            </div>
           </div>
           <div className="col-2">
             <div className="mb-3">
@@ -109,6 +112,23 @@ const AddTopicToExam = () => {
         </div>
       </form>
     </div>
+    <label>
+        Topic coverage 
+      </label>
+    <div class="progress">
+     
+    <div
+      class="progress-bar"
+      role="progressbar"
+      style={{width: 250}}
+      aria-valuenow="25"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    >
+      25%
+    </div>
+  </div>
+    </>
   );
 };
 

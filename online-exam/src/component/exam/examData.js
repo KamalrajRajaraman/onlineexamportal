@@ -5,6 +5,7 @@ const ExamContext = createContext(null);
 export const ExamProvider  = ({children})=>{
 
     const [exams, setExams] = useState([]);
+    const [alert,setAlert] =useState(false);
 
     //Delete Exam
     const onDelete=async(id)=>{
@@ -16,7 +17,7 @@ export const ExamProvider  = ({children})=>{
       }
     }
 
-      return <ExamContext.Provider value={{exams, setExams,onDelete}}>
+      return <ExamContext.Provider value={{exams, setExams,onDelete,alert,setAlert}}>
         {children}
       </ExamContext.Provider>
 

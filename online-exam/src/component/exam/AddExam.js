@@ -6,7 +6,7 @@ import { useExamContext } from "./examData";
 
 const AddExam = () => {
   const auth= useAuth();
-  const{exams,setExams} =useExamContext();
+  const{exams,setExams,setAlert} =useExamContext();
 
  
   const authToken=auth.authToken;
@@ -36,13 +36,11 @@ const AddExam = () => {
 
    //Create Exam
    function onCreateExam(examId) {
-    console.log(examId);
-    console.log(authToken)
+   
     fetch("https://localhost:8443/onlineexam/control/createExam", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        "Authorization" :`Bearer ${authToken}`
       },
       body: JSON.stringify( examId ),
     }).
@@ -51,6 +49,10 @@ const AddExam = () => {
       console.log(data);
 
       const newExam = data.result
+      console.log(newExam)
+      if(newExam["responseMessage"]==="success"){
+        setAlert(true);
+      }
       setExams([...exams,newExam])
 
     
