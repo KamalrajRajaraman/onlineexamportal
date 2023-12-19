@@ -34,7 +34,6 @@ public class OnlineExamServices {
 		try {
 			GenericValueList = EntityQuery.use(delegator).from("UserMaster").where("roleTypeId","PERSON_ROLE").queryList();
 			
-			
 		} catch (GenericEntityException e) {
 		
 			e.printStackTrace();

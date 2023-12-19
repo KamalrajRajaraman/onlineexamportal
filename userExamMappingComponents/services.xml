@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://ofbiz.apache.org/dtds/services.xsd">
+    <description>Online exam Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+	
+	<service name="createPartyRoleRecord" default-entity-name="PartyRole" engine="entity-auto" invoke="create" auth="false">
+		<description>Create a Party Role (add a Role to a Party)</description>
+		<auto-attributes include="pk" mode="IN" optional="false"/>
+	</service>
+	
+	<service name="findAllUser" engine="java" location="com.vastpro.onlineexam.services.OnlineExamServices" invoke="findAllUsers" auth="false">
+		<description>Find All User</description>
+		<attribute name="userList" type="List" mode="OUT" optional="true"/>
+	</service>
+	
+	<service name="createExam"
+		default-entity-name="ExamMaster" engine="entity-auto" invoke="create"
+		auth="false">
+		<description>Create Exam </description>
+		<auto-attributes  include="pk" mode="INOUT" optional="true"></auto-attributes>
+		<auto-attributes  include="nonpk" mode="IN" optional="true"></auto-attributes>
+	</service>
+	
+	<service name="findAllExams" engine="java" 
+	default-entity-name="ExamMaster"  
+	location="com.vastpro.onlineexam.services.OnlineExamServices" 
+	invoke="findAllExams" auth="false">
+		<description>Find Exams</description>
+		<attribute name ="examList" mode="OUT" optional="true" type="List"></attribute>
+		
+	</service>
+	
+	<service name="deleteExam" default-entity-name="ExamMaster"
+		engine="entity-auto" invoke="delete" auth="false">
+		<description>Create Exam </description>
+		<attribute type="String" name="examId" mode="IN"
+			optional="false"/>
+		</service>
+	
+	<service name="findExamById" engine="java"
+		location="com.vastpro.onlineexam.services.OnlineExamServices"
+		invoke="findExamById" auth="false">
+		<description>Find Exam</description>
+		<attribute name="examId" mode="IN" type="String" optional="false"></attribute>
+		<attribute name="exam" mode="OUT" optional="true"
+			type="Map"></attribute>
+	</service>	
+	
+	<service name="createTopic" engine="entity-auto"  default-entity-name="TopicMaster"
+		invoke="create" auth="false">
+		<description>Create Exam</description>
+		<auto-attributes mode="INOUT" include="pk" optional="true"></auto-attributes>
+		<auto-attributes mode="IN" include="nonpk" optional="true"></auto-attributes>
+	</service>
+	
+	<service name="deleteTopic" engine="entity-auto" default-entity-name="TopicMaster" invoke="delete" auth="false">
+		<description>delete topic</description>
+		<attribute name="topicId" type="String" mode="IN" optional="false"></attribute>
+	</service>
+	
+	<service name="findAllTopics" engine="java" 
+	location="com.vastpro.onlineexam.services.OnlineExamServices" invoke="findAllTopics" auth="false">
+		<description>Find All Topics</description>
+		<attribute name="topicList" mode="OUT" type="List" optional="true"></attribute>
+	</service>
+	
+	<service name="createQuestion"
+		default-entity-name="QuestionMaster" engine="entity-auto"
+		invoke="create" auth="false">
+		<description>Create Question </description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="true"></auto-attributes>
+		<auto-attributes include="nonpk" mode="IN"
+			optional="true"></auto-attributes>
+	</service>
+	
+	<service name="deleteQuestion" default-entity-name="QuestionMaster" engine="entity-auto" invoke="delete" auth="false" >
+		<description>delete Question</description>
+		<attribute name="questionId" mode="IN" optional="false" type="String" />
+	</service>
+	
+	<service name="findAllQuestions" engine="java"
+		location="com.vastpro.onlineexam.services.OnlineExamServices"
+		invoke="findAllQuestions" auth="false">
+			<description>Find Questions</description>
+		<attribute name="questionList" type="List" mode="OUT" optional="true"></attribute>
+	</service>
+	
+	<service name="addExamToUser" engine="entity-auto" default-entity-name="UserExamMappingMaster" invoke="create" auth="false">
+	<description>Crate Record in UserExamMappingMaster entity</description>
+	<auto-attributes  include="pk" mode="INOUT" optional="true"></auto-attributes>
+	<auto-attributes mode="IN" include="all" optional="true"></auto-attributes>
+	</service>
+	
+	<service name="showExamsForPartyId" engine="java" 
+	location="com.vastpro.onlineexam.services.OnlineExamServices"
+	invoke="showExamsForPartyId" auth="false">
+		<description>Fetch Exams from UserExamMappingMaster entity</description>
+		<attribute name="partyId" mode="IN" type="String" optional="false"></attribute>
+			<attribute name ="examList" mode="OUT" optional="true" type="List"></attribute>
+	</service>
+	
+    <service name="noSyntaxError" engine="interface">	
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+</services>
