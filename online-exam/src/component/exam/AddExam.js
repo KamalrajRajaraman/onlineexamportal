@@ -42,6 +42,7 @@ const AddExam = () => {
       headers: {
         "Content-type": "application/json",
       },
+      credentials: 'include',
       body: JSON.stringify( examId ),
     }).
     then((response) => response.json()).

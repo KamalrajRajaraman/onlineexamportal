@@ -25,7 +25,7 @@ const EditExam = () => {
 
   const fetchExamList = async () => {
     const res = await fetch(
-      `https://localhost:8443/onlineexam/control/getExamDetails?examId=${examId}`
+      `https://localhost:8443/onlineexam/control/getExamDetails?examId=${examId}`,{credentials: 'include'}
     );
     const { examList } = await res.json();
     setExamList(examList);
@@ -41,6 +41,7 @@ const EditExam = () => {
         headers: {
           "Content-type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify(examTopicMappingDetails),
       }
     );

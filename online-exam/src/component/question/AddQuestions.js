@@ -46,6 +46,7 @@ const AddQuestions = () => {
         headers: {
           'Content-type':"application/json"
         },
+         credentials: 'include',
         body: JSON.stringify(questionDetail)
       }
     );

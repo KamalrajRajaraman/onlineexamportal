@@ -7,28 +7,22 @@ import  Alert  from "../common/Alert";
 
 const Exam = () => {
   const navigate = useNavigate();
-  const { exams, setExams, onDelete,alert,setAlert} = useExamContext();
+  const { exams, setExams, onDelete,alert,setAlert,fetchExam} = useExamContext();
 
   useEffect(() => {
-    fetchExam();
+    getExams();
     return () => {
       setExams([]);
     };
   }, []);
 
-  const fetchExam = async () => {
-    const result = await getExams();
+  const getExams = async () => {
+    const result = await fetchExam();
     const examList = result.examList;
     setExams([...exams, ...examList]);
   };
 
-  const getExams = async () => {
-    const res = await fetch(
-      "https://localhost:8443/onlineexam/control/findAllExams"
-    );
-    const data = await res.json();
-    return data;
-  };
+ 
 
   const onEdit = (id) => {
     navigate(`edit/examId/${id}`);

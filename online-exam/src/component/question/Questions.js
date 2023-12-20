@@ -14,7 +14,7 @@ const Questions = () => {
   },[])
 
   const fetchQuestion =async()=>{
-    const res =await fetch("https://localhost:8443/onlineexam/control/findAllQuestions");
+    const res =await fetch("https://localhost:8443/onlineexam/control/findAllQuestions",  { credentials: 'include'});
     const data = await res.json();
     const questionList = data.questionList
    setQuestions([...questions,...questionList])

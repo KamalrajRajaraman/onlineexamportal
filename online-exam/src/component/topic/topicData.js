@@ -9,7 +9,7 @@ export const TopicProvider =({children})=>{
 
       const fetchTopic = async () => {
         const res = await fetch(
-          "https://localhost:8443/onlineexam/control/findAllTopics"
+          "https://localhost:8443/onlineexam/control/findAllTopics",{credentials: 'include',}
         );
         const data = await res.json();
       
@@ -18,7 +18,7 @@ export const TopicProvider =({children})=>{
       };
 
       const onDelete=async(id)=>{
-        const res = await fetch(`https://localhost:8443/onlineexam/control/deleteTopic?topicId=${id}`,{method:'DELETE'})
+        const res = await fetch(`https://localhost:8443/onlineexam/control/deleteTopic?topicId=${id}`,{method:'DELETE', credentials: 'include'})
         const data = await res.json();
         const response = data.result.responseMessage
         if(response==="success"){

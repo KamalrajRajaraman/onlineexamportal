@@ -14,6 +14,7 @@ const Addtopic = () => {
       headers:{
         'Content-type':"application/json"
       },
+       credentials: 'include',
       body:JSON.stringify(topicDetails)
     });
     const data =  await res.json();

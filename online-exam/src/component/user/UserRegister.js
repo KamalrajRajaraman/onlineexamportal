@@ -4,7 +4,7 @@ import { UserContext } from './User';
 
 
 const UserRegister = () => {
-    const {users,setUsers} = useContext(UserContext);
+   
     const [firstName,setFirstName]=useState("");
     const [lastName,setLastName]=useState("");
     const [userLoginId,setUserLoginId]=useState("");
@@ -49,6 +49,7 @@ const UserRegister = () => {
       headers: {
         "Content-type": "application/json",
       },
+      credentials: 'include',
       body: JSON.stringify(userRegisterationDetails),
     });
 

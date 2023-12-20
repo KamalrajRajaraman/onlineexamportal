@@ -1,53 +1,55 @@
 import React, { createContext, useEffect, useState } from "react";
 import MainContent from "../common/MainContent";
 import AccordinMaker from "../common/AccordinMaker";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export const UserContext = createContext(null);
 function User() {
-  const [users, setUsers] = useState([]);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchUsers();
-    return () => {
-      setUsers([]);
-    };
-  }, []);
-
-  const fetchUsers = async () => {
-    const res = await fetch(
-      "https://localhost:8443/onlineexam/control/findAllUsers"
-    );
-
-    const data = await res.json();
-
-    const { userList } = data;
-
-    setUsers(userList);
-  };
-
-  const onEdit = (id) => {
-    navigate(`edit/userId/${id}`);
-  };
-
-  const text = {
-    header: "Users",
-    btnText: "User",
-  };
-
   return (
-    <UserContext.Provider value={{ users, setUsers }}>
-      <MainContent text={text} to="add-user" back="/admin/user" />
-      <AccordinMaker
-        objects={users}
-        id={"partyId"}
-        name={"firstName"}
-        onDelete={""}
-        onEdit={onEdit}
-      />
-    </UserContext.Provider>
+    <>
+      <div className="row">
+        <div className="col p-0 border-bottom border-3 border-dark">
+          <h2 className="p-2">User</h2>
+        </div>
+      </div>
+      <nav>
+        <div
+          class="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2"
+          id="nav-tab"
+          role="tablist"
+        >
+          <button
+            class="nav-link  text-dark active"
+            id="nav-home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-home"
+            type="button"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+            onClick={() => navigate("list-user")}
+          >
+            List User
+          </button>
+          <button
+            class="nav-link  text-dark "
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            onClick={() => navigate("add-user")}
+          >
+            Add User
+          </button>
+        </div>
+      </nav>
+      <Outlet/>
+    </>
   );
 }
 

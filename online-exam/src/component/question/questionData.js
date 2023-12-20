@@ -6,7 +6,7 @@ export const QuestionProvider =({children})=>{
     const [questions, setQuestions] = useState([]);
 
     const onDelete=async(id)=>{
-      const res = await fetch(`https://localhost:8443/onlineexam/control/deleteQuestion?questionId=${id}`,{method:'DELETE'})
+      const res = await fetch(`https://localhost:8443/onlineexam/control/deleteQuestion?questionId=${id}`,{method:'DELETE', credentials: 'include'})
       const data = await res.json();
       const response = data.result.responseMessage
       if(response==="success"){

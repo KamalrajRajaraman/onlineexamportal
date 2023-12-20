@@ -18,6 +18,7 @@ import EditUser from "./component/user/EditUser";
 import AddExamToUser from "./component/user/AddExamToUser";
 import ExamTopicTable from "./component/edit-exam/ExamTopicTable";
 import QuestionTable from "./component/edit-exam/QuestionTable";
+import ListUser from "./component/user/ListUser";
 
 function App() {
   return (
@@ -42,7 +43,12 @@ function App() {
             <Route path="add-questions" element={<AddQuestions />} />
           </Route>
           <Route path="user" element={<User />}>
+          <Route index element={<ListUser/>} />
             <Route path="add-user" element={<UserRegister />} />
+            <Route path="list-user" element={<ListUser/>} />
+          </Route>
+          <Route path="user/list-user/edit/userId/:partyId" element={<EditUser />}>
+            <Route path="add-exam-to-user" element={<AddExamToUser />} />
           </Route>
           <Route path="user/edit/userId/:partyId" element={<EditUser />}>
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
