@@ -18,7 +18,14 @@ import EditUser from "./component/user/EditUser";
 import AddExamToUser from "./component/user/AddExamToUser";
 import ExamTopicTable from "./component/edit-exam/ExamTopicTable";
 import QuestionTable from "./component/edit-exam/QuestionTable";
+<<<<<<< HEAD
 import ListUser from "./component/user/ListUser";
+=======
+import UserDashboard from "./component/userModule/UserDashboard";
+import ExamsForUser from "./component/userModule/ExamsForUser";
+import ExamPage from "./component/exam-attempt-module/ExamPage";
+import Introduction from "./component/userModule/Introduction";
+>>>>>>> c1642be139ca28a19f3d8c05045f6fb9b6aa5f39
 
 function App() {
   return (
@@ -54,6 +61,11 @@ function App() {
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
           </Route>
         </Route>
+        <Route path="user-dashboard" element={<UserDashboard/>}>
+                <Route path="exams-for-user" element={<ExamsForUser/>}/>
+        </Route>
+        <Route path="exam-page" element={<ExamPage/>}/>
+       <Route path="introduction" element={<Introduction/>}/>
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </AuthProvider>
