@@ -5,6 +5,7 @@ const TopicContext = createContext(null);
 export const TopicProvider =({children})=>{
 
     const [topics, setTopics] = useState([]);
+    const [alert, setAlert] = useState(false);
 
       const fetchTopic = async () => {
         const res = await fetch(
@@ -25,7 +26,7 @@ export const TopicProvider =({children})=>{
         }
       }
 
-    return <TopicContext.Provider value={{topics,setTopics,fetchTopic,onDelete}}>
+    return <TopicContext.Provider value={{topics,setTopics,fetchTopic,onDelete,alert,setAlert}}>
         {children}
     </TopicContext.Provider>
 

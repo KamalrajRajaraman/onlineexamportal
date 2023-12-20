@@ -4,7 +4,7 @@ import { useTopicContext } from "./topicData";
 import Input from "../Input";
 
 const Addtopic = () => {
-  const{topics,setTopics} =useTopicContext();
+  const{topics,setTopics,setAlert} =useTopicContext();
   const [topicId, settopicId] = useState("");
   const [topicName, setTopicName] = useState("");
 
@@ -16,8 +16,11 @@ const Addtopic = () => {
       },
       body:JSON.stringify(topicDetails)
     });
-
-    const {topic} = await res.json();
+    const data =  await res.json();
+    const {topic} =data
+    if(data["result"]==="success"){
+      setAlert(true);
+    }
     setTopics([...topics,topic]);
     
   

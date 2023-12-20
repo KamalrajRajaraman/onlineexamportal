@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { EditExamContext } from "./EditExam";
 
 const QuestionTable= () => {
-  const {examList} = useContext(EditExamContext);
-
+  const {examList,fetchExamList,setExamList} = useContext(EditExamContext);
+  useEffect(()=>{
+   fetchExamList();
+    return()=>{
+      setExamList([]);
+    }
+  },[])
   const topicList = (examList) => {
       let unique = [];
       let topic = [];
@@ -38,7 +43,7 @@ const QuestionTable= () => {
   return (
     <div className="container-fluid border  ">
       {topicList(examList) && topicList(examList).map((topic)=><div className="border mt-2">
-      <h6 key = {topic.topicId }className="bg-light p-2 mb-0 fw-bold text-success border-bottom  border-2">{topic.topicName}</h6>
+      <h6 key = {topic.topicId }className="bg-light p-2 mb-0 fw-bold  text-danger border-bottom  border-2">{topic.topicName}</h6>
       <table className="table table-striped ">
       <thead  >
         <tr >
