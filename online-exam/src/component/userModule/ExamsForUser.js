@@ -1,43 +1,72 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ExamsForUser = () => {
-    const [exams, setExams] = useState([]);
-    const navigate = useNavigate();
-    const partyId='10025';
-    useEffect(()=>{
-        fetch(`https://localhost:8443/onlineexam/control/showExamsForPartyId`,
-        {
-            method:'POST', 
-            headers:
-            {'Content-type':'application/json'},
-           body: JSON.stringify({partyId})
-          }
-        )
-        .then((response)=> {return response.json()})
-        .then((data)=> 
-        {
-            console.log('data.examlist::::',data.examList);
-            setExams(data.examList);
-        })
-    },[])
+  const [exams, setExams] = useState([]);
+  const navigate = useNavigate();
+  const partyId = "10040";
+  useEffect(() => {
+    fetch(`https://localhost:8443/onlineexam/control/showExamsForPartyId`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ partyId }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data.examlist::::", data.examList);
+        setExams(data.examList);
+      });
+  }, []);
 
   return (
-    <div>
-        <h1 className='container col-12'>Scheduled Exams</h1>
-     {
-        exams.map((exam)=>(
-          
-           
-            <div className='container col-6 border rounded bg-secondary '>  
-            <h4>{exam.examName}<span className='offset-7 '><button className='mt-3 btn bg-primary' onClick={()=>navigate('/introduction')}>Take Exam</button></span></h4>
-            </div>
-          
-        )
-        )
-     }
+    <div className="container-fluid ">
+      <div className="container-fluid border-bottom border-dark border-3">
+        <h2 className="p-2 ">Scheduled Exams</h2>
+      </div>
+      <div className="mt-1 ">
+      {exams.map((exam) => (
+       
+            <h2 class="accordion-header border py-3 px-3" id="headingOne">
+              <div className="row">
+                <div class="col-10">
+                  <h5 className="m-0 pt-1"> {exam.examName}</h5>
+                </div>
+                <div className="col-2">
+                  <div className="d-grid gap-2 d-md-flex justify-content-md-end ">
+                    <button
+                      onClick={() => navigate("/introduction")}
+                      className="btn btn-outline-success  me-4 col-8"
+                    >
+                      Take exam
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </h2>
+       
+      ))}
     </div>
-  )
-}
+    </div>
+  );
+};
 
-export default ExamsForUser
+export default ExamsForUser;
+
+{
+  /* <div className="container col-6 border rounded bg-secondary ">
+          <h4>
+            {exam.examName}
+            <span className="offset-7 ">
+              <button
+                className="mt-3 btn bg-primary"
+                onClick={() => navigate("/introduction")}
+              >
+                Take Exam
+              </button>
+            </span>
+          </h4>
+        </div> */
+}

@@ -4,19 +4,20 @@ const AuthContext = createContext(null);
 
 export const AuthProvider =({children})=>{
     const[user,setUser]=useState(null);
-    const[authToken,SetAuthToken]=useState("");
+    const[partyRole,SetPartyRole]=useState(null);
 
-    const login=(user,authToken)=>{
-        console.log(authToken)
+    const login=(user,partyRole)=>{
+       
         setUser(user);
-        SetAuthToken(authToken)
+        SetPartyRole(partyRole);
 
     }
     const logout=()=>{
         setUser(null);
+        SetPartyRole(null);
     }
     return(
-        <AuthContext.Provider value={{user,login,logout,authToken}}>
+        <AuthContext.Provider value={{user,login,logout,partyRole}}>
             {children}
         </AuthContext.Provider>
     )

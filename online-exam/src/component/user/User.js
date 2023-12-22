@@ -16,12 +16,12 @@ function User() {
       </div>
       <nav>
         <div
-          class="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2"
+          className="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2"
           id="nav-tab"
           role="tablist"
         >
           <button
-            class="nav-link  text-dark active"
+            className="nav-link  text-dark active"
             id="nav-home-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-home"
@@ -34,7 +34,7 @@ function User() {
             List User
           </button>
           <button
-            class="nav-link  text-dark "
+            className="nav-link  text-dark "
             id="nav-profile-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-profile"

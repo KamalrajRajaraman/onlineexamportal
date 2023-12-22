@@ -19,7 +19,7 @@ const Exam = () => {
   const getExams = async () => {
     const result = await fetchExam();
     const examList = result.examList;
-    setExams([...exams, ...examList]);
+    setExams(examList);
   };
 
  

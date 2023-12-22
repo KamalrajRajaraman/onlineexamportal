@@ -16,7 +16,7 @@ const Topics = () => {
 
   const getTopics = async () => {
     const topicList = await fetchTopic();
-    setTopics([...topicList]);
+    setTopics(topicList);
   };
   const text ={
     header:"Topic",

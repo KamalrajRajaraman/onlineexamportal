@@ -26,8 +26,8 @@ const ExamTopicTable = () => {
     }
 
   return (
-    <div className="border mt-2">
-    <table className="table">
+    <div className="mt-2">
+    <table className="table table-bordered">
       <thead>
         <tr>
           <th scope="col">Exam Id</th>

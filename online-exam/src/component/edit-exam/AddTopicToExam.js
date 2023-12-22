@@ -12,6 +12,20 @@ const AddTopicToExam = () => {
   const [topicPassPercentage, setTopicPassPercentage] = useState("");
   const [questionsPerExam, setQuestionsPerExam] = useState("");
 
+  useEffect(() => {
+    getTopics();
+
+    return () => {
+      setTopics([]);
+    };
+  }, []);
+
+  const getTopics = async () => {
+    const topicList = await fetchTopic();
+    setTopics([...topicList]);
+  };
+
+
   const onSubmit = (e) => {
     e.preventDefault();
     onCreateExamTopicMappingMaster({
@@ -27,19 +41,9 @@ const AddTopicToExam = () => {
     setQuestionsPerExam("");
   };
 
-  useEffect(() => {
-    getTopics();
+ 
 
-    return () => {
-      setTopics([]);
-    };
-  }, []);
-
-  const getTopics = async () => {
-    const topicList = await fetchTopic();
-    setTopics([...topicList]);
-  };
-
+  
   return (
     <> 
     <div className="container-fluid border mt-2">

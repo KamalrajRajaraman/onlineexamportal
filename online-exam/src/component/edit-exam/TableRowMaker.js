@@ -9,7 +9,7 @@ const TableRowMaker = ({array}) => {
         <td>{obj["topicName"]}</td>
         <td>{obj["percentage"]}</td>
         <td>{obj["topicPassPercentage"]}</td>
-        <td>{obj["questionsPerTopic"]}</td>
+        <td>{obj["questionsPerExam"]}</td>
       </tr>))}
     </>
   );

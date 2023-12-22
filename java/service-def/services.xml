@@ -20,9 +20,9 @@
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
 		auth="false">
-		<description>Create a Party Role (add a Role to a Party).</description>
-		<auto-attributes 
-		include="pk" mode="IN"
+		<description>Create a Party Role (add a Role to a Party).
+		</description>
+		<auto-attributes include="pk" mode="IN"
 			optional="false" />
 	</service>
 
@@ -43,14 +43,22 @@
 			type="List" />
 	</service>
 
+	<service name="findNoOfQuestionCountByExamID"
+			 engine="java"
+			 location="com.vastpro.services.ExamMasterServices"
+			 invoke="findNoOfQuestionCountByExamID">
+		<attribute name="examId" mode="IN" optional="false" type="String" />
+		<attribute name="noOfQuestions" mode="OUT" optional="true"	type="Long" />		    
+	</service>
+
 	<service name="deleteExam" default-entity-name="ExamMaster"
 		engine="entity-auto" invoke="delete" auth="false">
 		<description>Delete Exam </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
 	</service>
-	
-	
+
+
 	<service name="getExamDetails" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
 		invoke="getExamDetails" auth="false">
@@ -154,15 +162,59 @@
 		<attribute name="examTopicMappingRecordList" type="List"
 			mode="OUT" optional="true"></attribute>
 	</service>
-	
+
 	<service name="findAllUser" engine="java"
 		location="com.vastpro.services.OnlineExamServices"
 		invoke="findAllUsers" auth="false">
-		
+
 		<description>Find All User</description>
-		
+
 		<attribute name="userList" type="List" mode="OUT"
 			optional="true"></attribute>
+	</service>
+
+
+	<service name="createUserExamMappingRecord"
+		engine="entity-auto" default-entity-name="UserExamMappingMaster"
+		invoke="create" auth="false">
+		<description>Crate Record in UserExamMappingMaster entity
+		</description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="true"></auto-attributes>
+		<auto-attributes mode="INOUT" include="nonpk"
+			optional="true"></auto-attributes>
+	</service>
+
+
+	<service name="showExamsForPartyId" engine="java"
+		location="com.vastpro.services.UserExamMappingMasterServices"
+		invoke="showExamsForPartyId" auth="false">
+		<description>Fetch Exams from UserExamMappingMaster entity</description>
+		<attribute name="partyId" mode="IN" type="String"
+			optional="false"></attribute>
+		<attribute name="examList" mode="OUT" optional="true"
+			type="List"></attribute>
+	</service>
+	
+	<service engine="entity-auto" name="createUserAttemptMaster" default-entity-name="UserAttemptMaster" invoke="create" auth="false">
+		<description>Create UserAttemptMaster Record</description>
+		<auto-attributes include="pk" mode="OUT"
+			optional="false"></auto-attributes>
+		<auto-attributes mode="INOUT" include="nonpk"
+			optional="true"></auto-attributes>
+	</service>
+	
+	<service engine="entity-auto" name="createUserAttemptTopicMaster" default-entity-name="UserAttemptTopicMaster" invoke="create" auth="false">
+		<description>Create UserAttemptTopicMaster Record</description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="false"></auto-attributes>
+		<auto-attributes mode="INOUT" include="nonpk"
+			optional="true"></auto-attributes>
+	</service>
+	
+	<service engine="java" name="findQuestionsByTopicIds" location="com.vastpro.services.ExamMasterServices" invoke="findQuestionsByTopicIds" auth="false">
+		<description>Find Questions based on Topic Id</description>
+		<attribute name="topicList" mode="INOUT" type="List" optional="true"></attribute>
 	</service>
 
 

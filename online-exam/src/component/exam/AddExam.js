@@ -49,12 +49,12 @@ const AddExam = () => {
     then(data=>{
       console.log(data);
 
-      const newExam = data.result
-      console.log(newExam)
-      if(newExam["responseMessage"]==="success"){
+      const {exam} = data
+      console.log(exam)
+      if(data.result==="success"){
         setAlert(true);
       }
-      setExams([...exams,newExam])
+      setExams([...exams,exam])
 
     
      

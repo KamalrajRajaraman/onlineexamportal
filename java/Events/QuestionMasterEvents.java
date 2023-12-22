@@ -133,7 +133,8 @@ public class QuestionMasterEvents {
 		 try {
 			 serviceResultMap = dispatcher.runSync("deleteQuestion", deleteQuestionContext);
 			 if (ServiceUtil.isSuccess(serviceResultMap)) {
-					request.setAttribute("result", serviceResultMap);
+					request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
+					request.setAttribute("resultMap", serviceResultMap);
 				}
 		} catch (GenericServiceException e) {
 			String errMsg = "Unable to delete  record  from QuestionMaster entity: " + e.toString();

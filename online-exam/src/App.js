@@ -18,14 +18,14 @@ import EditUser from "./component/user/EditUser";
 import AddExamToUser from "./component/user/AddExamToUser";
 import ExamTopicTable from "./component/edit-exam/ExamTopicTable";
 import QuestionTable from "./component/edit-exam/QuestionTable";
-<<<<<<< HEAD
 import ListUser from "./component/user/ListUser";
-=======
 import UserDashboard from "./component/userModule/UserDashboard";
 import ExamsForUser from "./component/userModule/ExamsForUser";
 import ExamPage from "./component/exam-attempt-module/ExamPage";
 import Introduction from "./component/userModule/Introduction";
->>>>>>> c1642be139ca28a19f3d8c05045f6fb9b6aa5f39
+import ShowExam from "./component/user/ShowExam";
+import RequiredAuth from "./component/common/RequiredAuth";
+import Error from "./component/common/Error";
 
 function App() {
   return (
@@ -33,13 +33,15 @@ function App() {
       <Header />
       <Routes>
         <Route path="login" element={<Login />} />
-        <Route path="admin" element={<Admin />}>
+        <Route path="error/:errorMessage" element={<Error />} />
+
+        <Route path="admin" element={<RequiredAuth><Admin /></RequiredAuth>}>
           <Route path="exam" element={<Exam />}>
             <Route path="add-exam" element={<AddExam />} />
           </Route>
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
-          <Route index element={<ExamTopicTable/>} />
-            <Route path="view-all" element={<ExamTopicTable/>} />
+            <Route index element={<ExamTopicTable />} />
+            <Route path="view-all" element={<ExamTopicTable />} />
             <Route path="add-topic-to-exam" element={<AddTopicToExam />} />
             <Route path="questions" element={<QuestionTable />} />
           </Route>
@@ -50,22 +52,31 @@ function App() {
             <Route path="add-questions" element={<AddQuestions />} />
           </Route>
           <Route path="user" element={<User />}>
-          <Route index element={<ListUser/>} />
+            <Route index element={<ListUser />} />
             <Route path="add-user" element={<UserRegister />} />
-            <Route path="list-user" element={<ListUser/>} />
+            <Route path="list-user" element={<ListUser />} />
           </Route>
-          <Route path="user/list-user/edit/userId/:partyId" element={<EditUser />}>
+          <Route
+            path="user/list-user/edit/userId/:partyId"
+            element={<EditUser />}
+          > <Route index element={<ShowExam />} />
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
+            <Route path="view-all-exam" element={<ShowExam />} />
           </Route>
           <Route path="user/edit/userId/:partyId" element={<EditUser />}>
+            <Route index element={<ShowExam />} />
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
+            <Route path="view-all-exam" element={<ShowExam />} />
           </Route>
         </Route>
-        <Route path="user-dashboard" element={<UserDashboard/>}>
-                <Route path="exams-for-user" element={<ExamsForUser/>}/>
+
+
+        
+        <Route path="user-dashboard" element={<RequiredAuth><UserDashboard /></RequiredAuth>}>
+          <Route path="exams-for-user" element={<ExamsForUser />} />
         </Route>
-        <Route path="exam-page" element={<ExamPage/>}/>
-       <Route path="introduction" element={<Introduction/>}/>
+        <Route path="exam-page" element={<ExamPage />} />
+        <Route path="introduction" element={<Introduction />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </AuthProvider>

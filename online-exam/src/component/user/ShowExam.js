@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { EditUserContext } from './EditUser';
 
 const ShowExam = () => {
-
+    const {partyId} =useContext(EditUserContext);
     const [exams, setExams] =useState([]);
     const param=useParams();
-    const partyId= param.partyId;
+   
     useEffect(()=>{
         fetch(`https://localhost:8443/onlineexam/control/showExamsForPartyId`,
         {

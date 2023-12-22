@@ -11,7 +11,7 @@ const UserDashboard = () => {
       <div className="col-2 p-0">
         <UserSideBar />
       </div>
-      <div className="col-10">
+      <div className="col-10 ">
         
         <Outlet/>
         

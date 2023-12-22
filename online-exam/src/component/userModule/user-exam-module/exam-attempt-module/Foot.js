@@ -4,9 +4,9 @@ const Foot = () => {
     return (
         <footer className="fixed-bottom ">
 
-            <nav className="navbar navbar-dark bg-dark">
-                <div className="container-fluid">
-                    <span className="navbar-text">
+            <nav class="navbar navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <span class="navbar-text">
                     Version : 1.01
                     </span>
                 </div>

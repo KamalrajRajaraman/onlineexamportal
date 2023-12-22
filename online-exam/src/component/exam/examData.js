@@ -13,6 +13,7 @@ export const ExamProvider  = ({children})=>{
         { credentials: 'include'}
       );
       const data = await res.json();
+      console.log(data);
       return data;
     };
 
@@ -21,8 +22,9 @@ export const ExamProvider  = ({children})=>{
       const res = await fetch(`https://localhost:8443/onlineexam/control/deleteExam?examId=${id}`,
       {method:'DELETE', credentials: 'include'})
       const data =await  res.json();
-      const response = data.result.responseMessage
-      if(response==="success"){
+      console.log(data);
+      const {result} = data
+      if(result==="success"){
         setExams(exams.filter(exam=>exam.examId !== id));
       }
     }

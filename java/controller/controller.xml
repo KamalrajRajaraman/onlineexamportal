@@ -55,7 +55,7 @@
 	<!-- Exam Related  Request mapping -->
 	
 	<request-map uri="createExam">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.ExamMasterEvents"
 			invoke="createExam" />
 		<response name="success" type="request" value="json" />
@@ -63,7 +63,7 @@
 	</request-map>
 
 	<request-map uri="findAllExams">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.ExamMasterEvents"
 			invoke="findAllExams" />
 		<response name="success" type="request" value="json" />
@@ -71,7 +71,7 @@
 	</request-map>
 
 	<request-map uri="deleteExam">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.ExamMasterEvents"
 			invoke="deleteExam" />
 		<response name="success" type="request" value="json" />
@@ -80,7 +80,7 @@
 	
 	
 	<request-map uri="findExamById">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.ExamMasterEvents"
 			invoke="findExamById" />
 		<response name="success" type="request" value="json" />
@@ -88,19 +88,32 @@
 	</request-map>
 	
 	<request-map uri="getExamDetails">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="service" invoke="getExamDetails" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
 	</request-map>
+	
 
+	<request-map uri="findQuestionCountForExamID">
+		<security https="true" auth="true" />
+		<event type="service" invoke="findQuestionCountForExamID" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
 
-
+	<request-map uri="createAttemptMasterRecords">
+		<security https="true" auth="true" />
+		<event type="java" path="com.vastpro.events.ExamMasterEvents"
+			invoke="createUserAttemptTopicMaster" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
 	
 	<!-- Topic Related Request Mapping -->
 
 	<request-map uri="createTopic">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.TopicMasterEvents"
 			invoke="createTopic" />
 		<response name="success" type="request" value="json" />
@@ -108,7 +121,7 @@
 	</request-map>
 
 	<request-map uri="findAllTopics">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.TopicMasterEvents"
 			invoke="findAllTopics" />
 		<response name="success" type="request" value="json" />
@@ -117,7 +130,7 @@
 
 
 	<request-map uri="deleteTopic">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java" path="com.vastpro.events.TopicMasterEvents"
 			invoke="deleteTopic" />
 		<response name="success" type="request" value="json" />
@@ -127,7 +140,7 @@
 	<!-- Question Related Request Mapping -->
 
 	<request-map uri="createQuestion">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java"
 			path="com.vastpro.events.QuestionMasterEvents"
 			invoke="createQuestion" />
@@ -136,7 +149,7 @@
 	</request-map>
 
 	<request-map uri="findAllQuestions">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java"
 			path="com.vastpro.events.QuestionMasterEvents"
 			invoke="findAllQuestions" />
@@ -145,7 +158,7 @@
 	</request-map>
 
 	<request-map uri="deleteQuestion">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java"
 			path="com.vastpro.events.QuestionMasterEvents"
 			invoke="deleteQuestion" />
@@ -156,7 +169,7 @@
 	<!-- Exam Topic Mapping Related Request Mapping   -->
 
 	<request-map uri="createExamTopicMappingMasterRecord">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java"
 			path="com.vastpro.events.ExamTopicMappingMasterEvents"
 			invoke="createExamTopicMappingMasterRecord" />
@@ -166,7 +179,7 @@
 
 	<request-map
 		uri="findAllExamTopicMappingMasterRecordByExamId">
-		<security https="true" auth="false" />
+		<security https="true" auth="true" />
 		<event type="java"
 			path="com.vastpro.events.ExamTopicMappingMasterEvents"
 			invoke="findAllExamTopicMappingRecordsByExamId" />
@@ -175,12 +188,33 @@
 	</request-map>
 
 	<request-map uri="findAllUsers">
-		<security https="true" auth="false" />
-		<event type="service" invoke="findAllUser" />
+		<security https="true" auth="true" />
+		<event type="java"
+			path="com.vastpro.events.OnlineExamEvents"
+			invoke="findAllUsers" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
 	</request-map>
-
+	
+	
+	
+	<!-- User Exam Mapping Related Request Map -->
+	<request-map uri="createUserExamMappingRecord">
+    	<security https="true" auth="true"></security>
+    	<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="createUserExamMappingRecord"></event>
+    	<response name="success" type="request" value="json"/>
+    	<response name="error" type="request" value="json"/>
+    </request-map>
+    
+    
+    
+	<request-map uri="showExamsForPartyId">
+			<security https="true" auth="true"/>
+			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="showExamsForPartyId"/>
+			<response name="success" type="request" value="json"/>
+			<response name="error" type="request" value="json"/>
+	</request-map>
+    
 	
 
 	<!-- View Mappings -->

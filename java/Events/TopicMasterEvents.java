@@ -104,7 +104,7 @@ public class TopicMasterEvents {
 			return CommonConstant.ERROR;
 		}
 		if (ServiceUtil.isSuccess(serviceResultMap)) {
-			request.setAttribute("exam", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
+			request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
 			Map<String,Object> topic = UtilMisc.toMap(
 					CommonConstant.TOPIC_ID,serviceResultMap.get(CommonConstant.TOPIC_ID),
 					CommonConstant.TOPIC_NAME,serviceResultMap.get(CommonConstant.TOPIC_NAME));
@@ -127,7 +127,8 @@ public class TopicMasterEvents {
 		 try {
 			 serviceResultMap = dispatcher.runSync("deleteTopic", deleteTopicContext);
 			 if (ServiceUtil.isSuccess(serviceResultMap)) {
-					request.setAttribute("result", serviceResultMap);
+					request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
+					request.setAttribute("resultMap", serviceResultMap);
 				}
 		} catch (GenericServiceException e) {
 			String errMsg = "Unable to delete  record  from TopicMaster entity: " + e.toString();

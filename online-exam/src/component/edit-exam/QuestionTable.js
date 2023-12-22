@@ -34,7 +34,7 @@ const QuestionTable= () => {
       return  questions.map((obj) => (
         obj["questionId"] &&
         <tr key={obj["questionId"]}>
-          <th scope="row">{obj["questionId"]}</th>
+          <td >{obj["questionId"]}</td>
           <td>{obj["questionDetail"]}</td>
         </tr>
       ))
@@ -44,7 +44,7 @@ const QuestionTable= () => {
     <div className="container-fluid border  ">
       {topicList(examList) && topicList(examList).map((topic)=><div className="border mt-2">
       <h6 key = {topic.topicId }className="bg-light p-2 mb-0 fw-bold  text-danger border-bottom  border-2">{topic.topicName}</h6>
-      <table className="table table-striped ">
+      <table className="table table-bordered">
       <thead  >
         <tr >
           <th scope="col">Question Id</th>

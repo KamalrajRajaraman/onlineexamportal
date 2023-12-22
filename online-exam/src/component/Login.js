@@ -9,7 +9,7 @@ const Login = () => {
   const location = useLocation();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const redirectPath = location.state?.path || "/admin";
+  
 
   const onLogin = async (userDetails) => {
     console.log(userDetails);
@@ -28,13 +28,32 @@ const Login = () => {
     );
 
     const data = await res.json();
-    if (data._LOGIN_PASSED_ === "TRUE") {
-      auth.login(
-        data.USERNAME,
-        data["org.apache.tomcat.util.net.secure_requested_ciphers"]
-      );
 
-      navigate(redirectPath, { replace: true });
+    if (data._LOGIN_PASSED_ === "TRUE") {
+      auth.login(data.USERNAME,data.partyRole);
+
+      if(data.partyRole==="PERSON_ROLE"){
+        const redirectPath = location.state?.path || "/user-dashboard";
+
+        if(redirectPath.startsWith("/user-dashboard")){
+          navigate(redirectPath, { replace: true });
+        }
+        else{
+          navigate("/error/user-credentials");
+        }
+      }
+
+      if(data.partyRole==="ADMIN"){
+        const redirectPath = location.state?.path || "/admin";
+        if(redirectPath.startsWith("/admin")){
+             navigate(redirectPath, { replace: true });
+        }
+        else{
+          navigate("/error/admin-credentials");
+        }
+      }
+     
+     
     }
     if (data._ERROR_MESSAGE_) {
       alert(data._ERROR_MESSAGE_);

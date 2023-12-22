@@ -20,8 +20,8 @@ export const TopicProvider =({children})=>{
       const onDelete=async(id)=>{
         const res = await fetch(`https://localhost:8443/onlineexam/control/deleteTopic?topicId=${id}`,{method:'DELETE', credentials: 'include'})
         const data = await res.json();
-        const response = data.result.responseMessage
-        if(response==="success"){
+        const {result} = data
+        if(result==="success"){
           setTopics(topics.filter(topic=>topic.topicId!==id));
         }
       }

@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
-
 export const EditExamContext = createContext();
 
 const EditExam = () => {
@@ -17,20 +16,21 @@ const EditExam = () => {
   };
 
   useEffect(() => {
-    fetchExamList();
+    // fetchExamList();
     return () => {
       setExamList([]);
     };
   }, []);
 
-  const fetchExamList = async () => {
-    const res = await fetch(
-      `https://localhost:8443/onlineexam/control/getExamDetails?examId=${examId}`,{credentials: 'include'}
-    );
-    const { examList } = await res.json();
-    setExamList(examList);
-    return;
-  };
+  // const fetchExamList = async () => {
+  //   const res = await fetch(
+  //     `https://localhost:8443/onlineexam/control/getExamDetails?examId=${examId}`,
+  //     { credentials: "include" }
+  //   );
+  //   const { examList } = await res.json();
+  //   setExamList(examList);
+  //   return;
+  // };
 
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
     console.log(examTopicMappingDetails);
@@ -41,7 +41,7 @@ const EditExam = () => {
         headers: {
           "Content-type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(examTopicMappingDetails),
       }
     );
@@ -50,10 +50,17 @@ const EditExam = () => {
     setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
   };
 
- 
   return (
     <EditExamContext.Provider
-      value={{examList, examId, onCreateExamTopicMappingMaster,examTopicMap,setExamTopicMap,setExamList,fetchExamList }}
+      value={{
+        examList,
+        examId,
+        onCreateExamTopicMappingMaster,
+        examTopicMap,
+        setExamTopicMap,
+        setExamList,
+        // fetchExamList,
+      }}
     >
       <div className="row">
         <div className="col p-0 border-bottom border-3 border-dark">
@@ -61,81 +68,66 @@ const EditExam = () => {
         </div>
       </div>
       <nav>
-        <div class="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2" id="nav-tab" role="tablist">
-        
+        <div
+          className="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2"
+          id="nav-tab"
+          role="tablist"
+        >
           <button
-            class="nav-link  text-dark active"
-            id="nav-home-tab"
+            className="nav-link text-dark active"
+            id="nav-view-all-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-home"
+            data-bs-target="#nav-view-all"
             type="button"
             role="tab"
-            aria-controls="nav-home"
-            aria-selected="true"
-            onClick={()=>navigate("view-all")}
+           
+            onClick={() => navigate("view-all")}
           >
-            
-           Exam To Topic Relation
+            Exam To Topic Relation
           </button>
           <button
-            class="nav-link  text-dark "
-            id="nav-profile-tab"
+            className="nav-link  text-dark "
+            id="nav-add-topic-to-exam-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
+            data-bs-target="#nav-add-topic-to-exam"
             type="button"
             role="tab"
-            aria-controls="nav-profile"
-            aria-selected="false"
-            onClick={()=>navigate("add-topic-to-exam")}
+            
+            onClick={() => navigate("add-topic-to-exam")}
           >
             Add Topic to Exam
           </button>
 
           <button
-             class="nav-link text-dark"
-            id="nav-profile-tab"
+            className="nav-link text-dark"
+            id="nav-questions-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
+            data-bs-target="#nav-questions"
             type="button"
             role="tab"
-            aria-controls="nav-profile"
-            aria-selected="false"
-            onClick={()=>navigate("questions")}
+           
+            onClick={() => navigate("questions")}
           >
             Questions
           </button>
-          
         </div>
       </nav>
-    
-      <div class="tab-content" id="nav-tabContent">
+
+      <div className="tab-content" id="nav-tabContent">
         <div
           class="tab-pane fade show active"
-          id="nav-home"
+          id="nav-view-all"
           role="tabpanel"
-          aria-labelledby="nav-home-tab"
         >
-          <Outlet/>
+          <Outlet />
         </div>
-        <div
-          class="tab-pane fade"
-          id="nav-profile"
-          role="tabpanel"
-          aria-labelledby="nav-profile-tab"
-        >
-         <Outlet/>
+        <div className="tab-pane fade" id="nav-add-topic-to-exam" role="tabpanel">
+          <Outlet />
         </div>
 
-        <div
-          class="tab-pane fade"
-          id="nav-profile"
-          role="tabpanel"
-          aria-labelledby="nav-profile-tab"
-        >
-         <div>Topic</div>
-         <div>What is Method Overloading?</div>
+        <div className="tab-pane fade" id="nav-questions" role="tabpanel">
+          <Outlet />
         </div>
-       
       </div>
 
       {/* <MainContent
