@@ -40,8 +40,8 @@ function App() {
             <Route path="add-exam" element={<AddExam />} />
           </Route>
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
-            <Route index element={<ExamTopicTable />} />
-            <Route path="view-all" element={<ExamTopicTable />} />
+            {/* <Route index element={<ExamTopicTable />} />
+            <Route path="view-all" element={<ExamTopicTable />} /> */}
             <Route path="add-topic-to-exam" element={<AddTopicToExam />} />
             <Route path="questions" element={<QuestionTable />} />
           </Route>

@@ -1,10 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import MainContent from "../common/MainContent"
+import ExamTopicTable from "./ExamTopicTable";
+import AccordinMaker from "../common/AccordinMaker"
 
 export const EditExamContext = createContext();
 
 const EditExam = () => {
   const [examList, setExamList] = useState([]);
+  
 
   const [examTopicMap, setExamTopicMap] = useState([]);
 
@@ -15,12 +19,12 @@ const EditExam = () => {
     btnText: "Topic to Exam ",
   };
 
-  useEffect(() => {
-    // fetchExamList();
-    return () => {
-      setExamList([]);
-    };
-  }, []);
+  // useEffect(() => {
+  //   fetchExamList();
+  //   return () => {
+  //     setExamList([]);
+  //   };
+  // }, []);
 
   // const fetchExamList = async () => {
   //   const res = await fetch(
@@ -28,6 +32,7 @@ const EditExam = () => {
   //     { credentials: "include" }
   //   );
   //   const { examList } = await res.json();
+  //   console.log(examList);
   //   setExamList(examList);
   //   return;
   // };
@@ -62,7 +67,7 @@ const EditExam = () => {
         // fetchExamList,
       }}
     >
-      <div className="row">
+      {/* <div className="row">
         <div className="col p-0 border-bottom border-3 border-dark">
           <h2 className="p-2">Exam Details</h2>
         </div>
@@ -128,16 +133,16 @@ const EditExam = () => {
         <div className="tab-pane fade" id="nav-questions" role="tabpanel">
           <Outlet />
         </div>
-      </div>
+      </div> */}
 
-      {/* <MainContent
+      <MainContent
         text={text}
-        to="Topic to Exam"
+        to="add-topic-to-Exam"
         back={`/admin/exam/edit/examId/${examId}`}
       />
       <ExamTopicTable examId={examId} examTopicMap={examTopicMap} setExamTopicMap={setExamTopicMap}/>
-      <AccordinMaker
-        objects={topicList(examList)}
+      {/* <AccordinMaker
+        objects={[]}
         id={"topicId"}
         name={"topicName"}
         onDelete={""}

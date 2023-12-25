@@ -21,8 +21,15 @@ const ExamTopicTable = () => {
     const fetchExamTopicMappingRecords=async ()=>{
         const res =await fetch(`https://localhost:8443/onlineexam/control/findAllExamTopicMappingMasterRecordByExamId?examId=${examId}`,{  credentials: 'include'});
         const data = await res.json();
+        const{_ERROR_MESSAGE_}=data;
+        if(_ERROR_MESSAGE_){
+          console.log(_ERROR_MESSAGE_);
+
+        }else{
         const{examTopicMappingRecordList}=data;
+        console.log(examTopicMappingRecordList);
         return examTopicMappingRecordList;
+        }
     }
 
   return (
