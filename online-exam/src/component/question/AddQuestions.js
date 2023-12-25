@@ -72,8 +72,12 @@ const AddQuestions = () => {
 
     const data = await res.json();
     console.log(data)
+    if(data.result==="success"){
+      setFromValues(initialValue);
       const {question} =data;
       setQuestions([...questions,question])
+    }
+     
    
   };
 
@@ -87,6 +91,7 @@ const AddQuestions = () => {
   useEffect(()=>{
     if(Object.keys(fromErrors).length === 0 && isSumbit ){
       onCreateQuestion(fromValues);
+     
     }
   },[fromErrors])
   
