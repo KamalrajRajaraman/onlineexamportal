@@ -8,12 +8,18 @@ export const EditExamContext = createContext();
 
 const EditExam = () => {
   const [examList, setExamList] = useState([]);
-  
-
   const [examTopicMap, setExamTopicMap] = useState([]);
 
   const { examId } = useParams();
   const navigate = useNavigate();
+  const initialValue ={
+    examId,
+    topicId:"",
+    percentage:"",
+    topicPassPercentage:"",
+    questionsPerExam:""
+  }
+  const [fromValues,setFromValues] =useState(initialValue);
   const text = {
     header: "Exam-Topic-Mapping",
     btnText: "Topic to Exam ",
@@ -51,8 +57,12 @@ const EditExam = () => {
       }
     );
     const data = await res.json();
+    if(data.result==="success"){
+      setFromValues(initialValue);
     const { examTopicMappingMasterRecord } = data;
     setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
+
+    }
   };
 
   return (
@@ -64,6 +74,8 @@ const EditExam = () => {
         examTopicMap,
         setExamTopicMap,
         setExamList,
+        fromValues,
+        setFromValues
         // fetchExamList,
       }}
     >

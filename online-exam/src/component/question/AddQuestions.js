@@ -23,8 +23,8 @@ const AddQuestions = () => {
     topicId:"",
     negativeMarkValue:""
   }
-  const [fromValues,setFromValues] =useState(initialValue);
-  const [fromErrors,setFromErrors] =useState({});
+  const [formValues,setFormValues] =useState(initialValue);
+  const [formErrors,setFormErrors] =useState({});
   const [isSumbit,setIsSumbit] =useState(false);
 
   // const [questionId, setQuestionId] = useState("");
@@ -72,28 +72,33 @@ const AddQuestions = () => {
 
     const data = await res.json();
     console.log(data)
+    if(data.result==="success"){
+      setFormValues(initialValue);
       const {question} =data;
       setQuestions([...questions,question])
+    }
+     
    
   };
 
   const handleChange =(e)=>{
     
     const {name,value}=e.target;
-    setFromValues({...fromValues,[name]:value});
+    setFormValues({...formValues,[name]:value});
    
   }
 
   useEffect(()=>{
-    if(Object.keys(fromErrors).length === 0 && isSumbit ){
-      onCreateQuestion(fromValues);
+    if(Object.keys(formErrors).length === 0 && isSumbit ){
+      onCreateQuestion(formValues);
+     
     }
-  },[fromErrors])
+  },[formErrors])
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFromErrors(validate(fromValues));
+    setFormErrors(validate(formValues));
     setIsSumbit(true)
    
   
@@ -187,63 +192,63 @@ const AddQuestions = () => {
               name="questionId"
               type={"text"}
               text={"Question Id"}
-              value={fromValues.questionId}
+              value={formValues.questionId}
               onChange={handleChange}
-              error={fromErrors.questionId}
+              error={formErrors.questionId}
             /> */}
             <FormInput
               id="questionDetail"
               name="questionDetail"
               type={"text"}
               text={"Question Detail"}
-              value={fromValues.questionDetail}
+              value={formValues.questionDetail}
               onChange={handleChange}
-              error={fromErrors.questionDetail}
+              error={formErrors.questionDetail}
             />
             <FormInput
                name="optionA"
               id="optionA"
               type={"text"}
               text={"Option A"}
-              value={fromValues.optionA}
+              value={formValues.optionA}
               onChange={handleChange}
-              error={fromErrors.optionA}
+              error={formErrors.optionA}
             />
             <FormInput
              name="optionB"
               id="optionB"
               type={"text"}
               text={"Option B"}
-              value={fromValues.optionB}
+              value={formValues.optionB}
               onChange={handleChange}
-              error={fromErrors.optionB}
+              error={formErrors.optionB}
             />
             <FormInput
              name="optionC"
               id="optionC"
               type={"text"}
               text={"Option C"}
-              value={fromValues.optionC}
+              value={formValues.optionC}
               onChange={handleChange}
-              error={fromErrors.optionC}
+              error={formErrors.optionC}
             />
             <FormInput
               name="optionD"
               id="optionD"
               type={"text"}
               text={"Option D"}
-              value={fromValues.optionD}
+              value={formValues.optionD}
               onChange={handleChange}
-              error={fromErrors.optionD}
+              error={formErrors.optionD}
             />
             <FormInput
              name="optionE"
               id="optionE"
               type={"text"}
               text={"Option E"}
-              value={fromValues.optionE}
+              value={formValues.optionE}
               onChange={handleChange}
-              error={fromErrors.optionE}
+              error={formErrors.optionE}
             />
           </div>
           <div className="col-6">
@@ -252,9 +257,9 @@ const AddQuestions = () => {
               id="answer"
               type={"text"}
               text={"Answer"}
-              value={fromValues.answer}
+              value={formValues.answer}
               onChange={handleChange}
-              error={fromErrors.answer}
+              error={formErrors.answer}
 
             />
             <FormInput
@@ -262,9 +267,9 @@ const AddQuestions = () => {
               id="numAnswers"
               type={"text"}
               text={"Num Answers"}
-              value={fromValues.numAnswers}
+              value={formValues.numAnswers}
               onChange={handleChange}
-              error={fromErrors.numAnswers}
+              error={formErrors.numAnswers}
             />
             <div className="row">
             <div className="mb-3 col">
@@ -275,7 +280,7 @@ const AddQuestions = () => {
                 className="form-control"
                 id="questionType"
                 name="questionType"
-                value={fromValues.questionType}
+                value={formValues.questionType}
                 onChange={handleChange}
                 
               >
@@ -285,7 +290,7 @@ const AddQuestions = () => {
                 <option value="04">Fill in the Blanks</option>
                 <option value="05">Detailed Answer</option>
               </select>
-              <small className="text-danger">{fromErrors.questionType}</small>
+              <small className="text-danger">{formErrors.questionType}</small>
             </div>
             <div className="mb-3 col">
               <label htmlFor="topicId" className="form-label">
@@ -295,14 +300,14 @@ const AddQuestions = () => {
                 className="form-control"
                 id="topicId"
                 name="topicId"
-                value={fromValues.topicId}
+                value={formValues.topicId}
                 onChange={handleChange}
               ><option value="">None</option>
                 { topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>{topic.topicName}</option>
                 ))}
               </select>
-              <small className="text-danger">{fromErrors.topicId}</small>
+              <small className="text-danger">{formErrors.topicId}</small>
             </div>
 
 
@@ -313,18 +318,18 @@ const AddQuestions = () => {
               name="difficultyLevel"
               type={"text"}
               text={"Difficulty Level"}
-              value={fromValues.difficultyLevel}
+              value={formValues.difficultyLevel}
               onChange={handleChange}
-              error={fromErrors.difficultyLevel}
+              error={formErrors.difficultyLevel}
             />
             <FormInput
               id="answerValue"
               name="answerValue"
               type={"text"}
               text={"Answer Value"}
-              value={fromValues.answerValue}
+              value={formValues.answerValue}
               onChange={handleChange}
-              error={fromErrors.answerValue}
+              error={formErrors.answerValue}
             />
 
           
@@ -334,9 +339,9 @@ const AddQuestions = () => {
               id="negativeMarkValue"
               type={"text"}
               text={"Negative Mark Value"}
-              value={fromValues.negativeMarkValue}
+              value={formValues.negativeMarkValue}
               onChange={handleChange}
-              error={fromErrors.negativeMarkValue}
+              error={formErrors.negativeMarkValue}
             />
           </div>
 
