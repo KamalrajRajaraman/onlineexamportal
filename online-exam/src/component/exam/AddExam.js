@@ -1,28 +1,101 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { useAuth } from "../../auth";
 import { useExamContext } from "./examData";
+import FormInput from "../common/FormInput";
 
 
 const AddExam = () => {
   const auth= useAuth();
   const{exams,setExams,setAlert} =useExamContext();
 
- 
+  const initialValues = {examId:'', examName:'', description:'', creationDate:'',
+                        expirationDate:'', noOfQuestions:'', durationMinutes:'',
+                        passPercentage:'', questionsRandomized:'Y', answersMust:'Y', enableNegativeMark:'N',
+                        negativeMarkValue:''
+                        }
+  const [examValues,setExamValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleChange = (e)=>{
+        const {name, value} = e.target;
+        setExamValues({...examValues, [name]:value});
+  }
+
+  const handleSubmit = (e)=>{
+    console.log("handle submit called");
+      e.preventDefault();
+      setFormErrors(validate(examValues));
+     
+      setIsSubmit(true);
+  
+  }
+
+  useEffect(()=>{
+    console.log(Object.keys(formErrors).length);
+    if(Object.keys(formErrors).length === 0 && isSubmit ){
+      onCreateExam(examValues);
+    }
+  },[formErrors]
+  )
+
+  const validate=(values)=>{
+    const errors={};
+    console.log('validate called');
+      if(!values.examName){
+            errors.examName = "Exam name is required"
+      }
+      if(!values.description){
+        errors.description = "Description is required"
+      }
+      if(!values.creationDate){
+       errors.creationDate = "Description is required"
+      }
+if(!values.expirationDate){
+  errors.expirationDate = "Expiration date is required"
+}
+if(!values.noOfQuestions){
+  errors.noOfQuestions = "No of questions is required"
+}
+if(!values.durationMinutes){
+  errors.durationMinutes = "Duration minutes is required"
+}
+if(!values.passPercentage){
+  errors.passPercentage = "Pass percentage is required"
+}
+if(!values.questionsRandomized){
+  errors.questionsRandomized = "Questions randomized is required"
+}
+if(!values.answersMust){
+  errors.answersMust = "Answers must is required"
+}
+if(!values.enableNegativeMark){
+  errors.enableNegativeMark = "Enable Negative Mark is required"
+}
+if(!values.negativeMarkValue){
+  errors.negativeMarkValue = "Negative Mark Value is required"
+}
+
+return errors;
+
+
+  }
+
   const authToken=auth.authToken;
 
-  const [examId, setExamId] = useState("");
-  const [examName, setExamName] = useState("");
-  const [description, setDescription] = useState("");
-  const [creationDate, setCreationDate] = useState("");
-  const [expirationDate, setExpirationDate] = useState("");
-  const [noOfQuestions, setNoOfQuestions] = useState("");
-  const [durationMinutes, setDurationMinutes] = useState("");
-  const [passPercentage, setPassPercentage] = useState("");
-  const [questionsRandomized, setQuestionsRandomized] = useState("Y");
-  const [answersMust, setAnswersMust] = useState("N");
-  const [enableNegativeMark, setEnableNegativeMark] = useState("N");
-  const [negativeMarkValue, setNegativeMarkValue] = useState("");
+  // const [examId, setExamId] = useState("");
+  // const [examName, setExamName] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [creationDate, setCreationDate] = useState("");
+  // const [expirationDate, setExpirationDate] = useState("");
+  // const [noOfQuestions, setNoOfQuestions] = useState("");
+  // const [durationMinutes, setDurationMinutes] = useState("");
+  // const [passPercentage, setPassPercentage] = useState("");
+  // const [questionsRandomized, setQuestionsRandomized] = useState("Y");
+  // const [answersMust, setAnswersMust] = useState("N");
+  // const [enableNegativeMark, setEnableNegativeMark] = useState("N");
+  // const [negativeMarkValue, setNegativeMarkValue] = useState("");
 
   const checkLength = (input, min, max) => {
     if (input.length < min) {
@@ -35,15 +108,15 @@ const AddExam = () => {
   };
 
    //Create Exam
-   function onCreateExam(examId) {
-   
+   function onCreateExam(exam) {
+    console.log('create exam called');
     fetch("https://localhost:8443/onlineexam/control/createExam", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       credentials: 'include',
-      body: JSON.stringify( examId ),
+      body: JSON.stringify( exam ),
     }).
     then((response) => response.json()).
     then(data=>{
@@ -52,9 +125,10 @@ const AddExam = () => {
       const {exam} = data
       console.log(exam)
       if(data.result==="success"){
+        setExamValues(initialValues);
         setAlert(true);
       }
-      setExams([...exams,exam])
+     setExams([...exams,exam])
 
     
      
@@ -64,8 +138,8 @@ const AddExam = () => {
 
  
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
 
     // const ExamId = checkLength(examId, 0, 20);
     // if (!(ExamId === "success")) {
@@ -85,111 +159,136 @@ const AddExam = () => {
     //   return;
     // }
 
-    onCreateExam({
-      examId,
-      examName,
-      description,
-      creationDate,
-      expirationDate,
-      noOfQuestions,
-      durationMinutes,
-      passPercentage,
-      questionsRandomized,
-      answersMust,
-      enableNegativeMark,
-      negativeMarkValue,
-      PASSWORD: "ofbiz",
-      USERNAME: "admin",
-      _LOGIN_PASSED_: "TRUE",
-    });
+    // onCreateExam({
+    //   examId,
+    //   examName,
+    //   description,
+    //   creationDate,
+    //   expirationDate,
+    //   noOfQuestions,
+    //   durationMinutes,
+    //   passPercentage,
+    //   questionsRandomized,
+    //   answersMust,
+    //   enableNegativeMark,
+    //   negativeMarkValue,
+    //   PASSWORD: "ofbiz",
+    //   USERNAME: "admin",
+    //   _LOGIN_PASSED_: "TRUE",
+    // });
 
-    setExamId("");
-    setExamName("");
-    setDescription("");
-    setCreationDate("");
-    setExpirationDate("");
-    setNoOfQuestions("");
-    setDurationMinutes("");
-    setPassPercentage("");
-    setQuestionsRandomized("Y");
-    setAnswersMust("N");
-    setEnableNegativeMark("N");
-    setNegativeMarkValue("");
-  };
+    // setExamId("");
+    // setExamName("");
+    // setDescription("");
+    // setCreationDate("");
+    // setExpirationDate("");
+    // setNoOfQuestions("");
+    // setDurationMinutes("");
+    // setPassPercentage("");
+    // setQuestionsRandomized("Y");
+    // setAnswersMust("N");
+    // setEnableNegativeMark("N");
+    // setNegativeMarkValue("");
+ // };
 
   return (
     <div className="container-fluid my-1 border bg-white   fw-bold">
       <div className="main-content">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="row mt-2 mb-4">
             <div className="col-4">
-              <Input
+              {/* <Input
                 name={"examId"}
                 text="Exam Id"
-                state={examId}
+                state={examValues.examId}
                 setStateFun={setExamId}
                 type={"text"}
                 placeholder={""}
-              />
-              <Input
+              /> */}
+              {/* <Input
                 name={"examName"}
                 text="Exam Name"
-                state={examName}
-                setStateFun={setExamName}
+                state={examValues.examName}
+                setStateFun={handleChange}
                 type={"text"}
                 placeholder={""}
+              /> */}
+              <FormInput
+                name={"examName"}
+                value={examValues.examName}
+                onChange={handleChange}
+                id={"examName"}
+                text="Exam Name"
+                type={"text"}
+                placeholder={""}
+                error={formErrors.examName}
               />
-              <Input
+
+              
+              <FormInput
                 name={"noOfQuestions"}
+                id={"noOfQuestions"}
+                value={examValues.noOfQuestions}
+                onChange={handleChange}
                 text="No Of Questions"
-                state={noOfQuestions}
-                setStateFun={setNoOfQuestions}
                 type={"text"}
                 placeholder={""}
+                error={formErrors.noOfQuestions}
               />
-              <Input
+
+              <FormInput
                 name={"passPercentage"}
+                id={"passPercentage"}
+                value={examValues.passPercentage}
+                onChange={handleChange}
                 text="Pass Percentage"
-                state={passPercentage}
-                setStateFun={setPassPercentage}
                 type={"text"}
                 placeholder={""}
+                error={formErrors.passPercentage}
               />
             </div>
             <div className="col-4">
-              <Input
+              <FormInput
                 name={"description"}
+                id={"description"}
                 text="Description"
-                state={description}
-                setStateFun={setDescription}
+                value={examValues.description}
+                onChange={handleChange}
                 type={"text"}
                 placeholder={""}
+                error={formErrors.description}
               />
-              <Input
+              <FormInput
                 name={"negativeMarkValue"}
+                id={"negativeMarkValue"}
                 text="Negative Mark Value"
-                state={negativeMarkValue}
-                setStateFun={setNegativeMarkValue}
+                value={examValues.negativeMarkValue}
+                onChange={handleChange}
                 type={"text"}
                 placeholder={""}
+                error={formErrors.negativeMarkValue}
               />
-              <Input
+              <FormInput
                 name={"durationMinutes"}
+                id={"durationMinutes"}
                 text="Duration Minutes"
-                state={durationMinutes}
-                setStateFun={setDurationMinutes}
+                value={examValues.durationMinutes}
+                onChange={handleChange}
                 type={"text"}
                 placeholder={""}
+                error={formErrors.durationMinutes}
               />
               <div className="mb-3">
                 <label htmlFor="questionsRandomized" className="form-label">
                   Questions Randomized
                 </label>
                 <select
+                  name="questionsRandomized"
                   className="form-control"
                   id="questionsRandomized "
-                  value={questionsRandomized}
-                  onChange={(e) => setQuestionsRandomized(e.target.value)}
+                  value={examValues.questionsRandomized}
+                  onChange={handleChange}
+                  error={formErrors.questionsRandomized}
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
@@ -202,10 +301,12 @@ const AddExam = () => {
                   Answers Must
                 </label>
                 <select
+                  name="answersMust"
                   className="form-control"
                   id="answersMust"
-                  value={answersMust}
-                  onChange={(e) => setAnswersMust(e.target.value)}
+                  value={examValues.answersMust}
+                  onChange={handleChange}
+                  error={formErrors.answersMust}
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
@@ -217,29 +318,35 @@ const AddExam = () => {
                   Enable Negative Mark
                 </label>
                 <select
+                  name="enableNegativeMark"
                   className="form-control"
                   id="enableNegativeMark"
-                  value={enableNegativeMark}
-                  onChange={(e) => setEnableNegativeMark(e.target.value)}
+                  value={examValues.enableNegativeMark}
+                  onChange={handleChange}
+                  error={formErrors.enableNegativeMark}
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
                 </select>
               </div>
 
-              <Input
+              <FormInput
                 name={"creationDate"}
+                id={"creationDate"}
                 text="Creation Date"
-                state={creationDate}
-                setStateFun={setCreationDate}
+                value={examValues.creationDate}
+                onChange={handleChange}
                 type={"date"}
+                error={formErrors.creationDate}
               />
-              <Input
+              <FormInput
                 name={"expirationDate"}
+                id={"expirationDate"}
                 text="Expiration Date"
-                state={expirationDate}
-                setStateFun={setExpirationDate}
+                value={examValues.expirationDate}
+                onChange={handleChange}
                 type={"date"}
+                error={formErrors.expirationDate}
               />
             </div>
           </div>

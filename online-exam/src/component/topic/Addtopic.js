@@ -4,6 +4,9 @@ import { useTopicContext } from "./topicData";
 import Input from "../Input";
 
 const Addtopic = () => {
+  const initialValues = {topicId:'', topicName:''};
+  const [topicValues, setTopicValues] = useState(initialValues);
+  
   const{topics,setTopics,setAlert} =useTopicContext();
   const [topicId, settopicId] = useState("");
   const [topicName, setTopicName] = useState("");
