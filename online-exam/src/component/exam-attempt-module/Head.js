@@ -1,8 +1,8 @@
 import React from 'react'
-
+import "./Styles/examPage.css"
 const Head = ({examName}) => {
   return (
-    <div className='header bg-warning p-2'>
+    <div className='header p-2'>
       <div className='text-dark fw-bold'>Java Exam</div>
     </div>    
   )

@@ -20,12 +20,15 @@ const FormInput = ({id,value,onChange,placeholder,text,type,passView,name,error}
       placeholder={placeholder}
       security=""
     />
-    <small className='text-danger'>{error}</small>
-    {passView && type === "password" && (
-      <>
+    <div className='row'> <small className='text-danger'>{error}</small></div>
+    <div className='row'>
+        {passView && type === "password" && (
+      <div>
         <input type="checkbox" onClick={onClick} /> Show Password
-      </>
-    )}
+      </div>
+    )}</div>
+   
+    
   </div>
   )
 }

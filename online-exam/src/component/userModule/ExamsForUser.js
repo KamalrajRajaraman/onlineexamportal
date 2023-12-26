@@ -4,13 +4,10 @@ import { useNavigate } from "react-router-dom";
 const ExamsForUser = () => {
   const [exams, setExams] = useState([]);
   const navigate = useNavigate();
-  const partyId = "10040";
+ 
   useEffect(() => {
     fetch(`https://localhost:8443/onlineexam/control/showExamsForPartyId`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ partyId }),
     })
       .then((response) => {
         return response.json();
@@ -29,15 +26,15 @@ const ExamsForUser = () => {
       <div className="mt-1 ">
       {exams.map((exam) => (
        
-            <h2 class="accordion-header border py-3 px-3" id="headingOne">
+            <h2  key={exam.examId} className ="accordion-header border py-3 px-3" id="headingOne">
               <div className="row">
-                <div class="col-10">
+                <div className="col-10">
                   <h5 className="m-0 pt-1"> {exam.examName}</h5>
                 </div>
                 <div className="col-2">
                   <div className="d-grid gap-2 d-md-flex justify-content-md-end ">
                     <button
-                      onClick={() => navigate("/introduction")}
+                      onClick={() => navigate(`exam-page/${exam.examId}`)}
                       className="btn btn-outline-success  me-4 col-8"
                     >
                       Take exam

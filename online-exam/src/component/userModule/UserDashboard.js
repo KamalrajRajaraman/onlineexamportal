@@ -12,9 +12,7 @@ const UserDashboard = () => {
         <UserSideBar />
       </div>
       <div className="col-10 ">
-        
-        <Outlet/>
-        
+        <Outlet/>       
       </div>
     </div>
 
