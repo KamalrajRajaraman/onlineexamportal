@@ -11,6 +11,7 @@ const AddTopicToExam = () => {
     examTopicMap,
     setFormValues,
   } = useContext(EditExamContext);
+
   const { topics, setTopics, fetchTopic } = useTopicContext();
 
   const [formErrors, setFromErrors] = useState({});
@@ -27,10 +28,7 @@ const AddTopicToExam = () => {
     }
   }, [formErrors]);
 
-  // const [topicId, setTopicId] = useState("00");
-  // const [percentage, setPercentage] = useState("");
-  // const [topicPassPercentage, setTopicPassPercentage] = useState("");
-  // const [questionsPerExam, setQuestionsPerExam] = useState("");
+ 
 
   useEffect(() => {
     getTopics();
@@ -64,18 +62,6 @@ const AddTopicToExam = () => {
     e.preventDefault();
     setFromErrors(validate(formValues));
     setIsSubmit(true);
-
-    // onCreateExamTopicMappingMaster({
-    //   examId,
-    //   topicId,
-    //   percentage,
-    //   topicPassPercentage,
-    //   questionsPerExam,
-    // });
-    // setTopicId("00");
-    // setPercentage("");
-    // setTopicPassPercentage("");
-    // setQuestionsPerExam("");
   };
 
   const validate = (values) => {
@@ -149,18 +135,7 @@ const AddTopicToExam = () => {
                 error={formErrors.topicPassPercentage}
               />
             </div>
-            {/* <div className="col-2">
-            <FormInput
-              id={"questionsPerExam"}
-              name={"questionsPerExam"}
-              text="Questions Per Exam"
-              value={formValues.questionsPerExam}
-              onChange={handleChange}
-              type={"text"}
-              placeholder={""}
-              error={formErrors.questionsPerExam}
-            />
-          </div> */}
+
             <div className="col">
               <div className="d-grid gap-2 mx-auto mt-4 p-2">
                 <button className="btn btn-primary" type="submit">

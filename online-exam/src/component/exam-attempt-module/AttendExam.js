@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import QuestionType from "./QuestionType";
+
 import Question from "./Question";
-import Options from "./Options";
-import QuestionTiles from "./QuestionTiles";
-import CandidateDetail from "./CandidateDetail";
-import QuestionNav from "./QuestionNav";
+
 import QuestionPalette from "./QuestionPalette";
 import { useParams } from "react-router-dom";
 import useStateRef from "react-usestateref";
@@ -49,17 +46,23 @@ const AttendExam = () => {
   const handleSubmit =async()=>{
     try{
       const res = await fetch(
-        `https://localhost:8443/onlineexam/control/createAttemptMasterRecords?examId=${examId}`,
-        { credentials: "include" }
+        "https://localhost:8443/onlineexam/control/",
+        { method:"POST",
+          
+          headers:{
+            'Content-type':'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify(questions)
+        }
       );
       const data = await res.json();
       const { selectedQuestion } = data;
     }catch(error){
       console.log(error)
     }
-    
-
   }
+
   return (
     <>
       {questions && (
