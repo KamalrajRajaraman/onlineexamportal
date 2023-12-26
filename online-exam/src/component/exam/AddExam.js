@@ -43,7 +43,7 @@ const AddExam = () => {
     }
   }, [formErrors]);
 
-  //Validate Inputs 
+  //Validate Inputs
   const validate = (values) => {
     const errors = {};
     if (!values.examName) {
@@ -82,21 +82,6 @@ const AddExam = () => {
     return errors;
   };
 
-  // const authToken = auth.authToken;
-
-  // const [examId, setExamId] = useState("");
-  // const [examName, setExamName] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [creationDate, setCreationDate] = useState("");
-  // const [expirationDate, setExpirationDate] = useState("");
-  // const [noOfQuestions, setNoOfQuestions] = useState("");
-  // const [durationMinutes, setDurationMinutes] = useState("");
-  // const [passPercentage, setPassPercentage] = useState("");
-  // const [questionsRandomized, setQuestionsRandomized] = useState("Y");
-  // const [answersMust, setAnswersMust] = useState("N");
-  // const [enableNegativeMark, setEnableNegativeMark] = useState("N");
-  // const [negativeMarkValue, setNegativeMarkValue] = useState("");
-
   const checkLength = (input, min, max) => {
     if (input.length < min) {
       return `must be atleast ${min} characters`;
@@ -107,9 +92,9 @@ const AddExam = () => {
     }
   };
 
-  //Create Exam 
+  //Create Exam
   function onCreateExam(exam) {
-    console.log("create exam called");
+
     fetch("https://localhost:8443/onlineexam/control/createExam", {
       method: "POST",
       headers: {
@@ -118,72 +103,27 @@ const AddExam = () => {
       credentials: "include",
       body: JSON.stringify(exam),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-
-        const { exam } = data;
-        console.log(exam);
-        if (data.result === "success") {
-          setExamValues(initialValues);
-          setAlert(true);
+      .then((response) =>{
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-        setExams([...exams, exam]);
-      });
+      
+      return response.json()})
+        .then((data) => {
+          console.log(data);
+
+          const { exam } = data;
+          console.log(exam);
+          if (data.result === "success") {
+            setExamValues(initialValues);
+            setAlert(true);
+          }
+          setExams([...exams, exam]);
+        })
+          .catch((error) => {
+            console.log(error);
+          });
   }
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-
-  // const ExamId = checkLength(examId, 0, 20);
-  // if (!(ExamId === "success")) {
-  //   alert(`Exam Id ${ExamId}`);
-  //   return;
-  // }
-
-  // const ExamName = checkLength(examName, 5, 255);
-  // if (!(ExamName === "success")) {
-  //   alert(`Exam Name ${ExamName}`);
-  //   return;
-  // }
-
-  // const Description = checkLength(description, 0, 1000);
-  // if (!(Description === "success")) {
-  //   alert(`Description ${Description}`);
-  //   return;
-  // }
-
-  // onCreateExam({
-  //   examId,
-  //   examName,
-  //   description,
-  //   creationDate,
-  //   expirationDate,
-  //   noOfQuestions,
-  //   durationMinutes,
-  //   passPercentage,
-  //   questionsRandomized,
-  //   answersMust,
-  //   enableNegativeMark,
-  //   negativeMarkValue,
-  //   PASSWORD: "ofbiz",
-  //   USERNAME: "admin",
-  //   _LOGIN_PASSED_: "TRUE",
-  // });
-
-  // setExamId("");
-  // setExamName("");
-  // setDescription("");
-  // setCreationDate("");
-  // setExpirationDate("");
-  // setNoOfQuestions("");
-  // setDurationMinutes("");
-  // setPassPercentage("");
-  // setQuestionsRandomized("Y");
-  // setAnswersMust("N");
-  // setEnableNegativeMark("N");
-  // setNegativeMarkValue("");
-  // };
 
   return (
     <div className="container-fluid my-1 border bg-white   fw-bold">
@@ -191,22 +131,6 @@ const AddExam = () => {
         <form onSubmit={handleSubmit}>
           <div className="row mt-2 mb-4">
             <div className="col-4">
-              {/* <Input
-                name={"examId"}
-                text="Exam Id"
-                state={examValues.examId}
-                setStateFun={setExamId}
-                type={"text"}
-                placeholder={""}
-              /> */}
-              {/* <Input
-                name={"examName"}
-                text="Exam Name"
-                state={examValues.examName}
-                setStateFun={handleChange}
-                type={"text"}
-                placeholder={""}
-              /> */}
               <FormInput
                 name={"examName"}
                 value={examValues.examName}

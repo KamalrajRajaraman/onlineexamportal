@@ -22,20 +22,7 @@ const Topics = () => {
     header:"Topic",
     btnText:"Topic"
    }
-  // const fetchTopic = async () => {
-  //   const topicList = await getTopics();
-  //   setTopics([...topics, ...topicList]);
-  // };
-
-  // const getTopics = async () => {
-  //   const res = await fetch(
-  //     "https://localhost:8443/onlineexam/control/findAllTopics"
-  //   );
-  //   const data = await res.json();
-  
-  //   const { topicList } = data;
-  //   return topicList;
-  // };
+ 
 
   return (
     <div className="position-relative">

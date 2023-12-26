@@ -27,20 +27,7 @@ const AddQuestions = () => {
   const [formErrors,setFormErrors] =useState({});
   const [isSumbit,setIsSumbit] =useState(false);
 
-  // const [questionId, setQuestionId] = useState("");
-  // const [questionDetail, setQuestionDetail] = useState("");
-  // const [optionA, setOptionA] = useState("");
-  // const [optionB, setOptionB] = useState("");
-  // const [optionC, setOptionC] = useState("");
-  // const [optionD, setOptionD] = useState("");
-  // const [optionE, setOptionE] = useState("");
-  // const [answer, setAnswer] = useState("");
-  // const [numAnswers, setNumAnswers] = useState("");
-  // const [questionType, setquestionType] = useState("01");
-  // const [difficultyLevel, setDifficultyLevel] = useState("");
-  // const [answerValue, setAnswerValue] = useState("");
-  // const [topicId, setTopicId] = useState("00");
-  // const [negativeMarkValue, setNegativeMarkValue] = useState("");
+  
 
   useEffect(() => {
      getTopics();
@@ -100,39 +87,6 @@ const AddQuestions = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSumbit(true)
-   
-  
-    // onCreateQuestion({
-    //   questionId,
-    //   questionDetail,
-    //   optionA,
-    //   optionB,
-    //   optionC,
-    //   optionD,
-    //   optionE,
-    //   answer,
-    //   numAnswers,
-    //   questionType,
-    //   difficultyLevel,
-    //   answerValue,
-    //   topicId,
-    //   negativeMarkValue}
-    // );
-
-    // setQuestionId("");
-    // setQuestionDetail("");
-    // setOptionA("");
-    // setOptionB("");
-    // setOptionC("");
-    // setOptionD("");
-    // setOptionE("");
-    // setAnswer("");
-    // setNumAnswers("");
-    // setquestionType("");
-    // setDifficultyLevel("");
-    // setAnswerValue("");
-    // setTopicId("");
-    // setNegativeMarkValue("");
   };
 
   const validate =(values)=>{
@@ -187,15 +141,7 @@ const AddQuestions = () => {
       <form onSubmit={handleSubmit}>
         <div className="row pt-2">
           <div className="col-6">
-            {/* <FormInput
-              id="questionId"
-              name="questionId"
-              type={"text"}
-              text={"Question Id"}
-              value={formValues.questionId}
-              onChange={handleChange}
-              error={formErrors.questionId}
-            /> */}
+           
             <FormInput
               id="questionDetail"
               name="questionDetail"

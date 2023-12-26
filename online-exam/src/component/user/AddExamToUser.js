@@ -111,17 +111,7 @@ const AddExamToUser = () => {
     console.log(data);
   };
 
-  // const handleSubmit= (e)=>{
-
-  //   e.preventDefault();
-  //   const form = new FormData(e.target);
-  //   console.log(form);
-  //   const formData = Object.fromEntries(form.entries());
-
-  //  fetchExamsForUser(formData)
-  //  document.getElementById("addExamToUser").reset();
-
-  // }
+ 
   function get() {}
   return (
     <div className="fluid-container mt-2  fw-bold">
@@ -160,15 +150,7 @@ const AddExamToUser = () => {
                 error={formErrors.allowedAttempts}
               />
 
-              {/* <label for="allowedAttempts" class="form-label">
-                allowedAttempts
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="allowedAttempts"
-                name="allowedAttempts"
-              /> */}
+             
             </div>
 
             <div class="mb-3  ">
@@ -182,15 +164,7 @@ const AddExamToUser = () => {
                 error={formErrors.noOfAttempts}
               />
 
-              {/* <label for="noOfAttempts" class="form-label">
-                noOfAttempts
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="noOfAttempts"
-                name="noOfAttempts"
-              /> */}
+              
             </div>
 
             <div className="row ">
@@ -247,18 +221,10 @@ const AddExamToUser = () => {
                 onChange={handleChange}
                 error={formErrors.lastPerformanceDate}
               />
-              {/* <label for="lastPerformanceDate" class="form-label">
-                lastPerformanceDate
-              </label>
-              <input
-                type="date"
-                class="form-control"
-                id="lastPerformanceDate"
-                name="lastPerformanceDate"
-              /> */}
+             
             </div>
 
-            {/* <div className="col"> */}
+          
             <div className="mb-3 ">
               <FormInput
                 name={"timeoutDays"}
@@ -269,15 +235,7 @@ const AddExamToUser = () => {
                 onChange={handleChange}
                 error={formErrors.timeoutDays}
               />
-              {/* <label for="timeoutDays" class="form-label">
-                timeoutDays
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="timeoutDays"
-                name="timeoutDays"
-              /> */}
+            
             </div>
 
             <div className="mb-3 ">
@@ -290,15 +248,7 @@ const AddExamToUser = () => {
                 onChange={handleChange}
                 error={formErrors.maxSplitAttempts}
               />
-              {/* <label for="maxSplitAttempts" class="form-label">
-                maxSplitAttempts
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="maxSplitAttempts"
-                name="maxSplitAttempts"
-              /> */}
+             
             </div>
 
             <div className="mb-3 col-6">
@@ -322,39 +272,6 @@ const AddExamToUser = () => {
             </div>
           </div>
 
-          {/* <div class="mb-3 col-5"> */}
-          {/* <FormInput
-                  name={partyId}
-                  value={partyId}
-                  onChange={handleChange}
-                  type="text"
-                  text="Party Id"
-                  class="form-control"
-                  readOnly
-                /> */}
-
-          {/* <label for="partyId" class="form-label">
-                partyId
-              </label>
-              <input
-              disabled
-                value={partyId}
-                type="text"
-                class="form-control"
-                readOnly
-              />
-               <input
-             hidden
-                value={partyId}
-                type="text"
-                class="form-control"
-                id="partyId"
-                name="partyId"
-                readOnly
-              /> */}
-          {/* </div> */}
-
-          {/* </div> */}
           </div>
           <div className="d-grid gap-2 col-4 mx-auto mb-2">
             <button className="btn btn-primary" type="submit">
