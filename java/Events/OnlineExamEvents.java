@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 
+import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
@@ -31,6 +33,8 @@ import com.vastpro.validator.HibernateHelper;
 import com.vastpro.validator.Loggable;
 import com.vastpro.validator.Validator;
 
+import bsh.util.Util;
+
 public class OnlineExamEvents {
 
 	public static final String module = OnlineExamEvents.class.getName();
@@ -40,81 +44,91 @@ public class OnlineExamEvents {
 	public static String login(HttpServletRequest request, HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		Locale locale = UtilHttp.getLocale(request);
-
-		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
-		String username = (String) combinedMap.get("USERNAME");
-//		String password = (String) combinedMap.get("PASSWORD");
-//	
-//		Map<String, Object> userLoginMap = UtilMisc.toMap("username", username, "password", password);
-//	
-// 		Validator loginForm = HibernateHelper.populateBeanFromMap(userLoginMap, Validator.class);
-// 		
-// 
-//		Set<ConstraintViolation<Validator>> errors = HibernateHelper.checkValidationErrors(loginForm,
-//				Loggable.class);
-//		
-//		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, errors, request, locale, "MandatoryFieldErrMsgLoginForm",
-//				resource_error, false);
-//		request.setAttribute("hasFormErrors", hasFormErrors);
-//		
-//		if(!hasFormErrors) {
-//			return CommonConstant.ERROR;
-//		}
-
+		String partyId = null;
 		String result = LoginWorker.login(request, response);
-		System.out.println(request);
-		
-		if (result == CommonConstant.SUCCESS) {
-			String partyRole =checkUserRole( request);
-			request.setAttribute("partyRole", partyRole);
-		}
 
-		System.out.println(result);
+		if (result == CommonConstant.SUCCESS) {
+			// check userLoginId in request
+			String userLoginId = (String) request.getAttribute("USERNAME");
+			if (userLoginId == null) {
+				userLoginId = request.getParameter("USERNAME");
+			}
+			GenericValue partyIdGv = null;
+			try {
+				// Gets partyId from PartyAndUserLogin View Entity using userLoginId
+				partyIdGv = EntityQuery.use(delegator).select("partyId").from("PartyAndUserLogin")
+						.where("userLoginId", userLoginId).queryOne();
+			} catch (GenericEntityException e) {
+				e.printStackTrace();
+			}
+
+			if (UtilValidate.isNotEmpty(partyIdGv)) {
+
+				partyId = partyIdGv.getString(CommonConstant.PARTY_ID);
+
+				EntityCondition conditionA = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "PERSON_ROLE");
+				EntityCondition conditionB = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "ADMIN");
+				EntityCondition conditionC = EntityCondition.makeCondition(CommonConstant.PARTY_ID, partyId);
+				EntityCondition orCondition = EntityCondition.makeCondition(conditionA, EntityOperator.OR, conditionB);
+				EntityCondition andCondition = EntityCondition.makeCondition(conditionC, EntityOperator.AND,
+						orCondition);
+
+				GenericValue roleTypeGV = null;
+				try {
+					roleTypeGV = EntityQuery.use(delegator).select(CommonConstant.ROLE_TYPE_ID).from("UserMaster")
+							.where(andCondition).queryOne();
+				} catch (GenericEntityException e) {
+
+					e.printStackTrace();
+				}
+
+				if (UtilValidate.isNotEmpty(roleTypeGV)) {
+					String partyRole = roleTypeGV.getString(CommonConstant.ROLE_TYPE_ID);
+					request.setAttribute("partyRole", partyRole);
+					if (partyRole.equals("PERSON_ROLE")) {
+						HttpSession session = request.getSession();
+						session.setAttribute(CommonConstant.PARTY_ID, partyId);
+					}
+				}
+			}
+
+		}
 		return CommonConstant.SUCCESS;
 
 	}
-	
-	public static String checkUserRole( HttpServletRequest request) {
-	
-		Delegator delegator = (Delegator) request.getAttribute("delegator");		
-		
-		//check userLoginId in request 
-		String userLoginId = (String) request.getAttribute("USERNAME");	
-		if(userLoginId == null) {
+
+	public static String checkUserRole(HttpServletRequest request) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		// check userLoginId in request
+		String userLoginId = (String) request.getAttribute("USERNAME");
+		if (userLoginId == null) {
 			userLoginId = request.getParameter("USERNAME");
 		}
 
-		try {			
-			//Gets partyId from PartyAndUserLogin View Entity using userLoginId
-			 GenericValue genericValue = EntityQuery.use(delegator)
-					 						.select("partyId").
-											from("PartyAndUserLogin")
-											.where("userLoginId",userLoginId).queryOne();
-			 
-			 
-			
-			 EntityCondition conditionA = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID,"PERSON_ROLE");
-			 EntityCondition conditionB	= EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID,"ADMIN");
-			 EntityCondition conditionC	= EntityCondition.makeCondition(CommonConstant.PARTY_ID,genericValue.getString(CommonConstant.PARTY_ID));
-			 
-			 EntityCondition orCondition = EntityCondition.makeCondition(conditionA, EntityOperator.OR, conditionB);
-			  
-			 EntityCondition andCondition = EntityCondition.makeCondition(conditionC, EntityOperator.AND, orCondition);
-			 		 
-			 GenericValue queryOne = EntityQuery.use(delegator)
-					  .select(CommonConstant.ROLE_TYPE_ID)
-					  .from("UserMaster")
-					  .where(andCondition).queryOne();
-			 
-			 
-			 if(queryOne !=null) {
-				 String partyRole = queryOne.getString(CommonConstant.ROLE_TYPE_ID);
-				 return partyRole;
-			 }
-			 
-			
-					
+		try {
+			// Gets partyId from PartyAndUserLogin View Entity using userLoginId
+			GenericValue genericValue = EntityQuery.use(delegator).select("partyId").from("PartyAndUserLogin")
+					.where("userLoginId", userLoginId).queryOne();
+
+			EntityCondition conditionA = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "PERSON_ROLE");
+			EntityCondition conditionB = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "ADMIN");
+			EntityCondition conditionC = EntityCondition.makeCondition(CommonConstant.PARTY_ID,
+					genericValue.getString(CommonConstant.PARTY_ID));
+
+			EntityCondition orCondition = EntityCondition.makeCondition(conditionA, EntityOperator.OR, conditionB);
+
+			EntityCondition andCondition = EntityCondition.makeCondition(conditionC, EntityOperator.AND, orCondition);
+
+			GenericValue queryOne = EntityQuery.use(delegator).select(CommonConstant.ROLE_TYPE_ID).from("UserMaster")
+					.where(andCondition).queryOne();
+
+			if (queryOne != null) {
+				String partyRole = queryOne.getString(CommonConstant.ROLE_TYPE_ID);
+				return partyRole;
+			}
+
 		} catch (GenericEntityException e) {
 
 			e.printStackTrace();
@@ -157,7 +171,7 @@ public class OnlineExamEvents {
 		}
 
 		if (ServiceUtil.isSuccess(serviceResultMap)) {
-			request.setAttribute("result", serviceResultMap);
+			request.setAttribute("PersonAndUserLoginMap", serviceResultMap);
 
 			String partyId = (String) serviceResultMap.get("partyId");
 			Map<String, Object> createRoleCtx = new HashMap<>();
@@ -168,7 +182,8 @@ public class OnlineExamEvents {
 			try {
 				Map<String, Object> createRoleResult = dispatcher.runSync("createPartyRoleRecord", createRoleCtx);
 				if (ServiceUtil.isSuccess(createRoleResult)) {
-					request.setAttribute("result1", createRoleResult);
+					request.setAttribute("result", "success");
+					request.setAttribute("PartyRoleRecordMap", createRoleResult);
 				}
 			} catch (GenericServiceException e) {
 				String errMsg = "Unable to create records in PartyRole entity: " + e.toString();
@@ -206,6 +221,39 @@ public class OnlineExamEvents {
 			request.setAttribute("userList", serviceResult.get("userList"));
 		}
 
+		return CommonConstant.SUCCESS;
+	}
+
+	public static String updateUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+
+		List<Map<String, Object>> questionList = (List<Map<String, Object>>) request.getAttribute("submittedAnswers");
+
+		for (Map<String, Object> question : questionList) {
+			String sequenceNumber = (String) question.get(CommonConstant.SEQUENCE_NUM);
+			String performanceId = (String) question.get(CommonConstant.PERFORMANCE_ID);
+			String questionId = (String) question.get(CommonConstant.QUESTION_ID);
+			String submittedAnswer = (String) question.get(CommonConstant.SUBMITTED_ANSWER);
+
+			try {
+				Map<String, Object> serviceResultMap = dispatcher.runSync("updateUserAttemptAnswerMaster",
+						UtilMisc.toMap(CommonConstant.PERFORMANCE_ID, performanceId, CommonConstant.QUESTION_ID,
+								questionId, CommonConstant.SEQUENCE_NUM, sequenceNumber,
+								CommonConstant.SUBMITTED_ANSWER, submittedAnswer, CommonConstant.USER_LOGIN,
+								userLogin));
+
+				if (!ServiceUtil.isSuccess(serviceResultMap)) {
+
+					return CommonConstant.ERROR;
+				}
+
+			} catch (GenericServiceException e) {
+				Debug.logError("cannot update record in user attempt answer master entity", e.toString());
+				return CommonConstant.ERROR;
+			}
+		}
 		return CommonConstant.SUCCESS;
 	}
 }

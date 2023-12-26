@@ -61,25 +61,12 @@ const validate = (values)=>{
 
   }
 
-  // const onSubmit =(e)=>{
-  //   e.preventDefault();
-  //   onCreateTopic({topicId,topicName});
-  // }
+ 
 
   return (
     <div className="container-fluid border my-2 fw-bold ">
        <form onSubmit={handleSubmit}>
-      {/* <div className="col-4 mx-auto mt-2 ">
-        <FormInput
-          name={"topicId"}
-          text="Topic Id"
-          value={topicValues.topicId}
-          onChange={handleChange}
-          
-          type={"text"}
-          placeholder={""}
-        />
-      </div> */}
+      
       <div className="col-4 mx-auto">
         <FormInput
           name={"topicName"}

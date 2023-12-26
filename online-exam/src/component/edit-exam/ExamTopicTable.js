@@ -27,7 +27,6 @@ const ExamTopicTable = () => {
 
         }else{
         const{examTopicMappingRecordList}=data;
-        // console.log(examTopicMappingRecordList);
         return examTopicMappingRecordList;
         }
     }

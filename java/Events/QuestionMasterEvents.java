@@ -121,6 +121,8 @@ public class QuestionMasterEvents {
 		return CommonConstant.SUCCESS;
 	}
 	
+	
+	
 	public static String deleteQuestion(HttpServletRequest request, HttpServletResponse response) {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");

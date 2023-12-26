@@ -75,7 +75,7 @@ public class UserExamMappingEvents {
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		String partyId = (String) request.getAttribute(CommonConstant.PARTY_ID);
+		String partyId = (String) request.getSession().getAttribute(CommonConstant.PARTY_ID);
 
 		Map<String, Object> findExamContext = new HashMap<>();
 		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);

@@ -58,36 +58,6 @@ const UserRegister = () => {
    }
 
 
-    // const onSubmit=(e)=>{
-    //   e.preventDefault();
-      // if(!firstName){
-      //   alert("First Name is required");
-      //   return;
-      // }
-      // if(!lastName){
-      //   alert("Last Name is required");
-      //   return;
-      // }
-      // if(!userLoginId){
-      //   alert("User Login Id is required");
-      //   return;
-      // }
-      // if(!currentPassword){
-      //   alert("Current Password is required");
-      //   return;
-      // }
-      // if(!currentPasswordVerify){
-      //   alert("Current Password Verify is required");
-      //   return;
-      // }
-      // onRegister({firstName,lastName,userLoginId,currentPassword,currentPasswordVerify})
-      // setFirstName('');        
-      // setLastName('');
-      // setUserLoginId('');
-      // setCurrentPassword('');
-      // setCurrentPasswordVerify('')
-   // }
-
     //User Registeration 
   const onRegister =async (userRegisterationDetails)=>{
 
