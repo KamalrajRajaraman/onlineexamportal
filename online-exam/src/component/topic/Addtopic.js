@@ -1,15 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTopicContext } from "./topicData";
 import Input from "../Input";
+import FormInput from "../common/FormInput";
 
 const Addtopic = () => {
-  const initialValues = {topicId:'', topicName:''};
+  const initialValues = { topicName:''};
   const [topicValues, setTopicValues] = useState(initialValues);
+  const [formErrors, setFormErrors] =  useState({})
+  const [isSubmit, setIsSubmit] = useState(false);
+ const{topics,setTopics,setAlert} =useTopicContext();
   
-  const{topics,setTopics,setAlert} =useTopicContext();
-  const [topicId, settopicId] = useState("");
-  const [topicName, setTopicName] = useState("");
+ const handleChange = (e)=>{
+  const {name, value} = e.target;
+  setTopicValues({...topicValues, [name]:value});
+}
+
+const handleSubmit = (e)=>{
+e.preventDefault();
+setFormErrors(validate(topicValues));
+
+setIsSubmit(true);
+}
+
+useEffect(()=>{
+  if(Object.keys(formErrors).length === 0 && isSubmit ){
+    onCreateTopic(topicValues);
+  }
+},[formErrors]
+
+)
+
+const validate = (values)=>{
+  const errors= {};
+
+  if(!topicValues.topicName){
+    errors.topicName = "Topic name is required!";
+  }
+  return errors;
+}
 
   const onCreateTopic =async (topicDetails)=>{
     const res = await fetch("https://localhost:8443/onlineexam/control/createTopic",{
@@ -23,6 +52,7 @@ const Addtopic = () => {
     const data =  await res.json();
     const {topic} =data
     if(data["result"]==="success"){
+      setTopicValues(initialValues)
       setAlert(true);
     }
     setTopics([...topics,topic]);
@@ -31,33 +61,32 @@ const Addtopic = () => {
 
   }
 
-  const onSubmit =(e)=>{
+  // const onSubmit =(e)=>{
+  //   e.preventDefault();
+  //   onCreateTopic({topicId,topicName});
+  // }
 
-    e.preventDefault();
-    onCreateTopic({topicId,topicName});
-    settopicId("");
-    setTopicName("");
-
-  }
   return (
     <div className="container-fluid border my-2 fw-bold ">
-       <form onSubmit={onSubmit}>
-      <div className="col-4 mx-auto mt-2 ">
-        <Input
+       <form onSubmit={handleSubmit}>
+      {/* <div className="col-4 mx-auto mt-2 ">
+        <FormInput
           name={"topicId"}
           text="Topic Id"
-          state={topicId}
-          setStateFun={settopicId}
+          value={topicValues.topicId}
+          onChange={handleChange}
+          
           type={"text"}
           placeholder={""}
         />
-      </div>
+      </div> */}
       <div className="col-4 mx-auto">
-        <Input
+        <FormInput
           name={"topicName"}
-          text="topicName"
-          state={topicName}
-          setStateFun={setTopicName}
+          text="TopicName"
+          value={topicValues.topicName}
+          error={formErrors.topicName}
+          onChange={handleChange}
           type={"text"}
           placeholder={""}
         />
