@@ -58,6 +58,7 @@ const AddQuestions = () => {
 
   const onCreateQuestion = async (questionDetail) => {
    console.log(questionDetail)
+   try{
     const res = await fetch(
       "https://localhost:8443/onlineexam/control/createQuestion",
       {
@@ -77,6 +78,12 @@ const AddQuestions = () => {
       const {question} =data;
       setQuestions([...questions,question])
     }
+    
+   }catch(error){
+    console.error('error occured in creating question ', error);
+   }
+
+   
      
    
   };
