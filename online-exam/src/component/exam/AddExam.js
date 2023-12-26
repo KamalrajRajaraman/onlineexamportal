@@ -1,88 +1,88 @@
 import React, { useEffect, useState } from "react";
-import Input from "../Input";
 import { useAuth } from "../../auth";
 import { useExamContext } from "./examData";
 import FormInput from "../common/FormInput";
 
-
 const AddExam = () => {
-  const auth= useAuth();
-  const{exams,setExams,setAlert} =useExamContext();
-
-  const initialValues = {examId:'', examName:'', description:'', creationDate:'',
-                        expirationDate:'', noOfQuestions:'', durationMinutes:'',
-                        passPercentage:'', questionsRandomized:'Y', answersMust:'Y', enableNegativeMark:'N',
-                        negativeMarkValue:''
-                        }
-  const [examValues,setExamValues] = useState(initialValues);
+  const { exams, setExams, setAlert } = useExamContext();
+  const initialValues = {
+    examId: "",
+    examName: "",
+    description: "",
+    creationDate: "",
+    expirationDate: "",
+    noOfQuestions: "",
+    durationMinutes: "",
+    passPercentage: "",
+    questionsRandomized: "Y",
+    answersMust: "Y",
+    enableNegativeMark: "N",
+    negativeMarkValue: "",
+  };
+  const [examValues, setExamValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const handleChange = (e)=>{
-        const {name, value} = e.target;
-        setExamValues({...examValues, [name]:value});
-  }
+  //Handles Form Input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setExamValues({ ...examValues, [name]: value });
+  };
 
-  const handleSubmit = (e)=>{
-    console.log("handle submit called");
-      e.preventDefault();
-      setFormErrors(validate(examValues));
-     
-      setIsSubmit(true);
-  
-  }
+  //Handle Form  Submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(examValues));
+    setIsSubmit(true);
+  };
 
-  useEffect(()=>{
-    console.log(Object.keys(formErrors).length);
-    if(Object.keys(formErrors).length === 0 && isSubmit ){
+  //add Exam using useEffect
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
       onCreateExam(examValues);
     }
-  },[formErrors]
-  )
+  }, [formErrors]);
 
-  const validate=(values)=>{
-    const errors={};
-    console.log('validate called');
-      if(!values.examName){
-            errors.examName = "Exam name is required"
-      }
-      if(!values.description){
-        errors.description = "Description is required"
-      }
-      if(!values.creationDate){
-       errors.creationDate = "Description is required"
-      }
-if(!values.expirationDate){
-  errors.expirationDate = "Expiration date is required"
-}
-if(!values.noOfQuestions){
-  errors.noOfQuestions = "No of questions is required"
-}
-if(!values.durationMinutes){
-  errors.durationMinutes = "Duration minutes is required"
-}
-if(!values.passPercentage){
-  errors.passPercentage = "Pass percentage is required"
-}
-if(!values.questionsRandomized){
-  errors.questionsRandomized = "Questions randomized is required"
-}
-if(!values.answersMust){
-  errors.answersMust = "Answers must is required"
-}
-if(!values.enableNegativeMark){
-  errors.enableNegativeMark = "Enable Negative Mark is required"
-}
-if(!values.negativeMarkValue){
-  errors.negativeMarkValue = "Negative Mark Value is required"
-}
+  //Validate Inputs 
+  const validate = (values) => {
+    const errors = {};
+    if (!values.examName) {
+      errors.examName = "Exam name is required";
+    }
+    if (!values.description) {
+      errors.description = "Description is required";
+    }
+    if (!values.creationDate) {
+      errors.creationDate = "Description is required";
+    }
+    if (!values.expirationDate) {
+      errors.expirationDate = "Expiration date is required";
+    }
+    if (!values.noOfQuestions) {
+      errors.noOfQuestions = "No of questions is required";
+    }
+    if (!values.durationMinutes) {
+      errors.durationMinutes = "Duration minutes is required";
+    }
+    if (!values.passPercentage) {
+      errors.passPercentage = "Pass percentage is required";
+    }
+    if (!values.questionsRandomized) {
+      errors.questionsRandomized = "Questions randomized is required";
+    }
+    if (!values.answersMust) {
+      errors.answersMust = "Answers must is required";
+    }
+    if (!values.enableNegativeMark) {
+      errors.enableNegativeMark = "Enable Negative Mark is required";
+    }
+    if (!values.negativeMarkValue) {
+      errors.negativeMarkValue = "Negative Mark Value is required";
+    }
+    return errors;
+  };
 
-return errors;
-
-
-  }
-
-  const authToken=auth.authToken;
+  // const authToken = auth.authToken;
 
   // const [examId, setExamId] = useState("");
   // const [examName, setExamName] = useState("");
@@ -107,89 +107,83 @@ return errors;
     }
   };
 
-   //Create Exam
-   function onCreateExam(exam) {
-    console.log('create exam called');
+  //Create Exam 
+  function onCreateExam(exam) {
+    console.log("create exam called");
     fetch("https://localhost:8443/onlineexam/control/createExam", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      credentials: 'include',
-      body: JSON.stringify( exam ),
-    }).
-    then((response) => response.json()).
-    then(data=>{
-      console.log(data);
+      credentials: "include",
+      body: JSON.stringify(exam),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
 
-      const {exam} = data
-      console.log(exam)
-      if(data.result==="success"){
-        setExamValues(initialValues);
-        setAlert(true);
-      }
-     setExams([...exams,exam])
-
-    
-     
-    });
-
+        const { exam } = data;
+        console.log(exam);
+        if (data.result === "success") {
+          setExamValues(initialValues);
+          setAlert(true);
+        }
+        setExams([...exams, exam]);
+      });
   }
-
- 
 
   // const onSubmit = (e) => {
   //   e.preventDefault();
 
-    // const ExamId = checkLength(examId, 0, 20);
-    // if (!(ExamId === "success")) {
-    //   alert(`Exam Id ${ExamId}`);
-    //   return;
-    // }
+  // const ExamId = checkLength(examId, 0, 20);
+  // if (!(ExamId === "success")) {
+  //   alert(`Exam Id ${ExamId}`);
+  //   return;
+  // }
 
-    // const ExamName = checkLength(examName, 5, 255);
-    // if (!(ExamName === "success")) {
-    //   alert(`Exam Name ${ExamName}`);
-    //   return;
-    // }
+  // const ExamName = checkLength(examName, 5, 255);
+  // if (!(ExamName === "success")) {
+  //   alert(`Exam Name ${ExamName}`);
+  //   return;
+  // }
 
-    // const Description = checkLength(description, 0, 1000);
-    // if (!(Description === "success")) {
-    //   alert(`Description ${Description}`);
-    //   return;
-    // }
+  // const Description = checkLength(description, 0, 1000);
+  // if (!(Description === "success")) {
+  //   alert(`Description ${Description}`);
+  //   return;
+  // }
 
-    // onCreateExam({
-    //   examId,
-    //   examName,
-    //   description,
-    //   creationDate,
-    //   expirationDate,
-    //   noOfQuestions,
-    //   durationMinutes,
-    //   passPercentage,
-    //   questionsRandomized,
-    //   answersMust,
-    //   enableNegativeMark,
-    //   negativeMarkValue,
-    //   PASSWORD: "ofbiz",
-    //   USERNAME: "admin",
-    //   _LOGIN_PASSED_: "TRUE",
-    // });
+  // onCreateExam({
+  //   examId,
+  //   examName,
+  //   description,
+  //   creationDate,
+  //   expirationDate,
+  //   noOfQuestions,
+  //   durationMinutes,
+  //   passPercentage,
+  //   questionsRandomized,
+  //   answersMust,
+  //   enableNegativeMark,
+  //   negativeMarkValue,
+  //   PASSWORD: "ofbiz",
+  //   USERNAME: "admin",
+  //   _LOGIN_PASSED_: "TRUE",
+  // });
 
-    // setExamId("");
-    // setExamName("");
-    // setDescription("");
-    // setCreationDate("");
-    // setExpirationDate("");
-    // setNoOfQuestions("");
-    // setDurationMinutes("");
-    // setPassPercentage("");
-    // setQuestionsRandomized("Y");
-    // setAnswersMust("N");
-    // setEnableNegativeMark("N");
-    // setNegativeMarkValue("");
- // };
+  // setExamId("");
+  // setExamName("");
+  // setDescription("");
+  // setCreationDate("");
+  // setExpirationDate("");
+  // setNoOfQuestions("");
+  // setDurationMinutes("");
+  // setPassPercentage("");
+  // setQuestionsRandomized("Y");
+  // setAnswersMust("N");
+  // setEnableNegativeMark("N");
+  // setNegativeMarkValue("");
+  // };
 
   return (
     <div className="container-fluid my-1 border bg-white   fw-bold">
@@ -224,7 +218,6 @@ return errors;
                 error={formErrors.examName}
               />
 
-              
               <FormInput
                 name={"noOfQuestions"}
                 id={"noOfQuestions"}
@@ -245,6 +238,15 @@ return errors;
                 type={"text"}
                 placeholder={""}
                 error={formErrors.passPercentage}
+              />
+              <FormInput
+                name={"expirationDate"}
+                id={"expirationDate"}
+                text="Expiration Date"
+                value={examValues.expirationDate}
+                onChange={handleChange}
+                type={"date"}
+                error={formErrors.expirationDate}
               />
             </div>
             <div className="col-4">
@@ -338,15 +340,6 @@ return errors;
                 onChange={handleChange}
                 type={"date"}
                 error={formErrors.creationDate}
-              />
-              <FormInput
-                name={"expirationDate"}
-                id={"expirationDate"}
-                text="Expiration Date"
-                value={examValues.expirationDate}
-                onChange={handleChange}
-                type={"date"}
-                error={formErrors.expirationDate}
               />
             </div>
           </div>

@@ -19,7 +19,7 @@ const EditExam = () => {
     topicPassPercentage:"",
     questionsPerExam:""
   }
-  const [fromValues,setFromValues] =useState(initialValue);
+  const [formValues,setFormValues] =useState(initialValue);
   const text = {
     header: "Exam-Topic-Mapping",
     btnText: "Topic to Exam ",
@@ -58,7 +58,7 @@ const EditExam = () => {
     );
     const data = await res.json();
     if(data.result==="success"){
-      setFromValues(initialValue);
+      setFormValues(initialValue);
     const { examTopicMappingMasterRecord } = data;
     setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
 
@@ -74,8 +74,8 @@ const EditExam = () => {
         examTopicMap,
         setExamTopicMap,
         setExamList,
-        fromValues,
-        setFromValues
+        formValues,
+        setFormValues
         // fetchExamList,
       }}
     >

@@ -6,7 +6,7 @@ const UserSideBar = () => {
       <>
       <div className="list-group">
        
-        <Link to="/user-dashboard/exams-for-user" className="list-group-item list-group-item-action">
+        <Link to="exams" className="list-group-item list-group-item-action">
           Exams
         </Link>
         <Link to="" className="list-group-item list-group-item-action">

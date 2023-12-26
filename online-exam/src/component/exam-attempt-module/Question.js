@@ -36,7 +36,7 @@ const Question = ({
   };
 
   return (
-    <div className="col-9 ">
+    <div className="col">
       <div className="border border-secondary-subtle p-3 rounded pb-5">
         <h6 >Question Type : {question.questionType}</h6>
         <hr />

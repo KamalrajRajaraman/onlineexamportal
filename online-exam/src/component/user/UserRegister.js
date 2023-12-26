@@ -20,10 +20,9 @@ const UserRegister = () => {
    }
  
    const handleSubmit = (e)=>{
-     console.log("handle submit called");
+      console.log("handle submit called");
        e.preventDefault();
        setFormErrors(validate(userValues));
-      
        setIsSubmit(true);
    
    }
@@ -105,6 +104,9 @@ const UserRegister = () => {
     const data = await res.json();
 
     console.log(data);
+    if(data.result==="success"){
+      setUserValues(initialValues);
+    }
 
 
 

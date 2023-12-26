@@ -7,9 +7,9 @@ const AddTopicToExam = () => {
   const {
     examId,
     onCreateExamTopicMappingMaster,
-    fromValues,
+    formValues,
     examTopicMap,
-    setFromValues,
+    setFormValues,
   } = useContext(EditExamContext);
   const { topics, setTopics, fetchTopic } = useTopicContext();
 
@@ -17,12 +17,13 @@ const AddTopicToExam = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFromValues({ ...fromValues, [name]: value });
+    setFormValues({ ...formValues, [name]: value });
   };
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      onCreateExamTopicMappingMaster(fromValues);
+      onCreateExamTopicMappingMaster(formValues);
+     
     }
   }, [formErrors]);
 
@@ -37,7 +38,7 @@ const AddTopicToExam = () => {
     return () => {
       setTopics([]);
     };
-  }, []);
+  }, [examTopicMap]);
 
   const getTopics = async () => {
     const topicList = await fetchTopic();
@@ -61,7 +62,7 @@ const AddTopicToExam = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFromErrors(validate(fromValues));
+    setFromErrors(validate(formValues));
     setIsSubmit(true);
 
     // onCreateExamTopicMappingMaster({
@@ -111,7 +112,7 @@ const AddTopicToExam = () => {
                   className="form-control"
                   id="topicId"
                   name="topicId"
-                  value={fromValues.topicId}
+                  value={formValues.topicId}
                   onChange={handleChange}
                 >
                   <option value="">None</option>
@@ -129,7 +130,7 @@ const AddTopicToExam = () => {
                 id={"percentage"}
                 name={"percentage"}
                 text="percentage"
-                value={fromValues.percentage}
+                value={formValues.percentage}
                 onChange={handleChange}
                 type={"text"}
                 placeholder={""}
@@ -141,7 +142,7 @@ const AddTopicToExam = () => {
                 id={"topicPassPercentage"}
                 name={"topicPassPercentage"}
                 text="Topic Pass Percentage"
-                value={fromValues.topicPassPercentage}
+                value={formValues.topicPassPercentage}
                 onChange={handleChange}
                 type={"text"}
                 placeholder={""}
@@ -153,7 +154,7 @@ const AddTopicToExam = () => {
               id={"questionsPerExam"}
               name={"questionsPerExam"}
               text="Questions Per Exam"
-              value={fromValues.questionsPerExam}
+              value={formValues.questionsPerExam}
               onChange={handleChange}
               type={"text"}
               placeholder={""}
@@ -171,9 +172,9 @@ const AddTopicToExam = () => {
         </form>
       </div>
       <label>Topic coverage</label>
-      <div class="progress">
+      <div className="progress">
         <div
-          class="progress-bar"
+          className="progress-bar"
           role="progressbar"
           style={{ width: 250 }}
           aria-valuenow="25"

@@ -73,8 +73,10 @@ function App() {
 
         
         <Route path="user-dashboard" element={<RequiredAuth><UserDashboard /></RequiredAuth>}>
-          <Route path="exams-for-user" element={<ExamsForUser />} />
+          <Route path="exams" element={<ExamsForUser />} />
+       
         </Route>
+        <Route path="user-dashboard/exams/exam-page/:examId" element={<ExamPage />} />
         <Route path="exam-page" element={<ExamPage />} />
         <Route path="introduction" element={<Introduction />} />
         <Route path="*" element={<NoMatch />} />
