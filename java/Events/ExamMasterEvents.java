@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -23,9 +26,7 @@ public class ExamMasterEvents {
 	
 	public static final String module = ExamMasterEvents.class.getName();
 
-	public static String createExam(HttpServletRequest request, HttpServletResponse response) {
-
-		
+	public static String createExam(HttpServletRequest request, HttpServletResponse response) {	
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 
@@ -62,12 +63,9 @@ public class ExamMasterEvents {
 		
 		// creating ExamMaster Record by calling createExam service 
 		Map<String, Object> createExamResp = null;
-		try {
-			
-			createExamResp = dispatcher.runSync("createExam", addExamContext);
-
-			
-			Debug.logInfo("=======Creating ExamMAster record in event using service createExam=========", module);
+		try {	
+			createExamResp = dispatcher.runSync("createExam", addExamContext);	
+			Debug.logInfo("=======Created Exam Master record in event using service createExam=========", module);
 		} catch (GenericServiceException e) {
 
 			String errMsg = "Unable to create new records in ExamMaster entity: " + e.toString();
@@ -160,6 +158,7 @@ public class ExamMasterEvents {
 	}
 
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
+		
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
@@ -187,7 +186,8 @@ public class ExamMasterEvents {
 	}
 	
 	
-	public static String createUserAttemptTopicMaster(HttpServletRequest request, HttpServletResponse response) {
+	public static String createUserAttemptMaster(HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 	  
@@ -205,12 +205,33 @@ public class ExamMasterEvents {
 			performanceId = request.getParameter(CommonConstant.PERFORMANCE_ID);
 		}
 		
+		if(UtilValidate.isEmpty(partyId)) {
+			partyId = (String) request.getSession().getAttribute(CommonConstant.PARTY_ID);
+		}
+		
+		//calculated attemptNumber by counting no. of records in UserAttemptMaster for PartyId and examId
+		long prevAttempt =0;	
+		try {
+			prevAttempt = EntityQuery.use(delegator)
+			.select("count(*)")
+			.from(CommonConstant.USER_ATTEMPT_MASTER)
+			.where(CommonConstant.PARTY_ID,partyId,CommonConstant.EXAM_ID,examId)
+			.queryCount();
+		} catch (GenericEntityException e) {
+			String errMsg = "Unable to retrieve previous no of Attempt from UserAttemptMaster : " + e.toString();
+			request.setAttribute("_ERROR_MESSAGE_", errMsg);
+			request.setAttribute("result", CommonConstant.ERROR);
+			return CommonConstant.ERROR;
+		}
+		long attemptNumber = prevAttempt+1;
+		
 		
 		Map<String, Object> attemptMasterCtx = new HashMap<String, Object>();
 		attemptMasterCtx.put(CommonConstant.USER_LOGIN, userLogin);
 		attemptMasterCtx.put(CommonConstant.EXAM_ID, examId);
 		attemptMasterCtx.put(CommonConstant.PARTY_ID, partyId);
 		attemptMasterCtx.put(CommonConstant.PERFORMANCE_ID, performanceId);
+		attemptMasterCtx.put(CommonConstant.ATTEMPT_NUMBER, attemptNumber);
 		
 		//Getting noOfQuestions from  ExamMaster entity 
 		Map<String, Object> noOfQuestionResp = null;
@@ -279,6 +300,7 @@ public class ExamMasterEvents {
 											 ));
 								 }	 
 							 }
+							 
 							 if(UtilValidate.isNotEmpty(topicList)) {
 								 
 								 attemptMasterCtx.put("topicList", topicList);
@@ -292,30 +314,99 @@ public class ExamMasterEvents {
 									return CommonConstant.ERROR;									
 								}
 								 
+								 //Selecting randamQuestions 
 								 List<String> randomQuestions = new LinkedList<>();
 								 
-								 if(ServiceUtil.isSuccess(findQuestionsByTopicIdsResp)){
-									 
-									
+								 if(ServiceUtil.isSuccess(findQuestionsByTopicIdsResp)){									
 									List<Map<String, Object>> topicWiseQuestions =(List<Map<String, Object>>) findQuestionsByTopicIdsResp.get("topicList");
-									for(Map<String, Object> topic:topicList) {
-										
+									for(Map<String, Object> topic:topicWiseQuestions) {
+									
 										Integer totalQuestionsInThisTopic =(Integer) topic.get(CommonConstant.TOTAL_QUESTIONS_IN_THIS_TOPIC);
 										List<String> questionIdList = (List<String>) topic.get("questionIdList");
 										
 										Random rd = new Random();
-										
-										for (int i = 0; i < totalQuestionsInThisTopic; i++) {
-											if(UtilValidate.isNotEmpty(questionIdList)) {
-												int rand = rd.nextInt(questionIdList.size());
-												randomQuestions.add(questionIdList.get(rand));
-												questionIdList.remove(rand);
+										//checking totalQuestionsInThisTopic  is not null
+										if(UtilValidate.isNotEmpty(totalQuestionsInThisTopic)) {
+											
+											for (int i = 0; i < totalQuestionsInThisTopic; i++) {
+												if(UtilValidate.isNotEmpty(questionIdList)) {
+													int rand = rd.nextInt(questionIdList.size());
+													randomQuestions.add(questionIdList.get(rand));
+													questionIdList.remove(rand);
+												}
 											}
 										}
 										
-									}
-									request.setAttribute("selectedQuestion", randomQuestions);		
+									}	
+									//Creating UserAttemptAnswerMaster Records
+									Integer sequenceNum = 1;
+									List<Map<String,Object>> insertedQuestions = new LinkedList<>();
+									for(String questionId: randomQuestions) {
+										Map<String, Object> createAAMSResp =null;
+										try {
 											
+											createAAMSResp = dispatcher.runSync("createUserAttemptAnswerMasterService" , 
+													UtilMisc.toMap(CommonConstant.QUESTION_ID, questionId, 
+															CommonConstant.PERFORMANCE_ID, performanceId,
+															CommonConstant.SEQUENCE_NUM,sequenceNum++, "userLogin" , userLogin
+													));
+											
+										}
+										catch (GenericServiceException e) {
+												Debug.logError("====Unable to create record in UserAttemptAnswerMaster=======",e.toString());
+												String errMsg = "Unable to create record in UserAttemptAnswerMaster : " + e.toString();
+												request.setAttribute("_ERROR_MESSAGE_", errMsg);
+												request.setAttribute("result", CommonConstant.ERROR);
+												return CommonConstant.ERROR;
+										}
+										if (ServiceUtil.isSuccess(createAAMSResp)) {
+											insertedQuestions.add(UtilMisc.toMap(
+													CommonConstant.PERFORMANCE_ID,createAAMSResp.get(CommonConstant.PERFORMANCE_ID),
+													CommonConstant.SEQUENCE_NUM,createAAMSResp.get(CommonConstant.SEQUENCE_NUM),
+													CommonConstant.QUESTION_ID,createAAMSResp.get(CommonConstant.QUESTION_ID)
+													));
+											
+											Debug.logInfo("=======Created UserAttemptAnswerMaster record  using service createUserAttemptAnswerMaster=========", module);
+										}
+									}
+									
+									if(UtilValidate.isNotEmpty(insertedQuestions)) {
+										Map<String, Object> RetriveQuestions = new HashMap<>();
+										RetriveQuestions.put(CommonConstant.USER_LOGIN, userLogin);
+										for(Map<String,Object> question :insertedQuestions) {	
+											RetriveQuestions.put(CommonConstant.QUESTION_ID, question.get(CommonConstant.QUESTION_ID));
+											Map<String, Object> resultMap = null;
+											try {
+
+												resultMap = dispatcher.runSync("findQuestionById", RetriveQuestions);
+
+											} catch (GenericServiceException e) {
+
+												Debug.log("Error finding question ---- " + e);
+												request.setAttribute("result", CommonConstant.ERROR);
+											}
+
+											if (ServiceUtil.isSuccess(resultMap)) {
+												request.setAttribute("result", resultMap.get(CommonConstant.RESPONSE_MESSAGE));
+												Map<String,Object> questionResult  = (Map<String, Object>) resultMap.get("question");
+												question.put(CommonConstant.QUESTION_ID, questionResult.get(CommonConstant.QUESTION_ID));
+												question.put(CommonConstant.QUESTION_DETAIL, questionResult.get(CommonConstant.QUESTION_DETAIL));
+												question.put(CommonConstant.OPTION_A, questionResult.get(CommonConstant.OPTION_A));
+												question.put(CommonConstant.OPTION_B, questionResult.get(CommonConstant.OPTION_B));
+												question.put(CommonConstant.OPTION_C, questionResult.get(CommonConstant.OPTION_C));
+												question.put(CommonConstant.OPTION_D, questionResult.get(CommonConstant.OPTION_D));
+												question.put(CommonConstant.OPTION_E, questionResult.get(CommonConstant.OPTION_E));
+//												question.put(CommonConstant.ANSWER, questionResult.get(CommonConstant.ANSWER));
+//												question.put(CommonConstant.NUM_ANSWERS, questionResult.get(CommonConstant.NUM_ANSWERS));
+												question.put(CommonConstant.QUESTION_TYPE, questionResult.get(CommonConstant.QUESTION_TYPE));
+//												question.put(CommonConstant.DIFFICULTY_LEVEL, questionResult.get(CommonConstant.DIFFICULTY_LEVEL));
+//												question.put(CommonConstant.ANSWER_VALUE, questionResult.get(CommonConstant.ANSWER_VALUE));
+												question.put(CommonConstant.TOPIC_ID, questionResult.get(CommonConstant.TOPIC_ID));
+//												question.put(CommonConstant.NEGATIVE_MARK_VALUE, questionResult.get(CommonConstant.NEGATIVE_MARK_VALUE));	
+											}			
+										}
+									}									
+									request.setAttribute("selectedQuestion", insertedQuestions);				
 								}
 							 }
 						 }	 
@@ -323,7 +414,13 @@ public class ExamMasterEvents {
 				}
 		}	
 		return CommonConstant.SUCCESS;
-	}
-	
-	
+	}	
 }
+
+
+
+
+
+
+
+

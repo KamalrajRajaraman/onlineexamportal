@@ -6,7 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -18,7 +22,7 @@ public class ExamTopicMappingMasterEvents {
 	public static final String module = ExamTopicMappingMasterEvents.class.getName();
 	
 	public static String createExamTopicMappingMasterRecord(HttpServletRequest request, HttpServletResponse response) {
-		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		
@@ -53,7 +57,7 @@ public class ExamTopicMappingMasterEvents {
 		//Retrieving noOfQuestion from ExamMaster Entity to calculate questionPerExam 
 		Map<String, Object>  noOfQuestionResp= null;
 		try {
-			noOfQuestionResp = dispatcher.runSync("findQuestionCountForExamID", addTopicToExamContextMap );
+			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamID", addTopicToExamContextMap );
 		} catch (GenericServiceException e) {
 			
 			String errMsg = "Unable to retrieve  noOfQuestions from ExamMaster entity: " + e.toString();
@@ -84,21 +88,39 @@ public class ExamTopicMappingMasterEvents {
 				request.setAttribute("result", CommonConstant.ERROR);
 				return CommonConstant.ERROR;
 			}
-	
+			
 			if (ServiceUtil.isSuccess(serviceResultMap)) {
-				
 				request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
-				
-				Map<String, Object> examTopicMappingMasterRecord = new HashMap<>();
-				examTopicMappingMasterRecord.put(CommonConstant.EXAM_ID, serviceResultMap.get(CommonConstant.EXAM_ID));
-				examTopicMappingMasterRecord.put(CommonConstant.TOPIC_ID, serviceResultMap.get(CommonConstant.TOPIC_ID));
-				examTopicMappingMasterRecord.put(CommonConstant.PERCENTAGE,
-						serviceResultMap.get(CommonConstant.PERCENTAGE));
-				examTopicMappingMasterRecord.put(CommonConstant.TOPIC_PASS_PERCENTAGE,
-						serviceResultMap.get(CommonConstant.TOPIC_PASS_PERCENTAGE));
-				examTopicMappingMasterRecord.put(CommonConstant.QUESTION_PER_EXAM,
-						serviceResultMap.get(CommonConstant.QUESTION_PER_EXAM));
-				request.setAttribute("examTopicMappingMasterRecord", examTopicMappingMasterRecord);
+				GenericValue insertedRecordGenericValue =null;
+				try {
+					insertedRecordGenericValue	 = EntityQuery.use(delegator)
+					.from("ExamTopicMappingViewEntity")
+					.where(CommonConstant.EXAM_ID,examId,CommonConstant.TOPIC_ID,topicId)
+					.queryOne();
+				} catch (GenericEntityException e) {
+					e.printStackTrace();
+				}
+				if(UtilValidate.isNotEmpty(insertedRecordGenericValue)) {
+
+					examId = insertedRecordGenericValue.getString(CommonConstant.EXAM_ID);
+					String examName = insertedRecordGenericValue.getString(CommonConstant.EXAM_NAME);
+					topicId = insertedRecordGenericValue.getString(CommonConstant.TOPIC_ID);
+					String topicName = insertedRecordGenericValue.getString(CommonConstant.TOPIC_NAME);
+					percentage = insertedRecordGenericValue.getString(CommonConstant.PERCENTAGE);
+					topicPassPercentage = insertedRecordGenericValue.getString(CommonConstant.TOPIC_PASS_PERCENTAGE);
+					questionPerExam = insertedRecordGenericValue.getLong(CommonConstant.QUESTION_PER_EXAM);
+					
+					Map<String, Object> examTopicMappingRecord = new HashMap<>();
+					examTopicMappingRecord.put(CommonConstant.EXAM_ID, examId);
+					examTopicMappingRecord.put(CommonConstant.EXAM_NAME, examName);
+					examTopicMappingRecord.put(CommonConstant.TOPIC_ID, topicId);
+					examTopicMappingRecord.put(CommonConstant.TOPIC_NAME, topicName);
+					examTopicMappingRecord.put(CommonConstant.PERCENTAGE, percentage);
+					examTopicMappingRecord.put(CommonConstant.TOPIC_PASS_PERCENTAGE, topicPassPercentage);
+					examTopicMappingRecord.put(CommonConstant.QUESTION_PER_EXAM, questionPerExam);
+					
+					request.setAttribute("examTopicMappingMasterRecord", examTopicMappingRecord);
+				}		
 			}
 		}
 		return CommonConstant.SUCCESS;

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
@@ -34,45 +35,79 @@ public class QuestionMasterServices {
 		
 		
 		for (GenericValue questionGenericValue : questionGenericValueList) {
-			
-			
-			Long questionId =  questionGenericValue.getLong(CommonConstant.QUESTION_ID);
-			String questionDetail = questionGenericValue.getString(CommonConstant.QUESTION_DETAIL);
-			String optionA =questionGenericValue.getString(CommonConstant.OPTION_A);
-			String optionB =questionGenericValue.getString(CommonConstant.OPTION_B);
-			String optionC = questionGenericValue.getString(CommonConstant.OPTION_C);
-			String optionD = questionGenericValue.getString(CommonConstant.OPTION_D);
-			String optionE = questionGenericValue.getString(CommonConstant.OPTION_E);
-			String answer = questionGenericValue.getString(CommonConstant.ANSWER);
-			Long numAnswers = questionGenericValue.getLong(CommonConstant.NUM_ANSWERS);
-			String questionType =questionGenericValue.getString(CommonConstant.QUESTION_TYPE);
-			Integer difficultyLevel =questionGenericValue.getInteger(CommonConstant.DIFFICULTY_LEVEL);
-			BigDecimal answerValue =questionGenericValue.getBigDecimal(CommonConstant.ANSWER_VALUE);
-			String topicId = questionGenericValue.getString(CommonConstant.TOPIC_ID);
-			BigDecimal negativeMarkValue = questionGenericValue.getBigDecimal(CommonConstant.NEGATIVE_MARK_VALUE);
-
-			Map<String, Object> question = new HashMap<>();
-			question.put(CommonConstant.QUESTION_ID, questionId);
-			question.put(CommonConstant.QUESTION_DETAIL, questionDetail);
-			question.put(CommonConstant.OPTION_A, optionA);
-			question.put(CommonConstant.OPTION_B, optionB);
-			question.put(CommonConstant.OPTION_C, optionC);
-			question.put(CommonConstant.OPTION_D, optionD);
-			question.put(CommonConstant.OPTION_E, optionE);
-			question.put(CommonConstant.ANSWER, answer);
-			question.put(CommonConstant.NUM_ANSWERS, numAnswers);
-			question.put(CommonConstant.QUESTION_TYPE, questionType);
-			question.put(CommonConstant.DIFFICULTY_LEVEL, difficultyLevel);
-			question.put(CommonConstant.ANSWER_VALUE, answerValue);
-			question.put(CommonConstant.TOPIC_ID, topicId);
-			question.put(CommonConstant.NEGATIVE_MARK_VALUE, negativeMarkValue);
-			
-			
+			Map<String, Object> question = getQuestionFromGenericValue(questionGenericValue);			
 			questionList.add( question);
 		}
 		returnSucces.put("questionList", questionList);
 		return returnSucces;
 
+	}
+
+	public static Map<String, Object> findQuestion(DispatchContext dctx, Map<String, ? extends Object> context) {
+
+		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();	
+		Delegator delegator = dctx.getDelegator();
+		
+		Long questionId = (Long) context.get(CommonConstant.QUESTION_ID);
+		
+		GenericValue questionMasterGV = null;
+		try {			
+			questionMasterGV = EntityQuery.use(delegator)
+									.from("QuestionMaster")
+									.where(CommonConstant.QUESTION_ID,questionId)
+									.queryOne();
+		
+		} 
+		catch (GenericEntityException e) {
+			return ServiceUtil.returnError("Error in fetching record from QuestionMaster entity ........" + module);
+		}
+
+		if(UtilValidate.isNotEmpty(questionMasterGV)) {		
+			Map<String, Object> questionMap = getQuestionFromGenericValue(questionMasterGV);
+			serviceResultMap.put("question", questionMap);
+		}
+		else {
+			serviceResultMap = ServiceUtil.returnError("Failed fetching question from DB");
+		}
+		
+		
+		return serviceResultMap;
+
+	}
+	
+	//Helper Method 
+	public static Map<String, Object> getQuestionFromGenericValue(GenericValue genericValue){	
+		Long questionId =  genericValue.getLong(CommonConstant.QUESTION_ID);
+		String questionDetail = genericValue.getString(CommonConstant.QUESTION_DETAIL);
+		String optionA =genericValue.getString(CommonConstant.OPTION_A);
+		String optionB =genericValue.getString(CommonConstant.OPTION_B);
+		String optionC = genericValue.getString(CommonConstant.OPTION_C);
+		String optionD = genericValue.getString(CommonConstant.OPTION_D);
+		String optionE = genericValue.getString(CommonConstant.OPTION_E);
+		String answer = genericValue.getString(CommonConstant.ANSWER);
+		Long numAnswers = genericValue.getLong(CommonConstant.NUM_ANSWERS);
+		String questionType =genericValue.getString(CommonConstant.QUESTION_TYPE);
+		Integer difficultyLevel =genericValue.getInteger(CommonConstant.DIFFICULTY_LEVEL);
+		BigDecimal answerValue =genericValue.getBigDecimal(CommonConstant.ANSWER_VALUE);
+		String topicId = genericValue.getString(CommonConstant.TOPIC_ID);
+		BigDecimal negativeMarkValue = genericValue.getBigDecimal(CommonConstant.NEGATIVE_MARK_VALUE);
+
+		Map<String, Object> question = new HashMap<>();
+		question.put(CommonConstant.QUESTION_ID, questionId);
+		question.put(CommonConstant.QUESTION_DETAIL, questionDetail);
+		question.put(CommonConstant.OPTION_A, optionA);
+		question.put(CommonConstant.OPTION_B, optionB);
+		question.put(CommonConstant.OPTION_C, optionC);
+		question.put(CommonConstant.OPTION_D, optionD);
+		question.put(CommonConstant.OPTION_E, optionE);
+		question.put(CommonConstant.ANSWER, answer);
+		question.put(CommonConstant.NUM_ANSWERS, numAnswers);
+		question.put(CommonConstant.QUESTION_TYPE, questionType);
+		question.put(CommonConstant.DIFFICULTY_LEVEL, difficultyLevel);
+		question.put(CommonConstant.ANSWER_VALUE, answerValue);
+		question.put(CommonConstant.TOPIC_ID, topicId);
+		question.put(CommonConstant.NEGATIVE_MARK_VALUE, negativeMarkValue);	
+		return question;
 	}
 
 }

@@ -100,5 +100,13 @@ public interface CommonConstant {
 	public static final String USER_TOPIC_PERCENTAGE ="userTopicPercentage";
 	public static final String USER_PASSED_THIS_TOPIC ="userPassedThisTopic";
 	
+	
+	//UserAttemptAnswerMaster
+	
+
+	public static final String SEQUENCE_NUM = "sequenceNum"; 
+	public static final String SUBMITTED_ANSWER ="submittedAnswer";
+	public static final String IS_FLAGGED ="isFlagged";
+	
 
 }

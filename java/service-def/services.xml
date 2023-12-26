@@ -43,12 +43,14 @@
 			type="List" />
 	</service>
 
-	<service name="findNoOfQuestionCountByExamID"
-			 engine="java"
-			 location="com.vastpro.services.ExamMasterServices"
-			 invoke="findNoOfQuestionCountByExamID">
-		<attribute name="examId" mode="IN" optional="false" type="String" />
-		<attribute name="noOfQuestions" mode="OUT" optional="true"	type="Long" />		    
+	<service name="findNoOfQuestionCountByExamID" engine="java"
+		location="com.vastpro.services.ExamMasterServices"
+		invoke="findNoOfQuestionCountByExamID">
+		<attribute name="examId" mode="IN" optional="false"
+			type="String" />
+		<attribute name="noOfQuestions" mode="OUT" optional="true"
+			type="Long" />
+		    
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
@@ -132,7 +134,16 @@
 		<attribute name="questionList" type="List" mode="OUT"
 			optional="true"></attribute>
 	</service>
-
+	
+	<service name="findQuestionById" engine="java"
+		location="com.vastpro.services.QuestionMasterServices" auth="false"
+		invoke="findQuestion">
+		<attribute name="questionId" type="Long" mode="IN"
+			optional="false" />
+		<attribute name="question" type="Map" mode="OUT"
+			optional="true" />		    
+	</service>
+	
 	<service name="deleteQuestion"
 		default-entity-name="QuestionMaster" engine="entity-auto"
 		invoke="delete" auth="false">
@@ -195,26 +206,51 @@
 		<attribute name="examList" mode="OUT" optional="true"
 			type="List"></attribute>
 	</service>
-	
-	<service engine="entity-auto" name="createUserAttemptMaster" default-entity-name="UserAttemptMaster" invoke="create" auth="false">
+
+	<service engine="entity-auto" name="createUserAttemptMaster"
+		default-entity-name="UserAttemptMaster" invoke="create" auth="false">
 		<description>Create UserAttemptMaster Record</description>
 		<auto-attributes include="pk" mode="OUT"
 			optional="false"></auto-attributes>
 		<auto-attributes mode="INOUT" include="nonpk"
 			optional="true"></auto-attributes>
 	</service>
-	
-	<service engine="entity-auto" name="createUserAttemptTopicMaster" default-entity-name="UserAttemptTopicMaster" invoke="create" auth="false">
+
+	<service engine="entity-auto"
+		name="createUserAttemptTopicMaster"
+		default-entity-name="UserAttemptTopicMaster" invoke="create"
+		auth="false">
 		<description>Create UserAttemptTopicMaster Record</description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="false"></auto-attributes>
 		<auto-attributes mode="INOUT" include="nonpk"
 			optional="true"></auto-attributes>
 	</service>
-	
-	<service engine="java" name="findQuestionsByTopicIds" location="com.vastpro.services.ExamMasterServices" invoke="findQuestionsByTopicIds" auth="false">
+
+	<service engine="java" name="findQuestionsByTopicIds"
+		location="com.vastpro.services.ExamMasterServices"
+		invoke="findQuestionsByTopicIds" auth="false">
 		<description>Find Questions based on Topic Id</description>
-		<attribute name="topicList" mode="INOUT" type="List" optional="true"></attribute>
+		<attribute name="topicList" mode="INOUT" type="List"
+			optional="true"></attribute>
+	</service>
+
+	<service engine="entity-auto"
+		name="createUserAttemptAnswerMasterService"
+		default-entity-name="UserAttemptAnswerMaster" invoke="create"
+		auth="true">
+		<auto-attributes mode="INOUT" include="pk"
+			optional="true"></auto-attributes>
+		<auto-attributes mode="INOUT" include="nonpk"
+			optional="true"></auto-attributes>
+	</service>
+	
+	
+	<service engine="entity-auto" default-entity-name="UserAttemptAnswerMaster" 
+		name="updateUserAttemptAnswerMaster" invoke="update" auth="false">
+			<description>Partial update in user attempt answer master</description>
+			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
+			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
 	</service>
 
 
