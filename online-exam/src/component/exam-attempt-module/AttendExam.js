@@ -43,28 +43,29 @@ const AttendExam = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const res = await fetch("https://localhost:8443/onlineexam/control/", {
-        method: "POST",
+    console.log(questions)
+    // try {
+    //   const res = await fetch("https://localhost:8443/onlineexam/control/", {
+    //     method: "POST",
 
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(questions),
-      });
-      const data = await res.json();
-      const { selectedQuestion } = data;
-    } catch (error) {
-      console.log(error);
-    }
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //     credentials: "include",
+    //     body: JSON.stringify(questions),
+    //   });
+    //   const data = await res.json();
+    //   const { selectedQuestion } = data;
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
     <>
       {questions && (
         <div className="container-fluid  exam-body py-3 ">
-          <div className="row mt-3 pt-2 ">
+          <div className="row ">
             <div className="col">
               <Question
                 question={activeQuestionRef.current}
@@ -75,10 +76,10 @@ const AttendExam = () => {
               <hr />
               <div className="row">
                 <div className="col">
-                  <div class="d-grid gap-2 d-md-flex justify-content-center">
+                  <div className="d-grid gap-2 d-md-flex justify-content-center">
                     <button
                       onClick={handleSubmit}
-                      class="btn btn-outline-danger col-3  "
+                      className="btn btn-outline-danger col-3  "
                       type="button"
                     >
                       Submit Exam

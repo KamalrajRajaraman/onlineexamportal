@@ -34,7 +34,7 @@ const ShowExam = () => {
                     <tr>
                          <th> Exam ID</th>
                          <th> Exam Name</th>
-                        <th>Action</th>
+                        {/* <th>Action</th> */}
                     </tr>
                     </thead>
 

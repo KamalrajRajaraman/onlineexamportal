@@ -15,7 +15,10 @@ const PaletteButton = ({onSequenceNumClick ,question}) => {
     
     const checkAnswered =()=>{
         if(mounted){
-            if(question?.answer){
+            if(question?.isFlagged){
+                setColor("btn-danger")  
+            }
+            else if(question?.submittedAnswer){
                 setColor("btn-success")     
             }else{   
                 setColor("btn-warning")
@@ -24,7 +27,7 @@ const PaletteButton = ({onSequenceNumClick ,question}) => {
     }
 
     const HandleClick =(sequenceNum)=>{
-        if(color!=="btn-success"){
+        if(color!=="btn-success" &&  color!=="btn-danger"){
             setColor("btn-warning")
         }
         onSequenceNumClick(sequenceNum);

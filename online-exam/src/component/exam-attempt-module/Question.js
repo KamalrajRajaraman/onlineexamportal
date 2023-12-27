@@ -6,10 +6,10 @@ const Question = ({
   setQuestions,
   questions,
 }) => {
-  const [answer, setAnswer] = useState("");
+  const [submittedAnswer, setSubmittedAnswer] = useState("");
 
   useEffect(() => {
-    setAnswer(question?.answer);
+    setSubmittedAnswer(question?.submittedAnswer);
   }, [question]);
 
   const onSave = (sequenceNum) => {
@@ -17,23 +17,43 @@ const Question = ({
     setQuestions(
       questions.map((question) =>
         question.sequenceNum === sequenceNum
-          ? { ...question, answer }
+          ? { ...question, submittedAnswer }
           : question
       )
     );
-    console.log(questions);
+  
   };
 
   const onReset = (sequenceNum) => {
     setQuestions(
       questions.map((question) =>
         question.sequenceNum === sequenceNum
-          ? { ...question, answer: null }
+          ? { ...question, submittedAnswer: null }
           : question
       )
     );
-    setAnswer("");
+    setSubmittedAnswer("");
   };
+
+  const onMarkForReview =(sequenceNum)=>{
+    if(question?.isFlagged){
+      setQuestions(
+        questions.map((question) =>
+          question.sequenceNum === sequenceNum
+            ? { ...question, isFlagged :false }
+            : question
+        )
+      );
+    }else{
+    setQuestions(
+      questions.map((question) =>
+        question.sequenceNum === sequenceNum
+          ? { ...question, isFlagged :true }
+          : question
+      )
+    );
+    }
+  }
 
   return (
     <div className="col">
@@ -42,7 +62,7 @@ const Question = ({
         <hr />
         <h6>Question No. {question.sequenceNum}</h6>
         <hr />
-        <p>{question.questionDetails}</p>
+        <p>{question.questionDetail}</p>
         <div>
           <div className="form-check">
             <input
@@ -51,8 +71,8 @@ const Question = ({
               name="flexRadioDefault"
               id="flexRadioDefault1"
               value={question.optionA}
-              checked={question.optionA === answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              checked={question.optionA === submittedAnswer}
+              onChange={(e) => setSubmittedAnswer(e.target.value)}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault1">
               {question.optionA}
@@ -65,8 +85,8 @@ const Question = ({
               name="flexRadioDefault"
               id="flexRadioDefault2"
               value={question.optionB}
-              checked={question.optionB === answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              checked={question.optionB === submittedAnswer}
+              onChange={(e) => setSubmittedAnswer(e.target.value)}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault2">
               {question.optionB}
@@ -79,8 +99,8 @@ const Question = ({
               name="flexRadioDefault"
               id="flexRadioDefault3"
               value={question.optionC}
-              checked={question.optionC === answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              checked={question.optionC === submittedAnswer}
+              onChange={(e) => setSubmittedAnswer(e.target.value)}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault3">
               {question.optionC}
@@ -92,9 +112,9 @@ const Question = ({
               type="radio"
               name="flexRadioDefault"
               id="flexRadioDefault4"
-              checked={question.optionD === answer}
+              checked={question.optionD === submittedAnswer}
               value={question.optionD}
-              onChange={(e) => setAnswer(e.target.value)}
+              onChange={(e) => setSubmittedAnswer(e.target.value)}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault4">
               {question.optionD}
@@ -107,8 +127,8 @@ const Question = ({
               name="flexRadioDefault"
               id="flexRadioDefault4"
               value={question.optionE}
-              checked={question.optionE === answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              checked={question.optionE === submittedAnswer}
+              onChange={(e) => setSubmittedAnswer(e.target.value)}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault4">
               {question.optionE}
@@ -125,8 +145,8 @@ const Question = ({
         >
           Previous
         </button>
-        <button type="button" className="btn btn-outline-primary me-1">
-          Mark for Review
+        <button   onClick={() => onMarkForReview(question.sequenceNum)}  type="button" className={`btn me-1 ${question?.isFlagged ?" btn-outline-danger":" btn-outline-primary"}`}>
+          {question?.isFlagged ? "Remove Marked":"Mark for Review"}
         </button>
         <button
           type="button"

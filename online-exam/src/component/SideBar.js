@@ -1,7 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../auth";
 
 const SideBar = () => {
+  const {logout} = useAuth();
+  const onlogout =async() =>{
+    const res = await fetch("https://localhost:8443/onlineexam/control/onlineExamLogout",{credentials:"include"});
+    const data = await res.json();
+    console.log(data);
+    if(data.result==="success"){
+      logout();
+    }
+  }
   return (
     <>
       <div className="list-group">
@@ -23,6 +33,7 @@ const SideBar = () => {
         <Link to="user" className="list-group-item list-group-item-action">
           Add User
         </Link>
+        <button  onClick = {onlogout}type="button" className="list-group-item list-group-item-action" >Logout</button>
       </div>
     </>
   );

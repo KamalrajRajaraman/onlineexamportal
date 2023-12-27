@@ -83,7 +83,7 @@ const Login = () => {
     setPass("");
   };
 
-  return (
+  return (<>
     <div className="container">
       <div className="row mt-5 align-items-center justify-content-center">
         <div className="col-5 mt-5  rounded-2 shadow-lg">
@@ -114,6 +114,11 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark  p-3 " style={{marginTop:137}}>
+      <p className='float-end ' ></p>
+      
+    </nav>
+    </>
   );
 };
 
