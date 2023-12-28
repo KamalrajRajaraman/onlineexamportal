@@ -46,7 +46,6 @@ const AddExamToUser = () => {
   useEffect(() => {
     console.log(Object.keys(formErrors).length);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log("hiiii");
       fetchExamsForUser(formValues);
       // getExams();
     }

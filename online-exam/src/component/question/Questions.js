@@ -5,7 +5,7 @@ import { useQuestionContext } from "./questionData";
 
 
 const Questions = () => {
-  const {questions, setQuestions,onDelete} = useQuestionContext();
+  const {questions, setQuestions, onDelete} = useQuestionContext();
   useEffect(()=>{
     fetchQuestion();
     return()=>{

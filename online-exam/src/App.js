@@ -45,7 +45,7 @@ function App() {
             <Route path="add-topic-to-exam" element={<AddTopicToExam />} />
             <Route path="questions" element={<QuestionTable />} />
           </Route>
-          <Route path="topic" element={<Topics />}>
+          <Route path="topic" element={<Topics/>}>
             <Route path="add-topic" element={<Addtopic />} />
           </Route>
           <Route path="questions" element={<Questions />}>
