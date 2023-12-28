@@ -1,32 +1,32 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { AuthProvider } from "./auth";
-import Header from "./component/Header";
-import Login from "./component/Login";
-import Admin from "./component/Admin";
-import Exam from "./component/exam/Exam";
-import AddExam from "./component/exam/AddExam";
-import EditExam from "./component/edit-exam/EditExam";
-import AddTopicToExam from "./component/edit-exam/AddTopicToExam";
-import Topics from "./component/topic/Topics";
-import Addtopic from "./component/topic/Addtopic";
-import UserRegister from "./component/user/UserRegister";
-import Questions from "./component/question/Questions";
-import AddQuestions from "./component/question/AddQuestions";
-import User from "./component/user/User";
-import NoMatch from "./component/NoMatch";
-import EditUser from "./component/user/EditUser";
-import AddExamToUser from "./component/user/AddExamToUser";
-import ExamTopicTable from "./component/edit-exam/ExamTopicTable";
-import QuestionTable from "./component/edit-exam/QuestionTable";
-import ListUser from "./component/user/ListUser";
-import UserDashboard from "./component/userModule/UserDashboard";
-import ExamsForUser from "./component/userModule/ExamsForUser";
-import ExamPage from "./component/exam-attempt-module/ExamPage";
-import Introduction from "./component/userModule/Introduction";
-import ShowExam from "./component/user/ShowExam";
+import { AuthProvider } from "./component/auth/auth";
+import Header from "./component/common/Header";
+import Login from "./component/auth/Login";
+import Admin from "./component/admin-module/admin-dashboard/Admin";
+import Exam from "./component/admin-module/exam/Exam";
+import AddExam from "./component/admin-module/exam/AddExam";
+import EditExam from "./component/admin-module/edit-exam/EditExam";
+import AddTopicToExam from "./component/admin-module/edit-exam/AddTopicToExam";
+import Topics from "./component/admin-module/topic/Topics";
+import Addtopic from "./component/admin-module/topic/Addtopic";
+import UserRegister from "./component/admin-module/user/UserRegister";
+import Questions from "./component/admin-module/question/Questions";
+import AddQuestions from "./component/admin-module/question/AddQuestions";
+import User from "./component/admin-module/user/User";
+import NoMatch from "./component/common/NoMatch";
+import EditUser from "./component/admin-module/user/EditUser";
+import AddExamToUser from "./component/admin-module/user/AddExamToUser";
+
+
+import ListUser from "./component/admin-module/user/ListUser";
+import UserDashboard from "./component/userModule/user-dashboard/UserDashboard";
+import ExamsForUser from "./component/userModule/exams/ExamsForUser";
+import ExamPage from "./component/userModule/exam-page/ExamPage";
+
+import ShowExam from "./component/admin-module/user/ShowExam";
 import RequiredAuth from "./component/common/RequiredAuth";
 import Error from "./component/common/Error";
-import Footer from "./component/Footer";
+
 
 function App() {
   return (
@@ -43,10 +43,7 @@ function App() {
             <Route path="add-exam" element={<AddExam />} />
           </Route>
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
-            {/* <Route index element={<ExamTopicTable />} />
-            <Route path="view-all" element={<ExamTopicTable />} /> */}
-            <Route path="add-topic-to-exam" element={<AddTopicToExam />} />
-            <Route path="questions" element={<QuestionTable />} />
+            <Route path="add-topic-to-exam" element={<AddTopicToExam />} />          
           </Route>
           <Route path="topic" element={<Topics />}>
             <Route path="add-topic" element={<Addtopic />} />
@@ -71,21 +68,15 @@ function App() {
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
             <Route path="view-all-exam" element={<ShowExam />} />
           </Route>
-        </Route>
-
-
-        
+        </Route>  
         <Route path="user-dashboard" element={<RequiredAuth><UserDashboard /></RequiredAuth>}>
         <Route index element={<Navigate to="exams" />}/>
           <Route path="exams" element={<ExamsForUser />} />
-       
         </Route>
         <Route path="user-dashboard/exams/exam-page/:examId" element={<ExamPage />} />
         <Route path="exam-page" element={<ExamPage />} />
-        <Route path="introduction" element={<Introduction />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
-     
     </AuthProvider>
    
   );

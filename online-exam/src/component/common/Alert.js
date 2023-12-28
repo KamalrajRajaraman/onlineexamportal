@@ -7,8 +7,7 @@ const Alert = ({close,message,color}) => {
       <div className="col-10">
         <h4 className="alert-heading">Well done!</h4>
       </div>
-      <div className="col-2 d-grid gap-2 d-md-flex justify-content-md-end">
-     
+      <div className="col-2 d-grid gap-2 d-md-flex justify-content-md-end">   
         <button
           type="button"
           className="btn-close "

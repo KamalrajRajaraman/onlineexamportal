@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Accordin from "./Accordin";
 
 const AccordinMaker = ({ objects ,id ,name ,onDelete,onEdit}) => {
