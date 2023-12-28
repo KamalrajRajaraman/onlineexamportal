@@ -15,7 +15,7 @@ const Exam = () => {
     return () => {
       setExams([]);
     };
-  }, []);
+  },[]);
 
   const getExams = async () => {
     const result = await fetchExam();
@@ -26,7 +26,7 @@ const Exam = () => {
   const onEdit = (id) => {
     navigate(`edit/examId/${id}`);
   };
-  
+
   const text = {
     header: "Exam",
     btnText: "Exam",

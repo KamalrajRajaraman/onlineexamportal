@@ -112,7 +112,6 @@ const AddExamToUser = () => {
   };
 
  
-  function get() {}
   return (
     <div className="fluid-container mt-2  fw-bold">
       <form id="addExamToUser" onSubmit={handleSubmit}>

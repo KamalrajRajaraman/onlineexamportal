@@ -20,7 +20,7 @@ const UserSideBar = () => {
           Exams
         </NavLink>
 
-        <button  onClick = {onlogout}type="button" class="list-group-item list-group-item-action" >Logout</button>
+        <button  onClick = {onlogout}type="button" className="list-group-item list-group-item-action" >Logout</button>
       
 
       </div>
