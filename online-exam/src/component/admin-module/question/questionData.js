@@ -14,11 +14,10 @@ export const QuestionProvider =({children})=>{
       }
     }
     
-    return
-     (<QuestionContext.Provider value={{questions,setQuestions,onDelete}}>
+    return<QuestionContext.Provider value={{questions,setQuestions,onDelete}}>
         {children}
     </QuestionContext.Provider>
-     )
+     
 }
 
 export const useQuestionContext=()=>{
