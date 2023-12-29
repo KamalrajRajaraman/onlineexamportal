@@ -1,4 +1,4 @@
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./component/auth/auth";
 import Header from "./component/common/Header";
 import Login from "./component/auth/Login";
@@ -45,7 +45,7 @@ function App() {
           <Route path="exam/edit/examId/:examId" element={<EditExam />}>
             <Route path="add-topic-to-exam" element={<AddTopicToExam />} />          
           </Route>
-          <Route path="topic" element={<Topics />}>
+          <Route path="topic" element={<Topics/>}>
             <Route path="add-topic" element={<Addtopic />} />
           </Route>
           <Route path="questions" element={<Questions />}>
