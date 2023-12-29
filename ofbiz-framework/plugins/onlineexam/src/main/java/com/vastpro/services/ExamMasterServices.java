@@ -67,7 +67,7 @@ public class ExamMasterServices {
 			}
 			result.put("examList", examList);
 		} catch (GenericEntityException e) {
-			Debug.logError(e,"Error in fetching All  record from ExamMaster entity" ,module);
+			Debug.logError(e,"Error in fetching All record from ExamMaster entity" ,module);
 			return ServiceUtil.returnError("Error in fetching All  record from ExamMaster entity :" + module);
 		}
 		return result;
