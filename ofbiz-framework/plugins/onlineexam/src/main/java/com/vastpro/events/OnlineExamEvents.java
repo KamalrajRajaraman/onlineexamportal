@@ -1,13 +1,18 @@
 package com.vastpro.events;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
+import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -21,7 +26,11 @@ import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.ofbiz.webapp.control.LoginWorker;
 
 import com.vastpro.constants.CommonConstant;
+import com.vastpro.validator.HibernateHelper;
+import com.vastpro.validator.Loggable;
+import com.vastpro.validator.LoginValidator;
 
+//OnlineExamEvents contain common events related to Online Exam Application
 public class OnlineExamEvents {
 
 	public static final String module = OnlineExamEvents.class.getName();
@@ -29,69 +38,87 @@ public class OnlineExamEvents {
 
 	// used to login 
 	public static String login(HttpServletRequest request, HttpServletResponse response) {
-
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		
+		
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		Locale locale = UtilHttp.getLocale(request);
+		LoginValidator loginForm = HibernateHelper.populateBeanFromMap(combinedMap, LoginValidator.class);
+		Set<ConstraintViolation<LoginValidator>> checkValidationErrors = HibernateHelper.checkValidationErrors(loginForm, Loggable.class);
+		
+		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", resource_error, false);
+		request.setAttribute("hasFormErrors", hasFormErrors);
+		
+		
 		String partyId = null;
 		String result = LoginWorker.login(request, response);
-
+		
+		//If logged in checking role type
 		if (CommonConstant.SUCCESS.equals(result)) {
-			// check userLoginId in request
-			String userLoginId = (String) request.getAttribute(CommonConstant.USERNAME);
-			if (userLoginId == null) {
-				userLoginId = request.getParameter(CommonConstant.USERNAME);
+			
+			//After logged in userLogin Generic Value available in session
+			GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+			
+			//Getting partyId available in userLogin GenericValue
+			if(UtilValidate.isNotEmpty(userLogin)) {
+				partyId = userLogin.getString(CommonConstant.PARTY_ID);
 			}
 			
-			// Gets partyId from PartyAndUserLogin View Entity using userLoginId
-			GenericValue partyIdGv = null;
-			try {
+			//if partyId is available retrieving roleTypeId List form UserMaster View Entity and partyRole is set in request Attribute
+			if (UtilValidate.isNotEmpty(partyId)) { 
 				
-				partyIdGv = EntityQuery.use(delegator).select(CommonConstant.PARTY_ID).from(CommonConstant.PARTY_AND_USER_LOGIN)
-						.where(CommonConstant.USER_LOGIN_ID, userLoginId).queryOne();
-			} 
-			catch (GenericEntityException e) {
-				Debug.logError(e, "Unable to retrieve partyId  from PartyAndUserLogin using userLoginId", module);			
-				String errMsg = "Unable to retrieve partyId  from PartyAndUserLogin using userLoginId : " + e.getMessage();
-				request.setAttribute("_ERROR_MESSAGE_", errMsg);
-				request.setAttribute("result", CommonConstant.ERROR);
-				return CommonConstant.ERROR;
-			}
-
-			if (UtilValidate.isNotEmpty(partyIdGv)) {
-
-				partyId = partyIdGv.getString(CommonConstant.PARTY_ID);
-
-				EntityCondition roleTypeIdEqualsPersonRole = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "PERSON_ROLE");
-				EntityCondition roleTypeIdEqualsAdmin = EntityCondition.makeCondition(CommonConstant.ROLE_TYPE_ID, "ADMIN");
-				EntityCondition containsPartyId = EntityCondition.makeCondition(CommonConstant.PARTY_ID, partyId);
-				EntityCondition containsRoleType = EntityCondition.makeCondition(roleTypeIdEqualsPersonRole, EntityOperator.OR, roleTypeIdEqualsAdmin);
-				EntityCondition andCondition = EntityCondition.makeCondition(containsPartyId, EntityOperator.AND,
-						containsRoleType);
-				
-				//RoleTypeId is retrieved from UserMaster ViewEntity
-				GenericValue roleTypeGV = null;
+				//if partyId is available retrieving roleTypeId List form UserMaster View Entity 
+				 List<GenericValue> roleTypeList = null;
 				try {
-					roleTypeGV = EntityQuery
+					 roleTypeList = EntityQuery
 								.use(delegator)
 								.select(CommonConstant.ROLE_TYPE_ID)
 								.from("UserMaster")
-								.where(andCondition)
-								.queryOne();
-				} catch (GenericEntityException e) {
+								.where(CommonConstant.PARTY_ID,partyId)
+								.queryList();
+				}
+				catch (GenericEntityException e) {
+					
 					Debug.logError(e, "Unable to retrieve RoleTypeId  from UserMaster ", module);	
 					String errMsg = "Unable to retrieve RoleTypeId  from UserMaster: " + e.getMessage();
 					request.setAttribute("_ERROR_MESSAGE_", errMsg);
 					request.setAttribute("result", CommonConstant.ERROR);
 					return CommonConstant.ERROR;
+					
 				}
 				
-				//If RoleTypeId is PersonRole ,partyId is stored in session
-				if (UtilValidate.isNotEmpty(roleTypeGV)) {
-					String partyRole = roleTypeGV.getString(CommonConstant.ROLE_TYPE_ID);
-					request.setAttribute("partyRole", partyRole);
-					if (partyRole.equals("PERSON_ROLE")) {
-						HttpSession session = request.getSession();
-						session.setAttribute(CommonConstant.PARTY_ID, partyId);
+				//Checking roleTypeId of Logged in Party is PERSON_ROLE or ADMIN
+				String partyRoleTypeId =null;
+				String personRole =null;
+				String admin =null;				
+				if (UtilValidate.isNotEmpty(roleTypeList)) {					
+					for(GenericValue roleType:roleTypeList) {
+						partyRoleTypeId = roleType.getString(CommonConstant.ROLE_TYPE_ID);
+						if(CommonConstant.PERSON_ROLE.equals(partyRoleTypeId)) {
+							personRole = partyRoleTypeId;
+						}
+						else if(CommonConstant.ADMIN.equals(partyRoleTypeId)) {
+							admin = partyRoleTypeId;
+						}	
 					}
+				}else {
+					String errMsg = "retrieved RoleTypeId List  from UserMaster Entity is null or empty in " + module;
+					request.setAttribute("_ERROR_MESSAGE_", errMsg);
+					request.setAttribute("result", CommonConstant.ERROR);
+					return CommonConstant.ERROR;
+				}
+				
+				//Storing partyRoleType 
+				if(UtilValidate.isNotEmpty(personRole)&&UtilValidate.isNotEmpty(admin)) {
+					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, "both");
+				}
+				else if(UtilValidate.isNotEmpty(personRole)) {
+					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, personRole);
+				}
+				else if(UtilValidate.isNotEmpty(admin)) {
+					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, admin);
+				}else {
+					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, "others");
 				}
 			}
 
@@ -101,7 +128,7 @@ public class OnlineExamEvents {
 	}
 
 	
-	//On user regiseration party,Person,UserLogin and PartyRole Records are created
+	//On user registering  party,Person,UserLogin and PartyRole Records are created
 	public static String registerPersonAndUserLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");

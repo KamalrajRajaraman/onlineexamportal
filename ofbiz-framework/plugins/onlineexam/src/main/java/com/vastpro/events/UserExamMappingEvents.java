@@ -92,8 +92,7 @@ public class UserExamMappingEvents {
 		
 		//If the partyId didn't came as both parameter and attribute then take it from the session
 		if(UtilValidate.isEmpty(partyId)) {
-			partyId = (String) request.getSession().getAttribute(CommonConstant.PARTY_ID);
-			
+			partyId = userLogin.getString(CommonConstant.PARTY_ID);			
 		}
 		
 		//create a map with partyId, userLogin object

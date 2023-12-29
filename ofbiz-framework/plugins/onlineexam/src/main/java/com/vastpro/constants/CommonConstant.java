@@ -1,20 +1,36 @@
 package com.vastpro.constants;
 
+/**
+ * CommonContanst Interface contains all commonly used String Objects.
+ * Note:
+ * Any variable declared inside interface are by default public ,static and final
+ * 
+ */
 public interface CommonConstant {
 	
 	//Common Ofbiz constants
 	public static final String SUCCESS = "success";
 	public static final String ERROR = "error";
-	public static final String USER_LOGIN="userLogin";
 	public static final String RESPONSE_MESSAGE="responseMessage";
 	public static final String USER_LOGIN_ID="userLoginId";
 	public static final String PARTY_AND_USER_LOGIN ="PartyAndUserLogin";
 	
+	
+	//Session Common Attribute 
+	public static final String USER_LOGIN="userLogin";
+	
+	//Request Common Attribute
+	public static final String DELEGATOR="delegator";
+	
 	//Party Entity Constant 
 	public static final String PARTY_ID = "partyId";
+	public static final String PARTY_ROLE ="partyRole";
+	public static final String PERSON_ROLE ="PERSON_ROLE";
+	public static final String ADMIN ="ADMIN";
 	
 	
-	//User Login Entity
+	
+	//UserLogin Entity	
 	public static final String USERNAME="USERNAME";
 	public static final String PASSWORD="PASSWORD";
 	
@@ -103,12 +119,13 @@ public interface CommonConstant {
 	
 	
 	//UserAttemptAnswerMaster
-	
-
 	public static final String SEQUENCE_NUM = "sequenceNum"; 
 	public static final String SUBMITTED_ANSWER ="submittedAnswer";
-	public static final String IS_FLAGGED ="isFlagged";
-	
+	public static final String IS_FLAGGED ="isFlagged";	
 	public static final String CREATE_EXAM="createExam";
+	
+	
+	//constant 
+	public static final String PARTY_ROLE_TYPE_ID="partyRoleTypeId";
 	
 }
