@@ -83,8 +83,7 @@ public class UserExamMappingEvents {
 		}
 		
 		if(UtilValidate.isEmpty(partyId)) {
-			partyId = (String) request.getSession().getAttribute(CommonConstant.PARTY_ID);
-			
+			partyId = userLogin.getString(CommonConstant.PARTY_ID);			
 		}
 		
 		Map<String, Object> findExamContext = new HashMap<>();
