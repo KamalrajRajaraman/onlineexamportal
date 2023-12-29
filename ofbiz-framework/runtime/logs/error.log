@@ -1,0 +1,456 @@
+2023-12-29 10:10:16,277 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [DIFFICULTY_LEVEL] of table [public.QUESTION_MASTER] of entity [QuestionMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [IS_FLAGGED] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [NO_OF_QUESTIONS] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_WRONG] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_CORRECT] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,282 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [CORRECT_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,283 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,283 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:16,283 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [MAX_SPLIT_ATTEMPTS] of table [public.USER_EXAM_MAPPING_MASTER] of entity [UserExamMappingMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 10:10:17,884 |kJoinPool-1-worker-2 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:10:17,886 |kJoinPool-1-worker-2 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:10:18,365 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:10:18,367 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:10:36,974 |main                 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:11:41,893 |jsse-nio-8443-exec-7 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 10:12:05,621 |jsse-nio-8443-exec-7 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:37:07,965 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [DIFFICULTY_LEVEL] of table [public.QUESTION_MASTER] of entity [QuestionMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [IS_FLAGGED] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [NO_OF_QUESTIONS] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_WRONG] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_CORRECT] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [CORRECT_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,973 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,974 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:07,974 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [MAX_SPLIT_ATTEMPTS] of table [public.USER_EXAM_MAPPING_MASTER] of entity [UserExamMappingMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:37:10,910 |kJoinPool-1-worker-5 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:37:10,913 |kJoinPool-1-worker-5 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:37:11,507 |kJoinPool-1-worker-3 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:37:11,509 |kJoinPool-1-worker-3 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:37:37,294 |main                 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:38:07,059 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:38:31,374 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:39:53,025 |jsse-nio-8443-exec-5 |JavaEventHandler              |E| null
+org.apache.ofbiz.entity.transaction.GenericTransactionException: Roll back error (with no rollbackOnly cause found), could not commit transaction, was rolled back instead: java.lang.Exception: Transaction has timed out (Transaction has timed out)
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:279) ~[main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:233) ~[main/:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:105) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doPost(ControlServlet.java:81) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+Caused by: java.lang.Exception: Transaction has timed out
+	at org.apache.geronimo.transaction.manager.TransactionImpl.commit(TransactionImpl.java:266) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.geronimo.transaction.manager.TransactionManagerImpl.commit(TransactionManagerImpl.java:263) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:250) ~[main/:?]
+	... 42 more
+2023-12-29 14:39:53,041 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:40:14,623 |jsse-nio-8443-exec-9 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:40:48,189 |jsse-nio-8443-exec-9 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:40:48,339 |sse-nio-8443-exec-10 |ServiceDispatcher             |E| Incoming context (in runSync : showExamsForPartyId) does not match expected requirements
+org.apache.ofbiz.service.ServiceValidationException: The following required parameter is missing: partyId
+	at org.apache.ofbiz.service.ModelService.resolveRequiredValues(ModelService.java:1270) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1150) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1120) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:408) [main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:244) [main/:?]
+	at org.apache.ofbiz.service.GenericDispatcherFactory$GenericDispatcher.runSync(GenericDispatcherFactory.java:93) [main/:?]
+	at com.vastpro.events.UserExamMappingEvents.showExamsForPartyId(UserExamMappingEvents.java:95) [main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:85) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doGet(ControlServlet.java:96) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+2023-12-29 14:40:48,354 |sse-nio-8443-exec-10 |UserExamMappingEvents         |E| Failed to execute showExamsForPartyId service
+org.apache.ofbiz.service.ServiceValidationException: The following required parameter is missing: partyId
+	at org.apache.ofbiz.service.ModelService.resolveRequiredValues(ModelService.java:1270) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1150) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1120) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:408) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:244) ~[main/:?]
+	at org.apache.ofbiz.service.GenericDispatcherFactory$GenericDispatcher.runSync(GenericDispatcherFactory.java:93) ~[main/:?]
+	at com.vastpro.events.UserExamMappingEvents.showExamsForPartyId(UserExamMappingEvents.java:95) [main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:85) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doGet(ControlServlet.java:96) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+2023-12-29 14:40:48,356 |sse-nio-8443-exec-10 |TransactionUtil               |E| Rollback Only was set when trying to commit transaction here; throwing rollbackOnly cause exception
+javax.transaction.RollbackException: Unable to commit: transaction marked for rollback
+	at org.apache.geronimo.transaction.manager.TransactionImpl.commit(TransactionImpl.java:272) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.geronimo.transaction.manager.TransactionManagerImpl.commit(TransactionManagerImpl.java:263) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:250) [main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:233) [main/:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:105) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doGet(ControlServlet.java:96) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+Caused by: org.apache.geronimo.transaction.manager.SetRollbackOnlyException: setRollbackOnly() called.  See stacktrace for origin
+	at org.apache.geronimo.transaction.manager.TransactionImpl.setRollbackOnly(TransactionImpl.java:126) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.geronimo.transaction.manager.TransactionManagerImpl.setRollbackOnly(TransactionManagerImpl.java:254) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.setRollbackOnly(TransactionUtil.java:375) ~[main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.rollback(TransactionUtil.java:306) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:556) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:244) ~[main/:?]
+	at org.apache.ofbiz.service.GenericDispatcherFactory$GenericDispatcher.runSync(GenericDispatcherFactory.java:93) ~[main/:?]
+	at com.vastpro.events.UserExamMappingEvents.showExamsForPartyId(UserExamMappingEvents.java:95) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:85) ~[main/:?]
+	... 40 more
+2023-12-29 14:40:48,356 |sse-nio-8443-exec-10 |JavaEventHandler              |E| null
+org.apache.ofbiz.entity.transaction.GenericTransactionException: Roll back error, could not commit transaction, was rolled back instead because of: Service [showExamsForPartyId] threw an unexpected exception/errororg.apache.ofbiz.service.ServiceValidationException: The following required parameter is missing: partyId (The following required parameter is missing: partyId)
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:275) ~[main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:233) ~[main/:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:105) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doGet(ControlServlet.java:96) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+Caused by: org.apache.ofbiz.service.ServiceValidationException: The following required parameter is missing: partyId
+	at org.apache.ofbiz.service.ModelService.resolveRequiredValues(ModelService.java:1270) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1150) ~[main/:?]
+	at org.apache.ofbiz.service.ModelService.validate(ModelService.java:1120) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:408) ~[main/:?]
+	at org.apache.ofbiz.service.ServiceDispatcher.runSync(ServiceDispatcher.java:244) ~[main/:?]
+	at org.apache.ofbiz.service.GenericDispatcherFactory$GenericDispatcher.runSync(GenericDispatcherFactory.java:93) ~[main/:?]
+	at com.vastpro.events.UserExamMappingEvents.showExamsForPartyId(UserExamMappingEvents.java:95) ~[main/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:85) ~[main/:?]
+	... 40 more
+2023-12-29 14:40:48,358 |sse-nio-8443-exec-10 |RequestHandler                |E| Request showExamsForPartyId caused an error with the following message: Failed to execute showExamsForPartyId service : The following required parameter is missing: partyId
+2023-12-29 14:48:51,363 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [DIFFICULTY_LEVEL] of table [public.QUESTION_MASTER] of entity [QuestionMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,366 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,366 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [IS_FLAGGED] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [NO_OF_QUESTIONS] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_WRONG] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_CORRECT] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [CORRECT_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,367 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:51,368 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [MAX_SPLIT_ATTEMPTS] of table [public.USER_EXAM_MAPPING_MASTER] of entity [UserExamMappingMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 14:48:52,318 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:48:52,335 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:49:02,402 |main                 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:49:27,438 |jsse-nio-8443-exec-2 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:49:46,651 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:50:24,840 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 14:50:38,712 |jsse-nio-8443-exec-7 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:27:47,701 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [DIFFICULTY_LEVEL] of table [public.QUESTION_MASTER] of entity [QuestionMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,708 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,709 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [IS_FLAGGED] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,709 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [NO_OF_QUESTIONS] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,710 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_WRONG] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,710 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_CORRECT] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,710 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,711 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [CORRECT_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,711 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,711 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:47,712 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [MAX_SPLIT_ATTEMPTS] of table [public.USER_EXAM_MAPPING_MASTER] of entity [UserExamMappingMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-29 17:27:49,037 |kJoinPool-1-worker-6 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:27:49,040 |kJoinPool-1-worker-6 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:28:00,553 |main                 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:29:31,789 |jsse-nio-8443-exec-8 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:39:47,089 |jsse-nio-8443-exec-1 |JavaEventHandler              |E| null
+org.apache.ofbiz.entity.transaction.GenericTransactionException: Roll back error (with no rollbackOnly cause found), could not commit transaction, was rolled back instead: java.lang.Exception: Transaction has timed out (Transaction has timed out)
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:279) ~[main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:233) ~[main/:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:105) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doPost(ControlServlet.java:81) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+Caused by: java.lang.Exception: Transaction has timed out
+	at org.apache.geronimo.transaction.manager.TransactionImpl.commit(TransactionImpl.java:266) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.geronimo.transaction.manager.TransactionManagerImpl.commit(TransactionManagerImpl.java:263) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:250) ~[main/:?]
+	... 42 more
+2023-12-29 17:39:47,107 |jsse-nio-8443-exec-1 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:40:28,809 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:48:00,252 |jsse-nio-8443-exec-5 |JavaEventHandler              |E| null
+org.apache.ofbiz.entity.transaction.GenericTransactionException: Roll back error (with no rollbackOnly cause found), could not commit transaction, was rolled back instead: java.lang.Exception: Transaction has timed out (Transaction has timed out)
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:279) ~[main/:?]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:233) ~[main/:?]
+	at org.apache.ofbiz.webapp.event.JavaEventHandler.invoke(JavaEventHandler.java:105) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.runEvent(RequestHandler.java:1078) [main/:?]
+	at org.apache.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:678) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.handle(ControlServlet.java:231) [main/:?]
+	at org.apache.ofbiz.webapp.control.ControlServlet.doPost(ControlServlet.java:81) [main/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.SameSiteFilter.doFilter(SameSiteFilter.java:45) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:188) [main/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.ofbiz.webapp.control.ControlFilter.doFilter(ControlFilter.java:167) [main/:?]
+	at javax.servlet.http.HttpFilter.doFilter(HttpFilter.java:53) [tomcat-servlet-api-9.0.82.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71) [log4j-web-2.20.0.jar:2.20.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:670) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) [tomcat-catalina-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.service(StreamProcessor.java:432) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamProcessor.process(StreamProcessor.java:90) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.coyote.http2.StreamRunnable.run(StreamRunnable.java:35) [tomcat-coyote-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util-9.0.82.jar:9.0.82]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util-9.0.82.jar:9.0.82]
+	at java.lang.Thread.run(Thread.java:833) [?:?]
+Caused by: java.lang.Exception: Transaction has timed out
+	at org.apache.geronimo.transaction.manager.TransactionImpl.commit(TransactionImpl.java:266) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.geronimo.transaction.manager.TransactionManagerImpl.commit(TransactionManagerImpl.java:263) ~[geronimo-transaction-3.1.5.jar:3.1.5]
+	at org.apache.ofbiz.entity.transaction.TransactionUtil.commit(TransactionUtil.java:250) ~[main/:?]
+	... 42 more
+2023-12-29 17:48:00,272 |jsse-nio-8443-exec-5 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-29 17:48:31,696 |jsse-nio-8443-exec-8 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
