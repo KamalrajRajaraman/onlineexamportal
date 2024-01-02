@@ -101,19 +101,24 @@ public class ExamMasterEvents {
 		return CommonConstant.SUCCESS;
 
 	}
-
+	
+	//Method to retrieve all the exams from ExamMaster entity
 	public static String findAllExams(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> examList = null;
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 
+		//Creation of a map to send the context to the service 
 		Map<String, Object> findExamContext = new HashMap<>();
 		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);
 
+		//Calling the service which in return provides the list of exams
 		try {
 			examList = dispatcher.runSync("findAllExams", findExamContext);
 			if (ServiceUtil.isSuccess(examList)) {
+				
+				//If the service returns success the list is added to the request
 				request.setAttribute("examList", examList.get("examList"));
 			}
 			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
@@ -128,21 +133,27 @@ public class ExamMasterEvents {
 
 	}
 
+	//Method to find an exam by using examId from ExamMaster entity
 	public static String findExamById(HttpServletRequest request, HttpServletResponse response) {
 		
-
+		//Getting the examId and other required attributed from the request
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
 
+		//Creation of a map to send the context to the service 
 		Map<String, Object> findExamByIdContext = new HashMap<>();
 		findExamByIdContext.put(CommonConstant.USER_LOGIN, userLogin);
 		findExamByIdContext.put(CommonConstant.EXAM_ID, examId);
 		
 		
 		Map<String, Object> findExamByIdResp = null;
+		
+		//Calling the service which in return provides the exam detail for the examId
 		try {
 			findExamByIdResp = dispatcher.runSync("findExamById", findExamByIdContext);
+			
+			//If the service returns success the list is added to the request
 			if (ServiceUtil.isSuccess(findExamByIdResp)) {
 				request.setAttribute("result", findExamByIdResp.get(CommonConstant.RESPONSE_MESSAGE));
 				request.setAttribute("exam", findExamByIdResp.get("exam"));
@@ -161,17 +172,22 @@ public class ExamMasterEvents {
 
 	}
 
+	//Method to delete an exam from ExamMaster entity
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 		
+		//Getting the examId and other required objects from the request
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
 
+		//Creation of a map to send the context to the service 
 		Map<String, Object> deleteExamContext = new HashMap<>();
 		deleteExamContext.put(CommonConstant.USER_LOGIN, userLogin);
 		deleteExamContext.put(CommonConstant.EXAM_ID, examId);
 		
 		Map<String, Object> deleteExamResp = null;
+		
+		//Calling the service which deletes the exam
 		try {
 			deleteExamResp = dispatcher.runSync("deleteExam", deleteExamContext);
 			
@@ -184,7 +200,7 @@ public class ExamMasterEvents {
             return CommonConstant.ERROR;
 
 		}
-		
+		//If the exam is deleted successfully the response is set in request
 		if (ServiceUtil.isSuccess(deleteExamResp)) {
 			request.setAttribute("result", deleteExamResp.get(CommonConstant.RESPONSE_MESSAGE));
 			request.setAttribute("resultMap", deleteExamResp);
@@ -193,7 +209,7 @@ public class ExamMasterEvents {
 		return CommonConstant.SUCCESS;
 	}
 	
-	
+	//Method to retrieve all the exams from ExamMaster entity
 	public static String createUserAttemptMaster(HttpServletRequest request, HttpServletResponse response) {
 		
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -236,7 +252,7 @@ public class ExamMasterEvents {
 		}
 		long attemptNumber = prevAttempt+1;
 		
-		
+		//Map to provide context to the service
 		Map<String, Object> attemptMasterCtx = new HashMap<String, Object>();
 		attemptMasterCtx.put(CommonConstant.USER_LOGIN, userLogin);
 		attemptMasterCtx.put(CommonConstant.EXAM_ID, examId);
@@ -266,6 +282,8 @@ public class ExamMasterEvents {
 					attemptMasterCtx.put(CommonConstant.NO_OF_QUESTIONS, noOfQuestion);
 					Map<String, Object> createUserAttemptMasterResp=null;
 					 try {
+						 
+						 //Call the service to create the entries provided through the map
 						 createUserAttemptMasterResp = dispatcher.runSync("createUserAttemptMaster", attemptMasterCtx);
 					} catch (GenericServiceException e) {
 						
@@ -278,6 +296,8 @@ public class ExamMasterEvents {
 					}
 					 
 					 if(ServiceUtil.isSuccess(createUserAttemptMasterResp)) {
+						 
+						//Converting the Generic value to String
 						 performanceId =  String.valueOf(createUserAttemptMasterResp.get(CommonConstant.PERFORMANCE_ID));
 						 
 						 //findAllExamTopicMappingRecordsByExamId
@@ -290,6 +310,7 @@ public class ExamMasterEvents {
 							 List< Map<String, Object>> topicList = new LinkedList<>();
 							 Map<String, Object> createUserAttemptTopicMasterResp = null;
 							 
+							 //Extracting the records from the Generic value returned by
 							 for(Map<String,Object> examTopicMappingRecord:examTopicMappingRespList) {
 								 String topicId=(String) examTopicMappingRecord.get(CommonConstant.TOPIC_ID);
 								 String topicPassPercentage = (String) examTopicMappingRecord.get(CommonConstant.TOPIC_PASS_PERCENTAGE);
@@ -337,7 +358,7 @@ public class ExamMasterEvents {
 																		
 								}
 								 
-								 //Selecting randamQuestions 
+								 //Selecting random Questions 
 								 List<String> randomQuestions = new LinkedList<>();
 								 
 								 if(ServiceUtil.isSuccess(findQuestionsByTopicIdsResp)){									
