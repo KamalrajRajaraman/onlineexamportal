@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://ofbiz.apache.org/Widget-Form"
+	xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<form name="createEmp" type="single" target="Insert-Emp">
+
+		<auto-fields-service service-name="Insert-Emp" />
+		<field name="deptno">
+
+			<drop-down allow-empty="false" current-description="">
+				<entity-options description="${deptno}"
+					key-field-name="deptno" entity-name="Dept">
+					<entity-order-by field-name="deptno" />
+				</entity-options>
+
+			</drop-down>
+
+		</field>
+
+		<field name="submitButton" title="${uiLabelMap.CommonAdd}">
+			<submit button-type="button" />
+		</field>
+
+	</form>
+
+	<form name="FindOfbizDemo" type="single" target="FindOfbizDemo"
+		default-entity-name="Emp">
+		<field name="noConditionFind">
+			<hidden value="Y" /> <!-- if this isn't there then with all fields empty no query will be done -->
+		</field>
+		<field name="eid" title="${uiLabelMap.eid}">
+			<text-find />
+		</field>
+		<field name="ename" title="${uiLabelMap.ename}">
+			<text-find />
+		</field>
+		<field name="salary" title="${uiLabelMap.salary}">
+			<text-find />
+		</field>
+		<field name="deptno"
+			title="${uiLabelMap.deptno}">
+			<drop-down allow-empty="false" current-description="">
+				<entity-options description="${dname}"
+					key-field-name="deptno" entity-name="Dept">
+					<entity-order-by field-name="dname" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.Search}"
+			widget-style="smallSubmit">
+			<submit button-type="button"
+				image-location="/images/icons/magnifier.png" />
+		</field>
+	</form>
+
+	<form name="ListOfbizDemo" type="list" list-name="listIt"
+		paginate-target="FindOfbizDemo" default-entity-name="Emp"
+		separate-columns="true" odd-row-style="alternate-row"
+		header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
+		<actions>
+			<!-- Preparing search results for user query by using OFBiz stock service 
+				to perform find operations on a single entity or view entity -->
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields"
+					from-field="myOfbizDemoCtx"/>
+				<field-map field-name="entityName" value="Emp" />
+				<field-map field-name="orderBy"
+					from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="eid" title="${uiLabelMap.eid}">
+			<display />
+		</field>
+		<field name="deptno"
+			title="${uiLabelMap.deptno}">
+			<display-entity entity-name="Dept" />
+		</field>
+		<field name="ename" title="${uiLabelMap.ename}"
+			sort-field="true">
+			<display />
+		</field>
+		<field name="salary" title="${uiLabelMap.salary}"
+			sort-field="true">
+			<display />
+		</field>
+	</form>
+
+</forms>

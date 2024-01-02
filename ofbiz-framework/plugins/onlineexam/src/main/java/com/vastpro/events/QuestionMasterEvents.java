@@ -13,11 +13,12 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstant;
-
+//Class containing questionMaster entity related events
 public class QuestionMasterEvents {
 
 	public static final String module = QuestionMasterEvents.class.getName();
 	
+	//Event for creating question in QuestionMaster Entity
 	public static String createQuestion(HttpServletRequest request, HttpServletResponse response) {
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
@@ -39,6 +40,7 @@ public class QuestionMasterEvents {
 		String topicId = (String) request.getAttribute(CommonConstant.TOPIC_ID);
 		String negativeMarkValue = (String) request.getAttribute(CommonConstant.NEGATIVE_MARK_VALUE);
 
+		//creating map with question details and userlogin object
 		Map<String, Object> addQuestionContext = new HashMap<>();
 		addQuestionContext.put(CommonConstant.QUESTION_ID, questionId);
 		addQuestionContext.put(CommonConstant.QUESTION_DETAIL, questionDetail);
@@ -57,11 +59,14 @@ public class QuestionMasterEvents {
 		addQuestionContext.put(CommonConstant.USER_LOGIN, userLogin);
 
 		Map<String, Object> serviceResultMap = null;
+		
+		//calling createQuestion service for creating question
 		try {
 			serviceResultMap = dispatcher.runSync("createQuestion", addQuestionContext);
 			if (ServiceUtil.isSuccess(serviceResultMap)) {
 				request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
 				
+				//created a new map called question and put all question details in that and set in request object
 				Map<String,Object> question = new HashMap<>();
 				question.put(CommonConstant.QUESTION_ID, serviceResultMap.get(CommonConstant.QUESTION_ID));
 				question.put(CommonConstant.QUESTION_DETAIL, serviceResultMap.get(CommonConstant.QUESTION_DETAIL));
@@ -96,18 +101,21 @@ public class QuestionMasterEvents {
 		return CommonConstant.SUCCESS;
 	}
 	
+	//Event for find All questions from QuestionMaster entity
 	public static String findAllQuestions(HttpServletRequest request, HttpServletResponse response) {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		
+		//create a map with userLogin object
 		Map<String, Object> findAllQuestionContext = new HashMap<>();
 		findAllQuestionContext.put(CommonConstant.USER_LOGIN, userLogin);
 		
 		Map<String, Object> serviceResult=null;
+		
+		//calling findAllQuestions 
 		try {
-			
 			serviceResult=dispatcher.runSync("findAllQuestions", findAllQuestionContext);
-			
+		
 		} catch (GenericServiceException e) {
 			
 			Debug.logError(e, "Failed to execute findAllQuestions service", module);
@@ -125,17 +133,19 @@ public class QuestionMasterEvents {
 	}
 	
 	
-	
+	//Event for deleting a question from QuestionMaster entity based on questionId
 	public static String deleteQuestion(HttpServletRequest request, HttpServletResponse response) {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		String questionId = request.getParameter(CommonConstant.QUESTION_ID);
 		
+		//create a map with questionId, userlogin
 		Map<String, Object> deleteQuestionContext = new HashMap<>();
 		deleteQuestionContext.put(CommonConstant.USER_LOGIN, userLogin);
 		deleteQuestionContext.put(CommonConstant.QUESTION_ID,questionId);
 		Map<String,Object> serviceResultMap=null;
-		 try {
+		//calling deleteQuestion service for delete a question
+		try {
 			 serviceResultMap = dispatcher.runSync("deleteQuestion", deleteQuestionContext);
 			 if (ServiceUtil.isSuccess(serviceResultMap)) {
 					request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));

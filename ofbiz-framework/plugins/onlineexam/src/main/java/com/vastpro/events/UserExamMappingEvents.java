@@ -16,16 +16,18 @@ import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstant;
 
+//Event class for UserExamMappingMaster operation
 public class UserExamMappingEvents {
 	public static final String module = UserExamMappingEvents.class.getName();
 	
-
+	//Method for create a record in UserExamMappingMaster entity
 	public static String createUserExamMappingRecord(HttpServletRequest request, HttpServletResponse response) {
 		
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		Map<String, Object> serviceResultMap = null;
 		
+		//Getting all details from the request as a attribute
 		String partyId = (String) request.getAttribute(CommonConstant.PARTY_ID);
 		String examId = (String) request.getAttribute(CommonConstant.EXAM_ID);
 		String allowedAttempts = (String) request.getAttribute(CommonConstant.ALLOWED_ATTEMPTS);
@@ -37,6 +39,7 @@ public class UserExamMappingEvents {
 		String canSeeDetailedResults = (String) request.getAttribute(CommonConstant.CAN_SEE_DETAILED_RESULTS);
 		String maxSplitAttempts = (String) request.getAttribute(CommonConstant.MAX_SPLIT_ATTEMPTS);
 
+		//Creating a map with all the details and userLogin object
 		Map<String, Object> createUserExamMappingRecordMap = UtilMisc.toMap(
 				CommonConstant.PARTY_ID, partyId ,
 				CommonConstant.EXAM_ID, examId,
@@ -50,11 +53,13 @@ public class UserExamMappingEvents {
 				CommonConstant.MAX_SPLIT_ATTEMPTS, maxSplitAttempts, 
 				CommonConstant.USER_LOGIN, userLogin);
 
+		//calling createUserExamMappingRecord service 
 		try {
 			serviceResultMap = dispatcher.runSync("createUserExamMappingRecord", createUserExamMappingRecordMap);
 			Debug.logInfo("=======Creating UserExamMappingMaster record in event using service addExamToUser=========",
 					module);
 		} catch (GenericServiceException e) {
+			//If any exception occur in service, set error as a result in request object
 			Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
 			String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
 			request.setAttribute(CommonConstant.ERROR, errMsg);
@@ -62,13 +67,14 @@ public class UserExamMappingEvents {
 			return CommonConstant.ERROR;
 		}
 		
+		//checking if the createUserExamMappingRecord service is success or not
 		if (ServiceUtil.isSuccess(createUserExamMappingRecordMap)) {
 			request.setAttribute("createUserExamMappingRecordMap", serviceResultMap);
 		}
 		return CommonConstant.SUCCESS;
 	}
 	
-
+	//Event for showing exams for the particular user based on partyId
 	public static String showExamsForPartyId(HttpServletRequest request, HttpServletResponse response) {
 		
 		Map<String, Object> examResult = null;
@@ -76,21 +82,25 @@ public class UserExamMappingEvents {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		
+		//checking partyId comes as a parameter
 		String partyId = request.getParameter(CommonConstant.PARTY_ID);
 		
+		//checking partyId comes as a attriubute
 		if(UtilValidate.isEmpty(partyId)) {
 			partyId = (String) request.getAttribute(CommonConstant.PARTY_ID);
 		}
 		
+		//If the partyId didn't came as both parameter and attribute then take it from the session
 		if(UtilValidate.isEmpty(partyId)) {
-			partyId = (String) request.getSession().getAttribute(CommonConstant.PARTY_ID);
-			
+			partyId = userLogin.getString(CommonConstant.PARTY_ID);			
 		}
 		
+		//create a map with partyId, userLogin object
 		Map<String, Object> findExamContext = new HashMap<>();
 		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);
 		findExamContext.put(CommonConstant.PARTY_ID, partyId);
 
+		//calling showExamsForPartyId service for showing exams
 		try {
 			examResult = dispatcher.runSync("showExamsForPartyId", findExamContext);
 			if (ServiceUtil.isSuccess(examResult)) {
@@ -98,7 +108,7 @@ public class UserExamMappingEvents {
 			}
 			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
 		} catch (GenericServiceException e) {
-			
+			//If any exception occur in service, set error as a result in request object
 			Debug.logError(e, "Failed to execute showExamsForPartyId service", module);
 			String errMsg = "Failed to execute showExamsForPartyId service : " + e.getMessage();
 			request.setAttribute("_ERROR_MESSAGE_", errMsg);

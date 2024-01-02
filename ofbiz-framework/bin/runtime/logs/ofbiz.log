@@ -1,0 +1,1088 @@
+2023-12-28 16:56:04,542 |main                 |ComponentContainer            |I| Auto-Loading component directory : [D:\onlineexamportal\ofbiz-framework\framework]
+2023-12-28 16:56:04,739 |main                 |ComponentContainer            |I| Auto-Loading component directory : [D:\onlineexamportal\ofbiz-framework\themes]
+2023-12-28 16:56:04,800 |main                 |ComponentContainer            |I| Auto-Loading component directory : [D:\onlineexamportal\ofbiz-framework\applications]
+2023-12-28 16:56:04,912 |main                 |ComponentContainer            |I| Auto-Loading component directory : [D:\onlineexamportal\ofbiz-framework\plugins]
+2023-12-28 16:56:05,111 |main                 |ComponentContainer            |I| All components loaded
+2023-12-28 16:56:05,112 |main                 |ContainerLoader               |I| [Startup] Loading containers...
+2023-12-28 16:56:05,117 |main                 |ContainerLoader               |I| Loading container: admin-container
+2023-12-28 16:56:05,124 |main                 |ContainerLoader               |I| Loaded container: admin-container
+2023-12-28 16:56:05,124 |main                 |ContainerLoader               |I| Loading container: delegator-container
+2023-12-28 16:56:05,125 |main                 |ContainerLoader               |I| Loaded container: delegator-container
+2023-12-28 16:56:05,125 |main                 |ContainerLoader               |I| Loading container: service-container
+2023-12-28 16:56:05,127 |main                 |ContainerLoader               |I| Loaded container: service-container
+2023-12-28 16:56:05,127 |main                 |ContainerLoader               |I| Loading container: catalina-container
+2023-12-28 16:56:05,383 |main                 |CatalinaContainer             |I| Tomcat Connector["ajp-nio-127.0.0.1-8009"]: set scheme=http
+2023-12-28 16:56:05,388 |main                 |CatalinaContainer             |I| Tomcat Connector["ajp-nio-127.0.0.1-8009"]: set secure=false
+2023-12-28 16:56:05,393 |main                 |CatalinaContainer             |I| Tomcat Connector["ajp-nio-127.0.0.1-8009"]: set URIEncoding=UTF-8
+2023-12-28 16:56:05,393 |main                 |CatalinaContainer             |I| Tomcat Connector["ajp-nio-127.0.0.1-8009"]: set xpoweredBy=false
+2023-12-28 16:56:05,393 |main                 |CatalinaContainer             |I| Tomcat Connector["ajp-nio-127.0.0.1-8009"]: set secretRequired=false
+2023-12-28 16:56:05,403 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: enabled HTTP/2
+2023-12-28 16:56:05,404 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set scheme=http
+2023-12-28 16:56:05,404 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set secure=false
+2023-12-28 16:56:05,405 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set URIEncoding=UTF-8
+2023-12-28 16:56:05,405 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set xpoweredBy=false
+2023-12-28 16:56:05,405 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set compression=on
+2023-12-28 16:56:05,406 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8080"]: set compressibleMimeType=text/html,text/xml,text/plain,text/css,application/javascript,application/json
+2023-12-28 16:56:05,406 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8443"]: enabled HTTP/2
+2023-12-28 16:56:05,406 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8443"]: set scheme=https
+2023-12-28 16:56:05,406 |main                 |CatalinaContainer             |I| Tomcat Connector["http-nio-8443"]: set secure=true
+2023-12-28 16:56:05,408 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set SSLEnabled=true
+2023-12-28 16:56:05,408 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set URIEncoding=UTF-8
+2023-12-28 16:56:05,409 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set xpoweredBy=false
+2023-12-28 16:56:05,409 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set compression=on
+2023-12-28 16:56:05,409 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set compressibleMimeType=text/html,text/xml,text/plain,text/css,application/javascript,application/json
+2023-12-28 16:56:05,409 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"]: set sslImplementationName=org.apache.tomcat.util.net.jsse.JSSEImplementation
+2023-12-28 16:56:05,416 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"] _default_: set keyManagerAlgorithm=SunX509
+2023-12-28 16:56:05,420 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"] _default_ certificate: set certificateKeystoreFile=framework/base/config/ofbizssl.jks
+2023-12-28 16:56:05,420 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"] _default_ certificate: set certificateKeystoreType=JKS
+2023-12-28 16:56:05,421 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"] _default_ certificate: set certificateKeyAlias=ofbiz
+2023-12-28 16:56:05,421 |main                 |CatalinaContainer             |I| Tomcat Connector["https-jsse-nio-8443"] _default_ certificate: set certificateKeyPassword
+2023-12-28 16:56:05,428 |main                 |CatalinaContainer             |I| Creating context [webpos]
+2023-12-28 16:56:05,429 |main                 |CatalinaContainer             |I| Creating context [solr]
+2023-12-28 16:56:05,429 |main                 |CatalinaContainer             |I| Creating context [scrumdemo]
+2023-12-28 16:56:05,429 |main                 |CatalinaContainer             |I| Creating context [scrum]
+2023-12-28 16:56:05,430 |main                 |CatalinaContainer             |I| Creating context [api-docs]
+2023-12-28 16:56:05,430 |main                 |CatalinaContainer             |I| Creating context [rest-api]
+2023-12-28 16:56:05,430 |main                 |CatalinaContainer             |I| Creating context [projectmgr]
+2023-12-28 16:56:05,430 |main                 |CatalinaContainer             |I| Creating context [pricatdemo]
+2023-12-28 16:56:05,430 |main                 |CatalinaContainer             |I| Creating context [pricat]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [passport]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [onlineexam]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [ofbizDemo]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [myportal]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [myOfizDemo]
+2023-12-28 16:56:05,431 |main                 |CatalinaContainer             |I| Creating context [multiflex]
+2023-12-28 16:56:05,432 |main                 |CatalinaContainer             |I| Creating context [msggateway]
+2023-12-28 16:56:05,432 |main                 |CatalinaContainer             |I| Creating context [content]
+2023-12-28 16:56:05,432 |main                 |CatalinaContainer             |I| Creating context [firstdata]
+2023-12-28 16:56:05,432 |main                 |CatalinaContainer             |I| Creating context [exampleext]
+2023-12-28 16:56:05,432 |main                 |CatalinaContainer             |I| Creating context [example]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [ecomseo]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [ecommerce]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [ebay]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [cmssite]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [bi]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [ismgr]
+2023-12-28 16:56:05,433 |main                 |CatalinaContainer             |I| Creating context [assetmaint]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [ordermgr-js]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [ofbizsetup]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [SalesForceAutomation]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [marketing]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [order]
+2023-12-28 16:56:05,434 |main                 |CatalinaContainer             |I| Creating context [humanres]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [ap]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [ar]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [accounting]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [manufacturing]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [facility]
+2023-12-28 16:56:05,435 |main                 |CatalinaContainer             |I| Creating context [catalog]
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Creating context [ical]
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Creating context [workeffort]
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Creating context [contentimages]
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Duplicate webapp mount (overridding); not loading : content / D:\onlineexamportal\ofbiz-framework\applications\content\webapp\content
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Creating context [party]
+2023-12-28 16:56:05,436 |main                 |CatalinaContainer             |I| Creating context [tomahawk]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [rainbowstone]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [helveticus]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [flatgrey]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [images]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [common-theme]
+2023-12-28 16:56:05,437 |main                 |CatalinaContainer             |I| Creating context [bluelight]
+2023-12-28 16:56:05,438 |main                 |CatalinaContainer             |I| Creating context [webtools]
+2023-12-28 16:56:05,722 |catalina-startup-4   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/scrum])
+2023-12-28 16:56:05,722 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/pricatdemo])
+2023-12-28 16:56:05,722 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/scrumdemo])
+2023-12-28 16:56:05,722 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/solr])
+2023-12-28 16:56:05,722 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/docs])
+2023-12-28 16:56:05,722 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/webpos])
+2023-12-28 16:56:05,722 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/projectmgr])
+2023-12-28 16:56:05,722 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/rest])
+2023-12-28 16:56:05,806 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/passport])
+2023-12-28 16:56:05,817 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/onlineexam])
+2023-12-28 16:56:05,825 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/msggateway])
+2023-12-28 16:56:05,833 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/myOfizDemo])
+2023-12-28 16:56:05,836 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/multiflex])
+2023-12-28 16:56:05,846 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ofbizDemo])
+2023-12-28 16:56:05,852 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/pricat])
+2023-12-28 16:56:05,864 |catalina-startup-4   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/myportal])
+2023-12-28 16:56:05,880 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/example])
+2023-12-28 16:56:05,887 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/content])
+2023-12-28 16:56:05,893 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ecommerce])
+2023-12-28 16:56:05,890 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/firstdata])
+2023-12-28 16:56:05,903 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ebay])
+2023-12-28 16:56:05,908 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ecomseo])
+2023-12-28 16:56:05,937 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/exampleext])
+2023-12-28 16:56:05,957 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ismgr])
+2023-12-28 16:56:05,957 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/assetmaint])
+2023-12-28 16:56:05,960 |catalina-startup-4   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/cmssite])
+2023-12-28 16:56:05,970 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ordermgr-js])
+2023-12-28 16:56:05,974 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/bi])
+2023-12-28 16:56:06,003 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/marketing])
+2023-12-28 16:56:06,005 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/humanres])
+2023-12-28 16:56:06,012 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/sfa])
+2023-12-28 16:56:06,013 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ordermgr])
+2023-12-28 16:56:06,041 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ofbizsetup])
+2023-12-28 16:56:06,063 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/manufacturing])
+2023-12-28 16:56:06,067 |catalina-startup-4   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ap])
+2023-12-28 16:56:06,067 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/facility])
+2023-12-28 16:56:06,071 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/ar])
+2023-12-28 16:56:06,090 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/iCalendar])
+2023-12-28 16:56:06,097 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/catalog])
+2023-12-28 16:56:06,114 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/rainbowstone])
+2023-12-28 16:56:06,127 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/accounting])
+2023-12-28 16:56:06,141 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/workeffort])
+2023-12-28 16:56:06,146 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/partymgr])
+2023-12-28 16:56:06,154 |catalina-startup-6   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/contentimages])
+2023-12-28 16:56:06,157 |catalina-startup-4   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/tomahawk])
+2023-12-28 16:56:06,170 |catalina-startup-1   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/images])
+2023-12-28 16:56:06,174 |catalina-startup-2   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/bluelight])
+2023-12-28 16:56:06,177 |catalina-startup-7   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/helveticus])
+2023-12-28 16:56:06,177 |catalina-startup-5   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/flatgrey])
+2023-12-28 16:56:06,186 |catalina-startup-8   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/common])
+2023-12-28 16:56:06,195 |catalina-startup-3   |CatalinaContainer             |I| host[StandardEngine[default-server].StandardHost[0.0.0.0]].addChild(StandardEngine[default-server].StandardHost[0.0.0.0].StandardContext[/webtools])
+2023-12-28 16:56:06,196 |main                 |ContainerLoader               |I| Loaded container: catalina-container
+2023-12-28 16:56:06,196 |main                 |ContainerLoader               |I| [Startup] Starting containers...
+2023-12-28 16:56:06,196 |main                 |ContainerLoader               |I| Starting container component-container
+2023-12-28 16:56:06,197 |main                 |ContainerLoader               |I| Started container component-container
+2023-12-28 16:56:06,197 |main                 |ContainerLoader               |I| Starting container admin-container
+2023-12-28 16:56:06,197 |main                 |ContainerLoader               |I| Started container admin-container
+2023-12-28 16:56:06,197 |main                 |ContainerLoader               |I| Starting container delegator-container
+2023-12-28 16:56:06,203 |delegator-startup-1  |DelegatorFactoryImpl          |I| Creating new delegator [default] (delegator-startup-1)
+2023-12-28 16:56:06,839 |delegator-startup-1  |ModelViewEntity               |W| [TestingCryptoRawView]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: rawEncryptedValue
+2023-12-28 16:56:06,839 |delegator-startup-1  |ModelViewEntity               |W| [TestingCryptoRawView]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: rawSaltedEncryptedValue
+2023-12-28 16:56:06,901 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemQuantityReportGroupByItem]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOrdered
+2023-12-28 16:56:06,902 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemQuantityReportGroupByItem]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOpen
+2023-12-28 16:56:06,902 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemQuantityReportGroupByProduct]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOrdered
+2023-12-28 16:56:06,902 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemQuantityReportGroupByProduct]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOpen
+2023-12-28 16:56:06,904 |delegator-startup-1  |ModelViewEntity               |W| [OrderReportSalesGroupByProduct]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOrdered
+2023-12-28 16:56:06,904 |delegator-startup-1  |ModelViewEntity               |W| [OrderReportSalesGroupByProduct]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: amount
+2023-12-28 16:56:06,906 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemAndShipGrpInvResAndItemSum]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: quantityOrdered
+2023-12-28 16:56:06,906 |delegator-startup-1  |ModelViewEntity               |W| [OrderItemAndShipGrpInvResAndItemSum]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: totQuantityAvailable
+2023-12-28 16:56:06,909 |delegator-startup-1  |ModelViewEntity               |W| [ExampleStatusDetail]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: statusDelay
+2023-12-28 16:56:06,910 |delegator-startup-1  |ModelViewEntity               |I| [ExamDetails]: Throwing out field alias in view entity because one already exists with the alias name [negativeMarkValue] and field name [QM(QuestionMaster).negativeMarkValue], existing field name is [EM.negativeMarkValue]
+2023-12-28 16:56:06,913 |delegator-startup-1  |ModelViewEntity               |W| [ProjectPhaseTaskActualRatedHoursView]: Conversion for complex-alias needs to be implemented for cache and in-memory eval stuff to work correctly, will not work for alias: totalRatedHours
+2023-12-28 16:56:06,985 |delegator-startup-1  |ModelReader                   |I| Finished loading entities; #Entities=892 #ViewEntities=321 #Fields=9378 #Relationships=3022 #AutoRelationships=2221
+2023-12-28 16:56:06,992 |delegator-startup-1  |GenericDelegator              |I| Doing entity definition check...
+2023-12-28 16:56:06,995 |delegator-startup-1  |ModelEntityChecker            |I| [initReservedWords] array length = 1025
+2023-12-28 16:56:07,056 |delegator-startup-1  |GenericDelegator              |W| =-=-=-=-= Found 1 warnings when checking the entity definitions:
+2023-12-28 16:56:07,056 |delegator-startup-1  |GenericDelegator              |W| [FieldNameGT30] Column name [CORRECT_QUESTIONS_IN_THIS_TOPIC] of entity UserAttemptTopicMaster is longer than 30 characters.
+2023-12-28 16:56:07,058 |OFBiz-batch-3        |GenericDelegator              |I| Delegator "default" initializing helper "localpostgrestenant" for entity group "org.apache.ofbiz.tenant".
+2023-12-28 16:56:07,058 |OFBiz-batch-2        |GenericDelegator              |I| Delegator "default" initializing helper "localpostgres" for entity group "org.apache.ofbiz".
+2023-12-28 16:56:07,058 |OFBiz-batch-1        |GenericDelegator              |I| Delegator "default" initializing helper "localpostgresolap" for entity group "org.apache.ofbiz.olap".
+2023-12-28 16:56:07,061 |OFBiz-batch-2        |GenericDelegator              |I| Doing database check as requested in entityengine.xml with addMissing=true
+2023-12-28 16:56:07,061 |OFBiz-batch-3        |GenericDelegator              |I| Doing database check as requested in entityengine.xml with addMissing=true
+2023-12-28 16:56:07,061 |OFBiz-batch-1        |GenericDelegator              |I| Doing database check as requested in entityengine.xml with addMissing=true
+2023-12-28 16:56:07,295 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Product Name is PostgreSQL
+2023-12-28 16:56:07,295 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Product Name is PostgreSQL
+2023-12-28 16:56:07,295 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Product Name is PostgreSQL
+2023-12-28 16:56:07,295 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Product Version is 12.16
+2023-12-28 16:56:07,295 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Product Version is 12.16
+2023-12-28 16:56:07,295 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Product Version is 12.16
+2023-12-28 16:56:07,295 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Driver Name is PostgreSQL JDBC Driver
+2023-12-28 16:56:07,295 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Driver Name is PostgreSQL JDBC Driver
+2023-12-28 16:56:07,295 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Driver Name is PostgreSQL JDBC Driver
+2023-12-28 16:56:07,296 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Driver Version is 42.6.0
+2023-12-28 16:56:07,296 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Driver Version is 42.6.0
+2023-12-28 16:56:07,296 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Driver Version is 42.6.0
+2023-12-28 16:56:07,299 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Driver JDBC Version is 4.2
+2023-12-28 16:56:07,299 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Driver JDBC Version is 4.2
+2023-12-28 16:56:07,299 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Driver JDBC Version is 4.2
+2023-12-28 16:56:07,299 |OFBiz-batch-2        |DatabaseUtil                  |I| Database Setting/Support Information (those with a * should be true):
+2023-12-28 16:56:07,299 |OFBiz-batch-1        |DatabaseUtil                  |I| Database Setting/Support Information (those with a * should be true):
+2023-12-28 16:56:07,299 |OFBiz-batch-3        |DatabaseUtil                  |I| Database Setting/Support Information (those with a * should be true):
+2023-12-28 16:56:07,300 |OFBiz-batch-1        |DatabaseUtil                  |I| - supports transactions     [true]*
+2023-12-28 16:56:07,300 |OFBiz-batch-2        |DatabaseUtil                  |I| - supports transactions     [true]*
+2023-12-28 16:56:07,300 |OFBiz-batch-3        |DatabaseUtil                  |I| - supports transactions     [true]*
+2023-12-28 16:56:07,300 |OFBiz-batch-1        |DatabaseUtil                  |I| - isolation None            [false]
+2023-12-28 16:56:07,300 |OFBiz-batch-2        |DatabaseUtil                  |I| - isolation None            [false]
+2023-12-28 16:56:07,300 |OFBiz-batch-1        |DatabaseUtil                  |I| - isolation ReadCommitted   [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-2        |DatabaseUtil                  |I| - isolation ReadCommitted   [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-3        |DatabaseUtil                  |I| - isolation None            [false]
+2023-12-28 16:56:07,300 |OFBiz-batch-2        |DatabaseUtil                  |I| - isolation ReadUncommitted [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-1        |DatabaseUtil                  |I| - isolation ReadUncommitted [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-1        |DatabaseUtil                  |I| - isolation RepeatableRead  [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-2        |DatabaseUtil                  |I| - isolation RepeatableRead  [true]
+2023-12-28 16:56:07,300 |OFBiz-batch-3        |DatabaseUtil                  |I| - isolation ReadCommitted   [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - isolation Serializable    [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - isolation Serializable    [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - isolation ReadUncommitted [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - forward only type         [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - forward only type         [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - isolation RepeatableRead  [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - isolation Serializable    [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - scroll sensitive type     [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - scroll sensitive type     [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - forward only type         [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - scroll insensitive type   [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - scroll insensitive type   [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - scroll sensitive type     [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - is case sensitive         [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - is case sensitive         [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - scroll insensitive type   [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - stores LowerCase          [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - stores LowerCase          [true]
+2023-12-28 16:56:07,301 |OFBiz-batch-3        |DatabaseUtil                  |I| - is case sensitive         [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-2        |DatabaseUtil                  |I| - stores MixedCase          [false]
+2023-12-28 16:56:07,301 |OFBiz-batch-1        |DatabaseUtil                  |I| - stores MixedCase          [false]
+2023-12-28 16:56:07,302 |OFBiz-batch-3        |DatabaseUtil                  |I| - stores LowerCase          [true]
+2023-12-28 16:56:07,302 |OFBiz-batch-2        |DatabaseUtil                  |I| - stores UpperCase          [false]
+2023-12-28 16:56:07,302 |OFBiz-batch-1        |DatabaseUtil                  |I| - stores UpperCase          [false]
+2023-12-28 16:56:07,302 |OFBiz-batch-3        |DatabaseUtil                  |I| - stores MixedCase          [false]
+2023-12-28 16:56:07,302 |OFBiz-batch-3        |DatabaseUtil                  |I| - stores UpperCase          [false]
+2023-12-28 16:56:07,307 |OFBiz-batch-2        |DatabaseUtil                  |I| - max table name length     [63]
+2023-12-28 16:56:07,307 |OFBiz-batch-3        |DatabaseUtil                  |I| - max table name length     [63]
+2023-12-28 16:56:07,308 |OFBiz-batch-2        |DatabaseUtil                  |I| - max column name length    [63]
+2023-12-28 16:56:07,308 |OFBiz-batch-3        |DatabaseUtil                  |I| - max column name length    [63]
+2023-12-28 16:56:07,308 |OFBiz-batch-2        |DatabaseUtil                  |I| - concurrent connections    [8192]
+2023-12-28 16:56:07,308 |OFBiz-batch-3        |DatabaseUtil                  |I| - concurrent connections    [8192]
+2023-12-28 16:56:07,308 |OFBiz-batch-2        |DatabaseUtil                  |I| - concurrent statements     [0]
+2023-12-28 16:56:07,308 |OFBiz-batch-3        |DatabaseUtil                  |I| - concurrent statements     [0]
+2023-12-28 16:56:07,308 |OFBiz-batch-3        |DatabaseUtil                  |I| - ANSI SQL92 Entry          [true]
+2023-12-28 16:56:07,308 |OFBiz-batch-2        |DatabaseUtil                  |I| - ANSI SQL92 Entry          [true]
+2023-12-28 16:56:07,308 |OFBiz-batch-2        |DatabaseUtil                  |I| - ANSI SQL92 Intermediate   [false]
+2023-12-28 16:56:07,308 |OFBiz-batch-3        |DatabaseUtil                  |I| - ANSI SQL92 Intermediate   [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-3        |DatabaseUtil                  |I| - ANSI SQL92 Full           [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-1        |DatabaseUtil                  |I| - max table name length     [63]
+2023-12-28 16:56:07,309 |OFBiz-batch-1        |DatabaseUtil                  |I| - max column name length    [63]
+2023-12-28 16:56:07,309 |OFBiz-batch-3        |DatabaseUtil                  |I| - ODBC SQL Grammar Core     [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-2        |DatabaseUtil                  |I| - ANSI SQL92 Full           [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-1        |DatabaseUtil                  |I| - concurrent connections    [8192]
+2023-12-28 16:56:07,309 |OFBiz-batch-3        |DatabaseUtil                  |I| - ODBC SQL Grammar Extended [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-2        |DatabaseUtil                  |I| - ODBC SQL Grammar Core     [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-3        |DatabaseUtil                  |I| - ODBC SQL Grammar Minimum  [true]
+2023-12-28 16:56:07,309 |OFBiz-batch-1        |DatabaseUtil                  |I| - concurrent statements     [0]
+2023-12-28 16:56:07,309 |OFBiz-batch-2        |DatabaseUtil                  |I| - ODBC SQL Grammar Extended [false]
+2023-12-28 16:56:07,309 |OFBiz-batch-3        |DatabaseUtil                  |I| - outer joins               [true]*
+2023-12-28 16:56:07,309 |OFBiz-batch-1        |DatabaseUtil                  |I| - ANSI SQL92 Entry          [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - ODBC SQL Grammar Minimum  [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - ANSI SQL92 Intermediate   [false]
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - limited outer joins       [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - outer joins               [true]*
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - ANSI SQL92 Full           [false]
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - full outer joins          [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - ODBC SQL Grammar Core     [false]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - limited outer joins       [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - group by                  [true]*
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - ODBC SQL Grammar Extended [false]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - full outer joins          [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - group by not in select    [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - ODBC SQL Grammar Minimum  [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - column aliasing           [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - group by                  [true]*
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - outer joins               [true]*
+2023-12-28 16:56:07,310 |OFBiz-batch-3        |DatabaseUtil                  |I| - order by not in select    [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-2        |DatabaseUtil                  |I| - group by not in select    [true]
+2023-12-28 16:56:07,310 |OFBiz-batch-1        |DatabaseUtil                  |I| - limited outer joins       [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-2        |DatabaseUtil                  |I| - column aliasing           [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-3        |DatabaseUtil                  |I| - alter table add column    [true]*
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - full outer joins          [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-2        |DatabaseUtil                  |I| - order by not in select    [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-3        |DatabaseUtil                  |I| - non-nullable column       [true]*
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - group by                  [true]*
+2023-12-28 16:56:07,311 |OFBiz-batch-2        |DatabaseUtil                  |I| - alter table add column    [true]*
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - group by not in select    [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-2        |DatabaseUtil                  |I| - non-nullable column       [true]*
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - column aliasing           [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - order by not in select    [true]
+2023-12-28 16:56:07,311 |OFBiz-batch-1        |DatabaseUtil                  |I| - alter table add column    [true]*
+2023-12-28 16:56:07,312 |OFBiz-batch-1        |DatabaseUtil                  |I| - non-nullable column       [true]*
+2023-12-28 16:56:07,312 |OFBiz-batch-3        |DatabaseUtil                  |I| - default fetchsize        [0]
+2023-12-28 16:56:07,312 |OFBiz-batch-2        |DatabaseUtil                  |I| - default fetchsize        [0]
+2023-12-28 16:56:07,312 |OFBiz-batch-3        |DatabaseUtil                  |I| - named parameters         [ SKIPPED ]
+2023-12-28 16:56:07,312 |OFBiz-batch-2        |DatabaseUtil                  |I| - named parameters         [ SKIPPED ]
+2023-12-28 16:56:07,312 |OFBiz-batch-1        |DatabaseUtil                  |I| - default fetchsize        [0]
+2023-12-28 16:56:07,312 |OFBiz-batch-3        |DatabaseUtil                  |I| Getting Table Info From Database
+2023-12-28 16:56:07,312 |OFBiz-batch-1        |DatabaseUtil                  |I| - named parameters         [ SKIPPED ]
+2023-12-28 16:56:07,312 |OFBiz-batch-2        |DatabaseUtil                  |I| Getting Table Info From Database
+2023-12-28 16:56:07,312 |OFBiz-batch-1        |DatabaseUtil                  |I| Getting Table Info From Database
+2023-12-28 16:56:07,330 |OFBiz-batch-3        |DatabaseUtil                  |I| Getting Column Info From Database
+2023-12-28 16:56:07,330 |OFBiz-batch-1        |DatabaseUtil                  |I| Getting Column Info From Database
+2023-12-28 16:56:07,339 |OFBiz-batch-2        |DatabaseUtil                  |I| Getting Column Info From Database
+2023-12-28 16:56:07,354 |OFBiz-batch-3        |DatabaseUtil                  |I| Reviewed 8 primary key fields from database.
+2023-12-28 16:56:07,356 |OFBiz-batch-1        |DatabaseUtil                  |I| Reviewed 9 primary key fields from database.
+2023-12-28 16:56:07,662 |OFBiz-batch-2        |DatabaseUtil                  |I| Reviewed 1708 primary key fields from database.
+2023-12-28 16:56:07,678 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [DIFFICULTY_LEVEL] of table [public.QUESTION_MASTER] of entity [QuestionMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [IS_FLAGGED] of table [public.USER_ATTEMPT_ANSWER_MASTER] of entity [UserAttemptAnswerMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [NO_OF_QUESTIONS] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_WRONG] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_CORRECT] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_MASTER] of entity [UserAttemptMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [CORRECT_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,682 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [PERFORMANCE_ID] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,683 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [TOTAL_QUESTIONS_IN_THIS_TOPIC] of table [public.USER_ATTEMPT_TOPIC_MASTER] of entity [UserAttemptTopicMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,683 |OFBiz-batch-2        |DatabaseUtil                  |E| Column [MAX_SPLIT_ATTEMPTS] of table [public.USER_EXAM_MAPPING_MASTER] of entity [UserExamMappingMaster] is of type [int4] in the database, but is defined as type [INTEGER] in the entity definition.
+2023-12-28 16:56:07,703 |main                 |ContainerLoader               |I| Started container delegator-container
+2023-12-28 16:56:07,704 |main                 |ContainerLoader               |I| Starting container service-container
+2023-12-28 16:56:07,704 |main                 |ContainerLoader               |I| Started container service-container
+2023-12-28 16:56:07,704 |main                 |ContainerLoader               |I| Starting container catalina-container
+2023-12-28 16:56:07,738 |kJoinPool-1-worker-3 |EntityEcaUtil                 |I| Loaded [14] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\applications\product/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,738 |kJoinPool-1-worker-5 |EntityEcaUtil                 |I| Loaded [3] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\applications\order/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,738 |kJoinPool-1-worker-8 |EntityEcaUtil                 |I| Loaded [0] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\plugins\solr/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,738 |kJoinPool-1-worker-4 |EntityEcaUtil                 |I| Loaded [2] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\applications\accounting/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,738 |kJoinPool-1-worker-6 |EntityEcaUtil                 |I| Loaded [15] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\plugins\lucene/entitydef/eecas_product.xml in loader main
+2023-12-28 16:56:07,739 |kJoinPool-1-worker-1 |EntityEcaUtil                 |I| Loaded [11] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\applications\content/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,739 |kJoinPool-1-worker-7 |EntityEcaUtil                 |I| Loaded [1] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\plugins\projectmgr/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,740 |kJoinPool-1-worker-2 |EntityEcaUtil                 |I| Loaded [4] Entity ECA definitions from D:\onlineexamportal\ofbiz-framework\applications\workeffort/entitydef/eecas.xml in loader main
+2023-12-28 16:56:07,814 |OFBiz-batch-1        |ServiceGroupReader            |I| Loaded [1] Group definitions from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/groups_test.xml
+2023-12-28 16:56:07,816 |OFBiz-batch-1        |ServiceGroupReader            |I| Loaded [4] Group definitions from file:/D:/onlineexamportal/ofbiz-framework/framework/entityext/servicedef/groups.xml
+2023-12-28 16:56:07,819 |OFBiz-batch-1        |ServiceGroupReader            |I| Loaded [2] Group definitions from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/service_groups.xml
+2023-12-28 16:56:07,829 |OFBiz-batch-1        |ServiceGroupReader            |I| Loaded [1] Group definitions from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/groups.xml
+2023-12-28 16:56:07,831 |OFBiz-batch-1        |ServiceGroupReader            |I| Loaded [4] Group definitions from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/groups.xml
+2023-12-28 16:56:07,841 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/secas_cdyne.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [14] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/secas.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/secas_test.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [26] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/secas.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [29] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/secas_shipment.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-6 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/secas.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/secas.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [4] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/secas.xml
+2023-12-28 16:56:07,844 |kJoinPool-1-worker-1 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/service/servicedef/secas_test_se.xml
+2023-12-28 16:56:07,848 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [27] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas.xml
+2023-12-28 16:56:07,848 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_ledger.xml
+2023-12-28 16:56:07,848 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [6] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_invoice.xml
+2023-12-28 16:56:07,851 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [10] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/servicedef/secas.xml
+2023-12-28 16:56:07,852 |kJoinPool-1-worker-1 |ServiceEcaUtil                |I| Loaded [5] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/assetmaint/servicedef/secas.xml
+2023-12-28 16:56:07,852 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/commonext/servicedef/secas.xml
+2023-12-28 16:56:07,852 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [1] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/ebay/servicedef/secas.xml
+2023-12-28 16:56:07,853 |kJoinPool-1-worker-6 |ServiceEcaUtil                |I| Loaded [108] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/secas.xml
+2023-12-28 16:56:07,854 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [5] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/bi/servicedef/secas.xml
+2023-12-28 16:56:07,855 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [1] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/servicedef/secas.xml
+2023-12-28 16:56:07,855 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/example/servicedef/secas.xml
+2023-12-28 16:56:07,856 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/solr/servicedef/secas.xml
+2023-12-28 16:56:07,857 |kJoinPool-1-worker-1 |ServiceEcaUtil                |I| Loaded [9] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/servicedef/secas.xml
+2023-12-28 16:56:07,858 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [8] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_payment.xml
+2023-12-28 16:56:07,906 |OFBiz-JobPoller      |JobPoller                     |I| JobPoller thread started.
+2023-12-28 16:56:07,908 |enerFactory@7c629fcd |JmsListenerFactory            |I| Starting JMS Listener Factory Thread
+2023-12-28 16:56:07,908 |enerFactory@7c629fcd |JmsListenerFactory            |I| JMS Listener Factory Thread Finished; All listeners connected.
+2023-12-28 16:56:07,933 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_cdyne.xml
+2023-12-28 16:56:07,933 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_enum.xml
+2023-12-28 16:56:07,933 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_geo.xml
+2023-12-28 16:56:07,934 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_qrcode.xml
+2023-12-28 16:56:07,936 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_method.xml
+2023-12-28 16:56:07,937 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [17] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_security.xml
+2023-12-28 16:56:07,942 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [18] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_email.xml
+2023-12-28 16:56:07,946 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [128] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services.xml
+2023-12-28 16:56:07,948 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/entityext/servicedef/services_synchronization.xml
+2023-12-28 16:56:07,948 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/entityext/servicedef/services_group.xml
+2023-12-28 16:56:07,951 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/entityext/servicedef/services_tenant.xml
+2023-12-28 16:56:07,952 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [34] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/service/servicedef/services.xml
+2023-12-28 16:56:07,953 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [39] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/service/servicedef/services_test_se.xml
+2023-12-28 16:56:07,956 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/testtools/servicedef/services.xml
+2023-12-28 16:56:07,956 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/webtools/servicedef/services.xml
+2023-12-28 16:56:07,958 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [18] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services_agreement.xml
+2023-12-28 16:56:07,958 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services_communication.xml
+2023-12-28 16:56:07,962 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/securityext/servicedef/services.xml
+2023-12-28 16:56:07,963 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [24] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services_party.xml
+2023-12-28 16:56:07,964 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [22] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services_contact.xml
+2023-12-28 16:56:07,966 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [15] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services_view.xml
+2023-12-28 16:56:07,971 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_telecom.xml
+2023-12-28 16:56:07,972 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [35] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_contenttypes.xml
+2023-12-28 16:56:07,994 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [28] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/services_test.xml
+2023-12-28 16:56:08,000 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_ftp.xml
+2023-12-28 16:56:08,001 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [39] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_data.xml
+2023-12-28 16:56:08,004 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [12] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_document.xml
+2023-12-28 16:56:08,005 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_output.xml
+2023-12-28 16:56:08,006 |kJoinPool-1-worker-6 |ModelService                  |W| DEPRECATED: the service getPublicForumMessage has been deprecated and replaced by getContentAndDataResource, since Release 22.01
+2023-12-28 16:56:08,007 |kJoinPool-1-worker-4 |ModelService                  |W| DEPRECATED: the service checkContentPermission has been deprecated and replaced by genericContentPermission, since Release 22.01
+2023-12-28 16:56:08,007 |kJoinPool-1-worker-4 |ModelService                  |W| DEPRECATED: the service checkAssocPermission has been deprecated and replaced by genericContentPermission, since Release 22.01
+2023-12-28 16:56:08,008 |kJoinPool-1-worker-4 |ModelService                  |W| DEPRECATED: the service assocContent has been deprecated and replaced by genericContentPermission, since Release 22.01
+2023-12-28 16:56:08,008 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [68] Services from file:/D:/onlineexamportal/ofbiz-framework/framework/entityext/servicedef/services.xml
+2023-12-28 16:56:08,013 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [57] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_content.xml
+2023-12-28 16:56:08,016 |kJoinPool-1-worker-2 |ModelService                  |W| DEPRECATED: the service lookupParty has been deprecated and replaced by performFindParty, since Upcoming Branch because '
+            use performFindParty to realize your search, the service lookupParty is inconsistent
+            and need to replace by appropriate service
+        '
+2023-12-28 16:56:08,025 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [36] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/services_workeffort.xml
+2023-12-28 16:56:08,029 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [19] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_website.xml
+2023-12-28 16:56:08,032 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [8] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_commevent.xml
+2023-12-28 16:56:08,038 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [42] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services_survey.xml
+2023-12-28 16:56:08,045 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [36] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_feature.xml
+2023-12-28 16:56:08,047 |kJoinPool-1-worker-6 |ModelService                  |W| DEPRECATED: the service resequence has been deprecated and replaced by resequenceContentAssocChildren, since release22.01
+2023-12-28 16:56:08,048 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [175] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/services.xml
+2023-12-28 16:56:08,050 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [75] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/services.xml
+2023-12-28 16:56:08,050 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [12] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_inventory.xml
+2023-12-28 16:56:08,056 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_migration.xml
+2023-12-28 16:56:08,068 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [110] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/services.xml
+2023-12-28 16:56:08,070 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [12] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_price.xml
+2023-12-28 16:56:08,071 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [20] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_maint.xml
+2023-12-28 16:56:08,076 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [132] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_facility.xml
+2023-12-28 16:56:08,077 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipment_fedex.xml
+2023-12-28 16:56:08,081 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [75] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_pricepromo.xml
+2023-12-28 16:56:08,085 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipment_usps.xml
+2023-12-28 16:56:08,091 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipment_dhl.xml
+2023-12-28 16:56:08,105 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [29] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_subscription.xml
+2023-12-28 16:56:08,105 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [9] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipment_ups.xml
+2023-12-28 16:56:08,109 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [21] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipmentgateway.xml
+2023-12-28 16:56:08,111 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_perm.xml
+2023-12-28 16:56:08,112 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_supplier.xml
+2023-12-28 16:56:08,112 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [54] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_store.xml
+2023-12-28 16:56:08,119 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_view.xml
+2023-12-28 16:56:08,126 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_config.xml
+2023-12-28 16:56:08,128 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_uom.xml
+2023-12-28 16:56:08,129 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [142] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_shipment.xml
+2023-12-28 16:56:08,131 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_upgrade.xml
+2023-12-28 16:56:08,131 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_rental.xml
+2023-12-28 16:56:08,135 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services.xml
+2023-12-28 16:56:08,151 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_routing.xml
+2023-12-28 16:56:08,154 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [24] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_cost.xml
+2023-12-28 16:56:08,154 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_bom.xml
+2023-12-28 16:56:08,159 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [16] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/services_timesheet.xml
+2023-12-28 16:56:08,159 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [23] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services_picklist.xml
+2023-12-28 16:56:08,162 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_formula.xml
+2023-12-28 16:56:08,163 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [8] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_mrp.xml
+2023-12-28 16:56:08,168 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_billing.xml
+2023-12-28 16:56:08,172 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_calendar.xml
+2023-12-28 16:56:08,175 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [36] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/services_production_run.xml
+2023-12-28 16:56:08,175 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [44] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_agreement.xml
+2023-12-28 16:56:08,177 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [237] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/services.xml
+2023-12-28 16:56:08,194 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [47] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_budget.xml
+2023-12-28 16:56:08,196 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [69] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_fixedasset.xml
+2023-12-28 16:56:08,203 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [76] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_finaccount.xml
+2023-12-28 16:56:08,208 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [83] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_invoice.xml
+2023-12-28 16:56:08,210 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [56] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_payment.xml
+2023-12-28 16:56:08,212 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [16] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_admin.xml
+2023-12-28 16:56:08,219 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_cost.xml
+2023-12-28 16:56:08,224 |kJoinPool-1-worker-8 |ModelService                  |W| DEPRECATED: the service deleteRateAmount has been deprecated and replaced by expireRateAmount, since Release 18.12
+2023-12-28 16:56:08,218 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_authorizedotnet.xml
+2023-12-28 16:56:08,225 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [14] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_rate.xml
+2023-12-28 16:56:08,227 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [9] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_sagepay.xml
+2023-12-28 16:56:08,243 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [31] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_tax.xml
+2023-12-28 16:56:08,243 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [4] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_pccharge.xml
+2023-12-28 16:56:08,244 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [95] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_paymentmethod.xml
+2023-12-28 16:56:08,246 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_cybersource.xml
+2023-12-28 16:56:08,246 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [8] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_paypal.xml
+2023-12-28 16:56:08,246 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [19] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_paymentgateway.xml
+2023-12-28 16:56:08,245 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_clearcommerce.xml
+2023-12-28 16:56:08,259 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [132] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_ledger.xml
+2023-12-28 16:56:08,264 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/humanres/servicedef/services_ability.xml
+2023-12-28 16:56:08,264 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_rita.xml
+2023-12-28 16:56:08,265 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_securepay.xml
+2023-12-28 16:56:08,264 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [11] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_verisign.xml
+2023-12-28 16:56:08,267 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_orbital.xml
+2023-12-28 16:56:08,269 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [21] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_valuelink.xml
+2023-12-28 16:56:08,270 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/services_perm.xml
+2023-12-28 16:56:08,277 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [23] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_shoppinglist.xml
+2023-12-28 16:56:08,281 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/humanres/servicedef/services_position.xml
+2023-12-28 16:56:08,284 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [15] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_cart.xml
+2023-12-28 16:56:08,289 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/humanres/servicedef/services_employment.xml
+2023-12-28 16:56:08,297 |kJoinPool-1-worker-3 |ModelService                  |W| DEPRECATED: the service createQuoteWorkEffort has been deprecated and replaced by ensureWorkEffortAndCreateQuoteWorkEffort, since Release 18.12 because '
+            use createQuoteWorkEffort to create a workeffort has been deprecated for best pratice naming reason, use ensureWorkEffortAndCreateQuoteWorkEffort instead.
+            Now createQuoteWorkEffort work as a crud service on QuoteWorkEffort
+        '
+2023-12-28 16:56:08,299 |kJoinPool-1-worker-3 |ModelServiceReader            |W| Service createQuoteWorkEffort is defined more than once, most recent will over-write previous definition(s)
+2023-12-28 16:56:08,301 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [48] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_quote.xml
+2023-12-28 16:56:08,304 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [113] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/humanres/servicedef/services.xml
+2023-12-28 16:56:08,305 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_reservations.xml
+2023-12-28 16:56:08,307 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [43] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_request.xml
+2023-12-28 16:56:08,308 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_checkout.xml
+2023-12-28 16:56:08,310 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_upgrade.xml
+2023-12-28 16:56:08,313 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [73] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_return.xml
+2023-12-28 16:56:08,313 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/servicedef/services_contact.xml
+2023-12-28 16:56:08,314 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [155] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services.xml
+2023-12-28 16:56:08,314 |kJoinPool-1-worker-6 |ModelService                  |W| DEPRECATED: the service addRequirementTask has been deprecated and replaced by createWorkRequirementFulfillment, since Upcoming Branch because '
+            Use createWorkRequirementFulfillment to create a workeffort requirement fulfillment, that is an entity-auto service
+        '
+2023-12-28 16:56:08,304 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [61] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_order.xml
+2023-12-28 16:56:08,316 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [42] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_requirement.xml
+2023-12-28 16:56:08,320 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/services_perm.xml
+2023-12-28 16:56:08,321 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/commonext/servicedef/services.xml
+2023-12-28 16:56:08,321 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/assetmaint/servicedef/services.xml
+2023-12-28 16:56:08,322 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [25] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/servicedef/services_opportunity.xml
+2023-12-28 16:56:08,326 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [24] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/bi/servicedef/services.xml
+2023-12-28 16:56:08,326 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/msggateway/servicedef/services.xml
+2023-12-28 16:56:08,327 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [7] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/lucene/servicedef/services.xml
+2023-12-28 16:56:08,329 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [22] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/example/servicedef/services.xml
+2023-12-28 16:56:08,330 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [13] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/ebay/servicedef/services.xml
+2023-12-28 16:56:08,331 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [3] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/myOfizDemo/servicedef/services.xml
+2023-12-28 16:56:08,334 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/ofbizDemo/servicedef/services.xml
+2023-12-28 16:56:08,335 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [5] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/firstdatapaymentgateway/servicedef/services.xml
+2023-12-28 16:56:08,343 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 54. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-28 16:56:08,345 |kJoinPool-1-worker-1 |UtilXml                       |E| XmlFileLoader: File D:\onlineexamportal\ofbiz-framework\plugins\onlineexam/servicedef/services.xml process error. Line: 145. Error message: cvc-complex-type.2.3: Element 'service' cannot have character [children], because the type's content type is element-only.
+2023-12-28 16:56:08,345 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [9] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/solr/servicedef/solrservices.xml
+2023-12-28 16:56:08,347 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [23] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/projectmgr/servicedef/services.xml
+2023-12-28 16:56:08,348 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [25] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/servicedef/services.xml
+2023-12-28 16:56:08,353 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/servicedef/permissionServices.xml
+2023-12-28 16:56:08,353 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [25] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/servicedef/services.xml
+2023-12-28 16:56:08,354 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/rest-api/servicedef/services.xml
+2023-12-28 16:56:08,354 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/myportal/servicedef/services.xml
+2023-12-28 16:56:08,354 |kJoinPool-1-worker-2 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services.xml
+2023-12-28 16:56:08,359 |kJoinPool-1-worker-4 |ModelServiceReader            |I| Loaded [6] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_manager.xml
+2023-12-28 16:56:08,359 |kJoinPool-1-worker-8 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_promo.xml
+2023-12-28 16:56:08,361 |kJoinPool-1-worker-7 |ModelServiceReader            |I| Loaded [7] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_payment.xml
+2023-12-28 16:56:08,361 |kJoinPool-1-worker-3 |ModelServiceReader            |I| Loaded [2] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_search.xml
+2023-12-28 16:56:08,363 |kJoinPool-1-worker-5 |ModelService                  |W| DEPRECATED: the service addPriceRuleToMarketingCampaign has been deprecated and replaced by createMarketingCampaignPrice, since Release 18.12 because '
+            Renaming service to respect service name best practice
+        '
+2023-12-28 16:56:08,364 |kJoinPool-1-worker-5 |ModelService                  |W| DEPRECATED: the service removePriceRuleFromMarketingCampaign has been deprecated and replaced by deleteMarketingCampaignPrice, since Release 18.12 because '
+                Renaming service to respect service name best practice
+            '
+2023-12-28 16:56:08,364 |kJoinPool-1-worker-5 |ModelService                  |W| DEPRECATED: the service addPromoToMarketingCampaign has been deprecated and replaced by createMarketingCampaignPromo, since Release 18.12 because '
+            Renaming service to respect service name best practice
+        '
+2023-12-28 16:56:08,365 |kJoinPool-1-worker-1 |ModelServiceReader            |I| Loaded [1] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_customer.xml
+2023-12-28 16:56:08,365 |kJoinPool-1-worker-5 |ModelService                  |W| DEPRECATED: the service removePromoFromMarketingCampaign has been deprecated and replaced by deleteMarketingCampaignPromo, since Release 18.12 because '
+            Renaming service to respect service name best practice
+        '
+2023-12-28 16:56:08,367 |kJoinPool-1-worker-6 |ModelServiceReader            |I| Loaded [10] Services from file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/servicedef/services_cart.xml
+2023-12-28 16:56:08,370 |kJoinPool-1-worker-5 |ModelServiceReader            |I| Loaded [79] Services from file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/servicedef/services.xml
+2023-12-28 16:56:08,379 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/secas_test.xml
+2023-12-28 16:56:08,379 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [14] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/servicedef/secas.xml
+2023-12-28 16:56:08,380 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [29] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/secas_shipment.xml
+2023-12-28 16:56:08,380 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/content/servicedef/secas.xml
+2023-12-28 16:56:08,383 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [4] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/servicedef/secas.xml
+2023-12-28 16:56:08,385 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/party/servicedef/secas.xml
+2023-12-28 16:56:08,386 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [8] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_payment.xml
+2023-12-28 16:56:08,386 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [27] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas.xml
+2023-12-28 16:56:08,389 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [25] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_ledger.xml
+2023-12-28 16:56:08,392 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [6] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/servicedef/secas_invoice.xml
+2023-12-28 16:56:08,392 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [10] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/servicedef/secas.xml
+2023-12-28 16:56:08,395 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [26] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/product/servicedef/secas.xml
+2023-12-28 16:56:08,396 |kJoinPool-1-worker-6 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/common/servicedef/secas_cdyne.xml
+2023-12-28 16:56:08,399 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/example/servicedef/secas.xml
+2023-12-28 16:56:08,400 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [108] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/order/servicedef/secas.xml
+2023-12-28 16:56:08,402 |kJoinPool-1-worker-6 |ServiceEcaUtil                |I| Loaded [1] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/servicedef/secas.xml
+2023-12-28 16:56:08,404 |kJoinPool-1-worker-4 |ServiceEcaUtil                |I| Loaded [9] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/servicedef/secas.xml
+2023-12-28 16:56:08,405 |kJoinPool-1-worker-3 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/solr/servicedef/secas.xml
+2023-12-28 16:56:08,405 |kJoinPool-1-worker-5 |ServiceEcaUtil                |I| Loaded [5] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/bi/servicedef/secas.xml
+2023-12-28 16:56:08,406 |kJoinPool-1-worker-2 |ServiceEcaUtil                |I| Loaded [1] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/ebay/servicedef/secas.xml
+2023-12-28 16:56:08,406 |kJoinPool-1-worker-7 |ServiceEcaUtil                |I| Loaded [5] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/plugins/assetmaint/servicedef/secas.xml
+2023-12-28 16:56:08,408 |kJoinPool-1-worker-1 |ServiceEcaUtil                |I| Loaded [3] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/framework/service/servicedef/secas_test_se.xml
+2023-12-28 16:56:08,408 |kJoinPool-1-worker-8 |ServiceEcaUtil                |I| Loaded [0] Service ECA Rules from file:/D:/onlineexamportal/ofbiz-framework/applications/commonext/servicedef/secas.xml
+2023-12-28 16:56:08,409 |OFBiz-batch-1        |ServiceDispatcher             |I| Registering dispatcher: entity-default
+2023-12-28 16:56:08,409 |OFBiz-batch-1        |ServiceContainer              |I| Created new dispatcher: entity-default
+2023-12-28 16:56:08,796 |main                 |ServiceDispatcher             |I| Registering dispatcher: ebay
+2023-12-28 16:56:08,796 |main                 |ServiceContainer              |I| Created new dispatcher: ebay
+2023-12-28 16:56:08,821 |main                 |ControlServlet                |I| Loading webapp [ebay], located at D:\onlineexamportal\ofbiz-framework\plugins\ebay\webapp\ebay\
+2023-12-28 16:56:08,932 |main                 |ConfigXMLReader               |I| controller loaded: 0.002s, 0 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/handlers-controller.xml
+2023-12-28 16:56:08,940 |main                 |ConfigXMLReader               |I| controller loaded: 0.037s, 52 requests, 21 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/common-controller.xml
+2023-12-28 16:56:08,961 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 26 requests, 10 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/portal-controller.xml
+2023-12-28 16:56:08,982 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/applications/commonext/webapp/WEB-INF/controller.xml
+2023-12-28 16:56:09,000 |main                 |ConfigXMLReader               |I| controller loaded: 0.118s, 539 requests, 178 views in file:/D:/onlineexamportal/ofbiz-framework/applications/product/webapp/catalog/WEB-INF/controller.xml
+2023-12-28 16:56:09,002 |main                 |ConfigXMLReader               |I| controller loaded: 0.157s, 20 requests, 10 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/ebay/webapp/ebay/WEB-INF/controller.xml
+2023-12-28 16:56:09,212 |main                 |FreeMarkerWorker              |I| loading properties: file:/D:/onlineexamportal/ofbiz-framework/build/resources/main/org/apache/ofbiz/webapp/freemarkerTransforms.properties
+2023-12-28 16:56:09,222 |main                 |FreeMarkerWorker              |I| loading properties: file:/D:/onlineexamportal/ofbiz-framework/build/resources/main/org/apache/ofbiz/widget/freemarkerTransforms.properties
+2023-12-28 16:56:09,228 |main                 |FreeMarkerWorker              |I| loading properties: file:/D:/onlineexamportal/ofbiz-framework/build/resources/main/org/apache/ofbiz/content/freemarkerTransforms.properties
+2023-12-28 16:56:09,247 |main                 |FreeMarkerWorker              |I| loading properties: file:/D:/onlineexamportal/ofbiz-framework/build/resources/main/org/apache/ofbiz/product/freemarkerTransforms.properties
+2023-12-28 16:56:09,265 |main                 |SeoConfigUtil                 |I| Parsing ^.*/.*$
+2023-12-28 16:56:09,268 |main                 |SeoConfigUtil                 |I| Parsing category-url [true]:
+2023-12-28 16:56:09,269 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /
+2023-12-28 16:56:09,269 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /ecomseo
+2023-12-28 16:56:09,269 |main                 |SeoConfigUtil                 |I|   category-name: false
+2023-12-28 16:56:09,270 |main                 |SeoConfigUtil                 |I|   category-url-suffix: .html
+2023-12-28 16:56:09,270 |main                 |SeoConfigUtil                 |I| Parsing jsessionid [true]:
+2023-12-28 16:56:09,270 |main                 |SeoConfigUtil                 |I|   anonymous: false
+2023-12-28 16:56:09,270 |main                 |SeoConfigUtil                 |I|   exceptions: 
+2023-12-28 16:56:09,271 |main                 |SeoConfigUtil                 |I|     url-pattern: ^.*/(keywordsearch|logout).*$
+2023-12-28 16:56:09,271 |main                 |SeoConfigUtil                 |I|   user: false
+2023-12-28 16:56:09,271 |main                 |SeoConfigUtil                 |I| Parsing url-config
+2023-12-28 16:56:09,271 |main                 |SeoConfigUtil                 |I|   url-pattern: ^(.*);jsessionid=(.*)jvm[1-9](.*)$
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     seo replacement: $1$3
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     forward replacement: $1$3
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/main$
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/main$
+2023-12-28 16:56:09,272 |main                 |SeoConfigUtil                 |I|     seo replacement: /
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|     forward replacement: /
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/control/(.*)$
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/$1
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/$1
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I| Parsing char-filter: 
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00fc
+2023-12-28 16:56:09,273 |main                 |SeoConfigUtil                 |I|   replacement: ue
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00e4
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   replacement: ae
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00f6
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   replacement: oe
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00df
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   replacement: ss
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   character-pattern: \\+
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   character-pattern: \u0026
+2023-12-28 16:56:09,274 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   character-pattern: è
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   replacement: e
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   character-pattern: [^A-Za-z0-9+-]
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   character-pattern: -{2,}
+2023-12-28 16:56:09,275 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:09,285 |main                 |SeoConfigUtil                 |I| Parsing ^.*/.*$
+2023-12-28 16:56:09,285 |main                 |SeoConfigUtil                 |I| Parsing category-url [true]:
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /ecomseo
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   category-name: false
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   category-url-suffix: .html
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I| Parsing jsessionid [true]:
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   anonymous: false
+2023-12-28 16:56:09,286 |main                 |SeoConfigUtil                 |I|   exceptions: 
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|     url-pattern: ^.*/(keywordsearch|logout).*$
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|   user: false
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I| Parsing url-config
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|   url-pattern: ^(.*);jsessionid=(.*)jvm[1-9](.*)$
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|     seo replacement: $1$3
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|     forward replacement: $1$3
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,287 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/main$
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/main$
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     seo replacement: /
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward replacement: /
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/control/(.*)$
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/$1
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/$1
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:09,288 |main                 |SeoConfigUtil                 |I| Parsing char-filter: 
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00fc
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   replacement: ue
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00e4
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   replacement: ae
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00f6
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   replacement: oe
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00df
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   replacement: ss
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \\+
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:09,289 |main                 |SeoConfigUtil                 |I|   character-pattern: \u0026
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   character-pattern: è
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   replacement: e
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   character-pattern: [^A-Za-z0-9+-]
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   character-pattern: -{2,}
+2023-12-28 16:56:09,290 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:09,383 |main                 |ServiceDispatcher             |I| Registering dispatcher: marketing
+2023-12-28 16:56:09,384 |main                 |ServiceContainer              |I| Created new dispatcher: marketing
+2023-12-28 16:56:09,385 |main                 |ControlServlet                |I| Loading webapp [marketing], located at D:\onlineexamportal\ofbiz-framework\applications\marketing\webapp\marketing\
+2023-12-28 16:56:09,411 |main                 |ConfigXMLReader               |I| controller loaded: 0.002s, 91 requests, 48 views in file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/webapp/marketing/WEB-INF/controller.xml
+2023-12-28 16:56:09,481 |main                 |ServiceDispatcher             |I| Registering dispatcher: ofbizDemo
+2023-12-28 16:56:09,481 |main                 |ServiceContainer              |I| Created new dispatcher: ofbizDemo
+2023-12-28 16:56:09,483 |main                 |ControlServlet                |I| Loading webapp [ofbizDemo], located at D:\onlineexamportal\ofbiz-framework\plugins\ofbizDemo\webapp\ofbizDemo\
+2023-12-28 16:56:09,491 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 7 requests, 3 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/ofbizDemo/webapp/ofbizDemo/WEB-INF/controller.xml
+2023-12-28 16:56:09,513 |main                 |ServiceDispatcher             |I| Registering dispatcher: order
+2023-12-28 16:56:09,513 |main                 |ServiceContainer              |I| Created new dispatcher: order
+2023-12-28 16:56:09,514 |main                 |ControlServlet                |I| Loading webapp [ordermgr], located at D:\onlineexamportal\ofbiz-framework\applications\order\webapp\ordermgr\
+2023-12-28 16:56:09,578 |main                 |ConfigXMLReader               |I| controller loaded: 0.007s, 347 requests, 134 views in file:/D:/onlineexamportal/ofbiz-framework/applications/content/webapp/content/WEB-INF/controller.xml
+2023-12-28 16:56:09,587 |main                 |ConfigXMLReader               |I| controller loaded: 0.044s, 380 requests, 153 views in file:/D:/onlineexamportal/ofbiz-framework/applications/order/webapp/ordermgr/WEB-INF/controller.xml
+2023-12-28 16:56:09,615 |main                 |ServiceDispatcher             |I| Registering dispatcher: ap
+2023-12-28 16:56:09,615 |main                 |ServiceContainer              |I| Created new dispatcher: ap
+2023-12-28 16:56:09,617 |main                 |ControlServlet                |I| Loading webapp [ap], located at D:\onlineexamportal\ofbiz-framework\applications\accounting\webapp\ap\
+2023-12-28 16:56:09,671 |main                 |ConfigXMLReader               |I| controller loaded: 0.01s, 518 requests, 247 views in file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/webapp/accounting/WEB-INF/controller.xml
+2023-12-28 16:56:09,671 |main                 |ConfigXMLReader               |I| controller loaded: 0.038s, 22 requests, 14 views in file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/webapp/ap/WEB-INF/controller.xml
+2023-12-28 16:56:09,698 |main                 |ServiceDispatcher             |I| Registering dispatcher: accounting
+2023-12-28 16:56:09,698 |main                 |ServiceContainer              |I| Created new dispatcher: accounting
+2023-12-28 16:56:09,699 |main                 |ControlServlet                |I| Loading webapp [accounting], located at D:\onlineexamportal\ofbiz-framework\applications\accounting\webapp\accounting\
+2023-12-28 16:56:09,722 |main                 |ServiceDispatcher             |I| Registering dispatcher: ar
+2023-12-28 16:56:09,722 |main                 |ServiceContainer              |I| Created new dispatcher: ar
+2023-12-28 16:56:09,723 |main                 |ControlServlet                |I| Loading webapp [ar], located at D:\onlineexamportal\ofbiz-framework\applications\accounting\webapp\ar\
+2023-12-28 16:56:09,742 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 16 requests, 10 views in file:/D:/onlineexamportal/ofbiz-framework/applications/accounting/webapp/ar/WEB-INF/controller.xml
+2023-12-28 16:56:09,764 |main                 |ServiceDispatcher             |I| Registering dispatcher: example
+2023-12-28 16:56:09,764 |main                 |ServiceContainer              |I| Created new dispatcher: example
+2023-12-28 16:56:09,766 |main                 |ControlServlet                |I| Loading webapp [example], located at D:\onlineexamportal\ofbiz-framework\plugins\example\webapp\example\
+2023-12-28 16:56:09,848 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 2 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/example/widget/example/ExampleCompoundWidgets.xml
+2023-12-28 16:56:09,850 |main                 |ConfigXMLReader               |I| controller loaded: 0.074s, 51 requests, 35 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/example/webapp/example/WEB-INF/controller.xml
+2023-12-28 16:56:09,912 |main                 |ServiceDispatcher             |I| Registering dispatcher: manufacturing
+2023-12-28 16:56:09,912 |main                 |ServiceContainer              |I| Created new dispatcher: manufacturing
+2023-12-28 16:56:09,913 |main                 |ControlServlet                |I| Loading webapp [manufacturing], located at D:\onlineexamportal\ofbiz-framework\applications\manufacturing\webapp\manufacturing\
+2023-12-28 16:56:09,937 |main                 |ConfigXMLReader               |I| controller loaded: 0.003s, 149 requests, 66 views in file:/D:/onlineexamportal/ofbiz-framework/applications/manufacturing/webapp/manufacturing/WEB-INF/controller.xml
+2023-12-28 16:56:09,958 |main                 |ServiceDispatcher             |I| Registering dispatcher: pricat
+2023-12-28 16:56:09,958 |main                 |ServiceContainer              |I| Created new dispatcher: pricat
+2023-12-28 16:56:09,959 |main                 |ControlServlet                |I| Loading webapp [pricatdemo], located at D:\onlineexamportal\ofbiz-framework\plugins\pricat\webapp\pricatdemo\
+2023-12-28 16:56:09,967 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 7 requests, 5 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/pricat/webapp/pricatdemo/WEB-INF/controller.xml
+2023-12-28 16:56:09,991 |main                 |ServiceDispatcher             |I| Registering dispatcher: bi
+2023-12-28 16:56:09,991 |main                 |ServiceContainer              |I| Created new dispatcher: bi
+2023-12-28 16:56:09,992 |main                 |ControlServlet                |I| Loading webapp [bi], located at D:\onlineexamportal\ofbiz-framework\plugins\bi\webapp\bi\
+2023-12-28 16:56:10,004 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 6 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/bi/webapp/bi/WEB-INF/controller.xml
+2023-12-28 16:56:10,029 |main                 |ServiceDispatcher             |I| Registering dispatcher: ecommerce
+2023-12-28 16:56:10,029 |main                 |ServiceContainer              |I| Created new dispatcher: ecommerce
+2023-12-28 16:56:10,030 |main                 |ControlServlet                |I| Loading webapp [ecomseo], located at D:\onlineexamportal\ofbiz-framework\plugins\ecommerce\webapp\ecomseo\
+2023-12-28 16:56:10,054 |main                 |ConfigXMLReader               |I| controller loaded: 0.006s, 290 requests, 96 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/ecommerce/webapp/ecommerce/WEB-INF/controller.xml
+2023-12-28 16:56:10,054 |main                 |ConfigXMLReader               |I| controller loaded: 0.017s, 0 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/ecommerce/webapp/ecomseo/WEB-INF/controller.xml
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I| Parsing ^.*/.*$
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I| Parsing category-url [true]:
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   allowed-context-paths: /ecomseo
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   category-name: false
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   category-url-suffix: .html
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I| Parsing jsessionid [true]:
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   anonymous: false
+2023-12-28 16:56:10,061 |main                 |SeoConfigUtil                 |I|   exceptions: 
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     url-pattern: ^.*/(keywordsearch|logout).*$
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|   user: false
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I| Parsing url-config
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|   url-pattern: ^(.*);jsessionid=(.*)jvm[1-9](.*)$
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     seo replacement: $1$3
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     forward replacement: $1$3
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/main$
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:10,062 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/main$
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     seo replacement: /
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     forward replacement: /
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   url-pattern: ^/ecomseo/control/(.*)$
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     seo replacement: /ecomseo/$1
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     forward replacement: /ecomseo/$1
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|     forward responsecode: 301
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I| Parsing char-filter: 
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00fc
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: ue
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00e4
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: ae
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00f6
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: oe
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \u00df
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: ss
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \\+
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   character-pattern: \u0026
+2023-12-28 16:56:10,063 |main                 |SeoConfigUtil                 |I|   replacement: und
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   character-pattern: è
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   replacement: e
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   character-pattern: [^A-Za-z0-9+-]
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   character-pattern: -{2,}
+2023-12-28 16:56:10,064 |main                 |SeoConfigUtil                 |I|   replacement: -
+2023-12-28 16:56:10,088 |main                 |ServiceDispatcher             |I| Registering dispatcher: facility
+2023-12-28 16:56:10,088 |main                 |ServiceContainer              |I| Created new dispatcher: facility
+2023-12-28 16:56:10,089 |main                 |ControlServlet                |I| Loading webapp [facility], located at D:\onlineexamportal\ofbiz-framework\applications\product\webapp\facility\
+2023-12-28 16:56:10,121 |main                 |ConfigXMLReader               |I| controller loaded: 0.005s, 243 requests, 95 views in file:/D:/onlineexamportal/ofbiz-framework/applications/product/webapp/facility/WEB-INF/controller.xml
+2023-12-28 16:56:10,144 |main                 |ServiceDispatcher             |I| Registering dispatcher: ical
+2023-12-28 16:56:10,144 |main                 |ServiceContainer              |I| Created new dispatcher: ical
+2023-12-28 16:56:10,170 |main                 |ServiceDispatcher             |I| Registering dispatcher: msggateway
+2023-12-28 16:56:10,170 |main                 |ServiceContainer              |I| Created new dispatcher: msggateway
+2023-12-28 16:56:10,171 |main                 |ControlServlet                |I| Loading webapp [msggateway], located at D:\onlineexamportal\ofbiz-framework\plugins\msggateway\webapp\msggateway\
+2023-12-28 16:56:10,180 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 1 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/msggateway/webapp/msggateway/WEB-INF/controller.xml
+2023-12-28 16:56:10,201 |main                 |ServiceDispatcher             |I| Registering dispatcher: exampleext
+2023-12-28 16:56:10,201 |main                 |ServiceContainer              |I| Created new dispatcher: exampleext
+2023-12-28 16:56:10,202 |main                 |ControlServlet                |I| Loading webapp [exampleext], located at D:\onlineexamportal\ofbiz-framework\plugins\exampleext\webapp\exampleext\
+2023-12-28 16:56:10,211 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 0 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/exampleext/webapp/exampleext/WEB-INF/controller.xml
+2023-12-28 16:56:10,239 |main                 |ServiceDispatcher             |I| Registering dispatcher: rest-api
+2023-12-28 16:56:10,239 |main                 |ServiceContainer              |I| Created new dispatcher: rest-api
+2023-12-28 16:56:10,239 |main                 |ApiContextListener            |I| Api Jersey Context initialized, delegator org.apache.ofbiz.entity.GenericDelegator@6acffb2d, dispatcher
+2023-12-28 16:56:10,572 |main                 |OFBizApiConfig                |I| No API definitions to process
+2023-12-28 16:56:11,465 |main                 |ServiceDispatcher             |I| Registering dispatcher: sfa
+2023-12-28 16:56:11,465 |main                 |ServiceContainer              |I| Created new dispatcher: sfa
+2023-12-28 16:56:11,466 |main                 |ControlServlet                |I| Loading webapp [sfa], located at D:\onlineexamportal\ofbiz-framework\applications\marketing\webapp\sfa\
+2023-12-28 16:56:11,519 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 30 requests, 13 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/security-controller.xml
+2023-12-28 16:56:11,523 |main                 |ConfigXMLReader               |I| controller loaded: 0.019s, 268 requests, 110 views in file:/D:/onlineexamportal/ofbiz-framework/applications/party/webapp/partymgr/WEB-INF/controller.xml
+2023-12-28 16:56:11,591 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 9 requests, 5 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortCpd.xml
+2023-12-28 16:56:11,628 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortCommEventCpd.xml
+2023-12-28 16:56:11,679 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortContentsCpd.xml
+2023-12-28 16:56:11,724 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortEventRemindersCpd.xml
+2023-12-28 16:56:11,756 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortGoodStandardsCpd.xml
+2023-12-28 16:56:11,793 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortKeywordsCpd.xml
+2023-12-28 16:56:11,834 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortNotesCpd.xml
+2023-12-28 16:56:11,889 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortOrdersCpd.xml
+2023-12-28 16:56:11,925 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortPartyAssignCpd.xml
+2023-12-28 16:56:11,956 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 8 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortQuotesCpd.xml
+2023-12-28 16:56:11,993 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortRateAssignCpd.xml
+2023-12-28 16:56:12,029 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 8 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortRequestAndItemCpd.xml
+2023-12-28 16:56:12,066 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 7 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortRequirementsCpd.xml
+2023-12-28 16:56:12,110 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortReviewsCpd.xml
+2023-12-28 16:56:12,143 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortShopListCpd.xml
+2023-12-28 16:56:12,176 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 9 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortTimeEntriesCpd.xml
+2023-12-28 16:56:12,213 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortContactMechCpd.xml
+2023-12-28 16:56:12,244 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 4 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortAgreementCpd.xml
+2023-12-28 16:56:12,276 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortFixedAssetCpd.xml
+2023-12-28 16:56:12,313 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/widget/workeffort/WorkEffortAttributeCpd.xml
+2023-12-28 16:56:12,314 |main                 |ConfigXMLReader               |I| controller loaded: 0.759s, 0 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/webapp/workeffort/WEB-INF/workeffort-controller.xml
+2023-12-28 16:56:12,331 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 15 requests, 7 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/webapp/workeffort/WEB-INF/icalendar-controller.xml
+2023-12-28 16:56:12,334 |main                 |ConfigXMLReader               |I| controller loaded: 0.796s, 94 requests, 69 views in file:/D:/onlineexamportal/ofbiz-framework/applications/workeffort/webapp/workeffort/WEB-INF/controller.xml
+2023-12-28 16:56:12,335 |main                 |ConfigXMLReader               |I| controller loaded: 0.854s, 55 requests, 36 views in file:/D:/onlineexamportal/ofbiz-framework/applications/marketing/webapp/sfa/WEB-INF/controller.xml
+2023-12-28 16:56:12,362 |main                 |ServiceDispatcher             |I| Registering dispatcher: Humanres
+2023-12-28 16:56:12,362 |main                 |ServiceContainer              |I| Created new dispatcher: Humanres
+2023-12-28 16:56:12,364 |main                 |ControlServlet                |I| Loading webapp [humanres], located at D:\onlineexamportal\ofbiz-framework\applications\humanres\webapp\humanres\
+2023-12-28 16:56:12,391 |main                 |ConfigXMLReader               |I| controller loaded: 0.003s, 232 requests, 98 views in file:/D:/onlineexamportal/ofbiz-framework/applications/humanres/webapp/humanres/WEB-INF/controller.xml
+2023-12-28 16:56:12,433 |main                 |ServiceDispatcher             |I| Registering dispatcher: myOfizDemo
+2023-12-28 16:56:12,434 |main                 |ServiceContainer              |I| Created new dispatcher: myOfizDemo
+2023-12-28 16:56:12,435 |main                 |ControlServlet                |I| Loading webapp [myOfizDemo], located at D:\onlineexamportal\ofbiz-framework\plugins\myOfizDemo\webapp\myOfizDemo\
+2023-12-28 16:56:12,442 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 4 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/myOfizDemo/webapp/myOfizDemo/WEB-INF/controller.xml
+2023-12-28 16:56:12,459 |main                 |ServiceDispatcher             |I| Registering dispatcher: partymgr
+2023-12-28 16:56:12,459 |main                 |ServiceContainer              |I| Created new dispatcher: partymgr
+2023-12-28 16:56:12,460 |main                 |ControlServlet                |I| Loading webapp [partymgr], located at D:\onlineexamportal\ofbiz-framework\applications\party\webapp\partymgr\
+2023-12-28 16:56:12,480 |main                 |ServiceDispatcher             |I| Registering dispatcher: webtools
+2023-12-28 16:56:12,480 |main                 |ServiceContainer              |I| Created new dispatcher: webtools
+2023-12-28 16:56:12,480 |main                 |ControlServlet                |I| Loading webapp [webtools], located at D:\onlineexamportal\ofbiz-framework\framework\webtools\webapp\webtools\
+2023-12-28 16:56:12,513 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/tempexpr-controller.xml
+2023-12-28 16:56:12,571 |main                 |ConfigXMLReader               |I| controller loaded: 0.073s, 122 requests, 79 views in file:/D:/onlineexamportal/ofbiz-framework/framework/webtools/webapp/webtools/WEB-INF/controller.xml
+2023-12-28 16:56:12,611 |main                 |ServiceDispatcher             |I| Registering dispatcher: workeffort
+2023-12-28 16:56:12,611 |main                 |ServiceContainer              |I| Created new dispatcher: workeffort
+2023-12-28 16:56:12,612 |main                 |ControlServlet                |I| Loading webapp [workeffort], located at D:\onlineexamportal\ofbiz-framework\applications\workeffort\webapp\workeffort\
+2023-12-28 16:56:12,634 |main                 |ServiceDispatcher             |I| Registering dispatcher: scrum
+2023-12-28 16:56:12,634 |main                 |ServiceContainer              |I| Created new dispatcher: scrum
+2023-12-28 16:56:12,634 |main                 |ControlServlet                |I| Loading webapp [scrum], located at D:\onlineexamportal\ofbiz-framework\plugins\scrum\webapp\scrum\
+2023-12-28 16:56:12,648 |main                 |ConfigXMLReader               |I| controller loaded: 0.005s, 207 requests, 81 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/webapp/scrum/WEB-INF/controller.xml
+2023-12-28 16:56:15,843 |main                 |ServiceDispatcher             |I| Registering dispatcher: solr
+2023-12-28 16:56:15,844 |main                 |ServiceContainer              |I| Created new dispatcher: solr
+2023-12-28 16:56:15,844 |main                 |ControlServlet                |I| Loading webapp [solr], located at D:\onlineexamportal\ofbiz-framework\plugins\solr\webapp\solr\
+2023-12-28 16:56:15,850 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 4 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/solr/webapp/solr/WEB-INF/controller.xml
+2023-12-28 16:56:15,876 |main                 |ServiceDispatcher             |I| Registering dispatcher: projectmgr
+2023-12-28 16:56:15,876 |main                 |ServiceContainer              |I| Created new dispatcher: projectmgr
+2023-12-28 16:56:15,877 |main                 |ControlServlet                |I| Loading webapp [projectmgr], located at D:\onlineexamportal\ofbiz-framework\plugins\projectmgr\webapp\projectmgr\
+2023-12-28 16:56:15,886 |main                 |ConfigXMLReader               |I| controller loaded: 0.002s, 125 requests, 50 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/projectmgr/webapp/projectmgr/WEB-INF/controller.xml
+2023-12-28 16:56:15,906 |main                 |ControlServlet                |I| Loading webapp [ecommerce], located at D:\onlineexamportal\ofbiz-framework\plugins\ecommerce\webapp\ecommerce\
+2023-12-28 16:56:15,924 |main                 |ControlServlet                |I| Loading webapp [scrumdemo], located at D:\onlineexamportal\ofbiz-framework\plugins\scrum\webapp\demotest\
+2023-12-28 16:56:15,930 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 2 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/scrum/webapp/demotest/WEB-INF/controller.xml
+2023-12-28 16:56:15,948 |main                 |ServiceDispatcher             |I| Registering dispatcher: lucene
+2023-12-28 16:56:15,948 |main                 |ServiceContainer              |I| Created new dispatcher: lucene
+2023-12-28 16:56:15,948 |main                 |ControlServlet                |I| Loading webapp [content], located at D:\onlineexamportal\ofbiz-framework\plugins\lucene\webapp\content\
+2023-12-28 16:56:15,954 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 5 requests, 3 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/lucene/webapp/content/WEB-INF/controller.xml
+2023-12-28 16:56:15,971 |main                 |ControlServlet                |I| Loading webapp [pricat], located at D:\onlineexamportal\ofbiz-framework\plugins\pricat\webapp\pricat\
+2023-12-28 16:56:15,978 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 3 requests, 2 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/pricat/webapp/pricat/WEB-INF/controller.xml
+2023-12-28 16:56:16,023 |main                 |ServiceDispatcher             |I| Registering dispatcher: CmsSite
+2023-12-28 16:56:16,024 |main                 |ServiceContainer              |I| Created new dispatcher: CmsSite
+2023-12-28 16:56:16,024 |main                 |ControlServlet                |I| Loading webapp [cmssite], located at D:\onlineexamportal\ofbiz-framework\plugins\cmssite\webapp\cmssite\
+2023-12-28 16:56:16,030 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 1 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/cmssite/webapp/cmssite/WEB-INF/controller.xml
+2023-12-28 16:56:16,049 |main                 |ServiceDispatcher             |I| Registering dispatcher: ismgr
+2023-12-28 16:56:16,049 |main                 |ServiceContainer              |I| Created new dispatcher: ismgr
+2023-12-28 16:56:16,050 |main                 |ControlServlet                |I| Loading webapp [ismgr], located at D:\onlineexamportal\ofbiz-framework\plugins\assetmaint\webapp\ismgr\
+2023-12-28 16:56:16,058 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 13 requests, 8 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/assetmaint/webapp/ismgr/WEB-INF/controller.xml
+2023-12-28 16:56:16,099 |main                 |ServiceDispatcher             |I| Registering dispatcher: assetmaint
+2023-12-28 16:56:16,099 |main                 |ServiceContainer              |I| Created new dispatcher: assetmaint
+2023-12-28 16:56:16,100 |main                 |ControlServlet                |I| Loading webapp [assetmaint], located at D:\onlineexamportal\ofbiz-framework\plugins\assetmaint\webapp\assetmaint\
+2023-12-28 16:56:16,106 |main                 |ConfigXMLReader               |I| controller loaded: 0.0s, 17 requests, 11 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/assetmaint/webapp/assetmaint/WEB-INF/controller.xml
+2023-12-28 16:56:16,123 |main                 |ServiceDispatcher             |I| Registering dispatcher: myportal
+2023-12-28 16:56:16,123 |main                 |ServiceContainer              |I| Created new dispatcher: myportal
+2023-12-28 16:56:16,124 |main                 |ControlServlet                |I| Loading webapp [myportal], located at D:\onlineexamportal\ofbiz-framework\plugins\myportal\webapp\myportal\
+2023-12-28 16:56:16,130 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 10 requests, 7 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/myportal/webapp/myportal/WEB-INF/controller.xml
+2023-12-28 16:56:16,161 |main                 |ServiceDispatcher             |I| Registering dispatcher: firstdatapaymentgateway
+2023-12-28 16:56:16,161 |main                 |ServiceContainer              |I| Created new dispatcher: firstdatapaymentgateway
+2023-12-28 16:56:16,161 |main                 |ControlServlet                |I| Loading webapp [firstdata], located at D:\onlineexamportal\ofbiz-framework\plugins\firstdatapaymentgateway\webapp\firstdata\
+2023-12-28 16:56:16,170 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 2 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/firstdatapaymentgateway/webapp/firstdata/WEB-INF/controller.xml
+2023-12-28 16:56:16,189 |main                 |ServiceDispatcher             |I| Registering dispatcher: webpos
+2023-12-28 16:56:16,189 |main                 |ServiceContainer              |I| Created new dispatcher: webpos
+2023-12-28 16:56:16,190 |main                 |ControlServlet                |I| Loading webapp [webpos], located at D:\onlineexamportal\ofbiz-framework\plugins\webpos\webapp\webpos\
+2023-12-28 16:56:16,199 |main                 |ConfigXMLReader               |I| controller loaded: 0.002s, 69 requests, 22 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/webpos/webapp/webpos/WEB-INF/controller.xml
+2023-12-28 16:56:16,217 |main                 |ServiceDispatcher             |I| Registering dispatcher: onlineexam
+2023-12-28 16:56:16,217 |main                 |ServiceContainer              |I| Created new dispatcher: onlineexam
+2023-12-28 16:56:16,217 |main                 |ControlServlet                |I| Loading webapp [onlineexam], located at D:\onlineexamportal\ofbiz-framework\plugins\onlineexam\webapp\onlineexam\
+2023-12-28 16:56:16,224 |main                 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-28 16:56:16,225 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 23 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml
+2023-12-28 16:56:16,242 |main                 |ServiceDispatcher             |I| Registering dispatcher: catalog
+2023-12-28 16:56:16,242 |main                 |ServiceContainer              |I| Created new dispatcher: catalog
+2023-12-28 16:56:16,242 |main                 |ControlServlet                |I| Loading webapp [catalog], located at D:\onlineexamportal\ofbiz-framework\applications\product\webapp\catalog\
+2023-12-28 16:56:16,258 |main                 |ServiceDispatcher             |I| Registering dispatcher: setup
+2023-12-28 16:56:16,258 |main                 |ServiceContainer              |I| Created new dispatcher: setup
+2023-12-28 16:56:16,259 |main                 |ControlServlet                |I| Loading webapp [ofbizsetup], located at D:\onlineexamportal\ofbiz-framework\applications\commonext\webapp\ofbizsetup\
+2023-12-28 16:56:16,273 |main                 |ConfigXMLReader               |I| controller loaded: 0.001s, 32 requests, 15 views in file:/D:/onlineexamportal/ofbiz-framework/applications/commonext/webapp/ofbizsetup/WEB-INF/controller.xml
+2023-12-28 16:56:16,333 |main                 |CatalinaContainer             |I| Connector AJP/1.3 @ 8009 - not-secure [org.apache.coyote.ajp.AjpNioProtocol] started.
+2023-12-28 16:56:16,333 |main                 |CatalinaContainer             |I| Connector HTTP/1.1 @ 8080 - not-secure [org.apache.coyote.http11.Http11NioProtocol] started.
+2023-12-28 16:56:16,333 |main                 |CatalinaContainer             |I| Connector HTTP/1.1 @ 8443 - secure [org.apache.coyote.http11.Http11NioProtocol] started.
+2023-12-28 16:56:16,333 |main                 |CatalinaContainer             |I| Started Apache Tomcat/9.0.82
+2023-12-28 16:56:16,333 |main                 |ContainerLoader               |I| Started container catalina-container
+2023-12-28 16:56:16,983 |OFBiz-JobPoller      |JobManager                    |I| No crashed jobs to re-schedule
+2023-12-28 16:56:16,983 |OFBiz-JobPoller      |ServiceDispatcher             |I| Registering dispatcher: default
+2023-12-28 16:56:16,983 |OFBiz-JobPoller      |ServiceContainer              |I| Created new dispatcher: default
+2023-12-28 16:56:17,105 |OFBiz-JobQueue-0     |TransactionUtil               |W| No transaction in place, so not suspending.
+2023-12-28 16:56:17,123 |OFBiz-JobQueue-0     |SequenceUtil                  |I| Got bank of sequenced IDs for [JobSandbox]; curSeqId=35500, maxSeqId=35600, bankSize=100
+2023-12-28 16:56:17,131 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35471] -- Next runtime: Thu Dec 28 17:11:17 IST 2023
+2023-12-28 16:56:17,140 |OFBiz-JobQueue-0     |AbstractEngine                |I| Loaded Service Locations: {rita-rmi=rmi://localhost:1099/RMIDispatcher, main-rmi=rmi://localhost:1099/RMIDispatcher, entity-sync-rmi=rmi://localhost:1099/RMIDispatcher}
+2023-12-28 16:56:17,140 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35472] -- Next runtime: Thu Dec 28 17:11:17 IST 2023
+2023-12-28 16:56:17,157 |OFBiz-JobQueue-1     |ScriptUtil                    |I| The following 2 scripting engines were found:
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I| Engine name: BeanShell Engine
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Version: 1.0
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Language: BeanShell
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Engine supports the following extensions:
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     bsh
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     java
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Engine has the following short names:
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     beanshell
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     bsh
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     java
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I| Engine name: Groovy Scripting Engine
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Version: 2.0
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Language: Groovy
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Engine supports the following extensions:
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     groovy
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|   Engine has the following short names:
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     groovy
+2023-12-28 16:56:17,158 |OFBiz-JobQueue-1     |ScriptUtil                    |I|     Groovy
+2023-12-28 16:56:20,875 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [3738] milliseconds
+2023-12-28 16:56:20,917 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Create Future Period] Id [FUTURE_PERIOD] -- Next runtime: Mon Jan 01 16:56:20 IST 2024
+2023-12-28 16:56:21,769 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4628] milliseconds
+2023-12-28 16:56:21,778 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [SENDEMAIL] -- Next runtime: Thu Dec 28 17:11:21 IST 2023
+2023-12-28 16:56:21,783 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [5] milliseconds
+2023-12-28 16:56:21,793 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Purge Old Store Auto-Entered Promos] Id [8100] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:21,807 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/purgeOldStoreAutoPromos] finished in [13] milliseconds
+2023-12-28 16:56:21,825 |OFBiz-JobQueue-1     |PersistedServiceJob           |W| Persisted Job [9000] references a RecurrenceInfo, recommend using TemporalExpression instead
+2023-12-28 16:56:21,842 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto Reconcile Financial Account] Id [9000] -- Next runtime: Sun Dec 31 00:00:00 IST 2023
+2023-12-28 16:56:22,137 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/autoFinAccountReconciliation] finished in [295] milliseconds
+2023-12-28 16:56:22,148 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [FAM_AUTO_CREATE] -- Next runtime: Thu Dec 28 17:56:22 IST 2023
+2023-12-28 16:56:22,247 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 16:56:23,172 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/createFuturePeriod] finished in [2253] milliseconds
+2023-12-28 16:56:23,181 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Clear EntitySyncRemove Info] Id [8200] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,185 |OFBiz-JobQueue-0     |EntitySyncServices            |I| Running cleanSyncRemoveInfo
+2023-12-28 16:56:23,193 |OFBiz-JobQueue-0     |EntitySyncServices            |I| In cleanSyncRemoveInfo removed [0] values with TX timestamp before [2023-12-27 16:56:23.189]
+2023-12-28 16:56:23,193 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/cleanSyncRemoveInfo] finished in [12] milliseconds
+2023-12-28 16:56:23,201 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [BackOrder Notification] Id [8000] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,214 |OFBiz-JobQueue-0     |InventoryServices             |I| OOS Inventory Items: 0
+2023-12-28 16:56:23,215 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/checkInventoryAvailability] finished in [14] milliseconds
+2023-12-28 16:56:23,222 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Replacement Held Order Auto-Cancel] Id [8007] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,238 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/autoCancelReplacementOrders] finished in [16] milliseconds
+2023-12-28 16:56:23,245 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Create Also Bought Product Associations] Id [8008] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,284 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/createAlsoBoughtProductAssocs] finished in [39] milliseconds
+2023-12-28 16:56:23,292 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Delete auto-save shopping list for anonymous users] Id [8009] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,322 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/autoDeleteAutoSaveShoppingList] finished in [30] milliseconds
+2023-12-28 16:56:23,330 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Re-Try Failed Auths NSF] Id [8004] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,347 |OFBiz-JobQueue-0     |PaymentGatewayServices        |I| Processing failed order re-auth(s)
+2023-12-28 16:56:23,348 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/retryFailedAuthNsfs] finished in [17] milliseconds
+2023-12-28 16:56:23,355 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Re-Try Failed Auths] Id [8001] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,356 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [1107] milliseconds
+2023-12-28 16:56:23,357 |OFBiz-JobQueue-0     |PaymentGatewayServices        |I| Processing failed order re-auth(s)
+2023-12-28 16:56:23,358 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/retryFailedAuths] finished in [3] milliseconds
+2023-12-28 16:56:23,366 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Extend expired Subscriptions] Id [8005] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,385 |OFBiz-JobQueue-1     |UtilProperties                |I| ResourceBundle DefaultMessagesUiLabels (en) created in 0.023s with 11 properties
+2023-12-28 16:56:23,388 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 16:56:23,388 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [1240] milliseconds
+2023-12-28 16:56:23,530 |OFBiz-JobQueue-0     |UtilProperties                |I| ResourceBundle OrderUiLabels (en) created in 0.144s with 1012 properties
+2023-12-28 16:56:23,531 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/runSubscriptionAutoReorders] finished in [165] milliseconds
+2023-12-28 16:56:23,540 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Run Auto-Reorders] Id [8003] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,551 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/runShoppingListAutoReorder] finished in [11] milliseconds
+2023-12-28 16:56:23,566 |OFBiz-JobQueue-0     |PersistedServiceJob           |W| Persisted Job [8500] references a RecurrenceInfo, recommend using TemporalExpression instead
+2023-12-28 16:56:23,578 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Generate Invoice template] Id [8500] -- Next runtime: Sun Jan 14 22:00:00 IST 2024
+2023-12-28 16:56:23,640 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/autoGenerateInvoiceFromExistingInvoice] finished in [53] milliseconds
+2023-12-28 16:56:23,649 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Cancels all orders after date] Id [8006] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,729 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/cancelAllBackOrders] finished in [80] milliseconds
+2023-12-28 16:56:23,739 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Run Nominated Service on Subscription Expiry] Id [8010] -- Next runtime: Fri Dec 29 00:00:00 IST 2023
+2023-12-28 16:56:23,756 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/runServiceOnSubscriptionExpiry] finished in [16] milliseconds
+2023-12-28 16:56:23,764 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35473] -- Next runtime: Thu Dec 28 17:11:23 IST 2023
+2023-12-28 16:56:23,777 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [13] milliseconds
+2023-12-28 16:56:23,786 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35464] -- Next runtime: Thu Dec 28 17:56:23 IST 2023
+2023-12-28 16:56:23,788 |OFBiz-JobQueue-0     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 16:56:23,790 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [2] milliseconds
+2023-12-28 16:56:23,791 |OFBiz-JobQueue-0     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 16:56:23,791 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [4] milliseconds
+2023-12-28 16:56:24,548 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [2400] milliseconds
+2023-12-28 16:56:24,556 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35465] -- Next runtime: Thu Dec 28 17:56:24 IST 2023
+2023-12-28 16:56:24,557 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 16:56:24,559 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [1] milliseconds
+2023-12-28 16:56:24,560 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 16:56:24,560 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [4] milliseconds
+2023-12-28 16:56:24,573 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [17] milliseconds
+2023-12-28 16:56:24,580 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35466] -- Next runtime: Thu Dec 28 17:56:24 IST 2023
+2023-12-28 16:56:24,582 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 16:56:24,583 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [1] milliseconds
+2023-12-28 16:56:24,584 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 16:56:24,584 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [3] milliseconds
+2023-12-28 16:56:24,597 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [17] milliseconds
+2023-12-28 16:56:24,604 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35467] -- Next runtime: Thu Dec 28 17:56:24 IST 2023
+2023-12-28 16:56:24,605 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 16:56:24,607 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [1] milliseconds
+2023-12-28 16:56:24,608 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 16:56:24,608 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [4] milliseconds
+2023-12-28 16:56:24,619 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [15] milliseconds
+2023-12-28 16:56:25,188 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [1402] milliseconds
+2023-12-28 17:11:17,735 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35500] -- Next runtime: Thu Dec 28 17:26:17 IST 2023
+2023-12-28 17:11:17,740 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35501] -- Next runtime: Thu Dec 28 17:26:17 IST 2023
+2023-12-28 17:11:19,962 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [2226] milliseconds
+2023-12-28 17:11:22,068 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4327] milliseconds
+2023-12-28 17:11:47,802 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35503] -- Next runtime: Thu Dec 28 17:26:47 IST 2023
+2023-12-28 17:11:47,808 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35519] -- Next runtime: Thu Dec 28 17:26:47 IST 2023
+2023-12-28 17:11:49,878 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [2074] milliseconds
+2023-12-28 17:11:51,932 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4124] milliseconds
+2023-12-28 17:26:18,412 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35525] -- Next runtime: Thu Dec 28 17:41:18 IST 2023
+2023-12-28 17:26:18,418 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35524] -- Next runtime: Thu Dec 28 17:41:18 IST 2023
+2023-12-28 17:26:20,406 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [1993] milliseconds
+2023-12-28 17:26:22,386 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [3967] milliseconds
+2023-12-28 17:26:48,441 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35526] -- Next runtime: Thu Dec 28 17:41:48 IST 2023
+2023-12-28 17:26:48,445 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35527] -- Next runtime: Thu Dec 28 17:41:48 IST 2023
+2023-12-28 17:26:50,478 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [2037] milliseconds
+2023-12-28 17:26:52,597 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4150] milliseconds
+2023-12-28 17:41:18,985 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35528] -- Next runtime: Thu Dec 28 17:56:18 IST 2023
+2023-12-28 17:41:18,991 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35529] -- Next runtime: Thu Dec 28 17:56:18 IST 2023
+2023-12-28 17:41:20,975 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [1988] milliseconds
+2023-12-28 17:41:23,032 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4040] milliseconds
+2023-12-28 17:41:49,038 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35530] -- Next runtime: Thu Dec 28 17:56:49 IST 2023
+2023-12-28 17:41:49,041 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35531] -- Next runtime: Thu Dec 28 17:56:49 IST 2023
+2023-12-28 17:41:51,080 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [2041] milliseconds
+2023-12-28 17:41:53,250 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4208] milliseconds
+2023-12-28 17:56:19,588 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35533] -- Next runtime: Thu Dec 28 18:11:19 IST 2023
+2023-12-28 17:56:19,598 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35532] -- Next runtime: Thu Dec 28 18:11:19 IST 2023
+2023-12-28 17:56:21,468 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [1880] milliseconds
+2023-12-28 17:56:23,704 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [4106] milliseconds
+2023-12-28 17:56:49,631 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35506] -- Next runtime: Thu Dec 28 18:56:49 IST 2023
+2023-12-28 17:56:49,680 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 17:56:49,826 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35520] -- Next runtime: Thu Dec 28 18:56:49 IST 2023
+2023-12-28 17:56:49,827 |OFBiz-JobQueue-0     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 17:56:49,892 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [210] milliseconds
+2023-12-28 17:56:49,893 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 17:56:49,894 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [263] milliseconds
+2023-12-28 17:56:50,075 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [246] milliseconds
+2023-12-28 17:56:50,077 |OFBiz-JobQueue-0     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 17:56:50,077 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [250] milliseconds
+2023-12-28 17:56:51,750 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [2119] milliseconds
+2023-12-28 17:56:51,784 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35521] -- Next runtime: Thu Dec 28 18:56:51 IST 2023
+2023-12-28 17:56:51,786 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 17:56:51,789 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [2] milliseconds
+2023-12-28 17:56:51,791 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 17:56:51,791 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [6] milliseconds
+2023-12-28 17:56:51,806 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [22] milliseconds
+2023-12-28 17:56:51,815 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35522] -- Next runtime: Thu Dec 28 18:56:51 IST 2023
+2023-12-28 17:56:51,817 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 17:56:51,819 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [2] milliseconds
+2023-12-28 17:56:51,820 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 17:56:51,821 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [6] milliseconds
+2023-12-28 17:56:51,838 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [23] milliseconds
+2023-12-28 17:56:51,849 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Auto-create Fixed Asset Maintenances] Id [35523] -- Next runtime: Thu Dec 28 18:56:51 IST 2023
+2023-12-28 17:56:51,852 |OFBiz-JobQueue-1     |Log                           |I| [CommonPermissionServices.xml#genericBasePermissionCheck line 59] This simple-method-call is deprecated! Please use a service-call of genericBasePermissionCheck instead.
+2023-12-28 17:56:51,854 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/genericBasePermissionCheck] finished in [2] milliseconds
+2023-12-28 17:56:51,856 |OFBiz-JobQueue-1     |ServiceEcaCondition           |W| doRealCompare returned null, returning false
+2023-12-28 17:56:51,856 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/fixedAssetPermissionCheck] finished in [7] milliseconds
+2023-12-28 17:56:51,873 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [24] milliseconds
+2023-12-28 17:56:51,883 |OFBiz-JobQueue-1     |PersistedServiceJob           |I| Job  [Send Email] Id [35534] -- Next runtime: Thu Dec 28 18:11:51 IST 2023
+2023-12-28 17:56:53,419 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/createMaintsFromTimeInterval] finished in [3593] milliseconds
+2023-12-28 17:56:53,448 |OFBiz-JobQueue-0     |PersistedServiceJob           |I| Job  [Send Email] Id [35535] -- Next runtime: Thu Dec 28 18:11:53 IST 2023
+2023-12-28 17:56:55,399 |OFBiz-JobQueue-1     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [3516] milliseconds
+2023-12-28 17:56:57,442 |OFBiz-JobQueue-0     |ServiceDispatcher             |T| Sync service [default/sendEmailDated] finished in [3994] milliseconds
+2023-12-28 18:03:04,603 |jsse-nio-8443-exec-2 |ControlEventListener          |I| Creating session:  hidden sessionId by default.
+2023-12-28 18:03:04,743 |jsse-nio-8443-exec-3 |ControlEventListener          |I| Creating session:  hidden sessionId by default.
+2023-12-28 18:03:04,962 |jsse-nio-8443-exec-3 |ControlServlet                |T| [[[onlineexam::onlineExamLogin (Domain:https://localhost)] Request Begun, encoding=[UTF-8]- total:0.001,since last(Begin):0.001]]
+2023-12-28 18:03:04,994 |jsse-nio-8443-exec-3 |VisitHandler                  |I| Found visitorId [41600] in cookie
+2023-12-28 18:03:05,009 |jsse-nio-8443-exec-3 |TransactionUtil               |W| No transaction in place, so not suspending.
+2023-12-28 18:03:05,034 |jsse-nio-8443-exec-3 |SequenceUtil                  |I| Got bank of sequenced IDs for [Visit]; curSeqId=61400, maxSeqId=61500, bankSize=100
+2023-12-28 18:03:05,077 |jsse-nio-8443-exec-3 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-28 18:03:05,095 |jsse-nio-8443-exec-3 |ConfigXMLReader               |I| controller loaded: 0.0s, 0 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/handlers-controller.xml
+2023-12-28 18:03:05,104 |jsse-nio-8443-exec-3 |ConfigXMLReader               |I| controller loaded: 0.013s, 52 requests, 21 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/common-controller.xml
+2023-12-28 18:03:05,106 |jsse-nio-8443-exec-3 |ConfigXMLReader               |I| controller loaded: 0.028s, 23 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml
+2023-12-28 18:03:05,132 |jsse-nio-8443-exec-3 |RequestHandler                |I| This is the first request in this visit. Hidden sessionId by default.
+2023-12-28 18:03:05,205 |jsse-nio-8443-exec-3 |LoginWorker                   |I| Setting default delegator
+2023-12-28 18:03:05,409 |jsse-nio-8443-exec-3 |ServiceDispatcher             |T| Sync service [onlineexam/userLogin] finished in [200] milliseconds
+2023-12-28 18:03:05,410 |jsse-nio-8443-exec-3 |VisitHandler                  |I| Found visitorId [41600] in cookie
+2023-12-28 18:03:05,447 |jsse-nio-8443-exec-3 |ServiceDispatcher             |T| Sync service [onlineexam/preferenceGetSetPermission] finished in [11] milliseconds
+2023-12-28 18:03:05,501 |jsse-nio-8443-exec-3 |ServiceDispatcher             |T| Sync service [onlineexam/setUserPreference] finished in [72] milliseconds
+2023-12-28 18:03:05,527 |jsse-nio-8443-exec-3 |ServiceDispatcher             |T| Sync service [onlineexam/getUserPreference] finished in [21] milliseconds
+2023-12-28 18:03:05,558 |jsse-nio-8443-exec-3 |ServiceDispatcher             |T| Sync service [onlineexam/getUserPreference] finished in [14] milliseconds
+2023-12-28 18:03:06,592 |jsse-nio-8443-exec-3 |RequestHandler                |I| Ran Event [java:com.vastpro.events.OnlineExamEvents#login] from [request], result is [success]
+2023-12-28 18:03:06,685 |jsse-nio-8443-exec-3 |RequestHandler                |I| [RequestHandler.doRequest]: Response is a chained request. Hidden sessionId by default.
+2023-12-28 18:03:06,693 |jsse-nio-8443-exec-3 |RequestHandler                |I| [RequestHandler]: Chain in place: requestUri=json overrideViewUri=null Hidden sessionId by default.
+2023-12-28 18:03:06,867 |jsse-nio-8443-exec-3 |RequestHandler                |I| Ran Event [java:org.apache.ofbiz.common.CommonEvents#jsonResponseFromRequestAttributes] from [request], result is [success]
+2023-12-28 18:03:06,944 |jsse-nio-8443-exec-3 |ServerHitBin                  |I| Visit delegatorName=default, ServerHitBin delegatorName=default
+2023-12-28 18:03:06,974 |jsse-nio-8443-exec-3 |ControlServlet                |T| [[[onlineexam::onlineExamLogin (Domain:https://localhost)] Request Done- total:2.012,since last([onlineexam::onli...):2.011]]
+2023-12-28 18:04:00,920 |jsse-nio-8443-exec-8 |ControlEventListener          |I| Creating session:  hidden sessionId by default.
+2023-12-28 18:04:00,976 |jsse-nio-8443-exec-7 |ControlServlet                |T| [[[onlineexam::onlineExamLogin (Domain:https://localhost)] Request Begun, encoding=[UTF-8]- total:0.0,since last(Begin):0.0]]
+2023-12-28 18:04:00,988 |jsse-nio-8443-exec-7 |UtilXml                       |E| XmlFileLoader: File file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml process error. Line: 231. Error message: cvc-complex-type.2.3: Element 'request-map' cannot have character [children], because the type's content type is element-only.
+2023-12-28 18:04:01,005 |jsse-nio-8443-exec-7 |ConfigXMLReader               |I| controller loaded: 0.0s, 0 requests, 0 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/handlers-controller.xml
+2023-12-28 18:04:01,006 |jsse-nio-8443-exec-7 |ConfigXMLReader               |I| controller loaded: 0.009s, 52 requests, 21 views in file:/D:/onlineexamportal/ofbiz-framework/framework/common/webcommon/WEB-INF/common-controller.xml
+2023-12-28 18:04:01,007 |jsse-nio-8443-exec-7 |ConfigXMLReader               |I| controller loaded: 0.019s, 23 requests, 1 views in file:/D:/onlineexamportal/ofbiz-framework/plugins/onlineexam/webapp/onlineexam/WEB-INF/controller.xml
+2023-12-28 18:04:01,019 |jsse-nio-8443-exec-7 |LoginWorker                   |I| Setting default delegator
+2023-12-28 18:04:01,024 |jsse-nio-8443-exec-7 |ServiceDispatcher             |T| Sync service [onlineexam/userLogin] finished in [4] milliseconds
+2023-12-28 18:04:01,024 |jsse-nio-8443-exec-7 |VisitHandler                  |I| Found visitorId [41600] in cookie
+2023-12-28 18:04:01,030 |jsse-nio-8443-exec-7 |ServiceDispatcher             |T| Sync service [onlineexam/setUserPreference] finished in [2] milliseconds
+2023-12-28 18:04:01,036 |jsse-nio-8443-exec-7 |ServiceDispatcher             |T| Sync service [onlineexam/getUserPreference] finished in [1] milliseconds
+2023-12-28 18:04:01,038 |jsse-nio-8443-exec-7 |ServiceDispatcher             |T| Sync service [onlineexam/getUserPreference] finished in [1] milliseconds
+2023-12-28 18:04:01,044 |jsse-nio-8443-exec-7 |RequestHandler                |I| Ran Event [java:com.vastpro.events.OnlineExamEvents#login] from [request], result is [success]
+2023-12-28 18:04:01,045 |jsse-nio-8443-exec-7 |RequestHandler                |I| [RequestHandler.doRequest]: Response is a chained request. Hidden sessionId by default.
+2023-12-28 18:04:01,045 |jsse-nio-8443-exec-7 |RequestHandler                |I| [RequestHandler]: Chain in place: requestUri=json overrideViewUri=null Hidden sessionId by default.
+2023-12-28 18:04:01,051 |jsse-nio-8443-exec-7 |RequestHandler                |I| Ran Event [java:org.apache.ofbiz.common.CommonEvents#jsonResponseFromRequestAttributes] from [request], result is [success]
+2023-12-28 18:04:01,053 |jsse-nio-8443-exec-7 |ServerHitBin                  |I| Visit delegatorName=default, ServerHitBin delegatorName=default
+2023-12-28 18:04:01,055 |jsse-nio-8443-exec-7 |ControlServlet                |T| [[[onlineexam::onlineExamLogin (Domain:https://localhost)] Request Done- total:0.079,since last([onlineexam::onli...):0.079]]

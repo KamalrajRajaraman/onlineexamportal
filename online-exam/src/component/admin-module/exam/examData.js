@@ -29,9 +29,10 @@ export const ExamProvider  = ({children})=>{
       }
     }
 
-      return <ExamContext.Provider value={{exams, setExams,onDelete,alert,setAlert,fetchExam}}>
+      return (
+      <> <ExamContext.Provider value={{exams, setExams,onDelete,alert,setAlert,fetchExam}}>
         {children}
-      </ExamContext.Provider>
+      </ExamContext.Provider></>)
 
 }
 

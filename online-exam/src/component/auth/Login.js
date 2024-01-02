@@ -30,9 +30,9 @@ const Login = () => {
     const data = await res.json();
 
     if (data._LOGIN_PASSED_ === "TRUE") {
-      auth.login(data.USERNAME,data.partyRole);
+      auth.login(data.USERNAME,data.partyRoleTypeId);
 
-      if(data.partyRole==="PERSON_ROLE"){
+      if(data.partyRoleTypeId==="PERSON_ROLE"){
         const redirectPath = location.state?.path || "/user-dashboard";
 
         if(redirectPath.startsWith("/user-dashboard")){
@@ -43,7 +43,7 @@ const Login = () => {
         }
       }
 
-      if(data.partyRole==="ADMIN"){
+      if(data.partyRoleTypeId==="ADMIN"){
         const redirectPath = location.state?.path || "/admin";
         if(redirectPath.startsWith("/admin")){
              navigate(redirectPath, { replace: true });
