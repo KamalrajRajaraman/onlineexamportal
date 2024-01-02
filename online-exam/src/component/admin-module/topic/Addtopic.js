@@ -47,7 +47,7 @@ const validate = (values)=>{
       body:JSON.stringify(topicDetails)
     });
     const data =  await res.json();
-   
+   console.log(data);
     if(data["result"]==="success"){
       setTopicValues(initialValues)
       setAlert(true);
