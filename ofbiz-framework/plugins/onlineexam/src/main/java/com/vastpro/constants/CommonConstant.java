@@ -9,18 +9,21 @@ package com.vastpro.constants;
 public interface CommonConstant {
 	
 	//Common Ofbiz constants
+	public static final String RESULT ="result";
 	public static final String SUCCESS = "success";
 	public static final String ERROR = "error";
 	public static final String RESPONSE_MESSAGE="responseMessage";
 	public static final String USER_LOGIN_ID="userLoginId";
 	public static final String PARTY_AND_USER_LOGIN ="PartyAndUserLogin";
-	
+	public static final String RESOURCE_ERROR = "OnlineexamUiLabels";
+	public static final String _ERROR_MESSAGE_ ="_ERROR_MESSAGE_";
 	
 	//Session Common Attribute 
 	public static final String USER_LOGIN="userLogin";
 	
 	//Request Common Attribute
 	public static final String DELEGATOR="delegator";
+	public static final String 	DISPATCHER ="dispatcher";
 	
 	//Party Entity Constant 
 	public static final String PARTY_ID = "partyId";
