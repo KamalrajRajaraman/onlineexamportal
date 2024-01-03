@@ -27,8 +27,9 @@ public class ExamMasterEvents {
 	public static final String module = ExamMasterEvents.class.getName();
 
 	public static String createExam(HttpServletRequest request, HttpServletResponse response) {	
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 
 		// Getting Add Exam Form data which is sent as Json Object from React
 		String examId = (String) request.getAttribute(CommonConstant.EXAM_ID);
@@ -69,13 +70,13 @@ public class ExamMasterEvents {
 		} catch (GenericServiceException e) {
 			 Debug.logError(e, "Failed to execute createExam service", module);
 			 String errMsg = "Failed to execute createExam service : " + e.getMessage();
-             request.setAttribute("_ERROR_MESSAGE_", errMsg);
-             request.setAttribute("result", CommonConstant.ERROR);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
              return CommonConstant.ERROR;
 		}
 		
 		if (ServiceUtil.isSuccess(createExamResp)) {
-			request.setAttribute("result", createExamResp.get(CommonConstant.RESPONSE_MESSAGE));
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
 			
 			
 			//constructing exam as mapObject
@@ -91,8 +92,7 @@ public class ExamMasterEvents {
 			exam.put(CommonConstant.QUESTIONS_RANDOMIZED,createExamResp.get(CommonConstant.QUESTIONS_RANDOMIZED) );
 			exam.put(CommonConstant.ANSWER_MUST,createExamResp.get(CommonConstant.ANSWER_MUST) );
 			exam.put(CommonConstant.ENABLE_NEGATIVE_MARK,createExamResp.get(CommonConstant.ENABLE_NEGATIVE_MARK) );
-			exam.put(CommonConstant.NEGATIVE_MARK_VALUE,createExamResp.get(CommonConstant.NEGATIVE_MARK_VALUE) );
-		
+			exam.put(CommonConstant.NEGATIVE_MARK_VALUE,createExamResp.get(CommonConstant.NEGATIVE_MARK_VALUE) );		
 			request.setAttribute("exam", exam);
 			
 		}
@@ -104,30 +104,31 @@ public class ExamMasterEvents {
 	
 	//Method to retrieve all the exams from ExamMaster entity
 	public static String findAllExams(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> examList = null;
+		
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 
 		//Creation of a map to send the context to the service 
 		Map<String, Object> findExamContext = new HashMap<>();
 		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);
 
 		//Calling the service which in return provides the list of exams
+		Map<String, Object> examList = null;
 		try {
-			examList = dispatcher.runSync("findAllExams", findExamContext);
-			if (ServiceUtil.isSuccess(examList)) {
-				
-				//If the service returns success the list is added to the request
-				request.setAttribute("examList", examList.get("examList"));
-			}
-			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
+			examList = dispatcher.runSync("findAllExams", findExamContext);	
+			Debug.logInfo("Successfully executed findAllExams service", module);
 		} catch (GenericServiceException e) {
 			 Debug.logError(e, "Failed to execute findAllExams service", module);
 			 String errMsg = "Failed to execute findAllExams service : " + e.getMessage();
-             request.setAttribute("_ERROR_MESSAGE_", errMsg);
-             request.setAttribute("result", CommonConstant.ERROR);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
              return CommonConstant.ERROR;
+		}
+		//If the service returns success result and  examList is added to the request
+		if (ServiceUtil.isSuccess(examList)) {	
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute("examList", examList.get("examList"));
 		}
 		return CommonConstant.SUCCESS;
 
@@ -136,9 +137,10 @@ public class ExamMasterEvents {
 	//Method to find an exam by using examId from ExamMaster entity
 	public static String findExamById(HttpServletRequest request, HttpServletResponse response) {
 		
+		
 		//Getting the examId and other required attributed from the request
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
 
 		//Creation of a map to send the context to the service 
@@ -146,38 +148,37 @@ public class ExamMasterEvents {
 		findExamByIdContext.put(CommonConstant.USER_LOGIN, userLogin);
 		findExamByIdContext.put(CommonConstant.EXAM_ID, examId);
 		
-		
-		Map<String, Object> findExamByIdResp = null;
-		
 		//Calling the service which in return provides the exam detail for the examId
+		Map<String, Object> findExamByIdResp = null;
 		try {
 			findExamByIdResp = dispatcher.runSync("findExamById", findExamByIdContext);
-			
-			//If the service returns success the list is added to the request
-			if (ServiceUtil.isSuccess(findExamByIdResp)) {
-				request.setAttribute("result", findExamByIdResp.get(CommonConstant.RESPONSE_MESSAGE));
-				request.setAttribute("exam", findExamByIdResp.get("exam"));
-			}
 			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
 		} catch (GenericServiceException e) {
 			
 			 Debug.logError(e, "Failed to execute findExamById service", module);
 			 String errMsg = "Failed to execute findExamById service : " + e.getMessage();
-             request.setAttribute("_ERROR_MESSAGE_", errMsg);
-             request.setAttribute("result", CommonConstant.ERROR);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
              return CommonConstant.ERROR;
        
 		}
+		
+		//If the service returns success result and exam record is added to the request
+		if (ServiceUtil.isSuccess(findExamByIdResp)) {
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute("exam", findExamByIdResp.get("exam"));
+		}
+		
 		return CommonConstant.SUCCESS;
-
 	}
 
 	//Method to delete an exam from ExamMaster entity
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 		
 		//Getting the examId and other required objects from the request
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
 
 		//Creation of a map to send the context to the service 
@@ -195,14 +196,14 @@ public class ExamMasterEvents {
 			
 			Debug.logError(e, "Failed to execute deleteExam service", module);
 			String errMsg = "Failed to execute deleteExam service : " + e.getMessage();
-            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-            request.setAttribute("result", CommonConstant.ERROR);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
             return CommonConstant.ERROR;
 
 		}
 		//If the exam is deleted successfully the response is set in request
 		if (ServiceUtil.isSuccess(deleteExamResp)) {
-			request.setAttribute("result", deleteExamResp.get(CommonConstant.RESPONSE_MESSAGE));
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
 			request.setAttribute("resultMap", deleteExamResp);
 		}
 
@@ -212,9 +213,9 @@ public class ExamMasterEvents {
 	//Method to retrieve all the exams from ExamMaster entity
 	public static String createUserAttemptMaster(HttpServletRequest request, HttpServletResponse response) {
 		
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 	  
 		//Retrieving data from front end
 		String examId = (String) request.getAttribute(CommonConstant.EXAM_ID);
@@ -246,8 +247,8 @@ public class ExamMasterEvents {
 		} catch (GenericEntityException e) {
 			Debug.logError(e, "Unable to retrieve previous no of Attempt from UserAttemptMaster", module);
 			String errMsg = "Unable to retrieve previous no of Attempt from UserAttemptMaster : " + e.getMessage();
-			request.setAttribute("_ERROR_MESSAGE_", errMsg);
-			request.setAttribute("result", CommonConstant.ERROR);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 			return CommonConstant.ERROR;
 		}
 		long attemptNumber = prevAttempt+1;
@@ -270,8 +271,8 @@ public class ExamMasterEvents {
 					
 					Debug.logError(e, "Failed to execute findNoOfQuestionCountByExamID service", module);
 					String errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
-		            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-		            request.setAttribute("result", CommonConstant.ERROR);
+					request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 		            return CommonConstant.ERROR;
 		            
 				}
@@ -289,8 +290,8 @@ public class ExamMasterEvents {
 						
 						Debug.logError(e, "Failed to execute createUserAttemptMaster service", module);
 						String errMsg = "Failed to execute createUserAttemptMaster service : " + e.getMessage();
-			            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-			            request.setAttribute("result", CommonConstant.ERROR);
+						request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+						request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 			            return CommonConstant.ERROR;
 						
 					}
@@ -326,8 +327,8 @@ public class ExamMasterEvents {
 									
 									Debug.logError(e, "Failed to execute createUserAttemptTopicMaster service", module);
 									String errMsg = "Failed to execute createUserAttemptTopicMaster service : " + e.getMessage();
-						            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-						            request.setAttribute("result", CommonConstant.ERROR);
+									 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+									 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 						            return CommonConstant.ERROR;
 									
 								}
@@ -352,8 +353,8 @@ public class ExamMasterEvents {
 									
 									Debug.logError(e, "Failed to execute findQuestionsByTopicIds service", module);
 									String errMsg = "Failed to execute findQuestionsByTopicIds service : " + e.getMessage();
-						            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-						            request.setAttribute("result", CommonConstant.ERROR);
+									request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+									request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 						            return CommonConstant.ERROR;
 																		
 								}
@@ -400,8 +401,8 @@ public class ExamMasterEvents {
 											
 											Debug.logError(e, "Failed to execute createUserAttemptAnswerMasterService service", module);
 											String errMsg = "Failed to execute createUserAttemptAnswerMasterService service : " + e.getMessage();
-								            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-								            request.setAttribute("result", CommonConstant.ERROR);
+											request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+											request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 								            return CommonConstant.ERROR;
 								            
 										}
@@ -431,8 +432,8 @@ public class ExamMasterEvents {
 												
 												Debug.logError(e, "Failed to execute findQuestionById service", module);
 												String errMsg = "Failed to execute findQuestionById service : " + e.getMessage();
-									            request.setAttribute("_ERROR_MESSAGE_", errMsg);
-									            request.setAttribute("result", CommonConstant.ERROR);
+												 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+												 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 									            return CommonConstant.ERROR;
 												
 											}
