@@ -23,36 +23,22 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
-import org.hibernate.Hibernate;
 
 import com.vastpro.constants.CommonConstant;
 import com.vastpro.validator.ExamMasterCheck;
 import com.vastpro.validator.ExamMasterValidator;
 import com.vastpro.validator.HibernateHelper;
-import com.vastpro.validator.Loggable;
 
 public class ExamMasterEvents {
 	
 	public static final String module = ExamMasterEvents.class.getName();
 	public static String resource_error = "OnlineexamUiLabels";
 	public static String createExam(HttpServletRequest request, HttpServletResponse response) {	
-		
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 
-		// Getting Add Exam Form data which is sent as Json Object from React
-		String examId = (String) request.getAttribute(CommonConstant.EXAM_ID);
-		String examName = (String) request.getAttribute(CommonConstant.EXAM_NAME);
-		String description = (String) request.getAttribute(CommonConstant.DESCRIPTION);
-		String creationDate = (String) request.getAttribute(CommonConstant.CREATION_DATE);
-		String expirationDate = (String) request.getAttribute(CommonConstant.EXPIRATION_DATE);
-		String noOfQuestions = (String) request.getAttribute(CommonConstant.NO_OF_QUESTIONS);
-		String durationMinutes = (String) request.getAttribute(CommonConstant.DURATION_MINUTES);
-		String passPercentage = (String) request.getAttribute(CommonConstant.PASS_PERCENTAGE);
-		String questionsRandomized = (String) request.getAttribute(CommonConstant.QUESTIONS_RANDOMIZED);
-		String answersMust = (String) request.getAttribute(CommonConstant.ANSWER_MUST);
-		String enableNegativeMark = (String) request.getAttribute(CommonConstant.ENABLE_NEGATIVE_MARK);
-		String negativeMarkValue = (String) request.getAttribute(CommonConstant.NEGATIVE_MARK_VALUE);
+		
 		
 		// Getting Add Exam Form data which is sent as JSON Object from React
 		Map<String,Object> combinedMap=UtilHttp.getCombinedMap(request);
