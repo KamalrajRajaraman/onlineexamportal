@@ -31,13 +31,11 @@ public class TopicMasterEvents {
 	// Event for creating new topic in TopicMaster entity
 	public static String createTopic(HttpServletRequest request, HttpServletResponse response) {
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
 
 		// Retrieving Topic Form Data from React which is sent as Json Object
-//		String topicId = (String) request.getAttribute(CommonConstant.TOPIC_ID);
-//		String topicName = (String) request.getAttribute(CommonConstant.TOPIC_NAME);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
@@ -50,7 +48,7 @@ public class TopicMasterEvents {
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
 		
-		String topicName = (String) combinedMap.get("topicName");
+		String topicName = (String) combinedMap.get(CommonConstant.TOPIC_NAME);
 		// create a map with topic details and userlogin object
 		Map<String, Object> addTopicContext = new HashMap<>();
 		// addTopicContext.put(CommonConstant.TOPIC_ID, topicId);

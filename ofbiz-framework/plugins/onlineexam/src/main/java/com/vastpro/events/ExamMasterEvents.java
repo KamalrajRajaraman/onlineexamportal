@@ -3,13 +3,17 @@ package com.vastpro.events;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
+import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
@@ -19,13 +23,18 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
+import org.hibernate.Hibernate;
 
 import com.vastpro.constants.CommonConstant;
+import com.vastpro.validator.ExamMasterCheck;
+import com.vastpro.validator.ExamMasterValidator;
+import com.vastpro.validator.HibernateHelper;
+import com.vastpro.validator.Loggable;
 
 public class ExamMasterEvents {
 	
 	public static final String module = ExamMasterEvents.class.getName();
-
+	public static String resource_error = "OnlineexamUiLabels";
 	public static String createExam(HttpServletRequest request, HttpServletResponse response) {	
 		
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
@@ -45,7 +54,37 @@ public class ExamMasterEvents {
 		String enableNegativeMark = (String) request.getAttribute(CommonConstant.ENABLE_NEGATIVE_MARK);
 		String negativeMarkValue = (String) request.getAttribute(CommonConstant.NEGATIVE_MARK_VALUE);
 		
+		// Getting Add Exam Form data which is sent as JSON Object from React
+		Map<String,Object> combinedMap=UtilHttp.getCombinedMap(request);
 		
+		String examId = (String) combinedMap.get(CommonConstant.EXAM_ID);
+		String examName = (String) combinedMap.get(CommonConstant.EXAM_NAME);
+		String description = (String) combinedMap.get(CommonConstant.DESCRIPTION);
+		String creationDate = (String) combinedMap.get(CommonConstant.CREATION_DATE);
+		String expirationDate = (String) combinedMap.get(CommonConstant.EXPIRATION_DATE);
+		String noOfQuestions = (String) combinedMap.get(CommonConstant.NO_OF_QUESTIONS);
+		String durationMinutes = (String) combinedMap.get(CommonConstant.DURATION_MINUTES);
+		String passPercentage = (String) combinedMap.get(CommonConstant.PASS_PERCENTAGE);
+		String questionsRandomized = (String) combinedMap.get(CommonConstant.QUESTIONS_RANDOMIZED);
+		String answersMust = (String) combinedMap.get(CommonConstant.ANSWER_MUST);
+		String enableNegativeMark = (String) combinedMap.get(CommonConstant.ENABLE_NEGATIVE_MARK);
+		String negativeMarkValue = (String) combinedMap.get(CommonConstant.NEGATIVE_MARK_VALUE);
+		
+		Locale locale= request.getLocale();
+		
+		ExamMasterValidator examMasterCheck=HibernateHelper.populateBeanFromMap(combinedMap, ExamMasterValidator.class);	
+		Set<ConstraintViolation<ExamMasterValidator>> errors=HibernateHelper.checkValidationErrors(examMasterCheck, ExamMasterCheck.class);
+		Boolean hasErrors= HibernateHelper.validateFormSubmission(delegator, errors, request, locale, "InvalidErrMsg", resource_error, false);
+		
+		if(hasErrors){
+			request.setAttribute(CommonConstant.RESPONSE_MESSAGE, CommonConstant.ERROR);
+			request.setAttribute("result", CommonConstant.ERROR);
+			Debug.logError("Some fields are empty", module);
+			return CommonConstant.ERROR;
+			
+		}
+		
+		else{
 		//creating map to pass required context to the service called 
 		Map<String, Object> addExamContext = UtilMisc.toMap(
 				CommonConstant.EXAM_ID, examId,
@@ -95,6 +134,7 @@ public class ExamMasterEvents {
 			exam.put(CommonConstant.NEGATIVE_MARK_VALUE,createExamResp.get(CommonConstant.NEGATIVE_MARK_VALUE) );		
 			request.setAttribute("exam", exam);
 			
+		}
 		}
 
 
@@ -311,7 +351,7 @@ public class ExamMasterEvents {
 							 List< Map<String, Object>> topicList = new LinkedList<>();
 							 Map<String, Object> createUserAttemptTopicMasterResp = null;
 							 
-							 //Extracting the records from the Generic value returned by
+							 //The objects in the list are added to a map
 							 for(Map<String,Object> examTopicMappingRecord:examTopicMappingRespList) {
 								 String topicId=(String) examTopicMappingRecord.get(CommonConstant.TOPIC_ID);
 								 String topicPassPercentage = (String) examTopicMappingRecord.get(CommonConstant.TOPIC_PASS_PERCENTAGE);
@@ -322,6 +362,7 @@ public class ExamMasterEvents {
 								 attemptMasterCtx.put(CommonConstant.TOTAL_QUESTIONS_IN_THIS_TOPIC, totalQuestionsInThisTopic);
 								
 								 try {
+									 //The service to create entries in the UserAttemptTopicMaster is called
 									 createUserAttemptTopicMasterResp=dispatcher.runSync("createUserAttemptTopicMaster", attemptMasterCtx);
 								} catch (GenericServiceException e) {
 									
