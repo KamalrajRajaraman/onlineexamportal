@@ -89,7 +89,7 @@ public class ExamMasterEvents {
 		
 		// creating ExamMaster Record by calling createExam service 
 		Map<String, Object> createExamResp = null;
-		try {	
+		try {
 			createExamResp = dispatcher.runSync(CommonConstant.CREATE_EXAM, addExamContext);	
 			Debug.logInfo("=======Created Exam Master record in event using service createExam=========", module);
 		} catch (GenericServiceException e) {
