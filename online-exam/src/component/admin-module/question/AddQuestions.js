@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
-import { useTopicContext } from "../topic/topicData";
-import { useQuestionContext } from "./questionData";
+import { useTopicContext } from "../topic/TopicData";
+import { useQuestionContext } from "./QuestionData";
 
 const AddQuestions = () => {
   

@@ -1,6 +1,6 @@
 import React from 'react'
 import {  NavLink } from 'react-router-dom'
-import { useAuth } from '../../auth/auth';
+import { useAuth } from '../../auth/Auth';
 const UserSideBar = () => {
   const {logout} = useAuth();
   const onlogout =async() =>{

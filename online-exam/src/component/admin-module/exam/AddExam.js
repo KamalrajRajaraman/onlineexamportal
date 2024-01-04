@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useExamContext } from "./examData";
+import { useExamContext } from "./ExamData";
 import FormInput from "../../common/FormInput";
 
 const AddExam = () => {
