@@ -26,7 +26,7 @@ import com.vastpro.validator.TopicMasterValidator;
 //Topic related events 
 public class TopicMasterEvents {
 	public static final String module = TopicMasterEvents.class.getName();
-	public static String resource_error = "OnlineexamUiLabels";
+	
 
 	// Event for creating new topic in TopicMaster entity
 	public static String createTopic(HttpServletRequest request, HttpServletResponse response) {
@@ -43,7 +43,7 @@ public class TopicMasterEvents {
 		Set<ConstraintViolation<TopicMasterValidator>> checkValidationErrors = HibernateHelper
 				.checkValidationErrors(topicForm, TopicMasterCheck.class);
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
-				locale, "MandatoryFieldErrMsgTopicForm", resource_error, false);
+				locale, "MandatoryFieldErrMsgTopicForm", CommonConstant.RESOURCE_ERROR, false);
 		
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
@@ -69,7 +69,7 @@ public class TopicMasterEvents {
 							serviceResult.get(CommonConstant.TOPIC_ID), CommonConstant.TOPIC_NAME,
 							serviceResult.get(CommonConstant.TOPIC_NAME));
 					request.setAttribute("topic", topic);
-					request.setAttribute("result", serviceResult.get(CommonConstant.RESPONSE_MESSAGE));
+					request.setAttribute(CommonConstant.RESULT, serviceResult.get(CommonConstant.RESPONSE_MESSAGE));
 				}
 				Debug.logInfo("=======Created TopicMaster record in this event using service createTopic=========",
 						module);
@@ -79,8 +79,8 @@ public class TopicMasterEvents {
 				// If exception occured error setted as result in request object
 				Debug.logError(e, "Failed to execute createTopic service", module);
 				String errMsg = "Failed to execute createTopic service : " + e.getMessage();
-				request.setAttribute("_ERROR_MESSAGE_", errMsg);
-				request.setAttribute("result", "error");
+				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 				return CommonConstant.ERROR;
 			}
 
@@ -91,8 +91,8 @@ public class TopicMasterEvents {
 
 	// Event for find all topics from TopicMaster entity
 	public static String findAllTopics(HttpServletRequest request, HttpServletResponse response) {
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 
 		// Create a map with userlogin object
 		Map<String, Object> findAllTopicContext = new HashMap<>();
@@ -106,8 +106,8 @@ public class TopicMasterEvents {
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute findAllTopics service", module);
 			String errMsg = "Failed to execute findAllTopics service : " + e.getMessage();
-			request.setAttribute("_ERROR_MESSAGE_", errMsg);
-			request.setAttribute("result", "error");
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 			return CommonConstant.ERROR;
 		}
 
@@ -123,8 +123,8 @@ public class TopicMasterEvents {
 	// Event for find a particular topic based on topic id
 	public static String findTopicById(HttpServletRequest request, HttpServletResponse response) {
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String topicId = (String) request.getAttribute(CommonConstant.TOPIC_ID);
 
 		Map<String, Object> findTopicContext = new HashMap<>();
@@ -141,14 +141,14 @@ public class TopicMasterEvents {
 
 			Debug.logError(e, "Failed to execute findTopicById service", module);
 			String errMsg = "Failed to execute findTopicById service : " + e.getMessage();
-			request.setAttribute("_ERROR_MESSAGE_", errMsg);
-			request.setAttribute("result", CommonConstant.ERROR);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 			return CommonConstant.ERROR;
 		}
 
 		// checking if the findTopicById service is success or not
 		if (ServiceUtil.isSuccess(serviceResultMap)) {
-			request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
+			request.setAttribute(CommonConstant.RESULT, serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
 			Map<String, Object> topic = UtilMisc.toMap(CommonConstant.TOPIC_ID,
 					serviceResultMap.get(CommonConstant.TOPIC_ID), CommonConstant.TOPIC_NAME,
 					serviceResultMap.get(CommonConstant.TOPIC_NAME));
@@ -161,8 +161,8 @@ public class TopicMasterEvents {
 
 	// Event for deleting a topic based on topic id
 	public static String deleteTopic(HttpServletRequest request, HttpServletResponse response) {
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String topicId = request.getParameter(CommonConstant.TOPIC_ID);
 
 		// creating map with inclusion of topicId and userLogin object
@@ -174,7 +174,7 @@ public class TopicMasterEvents {
 			// calling deleteTopic service
 			serviceResultMap = dispatcher.runSync("deleteTopic", deleteTopicContext);
 			if (ServiceUtil.isSuccess(serviceResultMap)) {
-				request.setAttribute("result", serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
+				request.setAttribute(CommonConstant.RESULT, serviceResultMap.get(CommonConstant.RESPONSE_MESSAGE));
 				request.setAttribute("resultMap", serviceResultMap);
 			}
 		} catch (GenericServiceException e) {
