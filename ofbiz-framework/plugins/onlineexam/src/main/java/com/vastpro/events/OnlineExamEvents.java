@@ -25,7 +25,7 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.ofbiz.webapp.control.LoginWorker;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 import com.vastpro.validator.HibernateHelper;
 import com.vastpro.validator.Loggable;
 import com.vastpro.validator.LoginValidator;
@@ -38,7 +38,7 @@ public class OnlineExamEvents {
 
 	// used to login 
 	public static String login(HttpServletRequest request, HttpServletResponse response) {
-		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		
 		
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -46,28 +46,28 @@ public class OnlineExamEvents {
 		LoginValidator loginForm = HibernateHelper.populateBeanFromMap(combinedMap, LoginValidator.class);
 		Set<ConstraintViolation<LoginValidator>> checkValidationErrors = HibernateHelper.checkValidationErrors(loginForm, Loggable.class);
 		
-		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", CommonConstant.RESOURCE_ERROR, false);
+		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
 		if(hasFormErrors) {
 			String errMsg = "Invalid Input" + module;
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;	
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;	
 		}
 		
 		String partyId = null;
 		String result = LoginWorker.login(request, response);
 		
 		//If logged in checking role type
-		if (CommonConstant.SUCCESS.equals(result)) {
+		if (CommonConstants.SUCCESS.equals(result)) {
 			
 			//After logged in userLogin Generic Value available in session
-			GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+			GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 			
 			//Getting partyId available in userLogin GenericValue
 			if(UtilValidate.isNotEmpty(userLogin)) {
-				partyId = userLogin.getString(CommonConstant.PARTY_ID);
+				partyId = userLogin.getString(CommonConstants.PARTY_ID);
 			}
 			
 			//if partyId is available retrieving roleTypeId List form UserMaster View Entity and partyRole is set in request Attribute
@@ -78,18 +78,18 @@ public class OnlineExamEvents {
 				try {
 					 roleTypeList = EntityQuery
 								.use(delegator)
-								.select(CommonConstant.ROLE_TYPE_ID)
+								.select(CommonConstants.ROLE_TYPE_ID)
 								.from("UserMaster")
-								.where(CommonConstant.PARTY_ID,partyId)
+								.where(CommonConstants.PARTY_ID,partyId)
 								.queryList();
 				}
 				catch (GenericEntityException e) {
 					
 					Debug.logError(e, "Unable to retrieve RoleTypeId  from UserMaster ", module);	
 					String errMsg = "Unable to retrieve RoleTypeId  from UserMaster: " + e.getMessage();
-					request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-					request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-					return CommonConstant.ERROR;
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					return CommonConstants.ERROR;
 					
 				}
 				
@@ -99,37 +99,37 @@ public class OnlineExamEvents {
 				String admin =null;				
 				if (UtilValidate.isNotEmpty(roleTypeList)) {					
 					for(GenericValue roleType:roleTypeList) {
-						partyRoleTypeId = roleType.getString(CommonConstant.ROLE_TYPE_ID);
-						if(CommonConstant.PERSON_ROLE.equals(partyRoleTypeId)) {
+						partyRoleTypeId = roleType.getString(CommonConstants.ROLE_TYPE_ID);
+						if(CommonConstants.PERSON_ROLE.equals(partyRoleTypeId)) {
 							personRole = partyRoleTypeId;
 						}
-						else if(CommonConstant.ADMIN.equals(partyRoleTypeId)) {
+						else if(CommonConstants.ADMIN.equals(partyRoleTypeId)) {
 							admin = partyRoleTypeId;
 						}	
 					}
 				}else {
 					String errMsg = "retrieved RoleTypeId List  from UserMaster Entity is null or empty in " + module;
-					request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-					request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-					return CommonConstant.ERROR;
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					return CommonConstants.ERROR;
 				}
 				
 				//Storing partyRoleType 
 				if(UtilValidate.isNotEmpty(personRole)&&UtilValidate.isNotEmpty(admin)) {
-					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, "both");
+					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, "both");
 				}
 				else if(UtilValidate.isNotEmpty(personRole)) {
-					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, personRole);
+					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, personRole);
 				}
 				else if(UtilValidate.isNotEmpty(admin)) {
-					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, admin);
+					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, admin);
 				}else {
-					request.setAttribute(CommonConstant.PARTY_ROLE_TYPE_ID, "others");
+					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, "others");
 				}
 			}
 
 		}
-			return CommonConstant.SUCCESS;
+			return CommonConstants.SUCCESS;
 		
 	}
 
@@ -137,22 +137,22 @@ public class OnlineExamEvents {
 	//On user registering  party,Person,UserLogin and PartyRole Records are created
 	public static String registerPersonAndUserLogin(HttpServletRequest request, HttpServletResponse response) {
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
-		String firstName = (String) request.getAttribute(CommonConstant.FIRST_NAME);
-		String lastName = (String) request.getAttribute(CommonConstant.LAST_NAME);
-		String userLoginId = (String) request.getAttribute(CommonConstant.USER_LOGIN_ID);
-		String currentPassword = (String) request.getAttribute(CommonConstant.CURRENT_PASSWORD);
-		String currentPasswordVerify = (String) request.getAttribute(CommonConstant.CURRENT_PASSWORD_VERIFY);
+		String firstName = (String) request.getAttribute(CommonConstants.FIRST_NAME);
+		String lastName = (String) request.getAttribute(CommonConstants.LAST_NAME);
+		String userLoginId = (String) request.getAttribute(CommonConstants.USER_LOGIN_ID);
+		String currentPassword = (String) request.getAttribute(CommonConstants.CURRENT_PASSWORD);
+		String currentPasswordVerify = (String) request.getAttribute(CommonConstants.CURRENT_PASSWORD_VERIFY);
 
 		Map<String, Object> registerCtx = new HashMap<>();
-		registerCtx.put(CommonConstant.FIRST_NAME, firstName);
-		registerCtx.put(CommonConstant.LAST_NAME, lastName);
-		registerCtx.put(CommonConstant.USER_LOGIN_ID, userLoginId);
-		registerCtx.put(CommonConstant.CURRENT_PASSWORD, currentPassword);
-		registerCtx.put(CommonConstant.CURRENT_PASSWORD_VERIFY, currentPasswordVerify);
-		registerCtx.put(CommonConstant.USER_LOGIN, userLogin);
+		registerCtx.put(CommonConstants.FIRST_NAME, firstName);
+		registerCtx.put(CommonConstants.LAST_NAME, lastName);
+		registerCtx.put(CommonConstants.USER_LOGIN_ID, userLoginId);
+		registerCtx.put(CommonConstants.CURRENT_PASSWORD, currentPassword);
+		registerCtx.put(CommonConstants.CURRENT_PASSWORD_VERIFY, currentPasswordVerify);
+		registerCtx.put(CommonConstants.USER_LOGIN, userLogin);
 		
 		
 		//createPersonAndUserLogin service is executed
@@ -163,18 +163,18 @@ public class OnlineExamEvents {
 		} catch (GenericServiceException e) {			
 			Debug.logError(e, "Failed to execute createPersonAndUserLogin service", module);
 			String errMsg = "Failed to execute createPersonAndUserLogin service : " + e.getMessage();
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-            return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+            return CommonConstants.ERROR;
 		}
 		/*if error occurred while executing createPersonAndUserLogin service ,
 		result and errMsg is set in request and error is returned*/
 		if(ServiceUtil.isError(createPersonAndUserLoginResp)) {
 			String errMsg = "Error occurred while executing createPersonAndUserLogin service ";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-            return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+            return CommonConstants.ERROR;
 			
 		}
 		
@@ -185,12 +185,12 @@ public class OnlineExamEvents {
 			request.setAttribute("PersonAndUserLoginMap", createPersonAndUserLoginResp);
 			
 			//partyId Of created user is available in createPersonAndUserLoginResp Map
-			String partyId = (String) createPersonAndUserLoginResp.get(CommonConstant.PARTY_ID);
+			String partyId = (String) createPersonAndUserLoginResp.get(CommonConstants.PARTY_ID);
 			Map<String, Object> createRoleCtx = new HashMap<>();
-			createRoleCtx.put(CommonConstant.USER_LOGIN, userLogin);
-			createRoleCtx.put(CommonConstant.PARTY_ID, partyId);
+			createRoleCtx.put(CommonConstants.USER_LOGIN, userLogin);
+			createRoleCtx.put(CommonConstants.PARTY_ID, partyId);
 			//ROLE_TYPE_ID is constantly set as PERSON_ROLE
-			createRoleCtx.put(CommonConstant.ROLE_TYPE_ID, CommonConstant.PERSON_ROLE);
+			createRoleCtx.put(CommonConstants.ROLE_TYPE_ID, CommonConstants.PERSON_ROLE);
 			
 			/*createPartyRole services is executed 
 			 * NOTE:In PartyRole Entity,partyId and roleTypeID is composite key
@@ -203,27 +203,27 @@ public class OnlineExamEvents {
 			} catch (GenericServiceException e) {
 				Debug.logError(e, "Failed to execute createPartyRoleRecord service", module);
 				String errMsg = "Failed to execute createPartyRoleRecord service : " + e.getMessage();
-				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-	            return CommonConstant.ERROR;
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+	            return CommonConstants.ERROR;
 			}
 			
 			
 			if (ServiceUtil.isSuccess(createPartyRoleRecordResp)) {
-				request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 				request.setAttribute("PartyRoleRecordMap", createPartyRoleRecordResp);
 			}
 			else {
 				String errMsg = "Error occured while executing createPartyRoleRecord service";
 				Debug.logError(errMsg, module);
-				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-	            return CommonConstant.ERROR;
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+	            return CommonConstants.ERROR;
 			}
 
 		}
 
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 
 	}
 
@@ -232,7 +232,7 @@ public class OnlineExamEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 
 		Map<String, Object> findAllUserContext = new HashMap<>();
-		findAllUserContext.put(CommonConstant.USER_LOGIN, userLogin);
+		findAllUserContext.put(CommonConstants.USER_LOGIN, userLogin);
 		//findAllUser service is executed
 		Map<String, Object> serviceResult = null;
 		try {
@@ -243,23 +243,23 @@ public class OnlineExamEvents {
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute findAllUser service", module);
 			String errMsg = "Failed to execute findAllUser service : " + e.getMessage();
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-            return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+            return CommonConstants.ERROR;
 		}
 		if (ServiceUtil.isSuccess(serviceResult)) {
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("userList", serviceResult.get("userList"));
 		}
 		else {
 			String errMsg = "Error occured while executing findAllUser service";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-            return CommonConstant.ERROR;		
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+            return CommonConstants.ERROR;		
 		}
 
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 	}
 
 	
@@ -267,13 +267,13 @@ public class OnlineExamEvents {
 	public static String logout(HttpServletRequest request, HttpServletResponse response) {
 		
 		String result = LoginWorker.logout(request, response);
-		if (!result.equals(CommonConstant.SUCCESS)) {
+		if (!result.equals(CommonConstants.SUCCESS)) {
 			String errMsg = "Unable to logout";
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
-		request.setAttribute(CommonConstant.RESULT, result);
-		return CommonConstant.SUCCESS;
+		request.setAttribute(CommonConstants.RESULT, result);
+		return CommonConstants.SUCCESS;
 	}
 }

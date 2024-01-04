@@ -13,7 +13,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 
 public class ExamTopicMappingMasterServices {
 	
@@ -24,7 +24,7 @@ public class ExamTopicMappingMasterServices {
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
 
-		String examIdPK=(String) context.get(CommonConstant.EXAM_ID);
+		String examIdPK=(String) context.get(CommonConstants.EXAM_ID);
 		
 		List<Map<String, Object>> examTopicMappingRecordList = new LinkedList<>();
 		
@@ -32,7 +32,7 @@ public class ExamTopicMappingMasterServices {
 		List<GenericValue> genericValueList = null;
 		
 		try {
-			genericValueList =  EntityQuery.use(delegator).from("ExamTopicMappingViewEntity").where(CommonConstant.EXAM_ID,examIdPK).queryList();
+			genericValueList =  EntityQuery.use(delegator).from("ExamTopicMappingViewEntity").where(CommonConstants.EXAM_ID,examIdPK).queryList();
 		} catch (GenericEntityException e) {
 			return ServiceUtil.returnError("Error in fetching record from ExamTopicMappingMaster entity ........" + module);
 		}
@@ -40,22 +40,22 @@ public class ExamTopicMappingMasterServices {
 			
 			for(GenericValue genericValue: genericValueList) {
 				
-				String examId = genericValue.getString(CommonConstant.EXAM_ID);
-				String examName = genericValue.getString(CommonConstant.EXAM_NAME);
-				String topicId = genericValue.getString(CommonConstant.TOPIC_ID);
-				String topicName = genericValue.getString(CommonConstant.TOPIC_NAME);
-				String percentage = genericValue.getString(CommonConstant.PERCENTAGE);
-				String topicPassPercentage = genericValue.getString(CommonConstant.TOPIC_PASS_PERCENTAGE);
-				String questionPerExam = genericValue.getString(CommonConstant.QUESTION_PER_EXAM);
+				String examId = genericValue.getString(CommonConstants.EXAM_ID);
+				String examName = genericValue.getString(CommonConstants.EXAM_NAME);
+				String topicId = genericValue.getString(CommonConstants.TOPIC_ID);
+				String topicName = genericValue.getString(CommonConstants.TOPIC_NAME);
+				String percentage = genericValue.getString(CommonConstants.PERCENTAGE);
+				String topicPassPercentage = genericValue.getString(CommonConstants.TOPIC_PASS_PERCENTAGE);
+				String questionPerExam = genericValue.getString(CommonConstants.QUESTION_PER_EXAM);
 				
 				Map<String, Object> examTopicMappingRecord = new HashMap<>();
-				examTopicMappingRecord.put(CommonConstant.EXAM_ID, examId);
-				examTopicMappingRecord.put(CommonConstant.EXAM_NAME, examName);
-				examTopicMappingRecord.put(CommonConstant.TOPIC_ID, topicId);
-				examTopicMappingRecord.put(CommonConstant.TOPIC_NAME, topicName);
-				examTopicMappingRecord.put(CommonConstant.PERCENTAGE, percentage);
-				examTopicMappingRecord.put(CommonConstant.TOPIC_PASS_PERCENTAGE, topicPassPercentage);
-				examTopicMappingRecord.put(CommonConstant.QUESTION_PER_EXAM, questionPerExam);
+				examTopicMappingRecord.put(CommonConstants.EXAM_ID, examId);
+				examTopicMappingRecord.put(CommonConstants.EXAM_NAME, examName);
+				examTopicMappingRecord.put(CommonConstants.TOPIC_ID, topicId);
+				examTopicMappingRecord.put(CommonConstants.TOPIC_NAME, topicName);
+				examTopicMappingRecord.put(CommonConstants.PERCENTAGE, percentage);
+				examTopicMappingRecord.put(CommonConstants.TOPIC_PASS_PERCENTAGE, topicPassPercentage);
+				examTopicMappingRecord.put(CommonConstants.QUESTION_PER_EXAM, questionPerExam);
 				
 				examTopicMappingRecordList.add(examTopicMappingRecord);
 						

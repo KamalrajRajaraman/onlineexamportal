@@ -17,7 +17,7 @@ import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 import com.vastpro.validator.HibernateHelper;
 import com.vastpro.validator.QuestionMasterCheck;
 import com.vastpro.validator.QuestionMasterValidator;
@@ -30,8 +30,8 @@ public class QuestionMasterEvents {
 	// Event for creating question in QuestionMaster Entity
 	public static String createQuestion(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
-		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 
 		// Create a combined map from request
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -44,7 +44,7 @@ public class QuestionMasterEvents {
 				.checkValidationErrors(questionForm, QuestionMasterCheck.class);
 
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
-				locale, "MandatoryFieldErrMsgQuestionForm", CommonConstant.RESOURCE_ERROR, false);
+				locale, "MandatoryFieldErrMsgQuestionForm", CommonConstants.RESOURCE_ERROR, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
 
 		// Checking form has errors or not
@@ -52,11 +52,11 @@ public class QuestionMasterEvents {
 			
 			String errMsg = "Error founded while executing hibernate validation in create question form ";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			
 			Debug.logError("The add question form has empty values ", module);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
 		Map<String, Object> createQuestionResp = null;
@@ -69,34 +69,34 @@ public class QuestionMasterEvents {
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute createQuestion service", module);
 			String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(createQuestionResp)) {
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("question", createQuestionResp);
 		} else {
 			// If the service return Error, set the result as error in request
 			String errMsg = "Error occured while running createQuestion service";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 	}
 
 	// Event for find All questions from QuestionMaster entity
 	public static String findAllQuestions(HttpServletRequest request, HttpServletResponse response) {
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		// create a map with userLogin object
 		Map<String, Object> findAllQuestionContext = new HashMap<>();
-		findAllQuestionContext.put(CommonConstant.USER_LOGIN, userLogin);
+		findAllQuestionContext.put(CommonConstants.USER_LOGIN, userLogin);
 
 		Map<String, Object> findAllQuestionsResp = null;
 
@@ -108,29 +108,29 @@ public class QuestionMasterEvents {
 			// If Exception occurred while execute the service
 			String errMsg = "Failed to execute findAllQuestions service " + e.getMessage();
 			Debug.logError(e, errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("questionList", findAllQuestionsResp.get("questionList"));
 		} else {
 			// If the service returns error, set the result as error in request
 			String errMsg = "Error occured while running findAllQuestions service";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 	}
 
 	// Event for deleting a question from QuestionMaster entity based on questionId
 	public static String deleteQuestion(HttpServletRequest request, HttpServletResponse response) {
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Map<String, Object> deleteQuestionResp = null;
@@ -143,22 +143,22 @@ public class QuestionMasterEvents {
 			// If Exception occured while execute the service, set result as Error in request
 			Debug.logError(e, "Failed to execute deleteQuestion service", module);
 			String errMsg = "Failed to execute deleteQuestion service : " + e.getMessage();
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 		// If the deleteQuestion service is success, set result as success in request
 		if (ServiceUtil.isSuccess(deleteQuestionResp)) {
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("resultMap", deleteQuestionResp);
 		} else {
 			// If the deleteQuestion service returns Error, set result as error in request
 			String errMsg = "Error occured in deleteQuestion service";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 		}
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 	}
 
 }

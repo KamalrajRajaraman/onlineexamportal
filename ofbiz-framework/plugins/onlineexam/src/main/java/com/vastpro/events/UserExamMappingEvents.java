@@ -18,7 +18,7 @@ import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 import com.vastpro.validator.HibernateHelper;
 import com.vastpro.validator.CreateUserExamMappingCheck;
 import com.vastpro.validator.FindUserExamMappingCheck;
@@ -31,8 +31,8 @@ public class UserExamMappingEvents {
 	// Method for create a record in UserExamMappingMaster entity
 	public static String createUserExamMappingRecord(HttpServletRequest request, HttpServletResponse response) {
 
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
-		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = request.getLocale();
 		Map<String, Object> createUserExamMappingRecordResp = null;
 
@@ -45,14 +45,14 @@ public class UserExamMappingEvents {
 		Set<ConstraintViolation<UserExamMappingValidator>> validationErrors = HibernateHelper
 				.checkValidationErrors(validateUserExamMapping, CreateUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
-				"InvalidErrMsg", CommonConstant.RESOURCE_ERROR, false);
+				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
 		if (hasFormErrors) {
 			//Set error message in request in case of empty fields
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			Debug.logError("Values are not assigned to every fields! " + module, module);
-			return CommonConstant.ERROR;
+			return CommonConstants.ERROR;
 			
 		} else {
 			try {
@@ -65,63 +65,63 @@ public class UserExamMappingEvents {
 				// If any exception occur in service, set error as a result in request object
 				Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
 				String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
-				request.setAttribute(CommonConstant.RESULT, errMsg);
-				return CommonConstant.ERROR;
+				request.setAttribute(CommonConstants.RESULT, errMsg);
+				return CommonConstants.ERROR;
 			}
 
 			// checking if the createUserExamMappingRecord service is success or not
 			if (ServiceUtil.isSuccess(createUserExamMappingRecordResp)) {
 				request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
-				request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			}
 			else {
 				
 				request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
-				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-				return CommonConstant.ERROR;
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
 			}
 		}
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 	}
 
 	// Event for showing exams for the particular user based on partyId
 	public static String showExamsForPartyId(HttpServletRequest request, HttpServletResponse response) {
 
 		
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
-		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = request.getLocale();
 		
 		//checking partyId comes as a parameter
-		String partyId = request.getParameter(CommonConstant.PARTY_ID);
+		String partyId = request.getParameter(CommonConstants.PARTY_ID);
 		
 		//checking partyId comes as a attribute
 		if(UtilValidate.isEmpty(partyId)) {
-			partyId = (String) request.getAttribute(CommonConstant.PARTY_ID);
+			partyId = (String) request.getAttribute(CommonConstants.PARTY_ID);
 		}
 		
 		//If the partyId didn't came as both parameter and attribute then take it from the session
 		if(UtilValidate.isEmpty(partyId)) {
-			partyId = userLogin.getString(CommonConstant.PARTY_ID);			
+			partyId = userLogin.getString(CommonConstants.PARTY_ID);			
 		}
 		
 		//create a map with partyId, userLogin object
 		Map<String, Object> findExamContext = new HashMap<>();
-		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);
-		findExamContext.put(CommonConstant.PARTY_ID, partyId);
+		findExamContext.put(CommonConstants.USER_LOGIN, userLogin);
+		findExamContext.put(CommonConstants.PARTY_ID, partyId);
 		
 		UserExamMappingValidator userExamMappingValidator = HibernateHelper.populateBeanFromMap(findExamContext, UserExamMappingValidator.class);
 		Set<ConstraintViolation<UserExamMappingValidator>> validationErrors = HibernateHelper.checkValidationErrors(userExamMappingValidator, FindUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
-				"InvalidErrMsg", CommonConstant.RESOURCE_ERROR, false);
+				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
 		request.setAttribute("hasFormErrors", hasFormErrors);
 		
 		if(hasFormErrors) {
 			//Set error message in request in case of empty fields
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			Debug.logError("Values are not assigned to every fields! " + module, module);
-			return CommonConstant.ERROR;
+			return CommonConstants.ERROR;
 		}
 		
 		// calling showExamsForPartyId service for showing exams
@@ -133,19 +133,19 @@ public class UserExamMappingEvents {
 		} catch (GenericServiceException e) {
 			// If any exception occur in service, set error as a result in request object
 			Debug.logError(e, "Failed to execute showExamsForPartyId service", module);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 		if (ServiceUtil.isSuccess(showExamsForPartyIdResp)) {
 			request.setAttribute("examList", showExamsForPartyIdResp.get("examList"));
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 		}
 		else {
 			request.setAttribute("createUserExamMappingRecordMap", null);
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
-			return CommonConstant.ERROR;
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
-		return CommonConstant.SUCCESS;
+		return CommonConstants.SUCCESS;
 
 	}
 

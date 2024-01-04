@@ -12,7 +12,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 
 public class UserExamMappingMasterServices {
 	public static final String module = UserExamMappingMasterServices.class.getName();
@@ -21,23 +21,23 @@ public class UserExamMappingMasterServices {
 
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
-		String partyIdPK = (String) context.get(CommonConstant.PARTY_ID);
+		String partyIdPK = (String) context.get(CommonConstants.PARTY_ID);
 		List<GenericValue> examGenericValue = null;
 		List<Map<String, Object>> mapValuesList= new LinkedList<Map<String,Object>>();
 		try {
 			
 			
 			examGenericValue = EntityQuery.use(delegator).from("UserExamMappingViewEntity")
-					.where(CommonConstant.PARTY_ID, partyIdPK).queryList();
+					.where(CommonConstants.PARTY_ID, partyIdPK).queryList();
 
 			if (examGenericValue != null) {
 
 				for (GenericValue value : examGenericValue) {
-					String examId = value.getString(CommonConstant.EXAM_ID);
-					String examName = value.getString(CommonConstant.EXAM_NAME);
+					String examId = value.getString(CommonConstants.EXAM_ID);
+					String examName = value.getString(CommonConstants.EXAM_NAME);
 
-					Map<String, Object> exam = UtilMisc.toMap(CommonConstant.EXAM_ID, examId,
-							CommonConstant.EXAM_NAME, examName);
+					Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId,
+							CommonConstants.EXAM_NAME, examName);
 					mapValuesList.add(exam); 
 				}
 				

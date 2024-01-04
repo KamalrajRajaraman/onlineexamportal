@@ -12,7 +12,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 
 public class TopicMasterServices {
 	public static final String module = TopicMasterServices.class.getName();
@@ -25,15 +25,15 @@ public class TopicMasterServices {
 		Delegator delegator = dctx.getDelegator();
 		List<GenericValue> topicGenericValueList =null;
 		try {
-			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstant.TOPIC_MASTER).queryList();
+			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER).queryList();
 		} catch (GenericEntityException e) {
 			return ServiceUtil.returnError("Error in fetching record from TopicMaster entity ........" + module);
 		}
 		for(GenericValue topicGenericValue:topicGenericValueList) {
 			Map<String, Object> topic = new HashMap<>();
-			String topicId= topicGenericValue.getString(CommonConstant.TOPIC_ID);
-			topic.put(CommonConstant.TOPIC_ID, topicId);
-			topic.put(CommonConstant.TOPIC_NAME, topicGenericValue.getString(CommonConstant.TOPIC_NAME));
+			String topicId= topicGenericValue.getString(CommonConstants.TOPIC_ID);
+			topic.put(CommonConstants.TOPIC_ID, topicId);
+			topic.put(CommonConstants.TOPIC_NAME, topicGenericValue.getString(CommonConstants.TOPIC_NAME));
 			topicList.add( topic);
 		}
 		returnSucces.put("topicList", topicList);

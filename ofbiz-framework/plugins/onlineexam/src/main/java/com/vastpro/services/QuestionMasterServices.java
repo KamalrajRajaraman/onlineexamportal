@@ -14,7 +14,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 
 public class QuestionMasterServices {
 
@@ -28,7 +28,7 @@ public class QuestionMasterServices {
 		Delegator delegator = dctx.getDelegator();
 		List<GenericValue> questionGenericValueList = null;
 		try {
-			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstant.QUESTION_MASTER).queryList();
+			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).queryList();
 		} 
 		catch (GenericEntityException e) {
 			return ServiceUtil.returnError("Error in fetching record from QuestionMaster entity ........" + module);
@@ -49,13 +49,13 @@ public class QuestionMasterServices {
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();	
 		Delegator delegator = dctx.getDelegator();
 		
-		Long questionId = (Long) context.get(CommonConstant.QUESTION_ID);
+		Long questionId = (Long) context.get(CommonConstants.QUESTION_ID);
 		
 		GenericValue questionMasterGV = null;
 		try {			
 			questionMasterGV = EntityQuery.use(delegator)
 									.from("QuestionMaster")
-									.where(CommonConstant.QUESTION_ID,questionId)
+									.where(CommonConstants.QUESTION_ID,questionId)
 									.queryOne();
 		
 		} 
@@ -78,36 +78,36 @@ public class QuestionMasterServices {
 	
 	//Helper Method 
 	public static Map<String, Object> getQuestionFromGenericValue(GenericValue genericValue){	
-		Long questionId =  genericValue.getLong(CommonConstant.QUESTION_ID);
-		String questionDetail = genericValue.getString(CommonConstant.QUESTION_DETAIL);
-		String optionA =genericValue.getString(CommonConstant.OPTION_A);
-		String optionB =genericValue.getString(CommonConstant.OPTION_B);
-		String optionC = genericValue.getString(CommonConstant.OPTION_C);
-		String optionD = genericValue.getString(CommonConstant.OPTION_D);
-		String optionE = genericValue.getString(CommonConstant.OPTION_E);
-		String answer = genericValue.getString(CommonConstant.ANSWER);
-		Long numAnswers = genericValue.getLong(CommonConstant.NUM_ANSWERS);
-		String questionType =genericValue.getString(CommonConstant.QUESTION_TYPE);
-		Integer difficultyLevel =genericValue.getInteger(CommonConstant.DIFFICULTY_LEVEL);
-		BigDecimal answerValue =genericValue.getBigDecimal(CommonConstant.ANSWER_VALUE);
-		String topicId = genericValue.getString(CommonConstant.TOPIC_ID);
-		BigDecimal negativeMarkValue = genericValue.getBigDecimal(CommonConstant.NEGATIVE_MARK_VALUE);
+		Long questionId =  genericValue.getLong(CommonConstants.QUESTION_ID);
+		String questionDetail = genericValue.getString(CommonConstants.QUESTION_DETAIL);
+		String optionA =genericValue.getString(CommonConstants.OPTION_A);
+		String optionB =genericValue.getString(CommonConstants.OPTION_B);
+		String optionC = genericValue.getString(CommonConstants.OPTION_C);
+		String optionD = genericValue.getString(CommonConstants.OPTION_D);
+		String optionE = genericValue.getString(CommonConstants.OPTION_E);
+		String answer = genericValue.getString(CommonConstants.ANSWER);
+		Long numAnswers = genericValue.getLong(CommonConstants.NUM_ANSWERS);
+		String questionType =genericValue.getString(CommonConstants.QUESTION_TYPE);
+		Integer difficultyLevel =genericValue.getInteger(CommonConstants.DIFFICULTY_LEVEL);
+		BigDecimal answerValue =genericValue.getBigDecimal(CommonConstants.ANSWER_VALUE);
+		String topicId = genericValue.getString(CommonConstants.TOPIC_ID);
+		BigDecimal negativeMarkValue = genericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
 
 		Map<String, Object> question = new HashMap<>();
-		question.put(CommonConstant.QUESTION_ID, questionId);
-		question.put(CommonConstant.QUESTION_DETAIL, questionDetail);
-		question.put(CommonConstant.OPTION_A, optionA);
-		question.put(CommonConstant.OPTION_B, optionB);
-		question.put(CommonConstant.OPTION_C, optionC);
-		question.put(CommonConstant.OPTION_D, optionD);
-		question.put(CommonConstant.OPTION_E, optionE);
-		question.put(CommonConstant.ANSWER, answer);
-		question.put(CommonConstant.NUM_ANSWERS, numAnswers);
-		question.put(CommonConstant.QUESTION_TYPE, questionType);
-		question.put(CommonConstant.DIFFICULTY_LEVEL, difficultyLevel);
-		question.put(CommonConstant.ANSWER_VALUE, answerValue);
-		question.put(CommonConstant.TOPIC_ID, topicId);
-		question.put(CommonConstant.NEGATIVE_MARK_VALUE, negativeMarkValue);	
+		question.put(CommonConstants.QUESTION_ID, questionId);
+		question.put(CommonConstants.QUESTION_DETAIL, questionDetail);
+		question.put(CommonConstants.OPTION_A, optionA);
+		question.put(CommonConstants.OPTION_B, optionB);
+		question.put(CommonConstants.OPTION_C, optionC);
+		question.put(CommonConstants.OPTION_D, optionD);
+		question.put(CommonConstants.OPTION_E, optionE);
+		question.put(CommonConstants.ANSWER, answer);
+		question.put(CommonConstants.NUM_ANSWERS, numAnswers);
+		question.put(CommonConstants.QUESTION_TYPE, questionType);
+		question.put(CommonConstants.DIFFICULTY_LEVEL, difficultyLevel);
+		question.put(CommonConstants.ANSWER_VALUE, answerValue);
+		question.put(CommonConstants.TOPIC_ID, topicId);
+		question.put(CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);	
 		return question;
 	}
 

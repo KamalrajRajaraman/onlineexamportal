@@ -6,7 +6,7 @@ package com.vastpro.constants;
  * Any variable declared inside interface are by default public ,static and final
  * 
  */
-public interface CommonConstant {
+public interface CommonConstants {
 	
 	//Common Ofbiz constants
 	public static final String RESULT ="result";
