@@ -17,6 +17,8 @@ public interface CommonConstant {
 	public static final String PARTY_AND_USER_LOGIN ="PartyAndUserLogin";
 	public static final String RESOURCE_ERROR = "OnlineexamUiLabels";
 	public static final String _ERROR_MESSAGE_ ="_ERROR_MESSAGE_";
+	public static final String HAS_FORM_ERROR ="hasFormErrors";
+	public static final String RESULT_MAP ="resultMap";
 	
 	//Session Common Attribute 
 	public static final String USER_LOGIN="userLogin";
@@ -31,11 +33,18 @@ public interface CommonConstant {
 	public static final String PERSON_ROLE ="PERSON_ROLE";
 	public static final String ADMIN ="ADMIN";
 	
+	public static final String FIRST_NAME ="firstName";
+	public static final String LAST_NAME = "lastName";
+	public static final String CURRENT_PASSWORD = "currentPassword";
+	public static final String CURRENT_PASSWORD_VERIFY = "currentPasswordVerify";
+	
 	
 	
 	//UserLogin Entity	
 	public static final String USERNAME="USERNAME";
 	public static final String PASSWORD="PASSWORD";
+	
+	
 	
 	
 	 
