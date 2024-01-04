@@ -137,28 +137,29 @@ public class OnlineExamEvents {
 	//On user registering  party,Person,UserLogin and PartyRole Records are created
 	public static String registerPersonAndUserLogin(HttpServletRequest request, HttpServletResponse response) {
 
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-		
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 
-		String firstName = (String) request.getAttribute("firstName");
-		String lastName = (String) request.getAttribute("lastName");
-		String userLoginId = (String) request.getAttribute("userLoginId");
-		String currentPassword = (String) request.getAttribute("currentPassword");
-		String currentPasswordVerify = (String) request.getAttribute("currentPasswordVerify");
+		String firstName = (String) request.getAttribute(CommonConstant.FIRST_NAME);
+		String lastName = (String) request.getAttribute(CommonConstant.LAST_NAME);
+		String userLoginId = (String) request.getAttribute(CommonConstant.USER_LOGIN_ID);
+		String currentPassword = (String) request.getAttribute(CommonConstant.CURRENT_PASSWORD);
+		String currentPasswordVerify = (String) request.getAttribute(CommonConstant.CURRENT_PASSWORD_VERIFY);
 
 		Map<String, Object> registerCtx = new HashMap<>();
-		registerCtx.put("firstName", firstName);
-		registerCtx.put("lastName", lastName);
-		registerCtx.put("userLoginId", userLoginId);
-		registerCtx.put("currentPassword", currentPassword);
-		registerCtx.put("currentPasswordVerify", currentPasswordVerify);
-		registerCtx.put("userLogin", userLogin);
-		Map<String, Object> serviceResultMap = null;
-
+		registerCtx.put(CommonConstant.FIRST_NAME, firstName);
+		registerCtx.put(CommonConstant.LAST_NAME, lastName);
+		registerCtx.put(CommonConstant.USER_LOGIN_ID, userLoginId);
+		registerCtx.put(CommonConstant.CURRENT_PASSWORD, currentPassword);
+		registerCtx.put(CommonConstant.CURRENT_PASSWORD_VERIFY, currentPasswordVerify);
+		registerCtx.put(CommonConstant.USER_LOGIN, userLogin);
+		
+		
+		//createPersonAndUserLogin service is executed
+		Map<String, Object> createPersonAndUserLoginResp = null;
 		try {
-			serviceResultMap = dispatcher.runSync("createPersonAndUserLogin", registerCtx);
-
+			createPersonAndUserLoginResp = dispatcher.runSync("createPersonAndUserLogin", registerCtx);
+			Debug.logInfo("Successfully execute createPersonAndUserLogin service", module);
 		} catch (GenericServiceException e) {			
 			Debug.logError(e, "Failed to execute createPersonAndUserLogin service", module);
 			String errMsg = "Failed to execute createPersonAndUserLogin service : " + e.getMessage();
@@ -166,25 +167,55 @@ public class OnlineExamEvents {
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
             return CommonConstant.ERROR;
 		}
-
-		if (ServiceUtil.isSuccess(serviceResultMap)) {
-			request.setAttribute("PersonAndUserLoginMap", serviceResultMap);
-
-			String partyId = (String) serviceResultMap.get("partyId");
+		/*if error occurred while executing createPersonAndUserLogin service ,
+		result and errMsg is set in request and error is returned*/
+		if(ServiceUtil.isError(createPersonAndUserLoginResp)) {
+			String errMsg = "Error occurred while executing createPersonAndUserLogin service ";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+            return CommonConstant.ERROR;
+			
+		}
+		
+		/*if executing createPersonAndUserLogin service is success,
+		 *then createPartyRole services is executed*/
+		if (ServiceUtil.isSuccess(createPersonAndUserLoginResp)) {
+			
+			request.setAttribute("PersonAndUserLoginMap", createPersonAndUserLoginResp);
+			
+			//partyId Of created user is available in createPersonAndUserLoginResp Map
+			String partyId = (String) createPersonAndUserLoginResp.get(CommonConstant.PARTY_ID);
 			Map<String, Object> createRoleCtx = new HashMap<>();
-			createRoleCtx.put("userLogin", userLogin);
-			createRoleCtx.put("partyId", partyId);
-			createRoleCtx.put("roleTypeId", "PERSON_ROLE");
-
+			createRoleCtx.put(CommonConstant.USER_LOGIN, userLogin);
+			createRoleCtx.put(CommonConstant.PARTY_ID, partyId);
+			//ROLE_TYPE_ID is constantly set as PERSON_ROLE
+			createRoleCtx.put(CommonConstant.ROLE_TYPE_ID, CommonConstant.PERSON_ROLE);
+			
+			/*createPartyRole services is executed 
+			 * NOTE:In PartyRole Entity,partyId and roleTypeID is composite key
+			 * */
+			Map<String, Object> createPartyRoleRecordResp = null;
 			try {
-				Map<String, Object> createRoleResult = dispatcher.runSync("createPartyRoleRecord", createRoleCtx);
-				if (ServiceUtil.isSuccess(createRoleResult)) {
-					request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
-					request.setAttribute("PartyRoleRecordMap", createRoleResult);
-				}
+				createPartyRoleRecordResp = dispatcher.runSync("createPartyRoleRecord", createRoleCtx);
+				Debug.logInfo("Successfully execute createPartyRoleRecord service", module);
+				
 			} catch (GenericServiceException e) {
 				Debug.logError(e, "Failed to execute createPartyRoleRecord service", module);
 				String errMsg = "Failed to execute createPartyRoleRecord service : " + e.getMessage();
+				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+	            return CommonConstant.ERROR;
+			}
+			
+			
+			if (ServiceUtil.isSuccess(createPartyRoleRecordResp)) {
+				request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
+				request.setAttribute("PartyRoleRecordMap", createPartyRoleRecordResp);
+			}
+			else {
+				String errMsg = "Error occured while executing createPartyRoleRecord service";
+				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 	            return CommonConstant.ERROR;
@@ -202,11 +233,12 @@ public class OnlineExamEvents {
 
 		Map<String, Object> findAllUserContext = new HashMap<>();
 		findAllUserContext.put(CommonConstant.USER_LOGIN, userLogin);
-
+		//findAllUser service is executed
 		Map<String, Object> serviceResult = null;
 		try {
 
 			serviceResult = dispatcher.runSync("findAllUser", findAllUserContext);
+			Debug.logInfo("Successfully execute findAllUser service", module);
 
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute findAllUser service", module);
@@ -218,6 +250,13 @@ public class OnlineExamEvents {
 		if (ServiceUtil.isSuccess(serviceResult)) {
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
 			request.setAttribute("userList", serviceResult.get("userList"));
+		}
+		else {
+			String errMsg = "Error occured while executing findAllUser service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+            return CommonConstant.ERROR;		
 		}
 
 		return CommonConstant.SUCCESS;

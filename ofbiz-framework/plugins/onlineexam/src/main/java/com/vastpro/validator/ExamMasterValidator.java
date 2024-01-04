@@ -4,8 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ExamMasterValidator {
 	
-	@NotEmpty(message = "Exam Id is unavailable", groups = { ExamMasterCheck.class })
-	private String examId;
+	
 
 	@NotEmpty(message = "Exam Name is unavailable", groups = { ExamMasterCheck.class })
 	private String examName;
@@ -40,13 +39,7 @@ public class ExamMasterValidator {
 	@NotEmpty(message = "Negatve mark value is unavailable", groups = { ExamMasterCheck.class })
 	private String negativeMarkValue;
 
-	public String getExamId() {
-		return examId;
-	}
 
-	public void setExamId(String examId) {
-		this.examId = examId;
-	}
 
 	public String getExamName() {
 		return examName;

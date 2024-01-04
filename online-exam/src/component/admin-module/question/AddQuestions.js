@@ -17,7 +17,7 @@ const AddQuestions = () => {
     optionE:"",
     answer:"",
     numAnswers:"",
-    questionType: "01",
+    questionType:"01",
     difficultyLevel:"",
     answerValue:"",
     topicId:"",

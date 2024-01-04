@@ -1,6 +1,7 @@
 package com.vastpro.events;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,8 @@ import com.vastpro.validator.ExamTopicMappingCheck;
 import com.vastpro.validator.ExamTopicMappingValidator;
 import com.vastpro.validator.HibernateHelper;
 
+import clojure.core.comment;
+
 
 public class ExamTopicMappingMasterEvents {
 
@@ -37,10 +40,8 @@ public class ExamTopicMappingMasterEvents {
 	 * @return
 	 */
 	public static String createExamTopicMappingMasterRecord(HttpServletRequest request, HttpServletResponse response) {
+		//Hibernate Validation for create ExamTopicMappingMaster Record
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
-
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
 
@@ -69,13 +70,37 @@ public class ExamTopicMappingMasterEvents {
 			return CommonConstant.ERROR;		
 		}
 		
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		//Getting records from front End 
 		String examId = (String) combinedMap.get(CommonConstant.EXAM_ID);
 		String topicId = (String) combinedMap.get(CommonConstant.TOPIC_ID);
 		String percentage = (String) combinedMap.get(CommonConstant.PERCENTAGE);
 		String topicPassPercentage = (String) combinedMap.get(CommonConstant.TOPIC_PASS_PERCENTAGE);
 		
+		 List<GenericValue> percentageList  =null;
+		try {
+				percentageList  = EntityQuery
+								.use(delegator)
+								.select(CommonConstant.PERCENTAGE)
+								.from(CommonConstant.EXAM_TOPIC_MAPPING_MASTER)
+								.where(CommonConstant.EXAM_ID,examId)
+								.queryList();
 
+		} catch (GenericEntityException e) {
+			Debug.logError(e, "Failed retrive List of percentage from EXamTopicMappingMaster for given examID and TopicId ", module);
+			String errMsg = "Failed retrive List of percentage from EXamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			return CommonConstant.ERROR;
+		}
+		
+		for(GenericValue percent :percentageList) {
+			
+			
+		}
+		
+		
 		// creating map to pass required context to the service called
 		Map<String, Object> addTopicToExamContextMap = new HashMap<>();
 		addTopicToExamContextMap.put(CommonConstant.EXAM_ID, examId);
@@ -88,6 +113,7 @@ public class ExamTopicMappingMasterEvents {
 		Map<String, Object> noOfQuestionResp = null;
 		try {
 			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamID", addTopicToExamContextMap);
+			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamID Service", module);
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute findNoOfQuestionCountByExamID service", module);
 			String errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
@@ -96,7 +122,17 @@ public class ExamTopicMappingMasterEvents {
 			return CommonConstant.ERROR;
 
 		}
-
+		
+		//Returned and terminated the method if Response from findNoOfQuestionCountByExamId service is error 
+		if(ServiceUtil.isError(noOfQuestionResp)) {
+			String errMsg = "Error while executing findNoOfQuestionCountByExamID service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			return CommonConstant.ERROR;		
+		}
+		
+		//if Response from findNoOfQuestionCountByExamID service is success 
 		if (ServiceUtil.isSuccess(noOfQuestionResp)) {
 
 			// questionPerExam calculated using the business logic
@@ -106,10 +142,11 @@ public class ExamTopicMappingMasterEvents {
 			addTopicToExamContextMap.put(CommonConstant.QUESTION_PER_EXAM, questionPerExam);
 
 			// creating examTopicMapping records
-			Map<String, Object> serviceResultMap = null;
+			Map<String, Object> addTopicToExamResp = null;
 			try {
-				serviceResultMap = dispatcher.runSync("addTopicToExam", addTopicToExamContextMap);
-
+				addTopicToExamResp = dispatcher.runSync("addTopicToExam", addTopicToExamContextMap);
+				Debug.logInfo("Successfully executed addTopicToExam Service", module);
+				
 			} catch (GenericServiceException e) {
 				Debug.logError(e, "Failed to execute addTopicToExam service", module);
 				String errMsg = "Failed to execute addTopicToExam service : " + e.getMessage();
@@ -117,13 +154,23 @@ public class ExamTopicMappingMasterEvents {
 				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 				return CommonConstant.ERROR;
 			}
+			//if error occurred while executing addTopicToExam service ,return is returned (method terminated)
+			if(ServiceUtil.isError(addTopicToExamResp)) {
+				String errMsg = "Error while executing addTopicToExam service";
+				Debug.logError(errMsg, module);
+				request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+				return CommonConstant.ERROR;		
+			}
+			
 
-			if (ServiceUtil.isSuccess(serviceResultMap)) {
+			if (ServiceUtil.isSuccess(addTopicToExamResp)) {
 				request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
 				GenericValue insertedRecordGenericValue = null;
 				try {
 					insertedRecordGenericValue = EntityQuery.use(delegator).from("ExamTopicMappingViewEntity")
 							.where(CommonConstant.EXAM_ID, examId, CommonConstant.TOPIC_ID, topicId).queryOne();
+					Debug.logInfo("Successfully retrieved  records from ExamTopicMappingViewEntity", module);
 				} catch (GenericEntityException e) {
 					Debug.logError(e, "Failed to retrieve records from ExamTopicMappingViewEntity ", module);
 					String errMsg = "Failed to retrieve records from ExamTopicMappingViewEntity : " + e.getMessage();
@@ -131,6 +178,16 @@ public class ExamTopicMappingMasterEvents {
 					request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 					return CommonConstant.ERROR;
 				}
+				//if Records retrieved  from ExamTopicMappingView is null or empty error is returned 
+				if(UtilValidate.isEmpty(insertedRecordGenericValue)) {
+					String errMsg = "Error - records revieved from ExamTopicMappingViewEntity is empty" ;
+					Debug.logError(errMsg, module);
+					request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+					return CommonConstant.ERROR;
+				}
+				/*if Records retrieved  from ExamTopicMappingView is not null or not empty ,
+				examTopicMappingRecord map is created and set in request*/
 				if (UtilValidate.isNotEmpty(insertedRecordGenericValue)) {
 
 					examId = insertedRecordGenericValue.getString(CommonConstant.EXAM_ID);
@@ -170,11 +227,12 @@ public class ExamTopicMappingMasterEvents {
 		Map<String, Object> findAllContextMap = new HashMap<>();
 		findAllContextMap.put(CommonConstant.EXAM_ID, examId);
 		findAllContextMap.put(CommonConstant.USER_LOGIN, userLogin);
-
-		Map<String, Object> serviceResultMap = null;
-
+		
+		//Executes findExamTopicMappingRecords service (one examId is related with many topicId)
+		Map<String, Object> findExamTopicMappingResp = null;
 		try {
-			serviceResultMap = dispatcher.runSync("findExamTopicMappingRecords", findAllContextMap);
+			findExamTopicMappingResp = dispatcher.runSync("findExamTopicMappingRecords", findAllContextMap);
+			Debug.logInfo("Successfully executed findExamTopicMappingRecords Service", module);
 		} catch (GenericServiceException e) {
 			Debug.logError(e, "Failed to execute findExamTopicMappingRecords service", module);
 			String errMsg = "Failed to execute findExamTopicMappingRecords service : " + e.getMessage();
@@ -182,10 +240,20 @@ public class ExamTopicMappingMasterEvents {
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
 			return CommonConstant.ERROR;
 		}
-		if (ServiceUtil.isSuccess(serviceResultMap)) {
+		//if findExamTopicMappingRecords Service result is success ,examTopicMappingRecordList is set in request
+		if (ServiceUtil.isSuccess(findExamTopicMappingResp)) {
 			
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
-			request.setAttribute("examTopicMappingRecordList", serviceResultMap.get("examTopicMappingRecordList"));
+			request.setAttribute("examTopicMappingRecordList", findExamTopicMappingResp.get("examTopicMappingRecordList"));
+		}
+		else {
+			//if findExamTopicMappingRecords Service result is error ,error message is set in request and return error
+			String errMsg = "Error returned while executing findExamTopicMappingRecords";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			return CommonConstant.ERROR;
+			
 		}
 
 		return CommonConstant.SUCCESS;

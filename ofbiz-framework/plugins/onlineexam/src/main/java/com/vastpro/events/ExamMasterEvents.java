@@ -32,16 +32,27 @@ import com.vastpro.validator.HibernateHelper;
 public class ExamMasterEvents {
 	
 	public static final String module = ExamMasterEvents.class.getName();
-	public static String resource_error = "OnlineexamUiLabels";
+	
 	public static String createExam(HttpServletRequest request, HttpServletResponse response) {	
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstant.DELEGATOR);
+		Map<String,Object> combinedMap=UtilHttp.getCombinedMap(request);	
+		Locale locale= request.getLocale();
+		
+		//Hibernate Validation for creating exam
+		ExamMasterValidator createExamForm =HibernateHelper.populateBeanFromMap(combinedMap, ExamMasterValidator.class);	
+		Set<ConstraintViolation<ExamMasterValidator>> createExamvalidationErrors =HibernateHelper.checkValidationErrors(createExamForm, ExamMasterCheck.class);
+		Boolean hasformErrors= HibernateHelper.validateFormSubmission(delegator, createExamvalidationErrors , request, locale, "InvalidErrMsg", CommonConstant.RESOURCE_ERROR, false);
+		request.setAttribute(CommonConstant.HAS_FORM_ERROR, hasformErrors);
+		if(hasformErrors){
+			
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			Debug.logError("Errors in  createExam Form Validation ", module);
+			return CommonConstant.ERROR;		
+		}
+		
+		//If Has No Hiberate Validation Error createExam Service is called 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
-
-		
-		
-		// Getting Add Exam Form data which is sent as JSON Object from React
-		Map<String,Object> combinedMap=UtilHttp.getCombinedMap(request);
 		
 		String examId = (String) combinedMap.get(CommonConstant.EXAM_ID);
 		String examName = (String) combinedMap.get(CommonConstant.EXAM_NAME);
@@ -55,22 +66,7 @@ public class ExamMasterEvents {
 		String answersMust = (String) combinedMap.get(CommonConstant.ANSWER_MUST);
 		String enableNegativeMark = (String) combinedMap.get(CommonConstant.ENABLE_NEGATIVE_MARK);
 		String negativeMarkValue = (String) combinedMap.get(CommonConstant.NEGATIVE_MARK_VALUE);
-		
-		Locale locale= request.getLocale();
-		
-		ExamMasterValidator examMasterCheck=HibernateHelper.populateBeanFromMap(combinedMap, ExamMasterValidator.class);	
-		Set<ConstraintViolation<ExamMasterValidator>> errors=HibernateHelper.checkValidationErrors(examMasterCheck, ExamMasterCheck.class);
-		Boolean hasErrors= HibernateHelper.validateFormSubmission(delegator, errors, request, locale, "InvalidErrMsg", resource_error, false);
-		
-		if(hasErrors){
-			request.setAttribute(CommonConstant.RESPONSE_MESSAGE, CommonConstant.ERROR);
-			request.setAttribute("result", CommonConstant.ERROR);
-			Debug.logError("Some fields are empty", module);
-			return CommonConstant.ERROR;
-			
-		}
-		
-		else{
+	
 		//creating map to pass required context to the service called 
 		Map<String, Object> addExamContext = UtilMisc.toMap(
 				CommonConstant.EXAM_ID, examId,
@@ -91,7 +87,7 @@ public class ExamMasterEvents {
 		Map<String, Object> createExamResp = null;
 		try {
 			createExamResp = dispatcher.runSync(CommonConstant.CREATE_EXAM, addExamContext);	
-			Debug.logInfo("=======Created Exam Master record in event using service createExam=========", module);
+			Debug.logInfo("Successfully executed createExam Service", module);
 		} catch (GenericServiceException e) {
 			 Debug.logError(e, "Failed to execute createExam service", module);
 			 String errMsg = "Failed to execute createExam service : " + e.getMessage();
@@ -101,9 +97,7 @@ public class ExamMasterEvents {
 		}
 		
 		if (ServiceUtil.isSuccess(createExamResp)) {
-			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
-			
-			
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);		
 			//constructing exam as mapObject
 			Map<String, Object> exam = new HashMap<>();			
 			exam.put(CommonConstant.EXAM_ID,createExamResp.get(CommonConstant.EXAM_ID) );
@@ -121,16 +115,20 @@ public class ExamMasterEvents {
 			request.setAttribute("exam", exam);
 			
 		}
+		else {
+			 String errMsg = "Error while executing createExam service";
+			 Debug.logError(errMsg, module);	
+			 request.setAttribute(CommonConstant.RESULT_MAP,createExamResp);
+			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+             return CommonConstant.ERROR;		
 		}
-
-
 		return CommonConstant.SUCCESS;
 
 	}
 	
 	//Method to retrieve all the exams from ExamMaster entity
 	public static String findAllExams(HttpServletRequest request, HttpServletResponse response) {
-		
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
@@ -140,9 +138,9 @@ public class ExamMasterEvents {
 		findExamContext.put(CommonConstant.USER_LOGIN, userLogin);
 
 		//Calling the service which in return provides the list of exams
-		Map<String, Object> examList = null;
+		Map<String, Object> findAllExamsResp = null;
 		try {
-			examList = dispatcher.runSync("findAllExams", findExamContext);	
+			findAllExamsResp = dispatcher.runSync("findAllExams", findExamContext);	
 			Debug.logInfo("Successfully executed findAllExams service", module);
 		} catch (GenericServiceException e) {
 			 Debug.logError(e, "Failed to execute findAllExams service", module);
@@ -152,9 +150,18 @@ public class ExamMasterEvents {
              return CommonConstant.ERROR;
 		}
 		//If the service returns success result and  examList is added to the request
-		if (ServiceUtil.isSuccess(examList)) {	
+		if (ServiceUtil.isSuccess(findAllExamsResp)) {	
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
-			request.setAttribute("examList", examList.get("examList"));
+			request.setAttribute("examList", findAllExamsResp.get("examList"));
+		}
+		else {
+			//If the service returns error ,result and response Map Object is added to request Object
+			String errMsg = "Error while executing findAllExams service";
+			Debug.logError(errMsg, module);	
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstant.RESULT_MAP,findAllExamsResp);
+			return CommonConstant.ERROR;
 		}
 		return CommonConstant.SUCCESS;
 
@@ -169,16 +176,16 @@ public class ExamMasterEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
 
-		//Creation of a map to send the context to the service 
+		//Map is created to sent it as context to  the service called
 		Map<String, Object> findExamByIdContext = new HashMap<>();
 		findExamByIdContext.put(CommonConstant.USER_LOGIN, userLogin);
 		findExamByIdContext.put(CommonConstant.EXAM_ID, examId);
 		
-		//Calling the service which in return provides the exam detail for the examId
+		//Calling the findExamById  service which  return the exam detail for given the examId
 		Map<String, Object> findExamByIdResp = null;
 		try {
 			findExamByIdResp = dispatcher.runSync("findExamById", findExamByIdContext);
-			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
+			Debug.logInfo("Successfully executed findExamById service", module);
 		} catch (GenericServiceException e) {
 			
 			 Debug.logError(e, "Failed to execute findExamById service", module);
@@ -194,6 +201,15 @@ public class ExamMasterEvents {
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
 			request.setAttribute("exam", findExamByIdResp.get("exam"));
 		}
+		else {
+			//If the service returns error ,result and response Map Object is added to request Object
+			String errMsg = "Error while executing findExamById service";
+			Debug.logError(errMsg, module);	
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg); 
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstant.RESULT_MAP,findExamByIdResp);	
+			return CommonConstant.ERROR;
+		}
 		
 		return CommonConstant.SUCCESS;
 	}
@@ -201,12 +217,12 @@ public class ExamMasterEvents {
 	//Method to delete an exam from ExamMaster entity
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 		
-		//Getting the examId and other required objects from the request
-		
+		//Getting the examId and other required objects from the request	
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstant.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstant.DISPATCHER);
 		String examId = request.getParameter(CommonConstant.EXAM_ID);
-
+		
+	
 		//Creation of a map to send the context to the service 
 		Map<String, Object> deleteExamContext = new HashMap<>();
 		deleteExamContext.put(CommonConstant.USER_LOGIN, userLogin);
@@ -217,20 +233,29 @@ public class ExamMasterEvents {
 		//Calling the service which deletes the exam
 		try {
 			deleteExamResp = dispatcher.runSync("deleteExam", deleteExamContext);
+			Debug.logInfo("Successfully executed deleteExam service", module);
 			
 		} catch (GenericServiceException e) {
-			
 			Debug.logError(e, "Failed to execute deleteExam service", module);
 			String errMsg = "Failed to execute deleteExam service : " + e.getMessage();
-			 request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
-			 request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
             return CommonConstant.ERROR;
 
 		}
-		//If the exam is deleted successfully the response is set in request
+		//If the exam is deleted successfully, the response Map object  is set in request
 		if (ServiceUtil.isSuccess(deleteExamResp)) {
 			request.setAttribute(CommonConstant.RESULT, CommonConstant.SUCCESS);
-			request.setAttribute("resultMap", deleteExamResp);
+			request.setAttribute(CommonConstant.RESULT_MAP, deleteExamResp);
+		}
+		else {
+			//If the service returns error ,result and response Map Object is added to request Object
+			String errMsg = "Error while executing deleteExam service";
+			Debug.logError(errMsg, module);	
+			request.setAttribute(CommonConstant._ERROR_MESSAGE_, errMsg); 
+			request.setAttribute(CommonConstant.RESULT, CommonConstant.ERROR);
+			request.setAttribute(CommonConstant.RESULT_MAP,deleteExamResp);
+			return CommonConstant.ERROR;
 		}
 
 		return CommonConstant.SUCCESS;
