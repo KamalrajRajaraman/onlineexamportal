@@ -17,7 +17,7 @@ const AddQuestions = () => {
     optionE:"",
     answer:"",
     numAnswers:"",
-    questionType:"1",
+    questionType:"01",
     difficultyLevel:"",
     answerValue:"",
     topicId:"",
@@ -235,11 +235,11 @@ const AddQuestions = () => {
                 onChange={handleChange}
                 
               >
-                <option value="1">Single Choice</option>
-                <option value="2">Multiple Choice</option>
-                <option value="3">True or False</option>
-                <option value="4">Fill in the Blanks</option>
-                <option value="5">Detailed Answer</option>
+                <option value="01">Single Choice</option>
+                <option value="02">Multiple Choice</option>
+                <option value="03">True or False</option>
+                <option value="04">Fill in the Blanks</option>
+                <option value="05">Detailed Answer</option>
               </select>
               <small className="text-danger">{formErrors.questionType}</small>
             </div>
