@@ -1,6 +1,7 @@
 package com.vastpro.events;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -50,22 +51,24 @@ public class UserExamMappingEvents {
 		
 		if (hasFormErrors) {
 			//Set error message in request in case of empty fields
+			String errMsg = "Values are not assigned to every fields!";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			Debug.logError("Values are not assigned to every fields! " + module, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			Debug.logError(errMsg, module);
 			return CommonConstants.ERROR;
 			
 		} else {
 			try {
 				// calling createUserExamMappingRecord service
 				createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
-				Debug.logInfo("CreateUserExamMappingRecord service has been executed successfully! ", module);
 				
 			} catch (GenericServiceException e) {
 				
 				// If any exception occur in service, set error as a result in request object
 				Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
 				String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
-				request.setAttribute(CommonConstants.RESULT, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				return CommonConstants.ERROR;
 			}
 
@@ -73,11 +76,15 @@ public class UserExamMappingEvents {
 			if (ServiceUtil.isSuccess(createUserExamMappingRecordResp)) {
 				request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+				Debug.logInfo("CreateUserExamMappingRecord service has been executed successfully! ", module);
+				
 			}
 			else {
-				
+				String errMsg= "Error while executing service";
 				request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				Debug.logError(errMsg, module);
 				return CommonConstants.ERROR;
 			}
 		}
@@ -119,8 +126,10 @@ public class UserExamMappingEvents {
 		
 		if(hasFormErrors) {
 			//Set error message in request in case of empty fields
+			String errMsg= "Values are not assigned to every fields! ";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			Debug.logError("Values are not assigned to every fields! " + module, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			Debug.logError(errMsg, module);
 			return CommonConstants.ERROR;
 		}
 		
@@ -134,19 +143,134 @@ public class UserExamMappingEvents {
 			// If any exception occur in service, set error as a result in request object
 			Debug.logError(e, "Failed to execute showExamsForPartyId service", module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "Failed to execute showExamsForPartyId service");
 			return CommonConstants.ERROR;
 		}
 		if (ServiceUtil.isSuccess(showExamsForPartyIdResp)) {
 			request.setAttribute("examList", showExamsForPartyIdResp.get("examList"));
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "showExamsForPartyId service executed successfully");
 		}
 		else {
 			request.setAttribute("createUserExamMappingRecordMap", null);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_ , "Error while executing showExamsForPartyId service");
 			return CommonConstants.ERROR;
 		}
 		return CommonConstants.SUCCESS;
 
 	}
+	
+	public String updateAnswerInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+		
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		Map<String, Object> updateAnswerInUserAttemptAnswerMasterResp=null;
+		
+		try {
+			updateAnswerInUserAttemptAnswerMasterResp = dispatcher.runSync("updateUserAttemptAnswerMaster", combinedMap);
+		
+		} catch (GenericServiceException e) {
+			// If any exception occur in service, set error as a result in request object
+			String errMsg= "Failed to execute updateAnswerInUserAttemptAnswerMaster service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
+		}
+	
+		if(ServiceUtil.isError(updateAnswerInUserAttemptAnswerMasterResp)) {
+			String errMsg= "Error while updating answer in UserAttemptAnswerMaster";
+			Debug.logInfo(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants.RESPONSE_MESSAGE, errMsg);
+			return CommonConstants.ERROR;
+		}
+		
+		request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+		return CommonConstants.SUCCESS;
+	}
+	
+public String updateQuestionForReviewInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+		
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		Map<String, Object> updateQuestionForReviewInUserAttemptAnswerMasterResp=null;
+		
+		try {
+			updateQuestionForReviewInUserAttemptAnswerMasterResp = dispatcher.runSync("updateUserAttemptAnswerMaster", combinedMap);
+		
+		} catch (GenericServiceException e) {
+			// If any exception occur in service, set error as a result in request object
+			String errMsg= "Failed to execute updateQuestionForReviewInUserAttemptAnswerMaster service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
+		}
+		
+		if(ServiceUtil.isError(updateQuestionForReviewInUserAttemptAnswerMasterResp)) {
+			String errMsg= "Error while updating Mark for review in UserAttemptAnswerMaster";
+			Debug.logInfo(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants.RESPONSE_MESSAGE, errMsg);
+			return CommonConstants.ERROR;
+		}
+		request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+		return CommonConstants.SUCCESS;
+	}
+public String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+	
+	LocalDispatcher dispatcher= (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+	
+	Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+	Map<String, Object> findAnswerAndTopicIdForQuestionIdResp=null;
+	Map<String, Object> findAnswerAndTopicIdForQuestionIdServiceMap=null;
+	Set<String> TopicIdSet=null;
+	int totalCorrect= 0;
+	
+	
+	List<Map<String, Object>> userAtemptAnswerList= 
+			(List<Map<String, Object>>) combinedMap.get("userAtemptAnswerList");
+	
+	for(Map<String, Object> userAttemptAnswer : userAtemptAnswerList) {
+		
+		Boolean correct= false;
+		String questionId= (String) userAttemptAnswer.get(CommonConstants.QUESTION_ID);
+		String submittedAnswer = (String) userAttemptAnswer.get(CommonConstants.SUBMITTED_ANSWER);
+		findAnswerAndTopicIdForQuestionIdServiceMap.put(CommonConstants.QUESTION_ID, questionId);
+		findAnswerAndTopicIdForQuestionIdServiceMap.put(CommonConstants.SUBMITTED_ANSWER, submittedAnswer);
+		try {
+			
+			//Returns the topic id and and the correct answer for the question
+			findAnswerAndTopicIdForQuestionIdResp = 
+					dispatcher.runSync("findAnswerAndTopicIdForQuestionId",
+							findAnswerAndTopicIdForQuestionIdServiceMap);
+		} catch (GenericServiceException e) {
+			// If any exception occur in service, set error as a result in request object
+			String errMsg= "Failed to execute findAnswerAndTopicIdForQuestionId service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
+		}
+		if(UtilValidate.isNotEmpty(findAnswerAndTopicIdForQuestionIdResp)) {
+			String topicId = (String) findAnswerAndTopicIdForQuestionIdResp.get(CommonConstants.TOPIC_ID);
+			//Adds the topicIds to a Set to prevent duplicates
+			TopicIdSet.add(topicId);
+			
+			//Adds the topicId for the question in the request list
+			userAttemptAnswer.put(CommonConstants.TOPIC_ID, topicId);
+			String answer = (String) findAnswerAndTopicIdForQuestionIdResp.get(CommonConstants.ANSWER);
+			if(answer.equals(submittedAnswer)) {
+				correct=true;
+				totalCorrect++;
+			}
+			//validates the answer and sets the value to the request list
+			userAttemptAnswer.put("correct", correct);
+		}
+	}
+	
+}
 
 }

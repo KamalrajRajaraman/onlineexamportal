@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
@@ -37,10 +38,10 @@ public class UserExamMappingMasterServices {
 			
 			//returning an error message to the event
 			return ServiceUtil.returnError(
-					"Error in fetching record from UserExamMappingViewEntity entity ........ " + e + module);
+					"Error in fetching record from UserExamMappingViewEntity entity ..... " + e + module);
 		}
 		
-		if (examGenericValueList != null) {
+		if (UtilValidate.isNotEmpty(examGenericValueList)) {
 			
 			//Creating a list, containing the map of exams
 			for (GenericValue examGenericValue : examGenericValueList) {
