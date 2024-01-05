@@ -98,6 +98,8 @@ public interface CommonConstants {
 	public static final String USER_ATTEMPT_ANSWER_MASTER="UserAttemptAnswerMaster";
 	public static final String USER_EXAM_MAPPING_MASTER="UserExamMappingMaster";
 
+	//--------------------------------------View Entity Name Constant-------------------
+	public static final String USER_MASTER = "UserMaster";
 	
 	//--------------------------USER EXAM MAPPING ENTITY CONSTANT----------------------------
 	public static final String ALLOWED_ATTEMPTS ="allowedAttempts";

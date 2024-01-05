@@ -49,8 +49,7 @@
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
-			type="Long" />
-		    
+			type="Long" />    
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
@@ -119,7 +118,7 @@
 
 	<service name="createQuestion"
 		default-entity-name="QuestionMaster" engine="entity-auto"
-		invoke="create" auth="false">
+		invoke="create" auth="true">
 		<description>Create Question </description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
@@ -129,7 +128,7 @@
 
 	<service name="findAllQuestions" engine="java"
 		location="com.vastpro.services.QuestionMasterServices"
-		invoke="findAllQuestions" auth="false">
+		invoke="findAllQuestions" auth="true">
 		<description>Find Questions</description>
 		<attribute name="questionList" type="List" mode="OUT"
 			optional="true"></attribute>
@@ -140,13 +139,12 @@
 		invoke="findQuestion">
 		<attribute name="questionId" type="Long" mode="IN"
 			optional="false" />
-		<attribute name="question" type="Map" mode="OUT"
-			optional="true" />		    
+		<attribute name="question" type="Map" mode="OUT" optional="true" />		    
 	</service>
 	
 	<service name="deleteQuestion"
 		default-entity-name="QuestionMaster" engine="entity-auto"
-		invoke="delete" auth="false">
+		invoke="delete" auth="true">
 		<description>Delete Question </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
