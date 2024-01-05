@@ -26,7 +26,7 @@ import com.vastpro.validator.ExamTopicMappingCheck;
 import com.vastpro.validator.ExamTopicMappingValidator;
 import com.vastpro.validator.HibernateHelper;
 
-import clojure.core.comment;
+
 
 
 public class ExamTopicMappingMasterEvents {

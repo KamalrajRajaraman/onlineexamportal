@@ -53,8 +53,6 @@ public class QuestionMasterEvents {
 			String errMsg = "Error founded while executing hibernate validation in create question form ";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			
-			Debug.logError("The add question form has empty values ", module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
@@ -133,6 +131,15 @@ public class QuestionMasterEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		String questionId = (String) combinedMap.get("questionId");
+		
+		if(questionId==null) {
+			String errMsg = "questionId is empty ";
+			Debug.logError( errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
 		Map<String, Object> deleteQuestionResp = null;
 
 		// calling deleteQuestion service
@@ -140,9 +147,10 @@ public class QuestionMasterEvents {
 			deleteQuestionResp = dispatcher.runSync("deleteQuestion", combinedMap);
 			Debug.logInfo("Succesfully executed deleteQuestion service", module);
 		} catch (GenericServiceException e) {
-			// If Exception occured while execute the service, set result as Error in request
-			Debug.logError(e, "Failed to execute deleteQuestion service", module);
+			// If Exception occurred while execute the service, set result as Error in request
+			
 			String errMsg = "Failed to execute deleteQuestion service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;

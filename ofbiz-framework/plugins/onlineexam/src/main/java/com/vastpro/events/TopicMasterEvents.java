@@ -26,7 +26,6 @@ import com.vastpro.validator.TopicMasterValidator;
 //Topic related events 
 public class TopicMasterEvents {
 	public static final String module = TopicMasterEvents.class.getName();
-	
 
 	// Event for creating new topic in TopicMaster entity
 	public static String createTopic(HttpServletRequest request, HttpServletResponse response) {
@@ -36,55 +35,68 @@ public class TopicMasterEvents {
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 
 		// Retrieving Topic Form Data from React which is sent as Json Object
-
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
 		TopicMasterValidator topicForm = HibernateHelper.populateBeanFromMap(combinedMap, TopicMasterValidator.class);
 		Set<ConstraintViolation<TopicMasterValidator>> checkValidationErrors = HibernateHelper
 				.checkValidationErrors(topicForm, TopicMasterCheck.class);
+		
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
 				locale, "MandatoryFieldErrMsgTopicForm", CommonConstants.RESOURCE_ERROR, false);
-		
+
 		request.setAttribute("hasFormErrors", hasFormErrors);
-		
-		
+
 		String topicName = (String) combinedMap.get(CommonConstants.TOPIC_NAME);
-		// create a map with topic details and userlogin object
+		
+		// create a map with topic details and user login object
 		Map<String, Object> addTopicContext = new HashMap<>();
-		// addTopicContext.put(CommonConstant.TOPIC_ID, topicId);
+		
 		addTopicContext.put(CommonConstants.TOPIC_NAME, topicName);
 		addTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
-
-		if (hasFormErrors == true) {
-			request.setAttribute("hasFormErrors", hasFormErrors);
+		Map<String, Object> createTopicResp = null;
+		
+		if (hasFormErrors) {
+			//If hasFormErrors is true, set result as Error in request
+			String errMsg = "Error founded while executing hibernate validation in create topic form ";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		} 
-		else {
-			request.setAttribute("hasFormErrors", hasFormErrors);
+		
 			try {
 				// calling createTopic service
-				Map<String, Object> serviceResult = dispatcher.runSync("createTopic", addTopicContext);
-				if (ServiceUtil.isSuccess(serviceResult)) {
-					Map<String, Object> topic = UtilMisc.toMap(CommonConstants.TOPIC_ID,
-							serviceResult.get(CommonConstants.TOPIC_ID), CommonConstants.TOPIC_NAME,
-							serviceResult.get(CommonConstants.TOPIC_NAME));
-					request.setAttribute("topic", topic);
-					request.setAttribute(CommonConstants.RESULT, serviceResult.get(CommonConstants.RESPONSE_MESSAGE));
-				}
-				Debug.logInfo("=======Created TopicMaster record in this event using service createTopic=========",
-						module);
+				createTopicResp = dispatcher.runSync("createTopic", addTopicContext);
+				
+				Debug.logInfo("=======createTopic method ran successfully=========",module);
 			}
 
 			catch (GenericServiceException e) {
-				// If exception occured error setted as result in request object
+				// If exception occurred error set as result in request object
 				Debug.logError(e, "Failed to execute createTopic service", module);
 				String errMsg = "Failed to execute createTopic service : " + e.getMessage();
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_,  errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+			//If createTopic service is success
+			if (ServiceUtil.isSuccess(createTopicResp)) {
+				
+				Map<String, Object> topic = UtilMisc.toMap(
+						CommonConstants.TOPIC_ID, createTopicResp.get(CommonConstants.TOPIC_ID), 
+						CommonConstants.TOPIC_NAME, createTopicResp.get(CommonConstants.TOPIC_NAME));
+				request.setAttribute("topic", topic);
+				request.setAttribute(CommonConstants.RESULT, createTopicResp.get(CommonConstants.RESPONSE_MESSAGE));
+			}
+			else {	
+				//If the service returns Error, set result as Error in request
+				String errMsg = "Error occurred while running createTopic service";
+				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
 			}
-
-		}
 
 		return CommonConstants.SUCCESS;
 	}
@@ -94,7 +106,7 @@ public class TopicMasterEvents {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
-		// Create a map with userlogin object
+		// Create a map with user login object
 		Map<String, Object> findAllTopicContext = new HashMap<>();
 		findAllTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 
@@ -104,6 +116,7 @@ public class TopicMasterEvents {
 			topicList = dispatcher.runSync("findAllTopics", findAllTopicContext);
 
 		} catch (GenericServiceException e) {
+			// If exception occurred, error set as result in request object
 			Debug.logError(e, "Failed to execute findAllTopics service", module);
 			String errMsg = "Failed to execute findAllTopics service : " + e.getMessage();
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -113,8 +126,16 @@ public class TopicMasterEvents {
 
 		// checking the service is success or not
 		if (ServiceUtil.isSuccess(topicList)) {
-			request.setAttribute(CommonConstants.RESPONSE_MESSAGE, topicList.get(CommonConstants.RESPONSE_MESSAGE));
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("topicList", topicList.get("topicList"));
+		}
+		else {
+			//If the service returns Error, set result as Error in request
+			String errMsg = "Error occurred while running findAllTopics service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
 		return CommonConstants.SUCCESS;
@@ -130,15 +151,24 @@ public class TopicMasterEvents {
 		Map<String, Object> findTopicContext = new HashMap<>();
 		findTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 		findTopicContext.put(CommonConstants.TOPIC_ID, topicId);
-
-		Map<String, Object> serviceResultMap = null;
+		
+		if(topicId==null) {
+			//If topicId is empty, set result as error in request
+			String errMsg = "topicId is empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+		Map<String, Object> findTopicByIdResp = null;
 		// calling findTopicById service
 		try {
-			serviceResultMap = dispatcher.runSync("findTopicById", findTopicContext);
+			findTopicByIdResp = dispatcher.runSync("findTopicById", findTopicContext);
 
-			Debug.logInfo("=======Retriving  ExamMAster record in this event using service findExams=========", module);
+			Debug.logInfo("========findTopicById method executed successfully========", module);
 		} catch (GenericServiceException e) {
-
+			// If exception occurred, error set as result in request object
 			Debug.logError(e, "Failed to execute findTopicById service", module);
 			String errMsg = "Failed to execute findTopicById service : " + e.getMessage();
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -147,13 +177,21 @@ public class TopicMasterEvents {
 		}
 
 		// checking if the findTopicById service is success or not
-		if (ServiceUtil.isSuccess(serviceResultMap)) {
-			request.setAttribute(CommonConstants.RESULT, serviceResultMap.get(CommonConstants.RESPONSE_MESSAGE));
+		if (ServiceUtil.isSuccess(findTopicByIdResp)) {
+			request.setAttribute(CommonConstants.RESULT, findTopicByIdResp.get(CommonConstants.RESPONSE_MESSAGE));
 			Map<String, Object> topic = UtilMisc.toMap(CommonConstants.TOPIC_ID,
-					serviceResultMap.get(CommonConstants.TOPIC_ID), CommonConstants.TOPIC_NAME,
-					serviceResultMap.get(CommonConstants.TOPIC_NAME));
+					findTopicByIdResp.get(CommonConstants.TOPIC_ID), CommonConstants.TOPIC_NAME,
+					findTopicByIdResp.get(CommonConstants.TOPIC_NAME));
 			request.setAttribute("topic", topic);
 
+		}
+		else {
+			//If the service returns Error, set result as Error in request
+			String errMsg = "Error occurred while running findTopicById service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 		return CommonConstants.SUCCESS;
 
@@ -164,25 +202,45 @@ public class TopicMasterEvents {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		String topicId = request.getParameter(CommonConstants.TOPIC_ID);
+		
+		if(topicId==null) {
+			//If the topicId is empty, set the result as error in request
+			String errMsg = "topicId is empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
 
 		// creating map with inclusion of topicId and userLogin object
 		Map<String, Object> deleteTopicContext = new HashMap<>();
 		deleteTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 		deleteTopicContext.put(CommonConstants.TOPIC_ID, topicId);
-		Map<String, Object> serviceResultMap = null;
+		Map<String, Object> deleteTopicResp = null;
 		try {
 			// calling deleteTopic service
-			serviceResultMap = dispatcher.runSync("deleteTopic", deleteTopicContext);
-			if (ServiceUtil.isSuccess(serviceResultMap)) {
-				request.setAttribute(CommonConstants.RESULT, serviceResultMap.get(CommonConstants.RESPONSE_MESSAGE));
-				request.setAttribute("resultMap", serviceResultMap);
-			}
+			deleteTopicResp = dispatcher.runSync("deleteTopic", deleteTopicContext);
+			
 		} catch (GenericServiceException e) {
-			// If Exception occured, error setted as result in request attribute
-			Debug.logError(e, "Failed to execute deleteTopic service", module);
+			// If Exception occurred, error set as result in request attribute
+			
 			String errMsg = "Failed to execute deleteTopic service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute("_ERROR_MESSAGE_", errMsg);
 			request.setAttribute("result", CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+		if (ServiceUtil.isSuccess(deleteTopicResp)) {
+			request.setAttribute(CommonConstants.RESULT, deleteTopicResp.get(CommonConstants.RESPONSE_MESSAGE));
+			request.setAttribute("resultMap", deleteTopicResp);
+		}
+		else {
+			//If the service returns Error, set result as Error in request
+			String errMsg = "Error occurred while running deleteTopic service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
 
