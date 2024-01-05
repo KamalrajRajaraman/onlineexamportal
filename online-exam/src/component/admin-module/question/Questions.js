@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MainContent from "../../common/MainContent";
 import AccordinMaker from "../../common/AccordinMaker";
-import { useQuestionContext } from "./questionData";
+import { useQuestionContext } from "./QuestionData";
 
 
 const Questions = () => {

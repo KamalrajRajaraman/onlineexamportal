@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { useTopicContext } from "../topic/topicData";
+import { useTopicContext } from "../topic/TopicData";
 import { EditExamContext } from "./EditExam";
 import FormInput from "../../common/FormInput";
 
