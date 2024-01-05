@@ -19,6 +19,15 @@ public class ExamTopicMappingMasterServices {
 	
 	public static final String module = ExamTopicMappingMasterServices.class.getName();
 	
+	/**
+	 * This method is used to retrieve all the topics assigned to particular exam
+	 *  from the Exam Master entity 
+	 * @param DispatchContext 
+	 * @param Map<String, ? extends Object>
+	 * @return
+	 * 		Map<String,Object>
+	 */
+	
 	public static Map<String,Object> findExamTopicMappingMasterRecords(DispatchContext dctx, Map<String, ? extends Object> context){
 		
 		Map<String, Object> result = ServiceUtil.returnSuccess();

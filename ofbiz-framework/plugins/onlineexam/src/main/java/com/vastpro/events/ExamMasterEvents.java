@@ -44,9 +44,10 @@ public class ExamMasterEvents {
 		Boolean hasformErrors= HibernateHelper.validateFormSubmission(delegator, createExamvalidationErrors , request, locale, "InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasformErrors);
 		if(hasformErrors){
-			
+			String errMsg= "Errors in  createExam Form Validation";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			Debug.logError("Errors in  createExam Form Validation ", module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			Debug.logError(errMsg, module);
 			return CommonConstants.ERROR;		
 		}
 		
@@ -54,7 +55,7 @@ public class ExamMasterEvents {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		
-		String examId = (String) combinedMap.get(CommonConstants.EXAM_ID);
+		
 		String examName = (String) combinedMap.get(CommonConstants.EXAM_NAME);
 		String description = (String) combinedMap.get(CommonConstants.DESCRIPTION);
 		String creationDate = (String) combinedMap.get(CommonConstants.CREATION_DATE);
@@ -69,7 +70,6 @@ public class ExamMasterEvents {
 	
 		//creating map to pass required context to the service called 
 		Map<String, Object> addExamContext = UtilMisc.toMap(
-				CommonConstants.EXAM_ID, examId,
 				CommonConstants.EXAM_NAME,examName,
 				CommonConstants.DESCRIPTION, description,
 				CommonConstants.CREATION_DATE, creationDate,
