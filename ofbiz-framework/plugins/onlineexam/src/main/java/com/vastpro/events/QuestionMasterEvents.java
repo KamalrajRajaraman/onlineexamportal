@@ -11,6 +11,7 @@ import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -57,9 +58,10 @@ public class QuestionMasterEvents {
 			return CommonConstants.ERROR;
 		}
 
-		Map<String, Object> createQuestionResp = null;
+		
 
 		// calling createQuestion service for creating question
+		Map<String, Object> createQuestionResp = null;
 		try {
 			createQuestionResp = dispatcher.runSync("createQuestion", combinedMap);
 			Debug.logInfo("Succesfully executed createQuestion service", module);
@@ -133,7 +135,7 @@ public class QuestionMasterEvents {
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		String questionId = (String) combinedMap.get("questionId");
 		
-		if(questionId==null) {
+		if(UtilValidate.isEmpty(questionId)) {
 			String errMsg = "questionId is empty ";
 			Debug.logError( errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);

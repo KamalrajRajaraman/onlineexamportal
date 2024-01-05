@@ -177,8 +177,8 @@ public class ExamMasterServices {
 			resultMap.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 		}
 		else {
-			Debug.logError("Number of questions is empty", module);
-			return ServiceUtil.returnError("Number of questions is empty"+module);
+			Debug.logError("while fetching Number of questions from ExamMaster entity  is empty", module);
+			return ServiceUtil.returnError("while fetching Number of questions from ExamMaster entity  is empty"+module);
 			
 		}
 			
