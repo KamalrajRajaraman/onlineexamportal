@@ -56,8 +56,9 @@ public class UserExamMappingEvents {
 			Debug.logError("Values are not assigned to every fields! " , module);
 			return CommonConstants.ERROR;
 			
-		} else {
-			try {
+		} 
+		
+		try {
 				// calling createUserExamMappingRecord service
 				createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
 				
@@ -79,21 +80,23 @@ public class UserExamMappingEvents {
 				
 			}
 			else {
-				String errMsg= "Error while executing service";
-				request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
+				
+				// If the createUserExamMappingRecord service returns Error, set result as error in request
+				String errMsg = "Error occured in createUserExamMappingRecord service";
+				Debug.logError(errMsg, module);
+				
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				Debug.logError(errMsg, module);
 				return CommonConstants.ERROR;
 			}
-		}
+		
 		return CommonConstants.SUCCESS;
 	}
 
 	// Event for showing exams for the particular user based on partyId
 	public static String showExamsForPartyId(HttpServletRequest request, HttpServletResponse response) {
 
-		
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
@@ -107,7 +110,7 @@ public class UserExamMappingEvents {
 			partyId = (String) request.getAttribute(CommonConstants.PARTY_ID);
 		}
 		
-		//If the partyId didn't came as both parameter and attribute then take it from the session
+		//If the partyId didn't came as both parameter and attribute then take it from the userLogin
 		if(UtilValidate.isEmpty(partyId)) {
 			partyId = userLogin.getString(CommonConstants.PARTY_ID);			
 		}
@@ -140,7 +143,8 @@ public class UserExamMappingEvents {
 			
 		} catch (GenericServiceException e) {
 			// If any exception occur in service, set error as a result in request object
-			Debug.logError(e, "Failed to execute showExamsForPartyId service", module);
+			String errMsg= "Failed to execute showExamsForPartyId service";
+			Debug.logError(e, errMsg , module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "Failed to execute showExamsForPartyId service");
 			return CommonConstants.ERROR;

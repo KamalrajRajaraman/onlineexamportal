@@ -207,8 +207,8 @@ public class OnlineExamEvents {
 			} catch (GenericServiceException e) {
 				
 				//These get executed in case of exception while running the service
-				Debug.logError(e, "Failed to execute createPartyRoleRecord service", module);
 				String errMsg = "Failed to execute createPartyRoleRecord service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 	            return CommonConstants.ERROR;
@@ -236,8 +236,8 @@ public class OnlineExamEvents {
 	}
 
 	public static String findAllUsers(HttpServletRequest request, HttpServletResponse response) {
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> findAllUserContext = new HashMap<>();
 		findAllUserContext.put(CommonConstants.USER_LOGIN, userLogin);
@@ -249,8 +249,9 @@ public class OnlineExamEvents {
 			Debug.logInfo("Successfully execute findAllUser service", module);
 
 		} catch (GenericServiceException e) {
-			Debug.logError(e, "Failed to execute findAllUser service", module);
+			
 			String errMsg = "Failed to execute findAllUser service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
             return CommonConstants.ERROR;

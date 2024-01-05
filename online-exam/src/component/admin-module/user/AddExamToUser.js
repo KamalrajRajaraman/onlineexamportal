@@ -106,7 +106,9 @@ const AddExamToUser = () => {
     );
 
     const data = await res.json();
-
+      if(data.result==="success"){
+        setFormValues(initialValues);
+      }
     console.log(data);
   };
 

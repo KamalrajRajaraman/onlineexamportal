@@ -34,13 +34,14 @@ public class ExamTopicMappingMasterEvents {
 	public static final String module = ExamTopicMappingMasterEvents.class.getName();
 	
 	/**
+	 * Method for create a record in ExamTopicMappingMaster entity
 	 * 
 	 * @param request
 	 * @param response
-	 * @return
+	 * @return String
 	 */
 	public static String createExamTopicMappingMasterRecord(HttpServletRequest request, HttpServletResponse response) {
-		//Hibernate Validation for create ExamTopicMappingMaster Record
+		
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
@@ -100,10 +101,7 @@ public class ExamTopicMappingMasterEvents {
 			return CommonConstants.ERROR;
 		}
 		
-		if(UtilValidate.isEmpty(percentageList)) {
-			return CommonConstants.ERROR;
-		}
-		
+
 		if(UtilValidate.isNotEmpty(percentageList)) {
 			//Total topic to exam percentage is calculated 
 			BigDecimal totalPercentageAdded = new BigDecimal(0);
@@ -168,8 +166,9 @@ public class ExamTopicMappingMasterEvents {
 			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamID", addTopicToExamContextMap);
 			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamID Service", module);
 		} catch (GenericServiceException e) {
-			Debug.logError(e, "Failed to execute findNoOfQuestionCountByExamID service", module);
+			
 			String errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;

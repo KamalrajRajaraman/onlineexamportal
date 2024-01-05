@@ -26,10 +26,9 @@ public class ExamMasterServices {
 	public static final String module = ExamMasterServices.class.getName();
 	/**
 	 * This method is used to retrieve all the exams from the Exam Master entity 
-	 * @param dctx 
-	 * @param context
-	 * @return
-	 * 		a map containing list of exams
+	 * @param DispatchContext 
+	 * @param Map<String, ? extends Object>
+	 * @return	Map<String, ? extends Object>
 	 */
 	public static Map<String, Object> findAllExams(DispatchContext dctx, Map<String, ? extends Object> context) {
 
@@ -48,14 +47,24 @@ public class ExamMasterServices {
 		} catch (GenericEntityException e) {
 			
 			//In case of exception, the following codes get executed
-			Debug.logError(e,"Error in fetching All record from ExamMaster entity" ,module);
-			return ServiceUtil.returnError("Error in fetching All  record from ExamMaster entity :" + module);
+			String errMsg = "Error in fetching All record from ExamMaster entity"+e.getMessage();
+			Debug.logError(e,errMsg ,module);
+			return ServiceUtil.returnError(errMsg + module);
 		}
+		
+		if(UtilValidate.isEmpty(examMasterGenericValueList)) {
+			//Retrieved exam list from ExamMaster entity is null or empty
+			String errMsg = "Error in fetching All record from ExamMaster entity";
+			Debug.logError(errMsg ,module);
+			return ServiceUtil.returnError(errMsg + module);
+		}
+		
 		
 		//Checks if the list of exams returned by the query is not empty
 		if (UtilValidate.isNotEmpty(examMasterGenericValueList)) {
 			
 			for (GenericValue examGenericValue : examMasterGenericValueList) {
+				//Extract all fields from generic value object
 				String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
 				String examName = examGenericValue.getString(CommonConstants.EXAM_NAME);
 				String description = examGenericValue.getString(CommonConstants.DESCRIPTION);
@@ -90,9 +99,9 @@ public class ExamMasterServices {
 	}
 	/**
 	 * This method accepts an exam Id and provides the details of the exam
-	 * @param dctx
-	 * @param context
-	 * @return a map containing exam details
+	 * @param DispatchContext
+	 * @param Map<String, ? extends Object>
+	 * @return Map<String, ? extends Object>
 	 */
 	public static Map<String, Object> findExamById(DispatchContext dctx, Map<String, ? extends Object> context) {
 
@@ -112,10 +121,17 @@ public class ExamMasterServices {
 		 catch (GenericEntityException e) {
 			
 			//In case of exception, the following codes get executed
-			Debug.logError(e,"Error in fetching exam record by examId from ExamMaster entity" ,module);
-			return ServiceUtil.returnError("Error in fetching exam record by examId from ExamMaster entity " + module);
+			String errMsg = "Error in fetching exam record by examId from ExamMaster entity"+e.getMessage();
+			Debug.logError(e,errMsg ,module);
+			return ServiceUtil.returnError(errMsg + module);
 		}
 
+		if(UtilValidate.isEmpty(examGenericValue)) {
+			 	String errMsg = "Retrieved exam list from ExamMaster entity is null or empty";
+				Debug.logError(errMsg ,module);
+				return ServiceUtil.returnError(errMsg + module);
+		}
+		
 		//Checks if the entity has the exam for the provided examId
 		if (UtilValidate.isNotEmpty(examGenericValue)) {
 			String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
@@ -148,12 +164,12 @@ public class ExamMasterServices {
 
 	/**
 	 * This method accepts and exam Id and provides the number of questions assigned to that exam	
-	 * @param dctx
-	 * @param context
+	 * @param DispatchContext
+	 * @param Map<String, Object>
 	 * @return
-	 * 		a map containing the number of questions 
+	 * 		Map<String, Object> 
 	 */
-	public static Map<String, Object> findNoOfQuestionCountByExamID(DispatchContext dctx, Map<String, ? extends Object> context) {
+	public static Map<String, Object> findNoOfQuestionCountByExamId(DispatchContext dctx, Map<String, ? extends Object> context) {
 		Map<String, Object> resultMap = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
 
@@ -161,14 +177,14 @@ public class ExamMasterServices {
 		GenericValue genericQuestionCount= null;
 		
 		try {
-			
 			//Query to find the number of questions for the exam id provided
 			genericQuestionCount = EntityQuery.use(delegator).select(CommonConstants.NO_OF_QUESTIONS)
 					.from(CommonConstants.EXAM_MASTER).where(CommonConstants.EXAM_ID, examId).queryOne();
 
 		} catch (GenericEntityException e) {
-			Debug.logError(e,"Error in fetching NoOfQuestion By ExamID from ExamMaster entity" ,module);
-			return ServiceUtil.returnError("Error finding Number of Questions" + module);
+			String errMsg = "Exception in fetching NoOfQuestion By ExamID from ExamMaster entity";
+			Debug.logError(e,errMsg ,module);
+			return ServiceUtil.returnError(errMsg + module);
 		}
 		
 		//Checks if number of questions in available for the exam 
@@ -177,7 +193,8 @@ public class ExamMasterServices {
 			resultMap.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 		}
 		else {
-			Debug.logError("while fetching Number of questions from ExamMaster entity  is empty", module);
+			String errMsg = "while fetching Number of questions from ExamMaster entity  is empty";
+			Debug.logError(errMsg, module);
 			return ServiceUtil.returnError("while fetching Number of questions from ExamMaster entity  is empty"+module);
 			
 		}
@@ -191,10 +208,10 @@ public class ExamMasterServices {
 	/**
 	 * This method accepts a list of topic ID and provides the question IDs 
 	 * assigned to each of them 
-	 * @param dctx
-	 * @param context
+	 * @param DispatchContext
+	 * @param Map<String, Object>
 	 * @return
-	 * a map containing the topic list 
+	 * 		Map<String, Object>
 	 */
 	public static Map<String, Object> findQuestionsByTopicIds(DispatchContext dctx,
 			Map<String, ? extends Object> context) {
@@ -221,9 +238,16 @@ public class ExamMasterServices {
 			catch (GenericEntityException e) {
 				
 				//In case of exception, the following codes get executed
-				Debug.logError(e,"Error in fetching record from Question Master entity" ,module);
-				return ServiceUtil.returnError(
-						"Error in fetching record from Question Master entity" + module);
+				String errMsg = "Error in fetching record from Question Master entity";
+				Debug.logError(e, errMsg ,module);
+				return ServiceUtil.returnError(errMsg + module);
+			}
+			
+			if(UtilValidate.isEmpty(questionIdListGV)) {
+				//If Retrieved questionId list is empty or null
+				String errMsg = "Error in fetching record from Question Master entity";
+				Debug.logError(errMsg ,module);
+				return ServiceUtil.returnError(errMsg + module);
 			}
 			
 			//Checks if the returned list is empty
