@@ -102,13 +102,7 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 
-	<request-map uri="createAttemptMasterRecords">
-		<security https="true" auth="true" />
-		<event type="java" path="com.vastpro.events.ExamMasterEvents"
-			invoke="createUserAttemptMaster" />
-		<response name="success" type="request" value="json" />
-		<response name="error" type="request" value="json" />
-	</request-map>
+	
 	
 	<!-- Topic Related Request Mapping -->
 
@@ -213,6 +207,15 @@
 			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="showExamsForPartyId"/>
 			<response name="success" type="request" value="json"/>
 			<response name="error" type="request" value="json"/>
+	</request-map>
+	
+	<!-- AttempMaster -->
+	<request-map uri="createAttemptMasterRecords">
+		<security https="true" auth="true" />
+		<event type="java" path="com.vastpro.events.UserAttemptEvents"
+			invoke="createUserAttemptMaster" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
 	</request-map>
 	
     <request-map uri="updateUserAttemptAnswerMaster">

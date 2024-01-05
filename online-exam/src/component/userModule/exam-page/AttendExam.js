@@ -25,6 +25,7 @@ const AttendExam = () => {
       
       setQuestions([...questions, ...selectedQuestion]);
       setActiveQuestion(questionsRef.current[0]);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

@@ -153,7 +153,7 @@ public class ExamMasterServices {
 	 * @return
 	 * 		a map containing the number of questions 
 	 */
-	public static Map<String, Object> findNoOfQuestionCountByExamID(DispatchContext dctx, Map<String, ? extends Object> context) {
+	public static Map<String, Object> findNoOfQuestionCountByExamId(DispatchContext dctx, Map<String, ? extends Object> context) {
 		Map<String, Object> resultMap = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
 

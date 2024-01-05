@@ -40,5 +40,8 @@ under the License.
      <property key="MaxTopicError">
         <value xml:lang="en">The Exam has Reached maximum no of Topic based on percentage.No more Topic can't be added</value> 
     </property>
+    <property key="MissingRequiredFieldsErrMsg">
+        <value xml:lang="en">While Hibernate Validation,Mandatory fields are missing</value> 
+    </property>
     
 </resource>

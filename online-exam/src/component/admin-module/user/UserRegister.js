@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import FormInput from '../../common/FormInput';
+import Swal from 'sweetalert2';
 
 
 const UserRegister = () => {
@@ -73,7 +74,28 @@ const UserRegister = () => {
 
     console.log(data);
     if(data.result==="success"){
+      Swal.fire({
+        title: "Good job!",
+        text: "User is added to exam created successfully!",
+        icon: "success",
+        timer:2000,
+        showConfirmButton:false
+      });
       setUserValues(initialValues);
+    }
+    if(data.result==="error"){
+      const errorFields = data.ERRORED_FIELD_NAMES
+      let errMsg ="";
+      errorFields.forEach(errorField => {
+        errMsg =errMsg+data[errorField]+".";
+      })
+      Swal.fire({
+        icon: "error",
+        title:data._ERROR_MESSAGE_,
+        text: errMsg
+      });
+
+
     }
 
 

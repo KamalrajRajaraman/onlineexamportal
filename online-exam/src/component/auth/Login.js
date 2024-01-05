@@ -57,7 +57,12 @@ const Login = () => {
      
     }
     if (data._ERROR_MESSAGE_) {
-      alert(data._ERROR_MESSAGE_);
+      Swal.fire({
+        title:"Error",
+        text:data._ERROR_MESSAGE_,
+        icon: "error"
+      });
+      
     }
 
     console.log(data);

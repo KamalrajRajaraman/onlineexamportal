@@ -43,9 +43,9 @@
 			type="List" />
 	</service>
 
-	<service name="findNoOfQuestionCountByExamID" engine="java"
+	<service name="findNoOfQuestionCountByExamId" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findNoOfQuestionCountByExamID">
+		invoke="findNoOfQuestionCountByExamId">
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
@@ -192,6 +192,17 @@
 		</description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
+		<auto-attributes mode="INOUT" include="nonpk"
+			optional="true"></auto-attributes>
+	</service>
+	
+	<service name="updateUserExamMappingRecord"
+		engine="entity-auto" default-entity-name="UserExamMappingMaster"
+		invoke="update" auth="false">
+		<description>Crate Record in UserExamMappingMaster entity
+		</description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="false"></auto-attributes>
 		<auto-attributes mode="INOUT" include="nonpk"
 			optional="true"></auto-attributes>
 	</service>
