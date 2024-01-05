@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTopicContext } from "./TopicData";
 import FormInput from "../../common/FormInput";
+import Swal from "sweetalert2";
 
 const Addtopic = () => {
   const initialValues = { topicName:''};
@@ -49,8 +50,14 @@ const validate = (values)=>{
     const data =  await res.json();
    console.log(data);
     if(data["result"]==="success"){
+      Swal.fire({
+        title: "Good job!",
+        text: "Topic created successfully!",
+        icon: "success",
+        timer:2000,
+        showConfirmButton:false
+      });
       setTopicValues(initialValues)
-      setAlert(true);
       const {topic} =data;
       setTopics([...topics,topic]);
     }   

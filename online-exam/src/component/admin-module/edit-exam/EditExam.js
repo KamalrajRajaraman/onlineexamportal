@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainContent from "../../common/MainContent"
 import ExamTopicTable from "./ExamTopicTable";
+import Swal from "sweetalert2";
 
 export const EditExamContext = createContext();
 const EditExam = () => {
@@ -43,9 +44,23 @@ const EditExam = () => {
     const data = await res.json();
 
     if(data.result==="success"){
+      Swal.fire({
+        title: "Good job!",
+        text: "Topic is added to exam created successfully!",
+        icon: "success",
+        timer:2000,
+        showConfirmButton:false
+      });
       setFormValues(initialValue);
       const { examTopicMappingMasterRecord } = data;
       setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
+    }
+    else if (data.result==="error"){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: data._ERROR_MESSAGE_,
+      });
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useExamContext } from "./ExamData";
 import FormInput from "../../common/FormInput";
+import Swal from "sweetalert2";
 
 const AddExam = () => {
   //consuming data from useExamContext
@@ -104,8 +105,14 @@ const AddExam = () => {
         return response.json() })
        .then((data) => {
             if (data.result === "success") {
+              Swal.fire({
+                title: "Good job!",
+                text: "Exam created successfully!",
+                icon: "success",
+                timer:2000,
+                showConfirmButton:false
+              });
               setExamValues(initialValues);
-              setAlert(true);
               const { exam } = data;
               setExams([...exams, exam]);
             } })

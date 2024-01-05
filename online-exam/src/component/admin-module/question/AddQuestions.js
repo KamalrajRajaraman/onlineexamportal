@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
 import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
+import Swal from "sweetalert2";
 
 const AddQuestions = () => {
   
@@ -59,6 +60,13 @@ const AddQuestions = () => {
     );
     const data = await res.json();
     if(data.result==="success"){
+      Swal.fire({
+        title: "Good job!",
+        text: "Question created successfully!",
+        icon: "success",
+        timer:2000,
+        showConfirmButton:false
+      });
       setFormValues(initialValue);
       const {question} =data;
       setQuestions([...questions,question])

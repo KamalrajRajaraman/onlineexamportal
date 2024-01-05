@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +13,7 @@ import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
+import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -26,7 +28,7 @@ import com.vastpro.validator.ExamTopicMappingCheck;
 import com.vastpro.validator.ExamTopicMappingValidator;
 import com.vastpro.validator.HibernateHelper;
 
-import clojure.core.comment;
+
 
 
 public class ExamTopicMappingMasterEvents {
@@ -78,7 +80,12 @@ public class ExamTopicMappingMasterEvents {
 		String percentage = (String) combinedMap.get(CommonConstants.PERCENTAGE);
 		String topicPassPercentage = (String) combinedMap.get(CommonConstants.TOPIC_PASS_PERCENTAGE);
 		
-		 List<GenericValue> percentageList  =null;
+		/*Calculation for finding available topic to exam Percentage.
+		 * While Mapping topic to exam,topic to exam percentage should not be more than 100
+		 * and Topic to exam percentage should not be more than available percentage that can be added
+		 * */
+		//retrieving List of percentage from ExamTopicMappingMaster for given examID and TopicId 
+		List<GenericValue> percentageList  =null;
 		try {
 				percentageList  = EntityQuery
 								.use(delegator)
@@ -88,18 +95,66 @@ public class ExamTopicMappingMasterEvents {
 								.queryList();
 
 		} catch (GenericEntityException e) {
-			Debug.logError(e, "Failed retrive List of percentage from EXamTopicMappingMaster for given examID and TopicId ", module);
-			String errMsg = "Failed retrive List of percentage from EXamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
+			Debug.logError(e, "Failed retrieve List of percentage from ExamTopicMappingMaster for given examID and TopicId ", module);
+			String errMsg = "Failed retrieve List of percentage from ExamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
 		
-		for(GenericValue percent :percentageList) {
-			
-			
+		if(UtilValidate.isEmpty(percentageList)) {
+			return CommonConstants.ERROR;
 		}
 		
+		if(UtilValidate.isNotEmpty(percentageList)) {
+			//Total topic to exam percentage is calculated 
+			BigDecimal totalPercentageAdded = new BigDecimal(0);
+			for(GenericValue percent :percentageList) {
+				totalPercentageAdded = totalPercentageAdded.add(percent.getBigDecimal(CommonConstants.PERCENTAGE));			
+			}
+			
+			//Normally total percentage will be 100
+			BigDecimal totalPercentage = new BigDecimal(100);
+			
+			//Available percentage is calculated by subtracting totalPercentageAdded from totalPercentage
+			BigDecimal availablePercentage = totalPercentage.subtract(totalPercentageAdded);
+			
+			
+			/*Before converting BigDecimal to Double,
+			checked availablePercentage is not empty,to avoid NullPointerException*/
+			if(UtilValidate.isNotEmpty(availablePercentage)) {
+				
+				double availablePercent = availablePercentage.doubleValue();
+				
+				//If No more  Topic can be added  to exam ,returning error
+				if(availablePercent==0) {
+					String errMsg = UtilProperties.getMessage(CommonConstants.RESOURCE_ERROR,"MaxTopicError", locale);
+					Debug.logError( errMsg, module);	
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					return CommonConstants.ERROR;
+					
+				}//if available percentage is less than topic percentage should be added, returning error
+				else if (availablePercent < Double.valueOf(percentage)) {
+					String errMsg = "Available Percentage for adding new topic is less than the topic percentage you trying to add ";
+					Debug.logError( errMsg, module);
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);			
+					return CommonConstants.ERROR;
+				}
+			}
+			else {
+				//when availablePercentage is empty or null,error is returned
+				String errMsg = "Available Percentage calculated is null or empty";
+				Debug.logError( errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);			
+				return CommonConstants.ERROR;
+				
+			}
+		}
+		
+	
 		
 		// creating map to pass required context to the service called
 		Map<String, Object> addTopicToExamContextMap = new HashMap<>();
@@ -216,13 +271,23 @@ public class ExamTopicMappingMasterEvents {
 
 	public static String findAllExamTopicMappingRecordsByExamId(HttpServletRequest request,
 			HttpServletResponse response) {
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 
 		String examId = (String) request.getAttribute(CommonConstants.EXAM_ID);
 		if (examId == null) {
 			examId = request.getParameter(CommonConstants.EXAM_ID);
 		}
+		
+		//If examId is null or Empty ,error returned
+		if(UtilValidate.isEmpty(examId)) {
+			String errMsg = "examId is Empty";
+			Debug.logError( errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+		    return CommonConstants.ERROR;		
+		}
+		
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 
 		Map<String, Object> findAllContextMap = new HashMap<>();
 		findAllContextMap.put(CommonConstants.EXAM_ID, examId);

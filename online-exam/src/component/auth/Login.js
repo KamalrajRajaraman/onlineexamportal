@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../common/Input";
 import { useAuth } from "./Auth";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const auth = useAuth();
@@ -66,11 +67,20 @@ const Login = () => {
     e.preventDefault();
 
     if (!user) {
-      alert("please enter user name");
+      Swal.fire({
+        title:"Missing credential",
+        text:"Please enter user name...",
+        icon: "question"
+      });
+      
       return;
     }
     if (!pass) {
-      alert("please enter password");
+      Swal.fire({
+        title:"Missing credential",
+        text:"please enter password...",
+        icon: "question"
+      });
       return;
     }
 
