@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MainContent from "../../common/MainContent";
 import AccordinMaker from "../../common/AccordinMaker";
-import { useExamContext } from "./examData";
+import { useExamContext } from "./ExamData";
 import { useNavigate } from "react-router-dom";
 import  Alert  from "../../common/Alert";
 

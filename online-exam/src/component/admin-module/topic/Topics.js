@@ -1,7 +1,7 @@
 import React, { useEffect} from "react";
 import MainContent from "../../common/MainContent";
 import AccordinMaker from "../../common/AccordinMaker";
-import { useTopicContext } from "./topicData";
+import { useTopicContext } from "./TopicData";
 import Alert from "../../common/Alert";
 
 const Topics = () => {

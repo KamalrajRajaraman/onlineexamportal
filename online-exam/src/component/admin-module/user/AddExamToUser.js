@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { EditUserContext } from "./EditUser";
-import { useExamContext } from "../exam/examData";
+import { useExamContext } from "../exam/ExamData";
 import FormInput from "../../common/FormInput";
 
 

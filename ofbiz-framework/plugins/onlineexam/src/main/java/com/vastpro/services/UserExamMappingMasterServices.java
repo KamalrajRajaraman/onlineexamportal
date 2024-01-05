@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
@@ -21,32 +22,45 @@ public class UserExamMappingMasterServices {
 
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
-		String partyIdPK = (String) context.get(CommonConstants.PARTY_ID);
-		List<GenericValue> examGenericValue = null;
-		List<Map<String, Object>> mapValuesList= new LinkedList<Map<String,Object>>();
+		
+		//Get and store the partyId which was sent from the event
+		String partyId = (String) context.get(CommonConstants.PARTY_ID);
+		List<GenericValue> examGenericValueList = null;
+		List<Map<String, Object>> examList= new LinkedList<Map<String,Object>>();
 		try {
 			
-			
-			examGenericValue = EntityQuery.use(delegator).from("UserExamMappingViewEntity")
-					.where(CommonConstants.PARTY_ID, partyIdPK).queryList();
-
-			if (examGenericValue != null) {
-
-				for (GenericValue value : examGenericValue) {
-					String examId = value.getString(CommonConstants.EXAM_ID);
-					String examName = value.getString(CommonConstants.EXAM_NAME);
-
-					Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId,
-							CommonConstants.EXAM_NAME, examName);
-					mapValuesList.add(exam); 
-				}
-				
-				result.put("examList", mapValuesList);
-				
-			}
+			//Query to fetch all the exams assigned to the partyId
+			examGenericValueList = EntityQuery.use(delegator).from("UserExamMappingViewEntity")
+					.where(CommonConstants.PARTY_ID, partyId).queryList();
 
 		} catch (GenericEntityException e) {
-			return ServiceUtil.returnError("Error in fetching record from UserExamMappingViewEntity entity ........" + module);
+			
+			//returning an error message to the event
+			return ServiceUtil.returnError(
+					"Error in fetching record from UserExamMappingViewEntity entity ........ " + e + module);
+		}
+		
+		if (examGenericValueList != null) {
+			
+			//Creating a list, containing the map of exams
+			for (GenericValue examGenericValue : examGenericValueList) {
+				String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
+				String examName = examGenericValue.getString(CommonConstants.EXAM_NAME);
+				
+				//Creating a map to store the exam details
+				Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId,
+						CommonConstants.EXAM_NAME, examName);
+				examList.add(exam); 
+			}
+			//adding the list of exams to the result map
+			result.put("examList", examList);
+			
+		}
+		else {
+			Debug.logInfo("The list of exams for the party Id is empty", module);
+			
+			//Adding an empty map to the result map
+			result.put("examList", examList);
 		}
 		return result;
 

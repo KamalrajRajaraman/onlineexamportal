@@ -1,9 +1,9 @@
 import React from "react";
 import SideBar from "../sidebar/SideBar";
 import { Outlet } from "react-router-dom";
-import { ExamProvider } from "../exam/examData";
-import { TopicProvider } from "../topic/topicData";
-import { QuestionProvider } from "../question/questionData";
+import { ExamProvider } from "../exam/ExamData";
+import { TopicProvider } from "../topic/TopicData";
+import { QuestionProvider } from "../question/QuestionData";
 
 const Admin = () => {
   return (

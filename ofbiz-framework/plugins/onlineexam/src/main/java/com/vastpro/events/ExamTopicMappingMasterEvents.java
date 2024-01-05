@@ -27,8 +27,6 @@ import com.vastpro.validator.ExamTopicMappingValidator;
 import com.vastpro.validator.HibernateHelper;
 
 
-
-
 public class ExamTopicMappingMasterEvents {
 
 	public static final String module = ExamTopicMappingMasterEvents.class.getName();
