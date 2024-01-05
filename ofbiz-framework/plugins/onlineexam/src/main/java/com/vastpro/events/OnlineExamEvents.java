@@ -152,7 +152,7 @@ public class OnlineExamEvents {
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale, "MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
 		
 		if(hasFormErrors) {
-			String errMsg = "Some of the fields are empty!";
+			String errMsg = "Errors in  createExam Form Validation";
 			Debug.logError (errMsg, module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
