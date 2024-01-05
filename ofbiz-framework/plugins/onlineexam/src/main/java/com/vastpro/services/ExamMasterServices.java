@@ -164,10 +164,10 @@ public class ExamMasterServices {
 
 	/**
 	 * This method accepts and exam Id and provides the number of questions assigned to that exam	
-	 * @param dctx
-	 * @param context
+	 * @param DispatchContext
+	 * @param Map<String, Object>
 	 * @return
-	 * 		a map containing the number of questions 
+	 * 		Map<String, Object> 
 	 */
 	public static Map<String, Object> findNoOfQuestionCountByExamID(DispatchContext dctx, Map<String, ? extends Object> context) {
 		Map<String, Object> resultMap = ServiceUtil.returnSuccess();
@@ -193,7 +193,8 @@ public class ExamMasterServices {
 			resultMap.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 		}
 		else {
-			Debug.logError("while fetching Number of questions from ExamMaster entity  is empty", module);
+			String errMsg = "while fetching Number of questions from ExamMaster entity  is empty";
+			Debug.logError(errMsg, module);
 			return ServiceUtil.returnError("while fetching Number of questions from ExamMaster entity  is empty"+module);
 			
 		}
@@ -207,10 +208,10 @@ public class ExamMasterServices {
 	/**
 	 * This method accepts a list of topic ID and provides the question IDs 
 	 * assigned to each of them 
-	 * @param dctx
-	 * @param context
+	 * @param DispatchContext
+	 * @param Map<String, Object>
 	 * @return
-	 * a map containing the topic list 
+	 * 		Map<String, Object>
 	 */
 	public static Map<String, Object> findQuestionsByTopicIds(DispatchContext dctx,
 			Map<String, ? extends Object> context) {
@@ -237,9 +238,16 @@ public class ExamMasterServices {
 			catch (GenericEntityException e) {
 				
 				//In case of exception, the following codes get executed
-				Debug.logError(e,"Error in fetching record from Question Master entity" ,module);
-				return ServiceUtil.returnError(
-						"Error in fetching record from Question Master entity" + module);
+				String errMsg = "Error in fetching record from Question Master entity";
+				Debug.logError(e, errMsg ,module);
+				return ServiceUtil.returnError(errMsg + module);
+			}
+			
+			if(UtilValidate.isEmpty(questionIdListGV)) {
+				//If Retrieved questionId list is empty or null
+				String errMsg = "Error in fetching record from Question Master entity";
+				Debug.logError(errMsg ,module);
+				return ServiceUtil.returnError(errMsg + module);
 			}
 			
 			//Checks if the returned list is empty

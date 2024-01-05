@@ -18,6 +18,13 @@ import com.vastpro.constants.CommonConstants;
 public class TopicMasterServices {
 	public static final String module = TopicMasterServices.class.getName();
 	
+	/**
+	 * This method is used to retrieve all topics from TopicMaster entity
+	 * @param DispatchContext
+	 * @param Map<String, Object>
+	 * @return
+	 * 		Map<String, Object>
+	 */
 	public static Map<String, Object> findAllTopics(DispatchContext dctx,Map<String,? extends Object > context){
 		
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();
@@ -30,9 +37,10 @@ public class TopicMasterServices {
 			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER).queryList();
 		} 
 		catch (GenericEntityException e) {
+			//Exception occurred while Execute the query
 			String errMsg = "Exception occured while fetching record from TopicMasterEntity"+ e.getMessage();
 			Debug.logError(e,errMsg, module);
-			return ServiceUtil.returnError("Error in fetching record from TopicMaster entity ........" + module);
+			return ServiceUtil.returnError(errMsg + module);
 		}
 		
 		//If the Retrieved topics are empty

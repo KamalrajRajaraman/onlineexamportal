@@ -27,7 +27,7 @@
 	</service>
 
 	<service name="createExam" default-entity-name="ExamMaster"
-		engine="entity-auto" invoke="create" auth="false">
+		engine="entity-auto" invoke="create" auth="true">
 		<description>Create Exam </description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
@@ -37,7 +37,7 @@
 
 	<service name="findAllExams" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findAllExams" auth="false">
+		invoke="findAllExams" auth="true">
 		<description>Find Exams</description>
 		<attribute name="examList" mode="OUT" optional="true"
 			type="List" />
@@ -45,7 +45,7 @@
 
 	<service name="findNoOfQuestionCountByExamID" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findNoOfQuestionCountByExamID">
+		invoke="findNoOfQuestionCountByExamID" auth="true">
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
@@ -53,7 +53,7 @@
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
-		engine="entity-auto" invoke="delete" auth="false">
+		engine="entity-auto" invoke="delete" auth="true">
 		<description>Delete Exam </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
@@ -62,7 +62,7 @@
 
 	<service name="getExamDetails" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="getExamDetails" auth="false">
+		invoke="getExamDetails" auth="true">
 		<description>Find Exams</description>
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
@@ -74,7 +74,7 @@
 
 	<service name="findExamById" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findExamById" auth="false">
+		invoke="findExamById" auth="true">
 		<description>Find Exam</description>
 		<attribute name="examId" mode="IN" type="String"
 			optional="false"></attribute>
@@ -83,7 +83,7 @@
 
 
 	<service name="createTopic" default-entity-name="TopicMaster"
-		engine="entity-auto" invoke="create" auth="false">
+		engine="entity-auto" invoke="create" auth="true">
 		<description>Create Topic </description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
@@ -93,7 +93,7 @@
 
 	<service name="findAllTopics" engine="java"
 		location="com.vastpro.services.TopicMasterServices"
-		invoke="findAllTopics" auth="false">
+		invoke="findAllTopics" auth="true">
 		<description>Find Topics</description>
 		<attribute name="topicList" type="List" mode="OUT"
 			optional="true"></attribute>
@@ -101,7 +101,7 @@
 
 	<service name="findTopicById" engine="java"
 		location="com.vastpro.services.TopicMasterServices"
-		invoke="findExamById" auth="false">
+		invoke="findExamById" auth="true">
 		<description>Find Topic </description>
 		<attribute name="topicId" mode="IN" type="String"
 			optional="false"></attribute>
@@ -110,7 +110,7 @@
 	</service>
 
 	<service name="deleteTopic" default-entity-name="TopicMaster"
-		engine="entity-auto" invoke="delete" auth="false">
+		engine="entity-auto" invoke="delete" auth="true">
 		<description>Delete Topic </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
@@ -135,7 +135,7 @@
 	</service>
 	
 	<service name="findQuestionById" engine="java"
-		location="com.vastpro.services.QuestionMasterServices" auth="false"
+		location="com.vastpro.services.QuestionMasterServices" auth="true"
 		invoke="findQuestion">
 		<attribute name="questionId" type="Long" mode="IN"
 			optional="false" />
@@ -152,7 +152,7 @@
 
 	<service name="addTopicToExam"
 		default-entity-name="ExamTopicMappingMaster" engine="entity-auto"
-		invoke="create" auth="false">
+		invoke="create" auth="true">
 		<description>Add Topic To Exam </description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="false"></auto-attributes>
@@ -164,7 +164,7 @@
 
 	<service name="findExamTopicMappingRecords" engine="java"
 		location="com.vastpro.services.ExamTopicMappingMasterServices"
-		invoke="findExamTopicMappingMasterRecords" auth="false">
+		invoke="findExamTopicMappingMasterRecords" auth="true">
 		<description>Find All Exam Topic Mapping Master Records </description>
 		<attribute name="examId" type="String" mode="IN"
 			optional="false"></attribute>
@@ -174,7 +174,7 @@
 
 	<service name="findAllUser" engine="java"
 		location="com.vastpro.services.OnlineExamServices"
-		invoke="findAllUsers" auth="false">
+		invoke="findAllUsers" auth="true">
 
 		<description>Find All User</description>
 
@@ -185,7 +185,7 @@
 
 	<service name="createUserExamMappingRecord"
 		engine="entity-auto" default-entity-name="UserExamMappingMaster"
-		invoke="create" auth="false">
+		invoke="create" auth="true">
 		<description>Crate Record in UserExamMappingMaster entity
 		</description>
 		<auto-attributes include="pk" mode="INOUT"
@@ -197,7 +197,7 @@
 
 	<service name="showExamsForPartyId" engine="java"
 		location="com.vastpro.services.UserExamMappingMasterServices"
-		invoke="showExamsForPartyId" auth="false">
+		invoke="showExamsForPartyId" auth="true">
 		<description>Fetch Exams from UserExamMappingMaster entity</description>
 		<attribute name="partyId" mode="IN" type="String"
 			optional="false"></attribute>
@@ -206,7 +206,7 @@
 	</service>
 
 	<service engine="entity-auto" name="createUserAttemptMaster"
-		default-entity-name="UserAttemptMaster" invoke="create" auth="false">
+		default-entity-name="UserAttemptMaster" invoke="create" auth="true">
 		<description>Create UserAttemptMaster Record</description>
 		<auto-attributes include="pk" mode="OUT"
 			optional="false"></auto-attributes>
@@ -217,7 +217,7 @@
 	<service engine="entity-auto"
 		name="createUserAttemptTopicMaster"
 		default-entity-name="UserAttemptTopicMaster" invoke="create"
-		auth="false">
+		auth="true">
 		<description>Create UserAttemptTopicMaster Record</description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="false"></auto-attributes>
@@ -227,7 +227,7 @@
 
 	<service engine="java" name="findQuestionsByTopicIds"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findQuestionsByTopicIds" auth="false">
+		invoke="findQuestionsByTopicIds" auth="true">
 		<description>Find Questions based on Topic Id</description>
 		<attribute name="topicList" mode="INOUT" type="List"
 			optional="true"></attribute>
@@ -245,7 +245,7 @@
 	
 	
 	<service engine="entity-auto" default-entity-name="UserAttemptAnswerMaster" 
-		name="updateUserAttemptAnswerMaster" invoke="update" auth="false">
+		name="updateUserAttemptAnswerMaster" invoke="update" auth="true">
 			<description>Partial update in user attempt answer master</description>
 			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
 			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>

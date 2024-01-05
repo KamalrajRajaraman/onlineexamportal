@@ -58,8 +58,6 @@ public class QuestionMasterEvents {
 			return CommonConstants.ERROR;
 		}
 
-		
-
 		// calling createQuestion service for creating question
 		Map<String, Object> createQuestionResp = null;
 		try {
@@ -104,7 +102,8 @@ public class QuestionMasterEvents {
 		try {
 			findAllQuestionsResp = dispatcher.runSync("findAllQuestions", findAllQuestionContext);
 			Debug.logInfo("Succesfully executed findAllQuestions service", module);
-		} catch (GenericServiceException e) {
+		} 
+		catch (GenericServiceException e) {
 			// If Exception occurred while execute the service
 			String errMsg = "Failed to execute findAllQuestions service " + e.getMessage();
 			Debug.logError(e, errMsg, module);
@@ -116,7 +115,8 @@ public class QuestionMasterEvents {
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("questionList", findAllQuestionsResp.get("questionList"));
-		} else {
+		} 
+		else {
 			// If the service returns error, set the result as error in request
 			String errMsg = "Error occured while running findAllQuestions service";
 			Debug.logError(errMsg, module);

@@ -21,6 +21,12 @@ public class QuestionMasterServices {
 
 	public static final String module = QuestionMasterServices.class.getName();
 
+	/**
+	 * This method is used to retrieve all the Questions from QuestionMaster entity
+	 * @param DispatchContext 
+	 * @param Map<String, ? extends Object>
+	 * @return Map<String,Object>	
+	 */
 	public static Map<String, Object> findAllQuestions(DispatchContext dctx, Map<String, ? extends Object> context) {
 
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();
@@ -57,7 +63,12 @@ public class QuestionMasterServices {
 
 	}
 
-	// Method for Find question based on questionId
+	/**
+	 * This method is used to retrieve a question based on questionId from QuestionMaster entity
+	 * @param DispatchContext 
+	 * @param Map<String, ? extends Object>
+	 * @return Map<String,Object>	
+	 */
 	public static Map<String, Object> findQuestion(DispatchContext dctx, Map<String, ? extends Object> context) {
 
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();
@@ -92,8 +103,14 @@ public class QuestionMasterServices {
 
 	}
 
-	// Helper Method
+	
+	/**
+	 * This helper method is used to 
+	 * @param GenericValue 
+	 * @return Map<String,Object>	
+	 */
 	public static Map<String, Object> getQuestionFromGenericValue(GenericValue genericValue) {
+		//Extract question fields from genericValue object 
 		Long questionId = genericValue.getLong(CommonConstants.QUESTION_ID);
 		String questionDetail = genericValue.getString(CommonConstants.QUESTION_DETAIL);
 		String optionA = genericValue.getString(CommonConstants.OPTION_A);
@@ -109,6 +126,7 @@ public class QuestionMasterServices {
 		String topicId = genericValue.getString(CommonConstants.TOPIC_ID);
 		BigDecimal negativeMarkValue = genericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
 
+		//Construct a map with the fields
 		Map<String, Object> question = new HashMap<>();
 		question.put(CommonConstants.QUESTION_ID, questionId);
 		question.put(CommonConstants.QUESTION_DETAIL, questionDetail);
