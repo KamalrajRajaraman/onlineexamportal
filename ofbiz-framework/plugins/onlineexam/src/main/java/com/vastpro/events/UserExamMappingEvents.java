@@ -51,7 +51,7 @@ public class UserExamMappingEvents {
 		if (hasFormErrors) {
 			//Set error message in request in case of empty fields
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			Debug.logError("Values are not assigned to every fields! " + module, module);
+			Debug.logError("Values are not assigned to every fields! " , module);
 			return CommonConstants.ERROR;
 			
 		} else {

@@ -12,6 +12,7 @@ import javax.validation.ConstraintViolation;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -152,7 +153,7 @@ public class TopicMasterEvents {
 		findTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 		findTopicContext.put(CommonConstants.TOPIC_ID, topicId);
 		
-		if(topicId==null) {
+		if(UtilValidate.isEmpty(topicId)) {
 			//If topicId is empty, set result as error in request
 			String errMsg = "topicId is empty";
 			Debug.logError(errMsg, module);
@@ -203,7 +204,7 @@ public class TopicMasterEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		String topicId = request.getParameter(CommonConstants.TOPIC_ID);
 		
-		if(topicId==null) {
+		if(UtilValidate.isEmpty(topicId)) {
 			//If the topicId is empty, set the result as error in request
 			String errMsg = "topicId is empty";
 			Debug.logError(errMsg, module);
