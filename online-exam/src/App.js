@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./component/auth/auth";
+import { AuthProvider } from "./component/auth/Auth";
 import Header from "./component/common/Header";
 import Login from "./component/auth/Login";
 import Admin from "./component/admin-module/admin-dashboard/Admin";
@@ -8,7 +8,7 @@ import AddExam from "./component/admin-module/exam/AddExam";
 import EditExam from "./component/admin-module/edit-exam/EditExam";
 import AddTopicToExam from "./component/admin-module/edit-exam/AddTopicToExam";
 import Topics from "./component/admin-module/topic/Topics";
-import Addtopic from "./component/admin-module/topic/Addtopic";
+import Addtopic from "./component/admin-module/topic/AddTopic";
 import UserRegister from "./component/admin-module/user/UserRegister";
 import Questions from "./component/admin-module/question/Questions";
 import AddQuestions from "./component/admin-module/question/AddQuestions";

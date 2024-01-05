@@ -36,4 +36,9 @@ under the License.
         <value xml:lang="en">You are not allowed to view this page.</value>
        
     </property>
+    
+     <property key="MaxTopicError">
+        <value xml:lang="en">The Exam has Reached maximum no of Topic based on percentage.No more Topic can't be added</value> 
+    </property>
+    
 </resource>
