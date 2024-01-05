@@ -29,6 +29,8 @@ import com.vastpro.constants.CommonConstants;
 import com.vastpro.validator.HibernateHelper;
 import com.vastpro.validator.Loggable;
 import com.vastpro.validator.LoginValidator;
+import com.vastpro.validator.RegisterCheck;
+import com.vastpro.validator.RegisterValidator;
 
 //OnlineExamEvents contain common events related to Online Exam Application
 public class OnlineExamEvents {
@@ -139,27 +141,29 @@ public class OnlineExamEvents {
 
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
-
-		String firstName = (String) request.getAttribute(CommonConstants.FIRST_NAME);
-		String lastName = (String) request.getAttribute(CommonConstants.LAST_NAME);
-		String userLoginId = (String) request.getAttribute(CommonConstants.USER_LOGIN_ID);
-		String currentPassword = (String) request.getAttribute(CommonConstants.CURRENT_PASSWORD);
-		String currentPasswordVerify = (String) request.getAttribute(CommonConstants.CURRENT_PASSWORD_VERIFY);
-
-		Map<String, Object> registerCtx = new HashMap<>();
-		registerCtx.put(CommonConstants.FIRST_NAME, firstName);
-		registerCtx.put(CommonConstants.LAST_NAME, lastName);
-		registerCtx.put(CommonConstants.USER_LOGIN_ID, userLoginId);
-		registerCtx.put(CommonConstants.CURRENT_PASSWORD, currentPassword);
-		registerCtx.put(CommonConstants.CURRENT_PASSWORD_VERIFY, currentPasswordVerify);
-		registerCtx.put(CommonConstants.USER_LOGIN, userLogin);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
+		Locale locale = request.getLocale();
+	
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		
+		//populates the Bean class with values from the combined map
+		RegisterValidator registerValidator = HibernateHelper.populateBeanFromMap(combinedMap, RegisterValidator.class);
+		Set<ConstraintViolation<RegisterValidator>> validationErrors = HibernateHelper.checkValidationErrors(registerValidator, RegisterCheck.class);
+		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale, "MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
+		
+		if(hasFormErrors) {
+			String errMsg = "Some of the fields are empty!";
+			Debug.logError (errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
+		}
 		
 		//createPersonAndUserLogin service is executed
 		Map<String, Object> createPersonAndUserLoginResp = null;
 		try {
-			createPersonAndUserLoginResp = dispatcher.runSync("createPersonAndUserLogin", registerCtx);
-			Debug.logInfo("Successfully execute createPersonAndUserLogin service", module);
+			createPersonAndUserLoginResp = dispatcher.runSync("createPersonAndUserLogin", combinedMap);
+			Debug.logInfo("Successfully executed createPersonAndUserLogin service", module);
 		} catch (GenericServiceException e) {			
 			Debug.logError(e, "Failed to execute createPersonAndUserLogin service", module);
 			String errMsg = "Failed to execute createPersonAndUserLogin service : " + e.getMessage();
@@ -198,9 +202,11 @@ public class OnlineExamEvents {
 			Map<String, Object> createPartyRoleRecordResp = null;
 			try {
 				createPartyRoleRecordResp = dispatcher.runSync("createPartyRoleRecord", createRoleCtx);
-				Debug.logInfo("Successfully execute createPartyRoleRecord service", module);
+				Debug.logInfo("Successfully executed createPartyRoleRecord service", module);
 				
 			} catch (GenericServiceException e) {
+				
+				//These get executed in case of exception while running the service
 				Debug.logError(e, "Failed to execute createPartyRoleRecord service", module);
 				String errMsg = "Failed to execute createPartyRoleRecord service : " + e.getMessage();
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -210,6 +216,8 @@ public class OnlineExamEvents {
 			
 			
 			if (ServiceUtil.isSuccess(createPartyRoleRecordResp)) {
+				//If the service returns success, success message is added to the request
+				Debug.logInfo("Role for the user is set successfully!", module);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 				request.setAttribute("PartyRoleRecordMap", createPartyRoleRecordResp);
 			}

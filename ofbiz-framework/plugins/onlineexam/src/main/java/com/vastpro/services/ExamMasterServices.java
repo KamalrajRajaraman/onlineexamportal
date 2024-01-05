@@ -17,10 +17,20 @@ import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstants;
-
+/**
+ * 
+ * @author Benin JM
+ *
+ */
 public class ExamMasterServices {
 	public static final String module = ExamMasterServices.class.getName();
-
+	/**
+	 * This method is used to retrieve all the exams from the Exam Master entity 
+	 * @param dctx 
+	 * @param context
+	 * @return
+	 * 		a map containing list of exams
+	 */
 	public static Map<String, Object> findAllExams(DispatchContext dctx, Map<String, ? extends Object> context) {
 
 		Map<String, Object> result = ServiceUtil.returnSuccess();
@@ -31,60 +41,21 @@ public class ExamMasterServices {
 		List<GenericValue> examMasterGenericValueList = null;
 
 		try {
-			
-			examMasterGenericValueList = EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER).queryList();
+			//Query to fetch all the exams from ExamMaster entity
+			examMasterGenericValueList = EntityQuery.use(delegator)
+					.from(CommonConstants.EXAM_MASTER).queryList();
 
-			if (UtilValidate.isNotEmpty(examMasterGenericValueList)) {
-
-				for (GenericValue examGenericValue : examMasterGenericValueList) {
-
-					String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
-					String examName = examGenericValue.getString(CommonConstants.EXAM_NAME);
-					String description = examGenericValue.getString(CommonConstants.DESCRIPTION);
-					Timestamp creationDate = examGenericValue.getTimestamp(CommonConstants.CREATION_DATE);
-					Timestamp expirationDate = examGenericValue.getTimestamp(CommonConstants.EXPIRATION_DATE);
-					Long noOfQuestions = examGenericValue.getLong(CommonConstants.NO_OF_QUESTIONS);
-					Long durationMinutes = examGenericValue.getLong(CommonConstants.DURATION_MINUTES);
-					BigDecimal passPercentage = examGenericValue.getBigDecimal(CommonConstants.PASS_PERCENTAGE);
-					String questionsRandomized = examGenericValue.getString(CommonConstants.QUESTIONS_RANDOMIZED);
-					String answersMust = examGenericValue.getString(CommonConstants.ANSWER_MUST);
-					String enableNegativeMark = examGenericValue.getString(CommonConstants.ENABLE_NEGATIVE_MARK);
-					BigDecimal negativeMarkValue = examGenericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
-
-					Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId, CommonConstants.EXAM_NAME,
-							examName, CommonConstants.DESCRIPTION, description, CommonConstants.CREATION_DATE,
-							creationDate, CommonConstants.EXPIRATION_DATE, expirationDate,
-							CommonConstants.NO_OF_QUESTIONS, noOfQuestions, CommonConstants.DURATION_MINUTES,
-							durationMinutes, CommonConstants.PASS_PERCENTAGE, passPercentage,
-							CommonConstants.QUESTIONS_RANDOMIZED, questionsRandomized, CommonConstants.ANSWER_MUST,
-							answersMust, CommonConstants.ENABLE_NEGATIVE_MARK, enableNegativeMark,
-							CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
-
-					examList.add(exam);
-				}
-			}
-			result.put("examList", examList);
 		} catch (GenericEntityException e) {
+			
+			//In case of exception, the following codes get executed
 			Debug.logError(e,"Error in fetching All record from ExamMaster entity" ,module);
 			return ServiceUtil.returnError("Error in fetching All  record from ExamMaster entity :" + module);
 		}
-		return result;
-
-	}
-
-	public static Map<String, Object> findExamById(DispatchContext dctx, Map<String, ? extends Object> context) {
-
-		Map<String, Object> result = ServiceUtil.returnSuccess();
-		Delegator delegator = dctx.getDelegator();
-		String examIdPK = (String) context.get(CommonConstants.EXAM_ID);
-		GenericValue examGenericValue = null;
-
-		try {
+		
+		//Checks if the list of exams returned by the query is not empty
+		if (UtilValidate.isNotEmpty(examMasterGenericValueList)) {
 			
-			examGenericValue = EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER)
-					.where(CommonConstants.EXAM_ID, examIdPK).queryOne();
-
-			if (UtilValidate.isNotEmpty(examGenericValue)) {
+			for (GenericValue examGenericValue : examMasterGenericValueList) {
 				String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
 				String examName = examGenericValue.getString(CommonConstants.EXAM_NAME);
 				String description = examGenericValue.getString(CommonConstants.DESCRIPTION);
@@ -97,51 +68,134 @@ public class ExamMasterServices {
 				String answersMust = examGenericValue.getString(CommonConstants.ANSWER_MUST);
 				String enableNegativeMark = examGenericValue.getString(CommonConstants.ENABLE_NEGATIVE_MARK);
 				BigDecimal negativeMarkValue = examGenericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
-
+				
+				//Maps the exam details  
 				Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId, CommonConstants.EXAM_NAME,
-						examName, CommonConstants.DESCRIPTION, description, CommonConstants.CREATION_DATE, creationDate,
-						CommonConstants.EXPIRATION_DATE, expirationDate, CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
-						CommonConstants.DURATION_MINUTES, durationMinutes, CommonConstants.PASS_PERCENTAGE,
-						passPercentage, CommonConstants.QUESTIONS_RANDOMIZED, questionsRandomized,
-						CommonConstants.ANSWER_MUST, answersMust, CommonConstants.ENABLE_NEGATIVE_MARK,
-						enableNegativeMark, CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
-				result.put("exam", exam);
+						examName, CommonConstants.DESCRIPTION, description, CommonConstants.CREATION_DATE,
+						creationDate, CommonConstants.EXPIRATION_DATE, expirationDate,
+						CommonConstants.NO_OF_QUESTIONS, noOfQuestions, CommonConstants.DURATION_MINUTES,
+						durationMinutes, CommonConstants.PASS_PERCENTAGE, passPercentage,
+						CommonConstants.QUESTIONS_RANDOMIZED, questionsRandomized, CommonConstants.ANSWER_MUST,
+						answersMust, CommonConstants.ENABLE_NEGATIVE_MARK, enableNegativeMark,
+						CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
 
+				examList.add(exam);
 			}
-
-		} catch (GenericEntityException e) {
-			Debug.logError(e,"Error in fetching exam record by examId from ExamMaster entity" ,module);
-			return ServiceUtil.returnError("Error in fetching exam record by examId from ExamMaster entity " + module);
 		}
+		
+		//Adds the exam list to the result map
+		result.put("examList", examList);
 		return result;
 
 	}
+	/**
+	 * This method accepts an exam Id and provides the details of the exam
+	 * @param dctx
+	 * @param context
+	 * @return a map containing exam details
+	 */
+	public static Map<String, Object> findExamById(DispatchContext dctx, Map<String, ? extends Object> context) {
 
-	
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+		Delegator delegator = dctx.getDelegator();
+		String examIdPK = (String) context.get(CommonConstants.EXAM_ID);
+		GenericValue examGenericValue = null;
 
-	
+		try {
+			
+			//Query to fetch an exam from ExamMaster entity for the provided examId
+			examGenericValue = EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER)
+					.where(CommonConstants.EXAM_ID, examIdPK).queryOne();
+
+			}
+
+		 catch (GenericEntityException e) {
+			
+			//In case of exception, the following codes get executed
+			Debug.logError(e,"Error in fetching exam record by examId from ExamMaster entity" ,module);
+			return ServiceUtil.returnError("Error in fetching exam record by examId from ExamMaster entity " + module);
+		}
+
+		//Checks if the entity has the exam for the provided examId
+		if (UtilValidate.isNotEmpty(examGenericValue)) {
+			String examId = examGenericValue.getString(CommonConstants.EXAM_ID);
+			String examName = examGenericValue.getString(CommonConstants.EXAM_NAME);
+			String description = examGenericValue.getString(CommonConstants.DESCRIPTION);
+			Timestamp creationDate = examGenericValue.getTimestamp(CommonConstants.CREATION_DATE);
+			Timestamp expirationDate = examGenericValue.getTimestamp(CommonConstants.EXPIRATION_DATE);
+			Long noOfQuestions = examGenericValue.getLong(CommonConstants.NO_OF_QUESTIONS);
+			Long durationMinutes = examGenericValue.getLong(CommonConstants.DURATION_MINUTES);
+			BigDecimal passPercentage = examGenericValue.getBigDecimal(CommonConstants.PASS_PERCENTAGE);
+			String questionsRandomized = examGenericValue.getString(CommonConstants.QUESTIONS_RANDOMIZED);
+			String answersMust = examGenericValue.getString(CommonConstants.ANSWER_MUST);
+			String enableNegativeMark = examGenericValue.getString(CommonConstants.ENABLE_NEGATIVE_MARK);
+			BigDecimal negativeMarkValue = examGenericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
+
+			//Maps the exam details
+			Map<String, Object> exam = UtilMisc.toMap(CommonConstants.EXAM_ID, examId, CommonConstants.EXAM_NAME,
+					examName, CommonConstants.DESCRIPTION, description, CommonConstants.CREATION_DATE, creationDate,
+					CommonConstants.EXPIRATION_DATE, expirationDate, CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
+					CommonConstants.DURATION_MINUTES, durationMinutes, CommonConstants.PASS_PERCENTAGE,
+					passPercentage, CommonConstants.QUESTIONS_RANDOMIZED, questionsRandomized,
+					CommonConstants.ANSWER_MUST, answersMust, CommonConstants.ENABLE_NEGATIVE_MARK,
+					enableNegativeMark, CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
+			
+			//Adds the exam to the result map
+			result.put("exam", exam);
+		}
+		return result;
+	}
+
+	/**
+	 * This method accepts and exam Id and provides the number of questions assigned to that exam	
+	 * @param dctx
+	 * @param context
+	 * @return
+	 * 		a map containing the number of questions 
+	 */
 	public static Map<String, Object> findNoOfQuestionCountByExamID(DispatchContext dctx, Map<String, ? extends Object> context) {
 		Map<String, Object> resultMap = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
 
 		String examId = (String) context.get(CommonConstants.EXAM_ID);
+		GenericValue genericQuestionCount= null;
+		
 		try {
-
-			GenericValue genericQuestionCount = EntityQuery.use(delegator).select(CommonConstants.NO_OF_QUESTIONS)
+			
+			//Query to find the number of questions for the exam id provided
+			genericQuestionCount = EntityQuery.use(delegator).select(CommonConstants.NO_OF_QUESTIONS)
 					.from(CommonConstants.EXAM_MASTER).where(CommonConstants.EXAM_ID, examId).queryOne();
-
-			Long noOfQuestions = genericQuestionCount.getLong(CommonConstants.NO_OF_QUESTIONS);
-			resultMap.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 
 		} catch (GenericEntityException e) {
 			Debug.logError(e,"Error in fetching NoOfQuestion By ExamID from ExamMaster entity" ,module);
 			return ServiceUtil.returnError("Error finding Number of Questions" + module);
 		}
-
+		
+		//Checks if number of questions in available for the exam 
+		if(UtilValidate.isNotEmpty(genericQuestionCount)) {
+			Long noOfQuestions  = genericQuestionCount.getLong(CommonConstants.NO_OF_QUESTIONS);
+			resultMap.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
+		}
+		else {
+			Debug.logError("Number of questions is empty", module);
+			return ServiceUtil.returnError("Number of questions is empty"+module);
+			
+		}
+			
+		//Adds the exam list to the result map
+		
 		return resultMap;
 
 	}
-
+	
+	/**
+	 * This method accepts a list of topic ID and provides the question IDs 
+	 * assigned to each of them 
+	 * @param dctx
+	 * @param context
+	 * @return
+	 * a map containing the topic list 
+	 */
 	public static Map<String, Object> findQuestionsByTopicIds(DispatchContext dctx,
 			Map<String, ? extends Object> context) {
 		
@@ -149,33 +203,44 @@ public class ExamMasterServices {
 		Delegator delegator = dctx.getDelegator();
 		
 		List<Map<String,Object>> topicList = (List<Map<String,Object>>) context.get("topicList");		
-		
-			
+		List<GenericValue> questionIdListGV=null;			
 		
 		for (Map<String,Object> topic : topicList) {
 			List<String> questionIdList = new LinkedList<>();
 			String topicId =(String) topic.get(CommonConstants.TOPIC_ID);
 			try {
-				List<GenericValue> questions = EntityQuery.use(delegator)
+				
+				//Query to fetch list of question IDs assigned to each
+				questionIdListGV = EntityQuery.use(delegator)
 						.select(CommonConstants.QUESTION_ID)
 						.from(CommonConstants.QUESTION_MASTER)
 						.where(CommonConstants.TOPIC_ID, topicId)
 						.queryList();
 
-				if (UtilValidate.isNotEmpty(questions)) {
-					for (GenericValue question : questions) {
-						String questionId = question.getString(CommonConstants.QUESTION_ID);
-						questionIdList.add(questionId);
-					}			
-					topic.put("questionIdList", questionIdList);
-				}
 			} 
 			catch (GenericEntityException e) {
+				
+				//In case of exception, the following codes get executed
 				Debug.logError(e,"Error in fetching record from Question Master entity" ,module);
-				return ServiceUtil
-						.returnError("Error in fetching record from Question Master entity" + module);
+				return ServiceUtil.returnError(
+						"Error in fetching record from Question Master entity" + module);
 			}
+			
+			//Checks if the returned list is empty
+			if (UtilValidate.isNotEmpty(questionIdListGV)) {
+				
+				//The question IDs are added to a list
+				for (GenericValue question : questionIdListGV) {
+					String questionId = question.getString(CommonConstants.QUESTION_ID);
+					questionIdList.add(questionId);
+				}			
+			}
+			
+			//The questionIdList is returned to its mapped topic
+			topic.put("questionIdList", questionIdList);
 		}
+		
+		//The list of topics is returned to the event
 		resultMap.put("topicList", topicList);
 
 		return resultMap;
