@@ -110,7 +110,7 @@ public class UserExamMappingEvents {
 			partyId = (String) request.getAttribute(CommonConstants.PARTY_ID);
 		}
 		
-		//If the partyId didn't came as both parameter and attribute then take it from the userLogin
+		//If the partyId didn't came as both parameter  and attribute then take it from the userLogin
 		if(UtilValidate.isEmpty(partyId)) {
 			partyId = userLogin.getString(CommonConstants.PARTY_ID);			
 		}
@@ -164,7 +164,7 @@ public class UserExamMappingEvents {
 
 	}
 	
-	public String updateAnswerInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+	public static String updateAnswerInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
 		
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -194,7 +194,7 @@ public class UserExamMappingEvents {
 		return CommonConstants.SUCCESS;
 	}
 	
-public String updateQuestionForReviewInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+public static String updateQuestionForReviewInUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
 		
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -222,7 +222,7 @@ public String updateQuestionForReviewInUserAttemptAnswerMaster(HttpServletReques
 		request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 		return CommonConstants.SUCCESS;
 	}
-public String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
+public static String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
 	
 	LocalDispatcher dispatcher= (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 	
@@ -273,6 +273,7 @@ public String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpSe
 			userAttemptAnswer.put("correct", correct);
 		}
 	}
+	return null;
 	
 }
 
