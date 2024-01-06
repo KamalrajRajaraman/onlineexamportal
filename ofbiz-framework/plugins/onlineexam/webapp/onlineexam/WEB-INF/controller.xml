@@ -218,9 +218,9 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
-    <request-map uri="updateUserAttemptAnswerMaster">
+    <request-map uri="updateAnswerInUserAttemptAnswerMaster">
 		<security https="true" auth="true"/>
-		<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="updateUserAttemptAnswerMaster"/>
+		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="updateAnswerInUserAttemptAnswerMaster"/>
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json" />
 	</request-map>
