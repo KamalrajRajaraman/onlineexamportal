@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
+
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
@@ -73,26 +75,49 @@ public class UserAttemptEvents {
 
 		List<Map<String, Object>> insertedQuestions = new LinkedList<>();
 		if (UtilValidate.isEmpty(performanceId)) {
-
-			// calculated attemptNumber by counting no. of records in UserAttemptMaster for
-			// PartyId and examId
-			long prevAttempt = 0;
+			
+			//To check allowedAttempt and noOfAttempt  ,retrieve  allowedAttempt and noOfAttempt from UserExamMappingMaster
+			Map<String, Object> findUserExamMappingRecordResp  =null;
+			
 			try {
-				prevAttempt = EntityQuery.use(delegator).select("count(*)").from(CommonConstants.USER_ATTEMPT_MASTER)
-						.where(CommonConstants.PARTY_ID, partyId, CommonConstants.EXAM_ID, examId).queryCount();
-			} catch (GenericEntityException e) {
-				Debug.logError(e, "Unable to retrieve previous no of Attempt from UserAttemptMaster", module);
-				errMsg = "Unable to retrieve previous no of Attempt from UserAttemptMaster : " + e.getMessage();
+				findUserExamMappingRecordResp = dispatcher.runSync("findUserExamMappingRecord", attemptMasterCtx);
+			} catch (GenericServiceException e) {				
+				Debug.logError(e, "Failed to execute findUserExamMappingRecord service", module);
+				errMsg = "Failed to execute findUserExamMappingRecord service : " + e.getMessage();
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;				
+			}
+			
+			
+			if(ServiceUtil.isError(findUserExamMappingRecordResp)) {
+				errMsg = "Error while executing findUserExamMappingRecord service";
+				Debug.logError(errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT_MAP, findUserExamMappingRecordResp);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;		
+			}
+			Map<String,Object> userExamMappingRecord  =(Map<String, Object>) findUserExamMappingRecordResp.get("userExamMappingRecord"); 
+			Long allowedAttempt =  (Long) userExamMappingRecord.get(CommonConstants.ALLOWED_ATTEMPTS);
+			Long noOfAttempt =  (Long) userExamMappingRecord.get(CommonConstants.NO_OF_ATTEMPTS);
+			
+			//if noOfAttempt is greater or equal allowed attempt return error
+			if(noOfAttempt >= allowedAttempt ) {
+				errMsg = "Error: User has reached Maximum Allowed Attempt";
+				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
+				
 			}
-			long attemptNumber = prevAttempt + 1;
+
+			//if noOfAttempt less than allowed attempt
+			Long attemptNumber = noOfAttempt + 1;
 			attemptMasterCtx.put(CommonConstants.ATTEMPT_NUMBER, attemptNumber);
 
 			// Getting noOfQuestions from ExamMaster entity
 			Map<String, Object> noOfQuestionResp = null;
-
 			try {
 				noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", attemptMasterCtx);
 			} catch (GenericServiceException e) {
@@ -274,14 +299,20 @@ public class UserAttemptEvents {
 
 			// Creating UserAttemptAnswerMaster Records
 			Integer sequenceNum = 1;
+			//isFlagged field default value is 0
+			Integer isFlagged =0;
 			for (String questionId : randomQuestions) {
 				Map<String, Object> createUAAMSResp = null;
 				try {
 
 					createUAAMSResp = dispatcher.runSync("createUserAttemptAnswerMasterService",
-							UtilMisc.toMap(CommonConstants.QUESTION_ID, questionId, CommonConstants.PERFORMANCE_ID,
-									performanceId, CommonConstants.SEQUENCE_NUM, sequenceNum++, "userLogin",
-									userLogin));
+							UtilMisc.toMap(
+									CommonConstants.QUESTION_ID, questionId,
+									CommonConstants.PERFORMANCE_ID,performanceId,
+									CommonConstants.SEQUENCE_NUM, sequenceNum++,
+									CommonConstants.IS_FLAGGED,isFlagged,
+									CommonConstants.USER_LOGIN,userLogin
+									));
 
 				} catch (GenericServiceException e) {
 
@@ -306,26 +337,34 @@ public class UserAttemptEvents {
 				Debug.logInfo(
 						"=======Created UserAttemptAnswerMaster record  using service createUserAttemptAnswerMaster=========",
 						module);
-				insertedQuestions.add(UtilMisc.toMap(CommonConstants.PERFORMANCE_ID,
-						createUAAMSResp.get(CommonConstants.PERFORMANCE_ID), CommonConstants.SEQUENCE_NUM,
-						createUAAMSResp.get(CommonConstants.SEQUENCE_NUM), CommonConstants.QUESTION_ID,
-						createUAAMSResp.get(CommonConstants.QUESTION_ID)));
+				insertedQuestions.add(
+						UtilMisc.toMap(
+						CommonConstants.PERFORMANCE_ID,createUAAMSResp.get(CommonConstants.PERFORMANCE_ID), 
+						CommonConstants.SEQUENCE_NUM,createUAAMSResp.get(CommonConstants.SEQUENCE_NUM), 
+						CommonConstants.QUESTION_ID,createUAAMSResp.get(CommonConstants.QUESTION_ID),
+						CommonConstants.IS_FLAGGED,createUAAMSResp.get(CommonConstants.IS_FLAGGED)
+						));
 
 				request.getSession().setAttribute(CommonConstants.PERFORMANCE_ID, performanceId);
-
-				// update noOfAttempts in userExamMapping Master
-				attemptMasterCtx.put(CommonConstants.NO_OF_ATTEMPTS, attemptNumber);
-				try {
-					dispatcher.runAsync("updateUserExamMappingRecord", attemptMasterCtx);
-				} catch (GenericServiceException e) {
-					Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
-					errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
-					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-					return CommonConstants.ERROR;
-				}
+				
+				
 
 			}
+			// update noOfAttempts and lastPerformanceDate in userExamMapping Master
+			 Timestamp lastPerformanceDate = new Timestamp(System.currentTimeMillis());
+			
+			userExamMappingRecord.put(CommonConstants.NO_OF_ATTEMPTS, attemptNumber);
+			userExamMappingRecord.put(CommonConstants.LAST_PERFORMANCE_DATE, lastPerformanceDate);
+			try {
+				Map<String, Object> updateUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", userExamMappingRecord);
+			} catch (GenericServiceException e) {
+				Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
+				errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
 		} else {
 
 			List<GenericValue> UserAttemptAnswerMasterGVList = null;
@@ -344,12 +383,12 @@ public class UserAttemptEvents {
 
 			if (UtilValidate.isNotEmpty(UserAttemptAnswerMasterGVList)) {
 				for (GenericValue UserAttemptAnswerMasterGV : UserAttemptAnswerMasterGVList) {
-					insertedQuestions.add(UtilMisc.toMap(CommonConstants.PERFORMANCE_ID,
-							UserAttemptAnswerMasterGV.getString(CommonConstants.PERFORMANCE_ID),
-							CommonConstants.SEQUENCE_NUM,
-							UserAttemptAnswerMasterGV.getString(CommonConstants.SEQUENCE_NUM),
-							CommonConstants.QUESTION_ID,
-							UserAttemptAnswerMasterGV.getString(CommonConstants.QUESTION_ID)));
+					insertedQuestions.add(
+							UtilMisc.toMap(
+							CommonConstants.PERFORMANCE_ID,UserAttemptAnswerMasterGV.getString(CommonConstants.PERFORMANCE_ID),
+							CommonConstants.SEQUENCE_NUM,UserAttemptAnswerMasterGV.getString(CommonConstants.SEQUENCE_NUM),
+							CommonConstants.QUESTION_ID,UserAttemptAnswerMasterGV.getString(CommonConstants.QUESTION_ID),
+							CommonConstants.IS_FLAGGED,UserAttemptAnswerMasterGV.getInteger(CommonConstants.IS_FLAGGED)));
 				}
 			}
 

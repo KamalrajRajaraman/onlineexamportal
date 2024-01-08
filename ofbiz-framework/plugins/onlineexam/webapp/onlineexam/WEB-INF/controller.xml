@@ -202,9 +202,9 @@
     
     
     
-	<request-map uri="showExamsForPartyId">
+	<request-map uri="findAllExamForPartyId">
 			<security https="true" auth="true"/>
-			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="showExamsForPartyId"/>
+			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="findAllExamForPartyId"/>
 			<response name="success" type="request" value="json"/>
 			<response name="error" type="request" value="json"/>
 	</request-map>

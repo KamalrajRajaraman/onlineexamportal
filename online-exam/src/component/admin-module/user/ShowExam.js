@@ -8,7 +8,7 @@ const ShowExam = () => {
     const param=useParams();
    
     useEffect(()=>{
-        fetch(`https://localhost:8443/onlineexam/control/showExamsForPartyId`,
+        fetch(`https://localhost:8443/onlineexam/control/findAllExamForPartyId`,
         {
           method:'POST', 
           headers:

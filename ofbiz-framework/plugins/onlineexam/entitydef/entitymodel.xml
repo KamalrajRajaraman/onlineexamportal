@@ -287,8 +287,7 @@
 		<member-entity entity-alias="UEMM"
 			entity-name="UserExamMappingMaster" />
 		<member-entity entity-alias="EM" entity-name="ExamMaster"/>
-		<alias entity-alias="UEMM" name="partyId"/>
-		<alias entity-alias="EM" name="examId"/>
+		<alias-all entity-alias="UEMM" />
 		<alias entity-alias="EM" name="examName"/>
 		<view-link entity-alias="EM" rel-entity-alias="UEMM" rel-optional="true">
 			<key-map field-name="examId"/>

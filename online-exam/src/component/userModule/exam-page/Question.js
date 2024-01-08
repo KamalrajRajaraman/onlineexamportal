@@ -7,25 +7,15 @@ const Question = ({
   questions,
 }) => {
   const [submittedAnswer, setSubmittedAnswer] = useState("");
-  
+  const [isFlagged,setIsFlagged] = useState(false);
   useEffect(() => {
+
     setSubmittedAnswer(question?.submittedAnswer);
-  }, [question]);
+    setIsFlagged(question.isFlagged===1?true:false);
+    questionViewed(question.sequenceNum)
+    }, [question]);
 
- 
 
-  // optionA: "When a class is made final, a subclass of it can not be created."
-  // optionB: " When a method is final, it can not be overridden"
-  // optionC: "When a variable is final, it can be assigned value only once"
-  // optionD: "All the above"
-  // optionE: "none"
-  // performanceId: 10461
-  // questionDetail: "What is the use of final keyword in Java?"
-  // questionId: 10280
-  // questionType: "01"
-  // sequenceNum: 1
-  // submittedAnswer: "When a class is made final, a subclass of it can not be created."
-  // topicId: "10270"
 
   const submitAnswerAndNext = async (answeredQuestion, sequenceNum) => {
     const response = await fetch(
@@ -43,6 +33,12 @@ const Question = ({
       const data = await response.json();
       console.log(data);
       if (data.result === "success") {
+        if(data.isFlagged === 1){
+          setIsFlagged(true);
+        }else{
+          setIsFlagged(false);
+        }
+
         if (answeredQuestion.submittedAnswer === "") {
           setQuestions(
             questions.map((question) =>
@@ -84,16 +80,37 @@ const Question = ({
         submitAnswerAndNext({ ...question, submittedAnswer: "" }, sequenceNum)
     );
   };
+
   const onMarkForReview = (sequenceNum) => {
-   const flagValue = question?.isFlagged?0:1;
+   
+   const flagValue = isFlagged? 0:1;
     questions.forEach(
       (question) =>
         question.sequenceNum === sequenceNum &&
         submitAnswerAndNext({ ...question, isFlagged:flagValue }, sequenceNum)
     );
   
-    onSequenceNumClick(sequenceNum);
+   
   };
+  const moveNext=(sequenceNum)=>{
+   
+    onSequenceNumClick(sequenceNum+1);
+
+  }
+  const movePrev=(sequenceNum)=>{
+    
+    onSequenceNumClick(sequenceNum-1);
+
+  }
+
+  const questionViewed = (sequenceNum) => {
+    
+    setQuestions(
+     questions.map(
+       (question) =>question.sequenceNum === sequenceNum ? { ...question, isViewed:true } :question))
+      
+    
+   };
 
   return (
     <div className="col">
@@ -181,7 +198,7 @@ const Question = ({
         <div className="col-3">
           <button
             type="button"
-            onClick={() => onSequenceNumClick(question.sequenceNum - 1)}
+            onClick={() => movePrev(question.sequenceNum)}
             className="btn btn-outline-success me-1  "
           >
             Previous
@@ -192,9 +209,9 @@ const Question = ({
             <button
               onClick={() => onMarkForReview(question.sequenceNum)}
               type="button"
-              className="btn btn-outline-primary "
+              className="btn btn-outline-danger "
             >
-              {question?.isFlagged?"Remove Mark":"Mark for Review"}
+              {isFlagged ? "Remove Mark":"Mark for Review"}
             </button>
             <button
               type="button"
@@ -216,7 +233,7 @@ const Question = ({
         <div className="col-3">
           <button
             type="button"
-            onClick={() => onSequenceNumClick(question.sequenceNum + 1)}
+            onClick={() => moveNext(question.sequenceNum)}
             className="btn btn-outline-success float-end"
           >
             Next

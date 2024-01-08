@@ -6,12 +6,12 @@ const PaletteButton = ({onSequenceNumClick ,question}) => {
     const [color,setColor] =useState("btn-outline-secondary");
 
     useEffect(()=>{
-        setMounted(true)
+        setMounted(true);    
     },[])
     
     useEffect(()=>{
         checkAnswered();
-    },[question]);
+    });
     
     const checkAnswered =()=>{
         if(mounted){
@@ -20,9 +20,9 @@ const PaletteButton = ({onSequenceNumClick ,question}) => {
             }
             else if(question?.submittedAnswer){
                 setColor("btn-success")     
-            }else{   
+            }else if(question?.isViewed){
                 setColor("btn-warning")
-            }   
+            }         
         }
     }
 
