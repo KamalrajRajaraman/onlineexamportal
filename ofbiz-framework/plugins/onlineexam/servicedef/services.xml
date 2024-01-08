@@ -16,6 +16,7 @@
 	<vendor></vendor>
 	<version>1.0</version>
 
+	<service engine="" name=""></service>
 
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
@@ -45,7 +46,7 @@
 
 	<service name="findNoOfQuestionCountByExamId" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findNoOfQuestionCountByExamId">
+		invoke="findNoOfQuestionCountByExamId" auth="true">
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
@@ -138,8 +139,8 @@
 		location="com.vastpro.services.QuestionMasterServices" auth="true"
 		invoke="findQuestion">
 		<attribute name="questionId" type="Long" mode="IN"
-			optional="false" />
-		<attribute name="question" type="Map" mode="OUT" optional="true" />		    
+			optional="false"/>
+		<attribute name="question" type="Map" mode="OUT" optional="true"/>		    
 	</service>
 	
 	<service name="deleteQuestion"
@@ -261,6 +262,19 @@
 			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
 			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
 	</service>
+	
+	<service engine="entity-auto" default-entity-name="UserAttemptTopicMaster" 
+		name="updateUserAttemptTopicMaster" invoke="update" auth="true">
+			<description> update in user attempt topic master</description>
+			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
+			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
+	</service>
 
+	<service engine="entity-auto" default-entity-name="UserAttemptMaster" 
+		name="updateUserAttemptMaster" invoke="update" auth="true">
+			<description>Partial update in user attempt master</description>
+			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
+			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
+	</service>
 
 </services>

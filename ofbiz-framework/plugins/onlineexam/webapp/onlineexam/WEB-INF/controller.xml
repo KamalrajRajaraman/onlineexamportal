@@ -34,6 +34,13 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="main" />
 	</request-map>
+	
+	<request-map uri="evaluateUserAttemptAnswerMaster">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="evaluateUserAttemptAnswerMaster"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json" />
+	</request-map>
 
 	<!-- Online Exam Common Request Mapping -->
 	<request-map uri="onlineExamLogin">
@@ -225,6 +232,7 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
+	 
 	
 	<request-map uri="onlineExamLogout">
     	<security https="true" auth="true"/>

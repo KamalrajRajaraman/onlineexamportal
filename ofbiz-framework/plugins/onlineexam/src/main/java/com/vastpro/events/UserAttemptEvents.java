@@ -45,9 +45,10 @@ public class UserAttemptEvents {
 		Locale locale = UtilHttp.getLocale(request);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		String examId = (String) combinedMap.get(CommonConstants.EXAM_ID);
-		String performanceId = (String) combinedMap.get(CommonConstants.PERFORMANCE_ID);
+		Integer performanceId = (Integer) combinedMap.get(CommonConstants.PERFORMANCE_ID);
 		String partyId = userLogin.getString(CommonConstants.PARTY_ID);
-
+	
+		
 		// Map to provide context to the service
 		Map<String, Object> attemptMasterCtx = new HashMap<String, Object>();
 		attemptMasterCtx.put(CommonConstants.USER_LOGIN, userLogin);
@@ -144,8 +145,8 @@ public class UserAttemptEvents {
 
 			// If the createUserAttemptMaster Service is executed successfully
 			// Converting the Generic value to String
-			performanceId = String.valueOf(createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID));
-
+		//	performanceId = String.valueOf(createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID));
+			 performanceId = (Integer) createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID);
 			// findAllExamTopicMappingRecordsByExamId
 			String eventResp = OnlineExamHelper.findAllExamTopicMappingRecordsByExamId(request);
 
