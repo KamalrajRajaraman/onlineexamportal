@@ -360,7 +360,7 @@ public class UserExamMappingEvents {
 				questionWithAnswer.put("isCorrect", isCorrect);
 				
 				if(noOfUnAnsweredQuestionsByTopicId.containsKey(topicId)) {
-					noOfUnAnsweredQuestionsByTopicId.replace(topicId, noOfCorrectedQuestionsByTopicId.get(topicId)+1); 	
+					noOfUnAnsweredQuestionsByTopicId.replace(topicId, noOfUnAnsweredQuestionsByTopicId.get(topicId)+1); 	
 				}
 				else {
 					noOfUnAnsweredQuestionsByTopicId.put(topicId, 1);
@@ -368,7 +368,7 @@ public class UserExamMappingEvents {
 				
 				
 			}
-			else {
+			else {//if submittedAnswer is not empty, which is Answered
 				//If answer equals submittedAnswer 
 			if(answer.equals(submittedAnswer)) {
 				isCorrect = true;
