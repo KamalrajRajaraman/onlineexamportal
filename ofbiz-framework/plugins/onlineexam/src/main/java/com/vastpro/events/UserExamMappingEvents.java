@@ -104,7 +104,7 @@ public class UserExamMappingEvents {
 	}
 
 	// Event for showing exams for the particular user based on partyId
-	public static String showExamsForPartyId(HttpServletRequest request, HttpServletResponse response) {
+	public static String findAllExamForPartyId(HttpServletRequest request, HttpServletResponse response) {
 
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
@@ -150,17 +150,18 @@ public class UserExamMappingEvents {
 		// calling showExamsForPartyId service for showing exams
 		Map<String, Object> showExamsForPartyIdResp = null;
 		try {
-			showExamsForPartyIdResp = dispatcher.runSync("showExamsForPartyId", findExamContext);
+			showExamsForPartyIdResp = dispatcher.runSync("findAllExamForPartyId", findExamContext);
 			Debug.logInfo("showExamsForPartyId service has been executed successfully!", module);
 
 		} catch (GenericServiceException e) {
 			// If any exception occur in service, set error as a result in request object
-			String errMsg = "Failed to execute showExamsForPartyId service";
+			String errMsg = "Failed to execute findAllExamForPartyId service";
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "Failed to execute showExamsForPartyId service");
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, e.getMessage());
 			return CommonConstants.ERROR;
 		}
+		
 		if (ServiceUtil.isSuccess(showExamsForPartyIdResp)) {
 			request.setAttribute("examList", showExamsForPartyIdResp.get("examList"));
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);

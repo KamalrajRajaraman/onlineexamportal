@@ -1,0 +1,10 @@
+find UserExamMappingRecord
+==============================
+1)create SuccessMap using ServiceUtil.returnSuccess()
+2)Create Delegator reference using DisptachContext
+3)create examId an partId reference using context Map
+4)retrieve userExamMappingGenericValue of given examId and partyId using EntityQuery 
+5)If Exception occurs return error
+6)If GenericValue is null or Empty ,return error (userExamMappingGenericValue is empty)
+7)If GenericValue is not null or no empty,create userExamMappingMap(DTO) 
+8)out created userExamMappingMap in SuccessMap and return
