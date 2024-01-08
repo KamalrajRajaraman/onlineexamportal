@@ -80,6 +80,28 @@ const AttendExam = () => {
   };
 
   const handleSubmit = async () => {
+
+    console.log('questions:::',questions)
+
+
+    try {
+      const res = await fetch(
+        `https://localhost:8443/onlineexam/control/evaluateUserAttemptAnswerMaster`,
+        {  method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+        // body: JSON.stringify(questions)
+      }
+      );
+      const data = await res.json();
+     
+      console.log('final question',data);
+    } catch (error) {
+      console.log(error);
+    }
+    
     navigate('/user-dashboard/result-page');
   };
 
