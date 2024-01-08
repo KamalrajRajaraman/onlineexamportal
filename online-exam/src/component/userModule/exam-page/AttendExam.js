@@ -96,13 +96,13 @@ const AttendExam = () => {
       }
       );
       const data = await res.json();
-     
       console.log('final question',data);
+      navigate('/user-dashboard/result-page');
     } catch (error) {
       console.log(error);
     }
     
-    navigate('/user-dashboard/result-page');
+    
   };
 
   return (
