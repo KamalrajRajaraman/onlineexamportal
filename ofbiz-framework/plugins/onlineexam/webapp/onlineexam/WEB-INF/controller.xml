@@ -85,6 +85,13 @@
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
 	</request-map>
+	
+	<request-map uri="editExam">
+	<security https="true" auth="true"/>
+	<event type="java" path="com.vastpro.events.ExamMasterEvents" invoke="editExam"/>
+	<response name="success" type="request" value="json"/>
+	<response name="error" type="request" value="json"/>
+	</request-map>
 
 	<request-map uri="findAllExams">
 		<security https="true" auth="true" />
@@ -194,6 +201,15 @@
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
 	</request-map>
+	
+	<request-map uri="editExamTopicMappingMasterRecord">
+		<security https="true" auth="true"/>
+		<event type="java" 
+			path="com.vastpro.events.ExamTopicMappingMasterEvents" 
+			invoke="editExamTopicMapping" />
+			<response name="success" type="request" value="json" />
+			<response name="error" type="request" value="json" />
+	</request-map>
 
 	<request-map
 		uri="findAllExamTopicMappingMasterRecordByExamId">
@@ -248,12 +264,10 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json" />
 	</request-map>
-	
-	 
-	
+
 	<request-map uri="onlineExamLogout">
     	<security https="true" auth="true"/>
-    	<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="logout"></event>
+    	<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="logout"/>
     	<response name="success" type="request" value="json"/>
     	<response name="error" type="request" value="json"/>
     </request-map>

@@ -92,7 +92,7 @@ const AttendExam = () => {
           "Content-type": "application/json",
         },
         credentials: "include",
-        // body: JSON.stringify(questions)
+        body: JSON.stringify({})
       }
       );
       const data = await res.json();

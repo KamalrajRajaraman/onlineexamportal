@@ -368,7 +368,7 @@ public class UserExamMappingEvents {
 				
 				
 			}
-			else {
+			else {//if submittedAnswer is not empty, which is Answered
 				//If answer equals submittedAnswer 
 			if(answer.equals(submittedAnswer)) {
 				isCorrect = true;
@@ -393,6 +393,7 @@ public class UserExamMappingEvents {
 		evaluatedQuestionList.add(questionWithAnswer);	
 		}
 	}
+	return null;
 	
 	//Find totalQuestions in this topic
 	for (Map.Entry<String,Integer> entry : noOfCorrectedQuestionsByTopicId.entrySet())  {
