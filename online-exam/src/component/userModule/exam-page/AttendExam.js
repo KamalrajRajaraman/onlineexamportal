@@ -13,7 +13,7 @@ const AttendExam = () => {
   const { examId } = useParams();
   const [questions, setQuestions, questionsRef] = useStateRef([]);
   const [activeQuestion, setActiveQuestion, activeQuestionRef] = useStateRef({});
-  const [seconds,setSeconds] =useState(60);
+  const [seconds,setSeconds] =useState(0);
   const [min,setMin] =useState(0);
   const [showExam,setShowExam] =useState(false);
   
@@ -30,7 +30,8 @@ const AttendExam = () => {
       }
       if(min===0&&seconds==0){
         console.log("exam submited");
-        navigate('/user-dashboard/result-page');
+        handleSubmit();
+       
       }
     }, 1000);
     return ()=>{
@@ -58,7 +59,7 @@ const AttendExam = () => {
         navigate("/user-dashboard/exams")
       }
         if(data.result==="success"){
-        
+        setMin(1);
         const { selectedQuestion } = data;
         setQuestions(selectedQuestion);
         const setFirstQuestion =questionsRef.current[0] 

@@ -18,7 +18,7 @@ import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
-import com.vastpro.constants.CommonConstant;
+import com.vastpro.constants.CommonConstants;
 
 public class OurEntityService {
 

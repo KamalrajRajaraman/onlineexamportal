@@ -56,10 +56,38 @@ Steps to create UserAttemptTopicMaster
 ====================================
 	7.1)for each IN =>performanceId, topicId,topicPassPercentage,totalQuestionInThisTopic=questionPerExam 
 						 of ExamTopicMappingRecords List 
+						 
 	7.2)Exception -> return error
-	7.3)created --> continue...
 	
-8)
+	7.3)create List empty ->return error
+	7.4)create Lis is not empty -->continue
+	
+8)find QuestionList by topicIdList 
+====================================
+	8.1)for each IN => topicId of TOPIC List , OUT = List of topicWisequestionsMap 	 
+	8.2)Exception -> return error
+	8.3)create List empty ->return error
+	4.4)create List is not empty -->continue
+
+9)Select Random Question in a Topic 
+====================================
+	9.1)create Random No. based  List Size 
+	9.2)add the questionId in randamQuestion List by retrieving the questionId from questionsList based on random no.
+	9.3)remove the questionId from questionsList based on random no.  to avoid duplicate Questions
+	9.4)randomQuestionlist is empty return error
+	9.5)randomQuestionlist is not empty return error
+10)create UserAttemptAnswerMaster
+===================================
+	10.1)for each questionId in randomList and performanceId  create UserAttemptAnswerMaster
+	10.2)Exception ->return error
+	10.3)insertedQuestionList is empty ->return List
+	10.4)put performanceId in session 
+11)UpdateUserExamMappingRecord
+=====================================
+	11.1) update noOfAttempts and lastPerformanceDate in userExamMapping Master
+	11.2)Exception ->return error
+	
+
 
 
 
