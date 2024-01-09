@@ -97,9 +97,24 @@ const AttendExam = () => {
       );
       const data = await res.json();
       console.log('final question',data);
-      navigate('/user-dashboard/result-page');
+      console.log('score:: ', data.score);
+      const valueObject = constructObject(data);
+      navigate(`/user-dashboard/result-page`);
     } catch (error) {
       console.log(error);
+    }
+
+    function constructObject  (data){
+        const valueObject ={
+          noOfQuestions : data.noOfQuestions,
+          totalCorrect : data.totalCorrectQuestionsInExam,
+          totalWrong : data.totalWrongAnswersInExam,
+          score : data.score,
+          userPassed : data.userPassed,
+        }
+
+        return valueObject;
+        
     }
     
     
