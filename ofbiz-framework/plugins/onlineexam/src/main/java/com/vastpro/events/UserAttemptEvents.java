@@ -118,31 +118,61 @@ public class UserAttemptEvents {
 			attemptMasterCtx.put(CommonConstants.ATTEMPT_NUMBER, attemptNumber);
 
 			// Getting noOfQuestions from ExamMaster entity
-			Map<String, Object> noOfQuestionResp = null;
+//			Map<String, Object> noOfQuestionResp = null;
+//			try {
+//				noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", attemptMasterCtx);
+//			} catch (GenericServiceException e) {
+//
+//				Debug.logError(e, "Failed to execute findNoOfQuestionCountByExamID service", module);
+//				errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
+//				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//				return CommonConstants.ERROR;
+//
+//			}
+//			if (ServiceUtil.isError(noOfQuestionResp)) {
+//				errMsg = "Error while executing findNoOfQuestionCountByExamID service";
+//				Debug.logError(errMsg, module);
+//				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//				request.setAttribute(CommonConstants.RESULT_MAP, noOfQuestionResp);
+//				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//				return CommonConstants.ERROR;
+//
+//			}
+			
+			//Calling the findExamById  service which  return the exam detail for given the examId
+			Map<String, Object> findExamByIdResp = null;
 			try {
-				noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", attemptMasterCtx);
-			} catch (GenericServiceException e) {
-
-				Debug.logError(e, "Failed to execute findNoOfQuestionCountByExamID service", module);
-				errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				return CommonConstants.ERROR;
-
+				findExamByIdResp = dispatcher.runSync("findExamById", attemptMasterCtx);
+				Debug.logInfo("Successfully executed findExamById service", module);
+			} catch (GenericServiceException e) {			
+				 Debug.logError(e, "Failed to execute findExamById service", module);
+				  errMsg = "Failed to execute findExamById service : " + e.getMessage();
+				 request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+	             return CommonConstants.ERROR;
+	       
 			}
-
-			if (ServiceUtil.isError(noOfQuestionResp)) {
-				errMsg = "Error while executing findNoOfQuestionCountByExamID service";
+			
+			if (ServiceUtil.isError(findExamByIdResp)) {
+				errMsg = "Error while executing findExamById service";
 				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstants.RESULT_MAP, noOfQuestionResp);
+				request.setAttribute(CommonConstants.RESULT_MAP, findExamByIdResp);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
 
 			}
+			 
+			 
+
+			
 			// If the findNoOfQuestionCountByExamId Service is executed successfully
+			Map<String,Object> exam = (Map<String, Object>) findExamByIdResp.get("exam");
+			request.setAttribute("durationMinutes", exam.get(CommonConstants.DURATION_MINUTES));
 			// creating UserAttemptMaster record
-			Long noOfQuestion = (Long) noOfQuestionResp.get(CommonConstants.NO_OF_QUESTIONS);
+			
+			Long noOfQuestion = (Long) exam.get(CommonConstants.NO_OF_QUESTIONS);
 			attemptMasterCtx.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestion);
 			Map<String, Object> createUserAttemptMasterResp = null;
 			try {
@@ -170,7 +200,7 @@ public class UserAttemptEvents {
 
 			// If the createUserAttemptMaster Service is executed successfully
 			// Converting the Generic value to String
-		//	performanceId = String.valueOf(createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID));
+			//	performanceId = String.valueOf(createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID));
 			 performanceId = (Integer) createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID);
 			// findAllExamTopicMappingRecordsByExamId
 			String eventResp = OnlineExamHelper.findAllExamTopicMappingRecordsByExamId(request);
@@ -389,7 +419,8 @@ public class UserAttemptEvents {
 							CommonConstants.PERFORMANCE_ID,UserAttemptAnswerMasterGV.getString(CommonConstants.PERFORMANCE_ID),
 							CommonConstants.SEQUENCE_NUM,UserAttemptAnswerMasterGV.getString(CommonConstants.SEQUENCE_NUM),
 							CommonConstants.QUESTION_ID,UserAttemptAnswerMasterGV.getString(CommonConstants.QUESTION_ID),
-							CommonConstants.IS_FLAGGED,UserAttemptAnswerMasterGV.getInteger(CommonConstants.IS_FLAGGED)));
+							CommonConstants.IS_FLAGGED,UserAttemptAnswerMasterGV.getInteger(CommonConstants.IS_FLAGGED),
+							CommonConstants.SUBMITTED_ANSWER,UserAttemptAnswerMasterGV.getString(CommonConstants.SUBMITTED_ANSWER)));
 				}
 			}
 
@@ -432,7 +463,7 @@ public class UserAttemptEvents {
 			}
 		}
 		request.setAttribute("selectedQuestion", insertedQuestions);
-
+		
 		return CommonConstants.SUCCESS;
 	}
 
