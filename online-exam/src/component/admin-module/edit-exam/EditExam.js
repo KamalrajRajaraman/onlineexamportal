@@ -1,12 +1,15 @@
 import React, { createContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import MainContent from "../../common/MainContent"
 import ExamTopicTable from "./ExamTopicTable";
 import Swal from "sweetalert2";
+import ViewExam from "../exam/ViewExam";
 
 export const EditExamContext = createContext();
 const EditExam = () => {
-  const [examList, setExamList] = useState([]);
+  const examRecord =useLocation().state;
+  const  [examDetails, setExamDetails] = useState(examRecord);
+  //const [examList, setExamList] = useState([]);
   const [examTopicMap, setExamTopicMap] = useState([]);
   //examId is retrieved from url 
   const { examId } = useParams();
@@ -26,6 +29,21 @@ const EditExam = () => {
     header: "Exam-Topic-Mapping",
     btnText: "Topic to Exam ",
   };
+
+  const editExam = (props)=>{
+    fetch("https://localhost:8443/onlineexam/control/editExam",{
+      method:"POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(props)
+    }).then((response)=>{return response.json();})
+    .then((data)=>{console.log(data)})
+      // if(data.result==="success"){
+      //   setExamDetails(data.examDetails)
+      //   }})
+  }
 
   //creating examtopicMapping Record 
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
@@ -67,17 +85,19 @@ const EditExam = () => {
   return (
     <EditExamContext.Provider
       value={{
-        examList,
+       // examList,
         examId,
         onCreateExamTopicMappingMaster,
         examTopicMap,
         setExamTopicMap,
-        setExamList,
+        //setExamList,
         formValues,
         setFormValues
        
       }}
     >
+      
+      <ViewExam examDetails={examDetails} onEdit={editExam}/>
       <MainContent
         text={text}
         to="add-topic-to-Exam"

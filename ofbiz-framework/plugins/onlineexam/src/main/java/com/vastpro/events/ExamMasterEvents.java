@@ -1,11 +1,8 @@
 package com.vastpro.events;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -275,6 +272,49 @@ public class ExamMasterEvents {
 		return CommonConstants.SUCCESS;
 	}
 	
+	public static String editExam(HttpServletRequest request, HttpServletResponse response) {
+		
+		LocalDispatcher dispatcher =(LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		
+		Map<String, Object> editExamResp=null;
+		
+		if(UtilValidate.isEmpty(combinedMap.get(CommonConstants.EXAM_ID))) {
+			 String errMsg = "examId is Empty";
+			 Debug.logError( errMsg, module);
+			 request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+             return CommonConstants.ERROR;
+		}
+		try {
+			editExamResp = dispatcher.runSync("editExam", combinedMap);
+			
+			
+		} catch (GenericServiceException e) {
+			String errMsg = "Failed to execute editExam service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+            return CommonConstants.ERROR;
+		}
+		if (ServiceUtil.isSuccess(editExamResp)) {
+			Debug.logInfo("Successfully executed editExam service", module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT_MAP, editExamResp);
+		}
+		else {
+			//If the service returns error ,result and response Map Object is added to request Object
+			String errMsg = "Error while executing deleteExam service";
+			Debug.logError(errMsg, module);	
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg); 
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants.RESULT_MAP,editExamResp);
+			return CommonConstants.ERROR;
+		}
+		
+		return CommonConstants.SUCCESS;
+		
+	}
 	
 }
 
