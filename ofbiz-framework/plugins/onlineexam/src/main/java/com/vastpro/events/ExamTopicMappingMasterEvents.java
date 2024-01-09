@@ -163,11 +163,11 @@ public class ExamTopicMappingMasterEvents {
 		//Retrieving noOfQuestion from ExamMaster Entity to calculate questionPerExam
 		Map<String, Object> noOfQuestionResp = null;
 		try {
-			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", addTopicToExamContextMap);
-			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamId Service", module);
+			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamID", addTopicToExamContextMap);
+			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamID Service", module);
 		} catch (GenericServiceException e) {
 			
-			String errMsg = "Failed to execute findNoOfQuestionCountByExamId service : " + e.getMessage();
+			String errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -177,7 +177,7 @@ public class ExamTopicMappingMasterEvents {
 		
 		//Returned and terminated the method if Response from findNoOfQuestionCountByExamId service is error 
 		if(ServiceUtil.isError(noOfQuestionResp)) {
-			String errMsg = "Error while executing findNoOfQuestionCountByExamId service";
+			String errMsg = "Error while executing findNoOfQuestionCountByExamID service";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -320,5 +320,31 @@ public class ExamTopicMappingMasterEvents {
 
 		return CommonConstants.SUCCESS;
 	}
-	public static String editExamTopicMapping((HttpServletRequest request,HttpServletResponse response){}
+	public static String editExamTopicMapping(HttpServletRequest request,HttpServletResponse response){
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Map<String, Object> editExamTopicMappingResp = null;
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		
+		try {
+			editExamTopicMappingResp = dispatcher.runSync("editExamTopicMapping", combinedMap);
+		} catch (GenericServiceException e) {
+			String errMsg = "Failed to execute editExamTopicMapping service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
+		}
+		if(ServiceUtil.isSuccess(editExamTopicMappingResp)) {
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+			request.setAttribute("editExamTopicMappingList", editExamTopicMappingResp);
+		}
+		if(ServiceUtil.isError(editExamTopicMappingResp)) {
+			String errMsg = "Error returned while executing editExamTopicMapping";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		return null;
+	}
 }
