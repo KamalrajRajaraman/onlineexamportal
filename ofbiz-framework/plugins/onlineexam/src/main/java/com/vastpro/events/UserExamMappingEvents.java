@@ -360,7 +360,7 @@ public class UserExamMappingEvents {
 				questionWithAnswer.put("isCorrect", isCorrect);
 				
 				if(noOfUnAnsweredQuestionsByTopicId.containsKey(topicId)) {
-					noOfUnAnsweredQuestionsByTopicId.replace(topicId, noOfCorrectedQuestionsByTopicId.get(topicId)+1); 	
+					noOfUnAnsweredQuestionsByTopicId.replace(topicId, noOfUnAnsweredQuestionsByTopicId.get(topicId)+1); 	
 				}
 				else {
 					noOfUnAnsweredQuestionsByTopicId.put(topicId, 1);
@@ -518,9 +518,11 @@ public class UserExamMappingEvents {
 		request.setAttribute("totalCorrectQuestionsInExam", totalCorrectQuestionsInExam);
 		request.setAttribute(CommonConstants.PASS_PERCENTAGE, actualPassPercentage);
 		request.setAttribute(CommonConstants.SCORE, score);
+		request.setAttribute(CommonConstants.USER_PASSED, userPassed);
+		request.setAttribute(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 		request.setAttribute("noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId);
 		request.setAttribute("evaluatedQuestionList", evaluatedQuestionList);
-		request.setAttribute("noOfQuestionsByTopicId", noOfCorrectedQuestionsByTopicId);
+		request.setAttribute("noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId);
 		return CommonConstants.SUCCESS;
 	}
 

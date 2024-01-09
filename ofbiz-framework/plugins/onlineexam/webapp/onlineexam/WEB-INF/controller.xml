@@ -41,6 +41,23 @@
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json" />
 	</request-map>
+	
+	
+	<request-map uri="findUserAttemptTopicMasterRecordsForReport">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="findUserAttemptTopicMasterRecordsForReport"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
+	<request-map uri="findUserAttemptMasterRecordsForReport">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="findUserAttemptMasterRecordsForReport"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
+	
 
 	<!-- Online Exam Common Request Mapping -->
 	<request-map uri="onlineExamLogin">
