@@ -16,6 +16,7 @@
 	<vendor></vendor>
 	<version>1.0</version>
 
+	<service engine="" name=""></service>
 
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
@@ -50,7 +51,7 @@
 
 	<service name="findNoOfQuestionCountByExamId" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
-		invoke="findNoOfQuestionCountByExamId">
+		invoke="findNoOfQuestionCountByExamId" auth="true">
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
@@ -191,7 +192,7 @@
 	<service name="createUserExamMappingRecord"
 		engine="entity-auto" default-entity-name="UserExamMappingMaster"
 		invoke="create" auth="true">
-		<description>Crate Record in UserExamMappingMaster entity
+		<description>Create Record in UserExamMappingMaster entity
 		</description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
@@ -202,18 +203,30 @@
 	<service name="updateUserExamMappingRecord"
 		engine="entity-auto" default-entity-name="UserExamMappingMaster"
 		invoke="update" auth="false">
-		<description>Crate Record in UserExamMappingMaster entity
+		<description>Update Record in UserExamMappingMaster entity
 		</description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="false"></auto-attributes>
 		<auto-attributes mode="INOUT" include="nonpk"
 			optional="true"></auto-attributes>
 	</service>
-
-
-	<service name="showExamsForPartyId" engine="java"
+	
+	<service name="findUserExamMappingRecord" engine="java"
 		location="com.vastpro.services.UserExamMappingMasterServices"
-		invoke="showExamsForPartyId" auth="true">
+		invoke="findUserExamMappingRecord" auth="true">
+		<description>Fetch UserExamMappingRecord from UserExamMappingMaster entity</description>
+		<attribute name="partyId" mode="IN" type="String"
+			optional="false"></attribute>
+		<attribute name="examId" mode="IN" type="String"
+			optional="false"></attribute>
+		<attribute name="userExamMappingRecord" mode="OUT" optional="true"
+			type="Map"></attribute>
+	</service>
+
+
+	<service name="findAllExamForPartyId" engine="java"
+		location="com.vastpro.services.UserExamMappingMasterServices"
+		invoke="findAllExamForPartyId" auth="true">
 		<description>Fetch Exams from UserExamMappingMaster entity</description>
 		<attribute name="partyId" mode="IN" type="String"
 			optional="false"></attribute>
@@ -266,6 +279,19 @@
 			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
 			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
 	</service>
+	
+	<service engine="entity-auto" default-entity-name="UserAttemptTopicMaster" 
+		name="updateUserAttemptTopicMaster" invoke="update" auth="true">
+			<description> update in user attempt topic master</description>
+			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
+			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
+	</service>
 
+	<service engine="entity-auto" default-entity-name="UserAttemptMaster" 
+		name="updateUserAttemptMaster" invoke="update" auth="true">
+			<description>Partial update in user attempt master</description>
+			<auto-attributes mode="INOUT" include="pk" optional="false"></auto-attributes>
+			<auto-attributes mode="INOUT" include="nonpk" optional="true"></auto-attributes>
+	</service>
 
 </services>

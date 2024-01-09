@@ -34,6 +34,13 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="main" />
 	</request-map>
+	
+	<request-map uri="evaluateUserAttemptAnswerMaster">
+		<security https="true" auth="true"/>
+		<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="evaluateUserAttemptAnswerMaster"/>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json" />
+	</request-map>
 
 	<!-- Online Exam Common Request Mapping -->
 	<request-map uri="onlineExamLogin">
@@ -218,9 +225,9 @@
     
     
     
-	<request-map uri="showExamsForPartyId">
+	<request-map uri="findAllExamForPartyId">
 			<security https="true" auth="true"/>
-			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="showExamsForPartyId"/>
+			<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="findAllExamForPartyId"/>
 			<response name="success" type="request" value="json"/>
 			<response name="error" type="request" value="json"/>
 	</request-map>
@@ -234,17 +241,16 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
-    <request-map uri="updateUserAttemptAnswerMaster">
+    <request-map uri="updateAnswerInUserAttemptAnswerMaster">
 		<security https="true" auth="true"/>
-		<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="updateUserAttemptAnswerMaster"/>
+		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="updateAnswerInUserAttemptAnswerMaster"/>
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json" />
 	</request-map>
-	
-	
+
 	<request-map uri="onlineExamLogout">
     	<security https="true" auth="true"/>
-    	<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="logout"></event>
+    	<event type="java" path="com.vastpro.events.OnlineExamEvents" invoke="logout"/>
     	<response name="success" type="request" value="json"/>
     	<response name="error" type="request" value="json"/>
     </request-map>

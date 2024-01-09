@@ -198,9 +198,7 @@ public class ExamMasterServices {
 			return ServiceUtil.returnError("while fetching Number of questions from ExamMaster entity  is empty"+module);
 			
 		}
-			
-		//Adds the exam list to the result map
-		
+				
 		return resultMap;
 
 	}
@@ -208,8 +206,8 @@ public class ExamMasterServices {
 	/**
 	 * This method accepts a list of topic ID and provides the question IDs 
 	 * assigned to each of them 
-	 * @param DispatchContext
-	 * @param Map<String, Object>
+	 * @param 
+	 * @param 
 	 * @return
 	 * 		Map<String, Object>
 	 */

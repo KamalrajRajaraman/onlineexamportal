@@ -26,6 +26,7 @@ import ExamPage from "./component/userModule/exam-page/ExamPage";
 import ShowExam from "./component/admin-module/user/ShowExam";
 import RequiredAuth from "./component/common/RequiredAuth";
 import Error from "./component/common/Error";
+import ResultPage from "./component/userModule/exam-page/ResultPage";
 
 
 function App() {
@@ -70,11 +71,14 @@ function App() {
           </Route>
         </Route>  
         <Route path="user-dashboard" element={<RequiredAuth><UserDashboard /></RequiredAuth>}>
-        <Route index element={<Navigate to="exams" />}/>
+          <Route index element={<Navigate to="exams" />}/>
           <Route path="exams" element={<ExamsForUser />} />
+          <Route path="result-page" element={<ResultPage />} />
         </Route>
+      
         <Route path="user-dashboard/exams/exam-page/:examId" element={<ExamPage />} />
         <Route path="exam-page" element={<ExamPage />} />
+      
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </AuthProvider>

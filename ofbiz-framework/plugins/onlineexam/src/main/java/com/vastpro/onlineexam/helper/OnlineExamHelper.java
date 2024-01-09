@@ -65,6 +65,7 @@ public class OnlineExamHelper {
 			//if findExamTopicMappingRecords Service result is error ,error message is set in request and return error
 			String errMsg = "Error returned while executing findExamTopicMappingRecords";
 			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants.RESULT_MAP, findExamTopicMappingResp);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;

@@ -7,40 +7,115 @@ const Question = ({
   questions,
 }) => {
   const [submittedAnswer, setSubmittedAnswer] = useState("");
-
+  const [isFlagged,setIsFlagged] = useState(false);
   useEffect(() => {
+
     setSubmittedAnswer(question?.submittedAnswer);
-  }, [question]);
+    setIsFlagged(question.isFlagged===1?true:false);
+    questionViewed(question.sequenceNum)
+    }, [question]);
+
+
+
+  const submitAnswerAndNext = async (answeredQuestion, sequenceNum) => {
+    const response = await fetch(
+      "https://localhost:8443/onlineexam/control/updateAnswerInUserAttemptAnswerMaster",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(answeredQuestion),
+      }
+    );
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log(data);
+      if (data.result === "success") {
+        if(data.isFlagged === 1){
+          setIsFlagged(true);
+        }else{
+          setIsFlagged(false);
+        }
+
+        if (answeredQuestion.submittedAnswer === "") {
+          setQuestions(
+            questions.map((question) =>
+              question.sequenceNum === sequenceNum
+                ? { answeredQuestion }
+                : question
+            )
+          );
+          setSubmittedAnswer("");
+        }
+        setQuestions(
+          questions.map((question) =>
+            question.sequenceNum === sequenceNum ? answeredQuestion : question
+          )
+        );
+      }
+    }
+    if (response.status === 401) {
+      console.log("ClientSide error");
+    }
+    if (response.status === 500) {
+      console.log("SERVER_ERROR");
+    }
+  };
 
   const onSave = (sequenceNum) => {
-    onSequenceNumClick(sequenceNum + 1 );
-    setQuestions(
-      questions.map((question) =>
-        question.sequenceNum === sequenceNum
-          ? { ...question, submittedAnswer }
-          : question
-      )
-    );
-  
+    questions.forEach((question) => {
+      if (question.sequenceNum === sequenceNum) {
+        const answeredQuestion = { ...question, submittedAnswer };
+        submitAnswerAndNext(answeredQuestion, sequenceNum);
+      }
+    });
   };
 
   const onReset = (sequenceNum) => {
-    setQuestions(
-      questions.map((question) =>
-        question.sequenceNum === sequenceNum
-          ? { ...question, submittedAnswer: null }
-          : question
-      )
+    questions.forEach(
+      (question) =>
+        question.sequenceNum === sequenceNum &&
+        submitAnswerAndNext({ ...question, submittedAnswer: "" }, sequenceNum)
     );
-    setSubmittedAnswer("");
   };
 
- 
+  const onMarkForReview = (sequenceNum) => {
+   
+   const flagValue = isFlagged? 0:1;
+    questions.forEach(
+      (question) =>
+        question.sequenceNum === sequenceNum &&
+        submitAnswerAndNext({ ...question, isFlagged:flagValue }, sequenceNum)
+    );
+  
+   
+  };
+  const moveNext=(sequenceNum)=>{
+   
+    onSequenceNumClick(sequenceNum+1);
+
+  }
+  const movePrev=(sequenceNum)=>{
+    
+    onSequenceNumClick(sequenceNum-1);
+
+  }
+
+  const questionViewed = (sequenceNum) => {
+    
+    setQuestions(
+     questions.map(
+       (question) =>question.sequenceNum === sequenceNum ? { ...question, isViewed:true } :question))
+      
+    
+   };
 
   return (
     <div className="col">
       <div className="border border-secondary-subtle p-3 rounded pb-5">
-        <h6 >Question Type : {question.questionType}</h6>
+        <h6>Question Type : {question.questionType}</h6>
         <hr />
         <h6>Question No. {question.sequenceNum}</h6>
         <hr />
@@ -119,30 +194,51 @@ const Question = ({
         </div>
       </div>
 
-      <div className="mt-3">
-        <button
-          type="button"
-          onClick={() => onSequenceNumClick(question.sequenceNum - 1)}
-          className="btn btn-outline-success me-1  "
-        >
-          Previous
-        </button>
-       
-        <button
-          type="button"
-          onClick={() => onReset(question.sequenceNum)}
-          className="btn btn-outline-primary"
-        >
-          Reset
-        </button>
+      <div className="mt-3 row">
+        <div className="col-3">
+          <button
+            type="button"
+            onClick={() => movePrev(question.sequenceNum)}
+            className="btn btn-outline-success me-1  "
+          >
+            Previous
+          </button>
+        </div>
+        <div className="col ">
+          <div className="col-8 mx-auto">
+            <button
+              onClick={() => onMarkForReview(question.sequenceNum)}
+              type="button"
+              className="btn btn-outline-danger "
+            >
+              {isFlagged ? "Remove Mark":"Mark for Review"}
+            </button>
+            <button
+              type="button"
+              onClick={() => onReset(question.sequenceNum)}
+              className="btn btn-outline-primary ms-2"
+            >
+              Reset
+            </button>
 
-        <button
-          type="button"
-          onClick={() => onSave(question.sequenceNum)}
-          className="btn btn-outline-success float-end"
-        >
-          Save & Next
-        </button>
+            <button
+              type="button"
+              onClick={() => onSave(question.sequenceNum)}
+              className="btn btn-outline-success ms-2 "
+            >
+              Save
+            </button>
+          </div>
+        </div>
+        <div className="col-3">
+          <button
+            type="button"
+            onClick={() => moveNext(question.sequenceNum)}
+            className="btn btn-outline-success float-end"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
