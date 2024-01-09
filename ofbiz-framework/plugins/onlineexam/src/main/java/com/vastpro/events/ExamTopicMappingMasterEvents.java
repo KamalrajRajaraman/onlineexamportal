@@ -320,4 +320,5 @@ public class ExamTopicMappingMasterEvents {
 
 		return CommonConstants.SUCCESS;
 	}
+	public static String editExamTopicMapping((HttpServletRequest request,HttpServletResponse response){}
 }

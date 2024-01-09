@@ -22,7 +22,7 @@ const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
               <p></p>
             </button>
             <div className="  row z-3 position-absolute end-0 me-5  top-0 mt-3 ">
-              <button   onClick={()=>onEdit(object[id])} className="btn btn-outline-success  btn-sm me-4 col">Edit</button>
+              <button   onClick={()=>onEdit(object[id], object)} className="btn btn-outline-success  btn-sm me-4 col">Edit</button>
               <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger btn-sm me-3 col ">Delete</button>
             </div>
           </h2>

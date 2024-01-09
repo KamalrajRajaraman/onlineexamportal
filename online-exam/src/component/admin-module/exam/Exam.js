@@ -23,8 +23,8 @@ const Exam = () => {
     setExams(examList);
   };
 
-  const onEdit = (id) => {
-    navigate(`edit/examId/${id}`);
+  const onEdit = (id,exam) => {
+    navigate(`edit/examId/${id}`,{state:exam});
   };
 
   const text = {
@@ -42,6 +42,7 @@ const Exam = () => {
         name={"examName"}
         onDelete={onDelete}
         onEdit={onEdit}
+        path={"viewExam"}
       />
     </div>
   );

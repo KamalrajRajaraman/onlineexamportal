@@ -34,6 +34,11 @@
 		<auto-attributes include="nonpk" mode="INOUT"
 			optional="true"></auto-attributes>
 	</service>
+	
+	<service engine="entity-auto" name="editExam" default-entity-name="ExamMaster" 
+		invoke="update" auth="true">
+		<auto-attributes mode="INOUT" include="all" optional="true"></auto-attributes>
+	</service>
 
 	<service name="findAllExams" engine="java"
 		location="com.vastpro.services.ExamMasterServices"
@@ -49,7 +54,7 @@
 		<attribute name="examId" mode="IN" optional="false"
 			type="String" />
 		<attribute name="noOfQuestions" mode="OUT" optional="true"
-			type="Long" />    
+			type="Long" />
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
@@ -139,7 +144,7 @@
 		invoke="findQuestion">
 		<attribute name="questionId" type="Long" mode="IN"
 			optional="false" />
-		<attribute name="question" type="Map" mode="OUT" optional="true" />		    
+		<attribute name="question" type="Map" mode="OUT" optional="true" />
 	</service>
 	
 	<service name="deleteQuestion"

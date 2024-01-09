@@ -273,6 +273,7 @@ public String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpSe
 			userAttemptAnswer.put("correct", correct);
 		}
 	}
+	return null;
 	
 }
 
