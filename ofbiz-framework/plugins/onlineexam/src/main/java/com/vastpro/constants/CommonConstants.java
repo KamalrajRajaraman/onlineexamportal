@@ -37,6 +37,7 @@ public interface CommonConstants {
 	public static final String LAST_NAME = "lastName";
 	public static final String CURRENT_PASSWORD = "currentPassword";
 	public static final String CURRENT_PASSWORD_VERIFY = "currentPasswordVerify";
+	public static final String DISABLED_DATE_TIME ="disabledDateTime";
 	
 	
 	

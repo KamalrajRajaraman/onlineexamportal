@@ -16,7 +16,6 @@
 	<vendor></vendor>
 	<version>1.0</version>
 
-	<service engine="" name=""></service>
 
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
@@ -25,6 +24,15 @@
 		</description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false" />
+	</service>
+	
+	<service name="deleteUserLogin"
+		default-entity-name="UserLogin" engine="entity-auto" invoke="update"
+		auth="true">
+		<description>Hide UserLogin record by updating disabledDateTime</description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="false" />
+		<attribute name="disabledDateTime" mode="IN" type="Timestamp"></attribute>
 	</service>
 
 	<service name="createExam" default-entity-name="ExamMaster"
@@ -59,10 +67,11 @@
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
-		engine="entity-auto" invoke="delete" auth="true">
+		engine="entity-auto" invoke="update" auth="true">
 		<description>Delete Exam </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
+		<attribute name="expirationDate" mode="IN" type="Timestamp"></attribute>
 	</service>
 
 
@@ -167,7 +176,10 @@
 			optional="true"></auto-attributes>
 	</service>
 
-
+	<service engine="entity-auto" name="updateExamTopicMappingRecord"
+	default-entity-name="ExamTopicMappingMaster" invoke="update" auth="true">
+		<auto-attributes include="all" mode="INOUT" optional="true"></auto-attributes>
+	</service>
 
 	<service name="findExamTopicMappingRecords" engine="java"
 		location="com.vastpro.services.ExamTopicMappingMasterServices"

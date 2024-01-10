@@ -320,13 +320,13 @@ public class ExamTopicMappingMasterEvents {
 
 		return CommonConstants.SUCCESS;
 	}
-	public static String editExamTopicMapping(HttpServletRequest request,HttpServletResponse response){
+	public static String updateExamTopicMappingRecord(HttpServletRequest request,HttpServletResponse response){
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
-		Map<String, Object> editExamTopicMappingResp = null;
+		Map<String, Object> updateExamTopicMappingRecordResp = null;
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		
 		try {
-			editExamTopicMappingResp = dispatcher.runSync("editExamTopicMapping", combinedMap);
+			updateExamTopicMappingRecordResp = dispatcher.runSync("updateExamTopicMappingRecord", combinedMap);
 		} catch (GenericServiceException e) {
 			String errMsg = "Failed to execute editExamTopicMapping service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
@@ -334,17 +334,17 @@ public class ExamTopicMappingMasterEvents {
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			return CommonConstants.ERROR;
 		}
-		if(ServiceUtil.isSuccess(editExamTopicMappingResp)) {
+		if(ServiceUtil.isSuccess(updateExamTopicMappingRecordResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("editExamTopicMappingList", editExamTopicMappingResp);
+			request.setAttribute("updateExamTopicMappingRecord", updateExamTopicMappingRecordResp);
 		}
-		if(ServiceUtil.isError(editExamTopicMappingResp)) {
+		if(ServiceUtil.isError(updateExamTopicMappingRecordResp)) {
 			String errMsg = "Error returned while executing editExamTopicMapping";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
-		return null;
+		return CommonConstants.SUCCESS;
 	}
 }

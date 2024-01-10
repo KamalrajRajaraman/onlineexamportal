@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TableRowMaker from './TableRowMaker'
 import { EditExamContext } from './EditExam';
 
 const ExamTopicTable = () => {
     //Consuming data from EditExamContext
-    const {examId,examTopicMap,setExamTopicMap} = useContext(EditExamContext);
-
+    const {examId,examTopicMap,setExamTopicMap,refresh} = useContext(EditExamContext);
+    
     //fetch data on Mount
     useEffect(()=>{
         getExamTopicMappingRecords();
-    },[])
+    },[refresh])
 
     
     const getExamTopicMappingRecords =async()=>{
@@ -44,10 +44,11 @@ const ExamTopicTable = () => {
           <th scope="col">Percentage</th>
           <th scope="col">Topic Pass Percentage</th>
           <th scope="col">Question Per Exam</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
-        <TableRowMaker array={examTopicMap}/>
+        <TableRowMaker array={examTopicMap} />
       </tbody>
     </table>
     </div>

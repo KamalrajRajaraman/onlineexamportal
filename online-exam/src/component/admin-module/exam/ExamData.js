@@ -7,6 +7,8 @@ export const ExamProvider  = ({children})=>{
     const [exams, setExams] = useState([]);
     const [alert,setAlert] =useState(false);
 
+    const [refresh,setRefresh]= useState(true);
+
     const fetchExam = async () => {
       const res = await fetch(
         "https://localhost:8443/onlineexam/control/findAllExams",
@@ -31,7 +33,7 @@ export const ExamProvider  = ({children})=>{
     }
 
       return (
-      <> <ExamContext.Provider value={{exams, setExams,onDelete,alert,setAlert,fetchExam}}>
+      <> <ExamContext.Provider value={{exams, setExams,onDelete,alert,setAlert,fetchExam,refresh,setRefresh}}>
         {children}
       </ExamContext.Provider></>)
 

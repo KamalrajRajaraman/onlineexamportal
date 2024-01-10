@@ -1,6 +1,7 @@
 
 package com.vastpro.services;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,10 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityExpr;
+import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -36,11 +41,16 @@ public class OnlineExamServices {
 
 		List<Map<String, Object>> userList = new LinkedList<>();
 		List<GenericValue> GenericValueList = null;
-
+		Timestamp currentDateTime = new Timestamp(System.currentTimeMillis());
+		EntityExpr roleTypeCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID, EntityOperator.EQUALS,CommonConstants.PERSON_ROLE);
+		EntityExpr disabledDateTimeCondition1 = EntityCondition.makeCondition("disabledDateTime", EntityOperator.EQUALS,null);
+		EntityExpr disabledDateTimeCondition2= EntityCondition.makeCondition("disabledDateTime", EntityOperator.GREATER_THAN_EQUAL_TO,currentDateTime);
+		EntityExpr disabledDateTimeOrCondition = EntityCondition.makeCondition(disabledDateTimeCondition1,EntityOperator.OR,disabledDateTimeCondition2);
+		EntityExpr whereCondition = EntityCondition.makeCondition(roleTypeCondition,EntityOperator.AND,disabledDateTimeOrCondition);
 		try {
 			// Retrieve all users based on roleTypeId
 			GenericValueList = EntityQuery.use(delegator).from(CommonConstants.USER_MASTER)
-					.where(CommonConstants.ROLE_TYPE_ID, "PERSON_ROLE").queryList();
+					.where(whereCondition).queryList();
 
 		} catch (GenericEntityException e) {
 			// If Exception occurred return error map

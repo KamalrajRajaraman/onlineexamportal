@@ -33,12 +33,25 @@ const ListUser = () => {
         btnText: "User",
       };
 
+    //Delete Exam
+    const onDelete=async(id)=>{
+      console.log(id);
+      const res = await fetch(`https://localhost:8443/onlineexam/control/deleteUser?partyId=${id}`,
+      {credentials: 'include'})
+      const data =await  res.json();
+      console.log(data);
+      const {result} = data
+      if(result==="success"){
+        fetchUsers();
+      }
+    }
+
   return (
     <>  <AccordinMaker
     objects={users}
     id={"partyId"}
     name={"firstName"}
-    onDelete={""}
+    onDelete={onDelete}
     onEdit={onEdit}
   /></>
   )
