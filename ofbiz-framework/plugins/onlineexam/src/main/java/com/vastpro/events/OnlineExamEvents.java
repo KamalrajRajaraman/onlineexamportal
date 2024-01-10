@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -271,7 +272,70 @@ public class OnlineExamEvents {
 		return CommonConstants.SUCCESS;
 	}
 
-	
+	// Event for deleting a question from QuestionMaster entity based on questionId
+	public static String deleteUser(HttpServletRequest request, HttpServletResponse response) {
+		
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		String partyId = (String) combinedMap.get(CommonConstants.PARTY_ID);
+		
+		
+		if(UtilValidate.isEmpty(partyId)) {
+			String errMsg = "partyId is empty ";
+			Debug.logError( errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		GenericValue userLoginId =null;
+		try {
+			userLoginId = EntityQuery.use(delegator).select(CommonConstants.USER_LOGIN_ID).from("UserLogin").where(CommonConstants.PARTY_ID,partyId).queryOne();
+		} catch (GenericEntityException e) {
+			String errMsg = "Failed to retrieve userLoginId from  UserMaster View Entity" + e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+		if(UtilValidate.isNotEmpty(userLoginId)) {
+			combinedMap.put(CommonConstants.USER_LOGIN_ID,userLoginId.getString(CommonConstants.USER_LOGIN_ID) );
+			
+		}
+		
+		
+		Timestamp DisabledDateTime = new Timestamp(System.currentTimeMillis());
+		combinedMap.put(CommonConstants.DISABLED_DATE_TIME, DisabledDateTime);
+		
+		Map<String, Object> deleteUserLoginResp = null;
+
+		// calling deleteUserLogin service
+		try {
+			deleteUserLoginResp = dispatcher.runSync("deleteUserLogin", combinedMap);
+			Debug.logInfo("Succesfully executed deleteUserLogin service", module);
+		} catch (GenericServiceException e) {
+			// If Exception occurred while execute the service, set result as Error in request
+			
+			String errMsg = "Failed to execute deleteUserLogin service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		// If the deleteUserLogin service is success, set result as success in request
+		if (ServiceUtil.isSuccess(deleteUserLoginResp)) {
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+			request.setAttribute(CommonConstants.RESULT_MAP, deleteUserLoginResp);
+		} else {
+			// If the deleteUserLogin service returns Error, set result as error in request
+			String errMsg = "Error occured in deleteUserLogin service";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+		}
+		return CommonConstants.SUCCESS;
+	}
 	
 	public static String logout(HttpServletRequest request, HttpServletResponse response) {
 		

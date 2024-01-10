@@ -12,6 +12,9 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityExpr;
+import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -38,11 +41,14 @@ public class ExamMasterServices {
 		List<Map<String, Object>> examList = new LinkedList<>();
 
 		List<GenericValue> examMasterGenericValueList = null;
-
+		Timestamp throughDate = new Timestamp(System.currentTimeMillis());
+		
+		EntityExpr expirationDateCondition = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE,EntityOperator.GREATER_THAN_EQUAL_TO,throughDate);
+		
 		try {
 			//Query to fetch all the exams from ExamMaster entity
 			examMasterGenericValueList = EntityQuery.use(delegator)
-					.from(CommonConstants.EXAM_MASTER).queryList();
+					.from(CommonConstants.EXAM_MASTER).where(expirationDateCondition).queryList();
 
 		} catch (GenericEntityException e) {
 			

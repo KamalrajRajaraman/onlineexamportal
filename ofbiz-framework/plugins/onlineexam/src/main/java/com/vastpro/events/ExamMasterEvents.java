@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -233,11 +234,12 @@ public class ExamMasterEvents {
 		
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
-		
+		Timestamp expirationDate = new Timestamp(System.currentTimeMillis());
 		//Creation of a map to send the context to the service 
 		Map<String, Object> deleteExamContext = new HashMap<>();
 		deleteExamContext.put(CommonConstants.USER_LOGIN, userLogin);
 		deleteExamContext.put(CommonConstants.EXAM_ID, examId);
+		deleteExamContext.put(CommonConstants.EXPIRATION_DATE, expirationDate);
 		
 		Map<String, Object> deleteExamResp = null;
 		

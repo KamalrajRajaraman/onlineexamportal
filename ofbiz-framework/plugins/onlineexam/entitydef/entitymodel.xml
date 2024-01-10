@@ -244,13 +244,22 @@
 			entity-name="PartyRole" />
 
 		<member-entity entity-alias="PR" entity-name="Person" />
+		<member-entity entity-alias="UL" entity-name="UserLogin" />
 
 		<alias entity-alias="PR" name="firstName" />
 		<alias entity-alias="PR" name="lastName" />
 		<alias entity-alias="PTRLE" name="partyId" />
 		<alias entity-alias="PTRLE" name="roleTypeId" />
+		<alias entity-alias="UL" name="userLoginId" />
+		<alias entity-alias="UL" name="disabledDateTime" />
 
 		<view-link entity-alias="PR" rel-entity-alias="PTRLE"
+			rel-optional="true">
+			<key-map field-name="partyId" />
+		</view-link>
+		
+		
+		<view-link entity-alias="PR" rel-entity-alias="UL"
 			rel-optional="true">
 			<key-map field-name="partyId" />
 		</view-link>

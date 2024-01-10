@@ -30,7 +30,7 @@ const AttendExam = () => {
       }
       if(min===0&&seconds==0){
         console.log("exam submited");
-        handleSubmit();
+        // handleSubmit();
        
       }
     }, 1000);

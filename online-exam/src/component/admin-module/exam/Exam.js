@@ -36,14 +36,14 @@ const Exam = () => {
     <div className="position-relative" >
     {alert &&<Alert color={"alert-success"} close={setAlert} message ={"Aww yeah, you successfully created Exam"}/>}
       <MainContent text={text} to="add-exam" back="/admin/exam" />
-      <AccordinMaker
+      {exams ? <AccordinMaker
         objects={exams}
         id={"examId"}
         name={"examName"}
         onDelete={onDelete}
         onEdit={onEdit}
         path={"viewExam"}
-      />
+      />:"No Exams Found"}
     </div>
   );
 };
