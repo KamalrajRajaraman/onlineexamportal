@@ -133,7 +133,7 @@ public class QuestionMasterEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
-		String questionId = (String) combinedMap.get("questionId");
+		String questionId = (String) combinedMap.get(CommonConstants.QUESTION_ID);
 		
 		if(UtilValidate.isEmpty(questionId)) {
 			String errMsg = "questionId is empty ";

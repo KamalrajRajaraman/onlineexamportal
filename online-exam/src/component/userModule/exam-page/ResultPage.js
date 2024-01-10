@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
 import useStateRef from 'react-usestateref';
+import { useLocation } from 'react-router-dom';
+import { BsAward } from "react-icons/bs";
+import { FaHashtag } from "react-icons/fa6";
+import { BsClipboardCheckFill } from "react-icons/bs";
+import { BsClipboard2XFill } from "react-icons/bs";
+import { BsAwardFill } from "react-icons/bs";
+import { HiMiniReceiptPercent } from "react-icons/hi2";
+import { PiPercentFill } from "react-icons/pi";
+
 
 const ResultPage = () => {
+ const {state} = useLocation();
+ const {actualUserPercentage, passPercentage} = state;
+  // const actualUserPercentage = sessionStorage.getItem("actualUserPercentage");
+  // const passPercentage = sessionStorage.getItem("passPercentage");
+ 
+  
+ 
   const [result, setResult] = useState({
     noOfQuestions:'', score : '', totalCorrect : '', totalWrong : '', userPassed:''
   });
@@ -95,7 +110,7 @@ const ResultPage = () => {
                   <i class="icon-pencil primary font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3>{result.noOfQuestions}</h3>
+                  <h3> <FaHashtag />{result.noOfQuestions}</h3>
                   <span>No of Questions</span>
                 </div>
               </div>
@@ -109,10 +124,10 @@ const ResultPage = () => {
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="icon-speech warning font-large-2 float-left"></i>
+               
                 </div>
                 <div class="media-body text-right">
-                  <h3>{result.score}</h3>
+                  <h3> <BsAward />{result.score}</h3>
                   <span>Score</span>
                 </div>
               </div>
@@ -130,7 +145,7 @@ const ResultPage = () => {
                   
                 </div>
                 <div class="media-body text-right">
-                  <h3>64.89 %</h3>
+                  <h3><HiMiniReceiptPercent />{passPercentage}</h3>
                   <span>Pass percentage</span>
                 </div>
               </div>
@@ -147,7 +162,7 @@ const ResultPage = () => {
                   <i class="icon-pointer danger font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3>45</h3>
+                  <h3><PiPercentFill />{actualUserPercentage}</h3>
                   <span>User percentage</span>
                 </div>
               </div>
@@ -166,7 +181,7 @@ const ResultPage = () => {
                   <i class="icon-pencil primary font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3>{result.totalCorrect}</h3>
+                  <h3><BsClipboardCheckFill /> {result.totalCorrect}</h3>
                   <span>Total correct Questions</span>
                 </div>
               </div>
@@ -183,7 +198,7 @@ const ResultPage = () => {
                   <i class="icon-speech warning font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3>{result.totalWrong}</h3>
+                  <h3><BsClipboard2XFill />{result.totalWrong}</h3>
                   <span>Total wrong questions</span>
                 </div>
               </div>
@@ -196,38 +211,10 @@ const ResultPage = () => {
   
   </div>
 
- {/* <div className="grid ">
-    <div className='col-span-1'>
-        <div className='mx-auto bg-sky-50 rounded-xl shadow-lg '>
-           
-            <div className='flex justify-between'>
-                <div className='ml-5 mt-5'>
-                Icon
-                </div>
-            </div>
-
-            <div className='pl-7 py-5'>
-                <div className='text-blue-600 font-semibold'>
-                      No of Questions
-                </div>
-                <div className='text-3xl font-semibold'>
-                  60
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
- </div> */}
-
-
-
 <div className='mt-3'><h2>Topicwise Results</h2></div>
-<div className='container-fluid'>
-<table class="table table-success table-striped   table-bordered  mt-3">
-  <tr className='border bg-primary'>
+
+<table class="table table-success table-striped table-bordered  mt-3">
+  <tr className='border bg-primary '>
     <th>TopicId</th>
     <th>Topic pass percentage</th>
     <th>User topic percentage</th>
@@ -245,7 +232,7 @@ const ResultPage = () => {
 })}
 
 </table>
-</div>
+
 
 
 

@@ -1,6 +1,7 @@
 package com.vastpro.services;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,11 +12,15 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstants;
+
+import groovy.xml.Entity;
 
 public class QuestionMasterServices {
 
@@ -27,6 +32,7 @@ public class QuestionMasterServices {
 	 * @param Map<String, ? extends Object>
 	 * @return Map<String,Object>	
 	 */
+	
 	public static Map<String, Object> findAllQuestions(DispatchContext dctx, Map<String, ? extends Object> context) {
 
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();
@@ -34,9 +40,13 @@ public class QuestionMasterServices {
 
 		Delegator delegator = dctx.getDelegator();
 		List<GenericValue> questionGenericValueList = null;
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
+		EntityCondition condition1 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityOperator.EQUALS, null);
+		EntityCondition condition2 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityOperator.GREATER_THAN, currentTime );
+		EntityCondition condition = EntityCondition.makeCondition(condition1, EntityOperator.OR, condition2);
 		try {
-			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).queryList();
+			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).where(condition).queryList();
 		} 
 		catch (GenericEntityException e) {
 			//If Exception occurred return error map

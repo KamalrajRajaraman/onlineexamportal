@@ -199,8 +199,9 @@ public class UserExamMappingEvents {
 		List<Map<String, Object>> evaluatedQuestionList = new LinkedList<>();
 		Map<String, Integer> noOfCorrectedQuestionsByTopicId = new HashMap<String, Integer>();
 		Map<String, Integer> noOfUnAnsweredQuestionsByTopicId = new HashMap<String, Integer>();
+		Map<String, Integer> totalEvaluatedQuestionsByTopicId = new HashMap<String,Integer>();
 		Double score = 0.0;
-
+		Double totalScore =0.0;
 		// If the userAttemptAnswerMasterList is empty, set the result as Error in
 		// request
 		if (UtilValidate.isEmpty(userAttemptAnswerMasterList)) {
@@ -215,7 +216,7 @@ public class UserExamMappingEvents {
 		if (UtilValidate.isNotEmpty(userAttemptAnswerMasterList)) {
 			Integer noOfCorrectQuestions = 0;
 			Boolean isCorrect = false;
-
+			
 			// Iterate the userAttemptAnswerMasterList and taking the question wise
 			// submittedAnswer
 			for (GenericValue question : userAttemptAnswerMasterList) {
@@ -255,10 +256,12 @@ public class UserExamMappingEvents {
 					String topicId = questionDetail.getString(CommonConstants.TOPIC_ID);
 					String answer = questionDetail.getString(CommonConstants.ANSWER);
 					Double answerValue = questionDetail.getDouble(CommonConstants.ANSWER_VALUE);
-
+					
+					totalScore += answerValue;
 					questionWithAnswer.put(CommonConstants.TOPIC_ID, topicId);
 					questionWithAnswer.put(CommonConstants.ANSWER, answer);
-
+					
+					
 					// If submittedAnswer is empty, which is unAnswered
 					if (UtilValidate.isEmpty(submittedAnswer)) {
 						isCorrect = null;
@@ -279,6 +282,13 @@ public class UserExamMappingEvents {
 							score += answerValue;
 							questionWithAnswer.put("isCorrect", isCorrect);
 
+							if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
+								totalEvaluatedQuestionsByTopicId.replace(topicId,
+										totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
+							} else {
+								totalEvaluatedQuestionsByTopicId.put(topicId, 1);
+							}
+							
 							// Sum 1 to noOfCorrectedQuestions for this particular topicId key
 							if (noOfCorrectedQuestionsByTopicId.containsKey(topicId)) {
 								noOfCorrectedQuestionsByTopicId.replace(topicId,
@@ -291,62 +301,84 @@ public class UserExamMappingEvents {
 						else {
 							isCorrect = false;
 							questionWithAnswer.put("isCorrect", isCorrect);
+							
+							if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
+								totalEvaluatedQuestionsByTopicId.replace(topicId,
+										totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
+							} else {
+								totalEvaluatedQuestionsByTopicId.put(topicId, 1);
+							}
 						}
 					}
 				}
 				evaluatedQuestionList.add(questionWithAnswer);
 			}
 		}
-
+	
 		// Find totalQuestions in this topic
-		for (Map.Entry<String, Integer> entry : noOfCorrectedQuestionsByTopicId.entrySet()) {
-			String topicId = entry.getKey();
-			Integer noOfUnAnsweredQuestions = noOfUnAnsweredQuestionsByTopicId.get(topicId);
-			Integer noOfCorrectQuestions = entry.getValue();
-			GenericValue UserAttemptTopicMasterGv = null;
-			try {
-				UserAttemptTopicMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER)
-						.where(CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId)
-						.queryOne();
+				for (Map.Entry<String, Integer> entry : totalEvaluatedQuestionsByTopicId.entrySet()) {
+					String topicId = entry.getKey();
+					Integer noOfUnAnsweredQuestions = noOfUnAnsweredQuestionsByTopicId.get(topicId);
+					Integer noOfCorrectQuestions = noOfCorrectedQuestionsByTopicId.get(topicId);
+					GenericValue UserAttemptTopicMasterGv = null;
+					try {
+						UserAttemptTopicMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER)
+								.where(CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId)
+								.queryOne();
 
-			} catch (GenericEntityException e) {
+					} catch (GenericEntityException e) {
+						String errMsg = "Exception occured while fetching the record from UserAttemptTopicMaster entity: "+ e.getMessage();
+						Debug.logError(e, errMsg, module);
+						request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+						request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+						return CommonConstants.ERROR;
+						
+					}
+					String userPassedThisTopic = null;
+					double actualUserTopicPercentage = 0.0;
+					Map<String, Object> updateUserAttemptTopicMasterResp = null;
+					if (UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
+						Double topicPassPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
+						Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv
+								.getInteger(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC);
+						if(UtilValidate.isNotEmpty(noOfCorrectQuestions)) {
+						actualUserTopicPercentage = ((double) noOfCorrectQuestions / (double) totalQuestionsInThisTopic) * 100;
+						}
+						// checking user is passed or not in particular topic
+						if (actualUserTopicPercentage >= topicPassPercentage) {
+							userPassedThisTopic = "Y";
+						} else {
+							userPassedThisTopic = "N";
+						}
 
-				e.printStackTrace();
-			}
-			String userPassedThisTopic = null;
-			double actualUserTopicPercentage = 0.0;
-			Map<String, Object> updateUserAttemptTopicMasterResp = null;
-			if (UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
-				Double userTopicPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
-				Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv
-						.getInteger(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC);
-				actualUserTopicPercentage = ((double) noOfCorrectQuestions / (double) totalQuestionsInThisTopic) * 100;
+					}
 
-				// checking user is passed or not in particular topic
-				if (actualUserTopicPercentage >= userTopicPercentage) {
-					userPassedThisTopic = "Y";
-				} else {
-					userPassedThisTopic = "N";
+					Map<String, Object> updateUserAttemptTopicMasterContext = UtilMisc.toMap(
+							CommonConstants.USER_PASSED_THIS_TOPIC, userPassedThisTopic, CommonConstants.USER_TOPIC_PERCENTAGE,
+							actualUserTopicPercentage, CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC, noOfCorrectQuestions,
+							CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId,
+							CommonConstants.USER_LOGIN, userLogin);
+
+					// update the record in userAttemptTopicMaster entity
+					try {
+						updateUserAttemptTopicMasterResp = dispatcher.runSync("updateUserAttemptTopicMaster",
+								updateUserAttemptTopicMasterContext);
+					} catch (GenericServiceException e) {
+
+						String errMsg = "Exception occured while calling updateUserAttemptTopicMaster service : "
+								+ e.getMessage();
+						Debug.logError(e, errMsg, module);
+						request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+						request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+						return CommonConstants.ERROR;
+					}
+
 				}
-
-			}
-
-			Map<String, Object> updateUserAttemptTopicMasterContext = UtilMisc.toMap(
-					CommonConstants.USER_PASSED_THIS_TOPIC, userPassedThisTopic, CommonConstants.USER_TOPIC_PERCENTAGE,
-					actualUserTopicPercentage, CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC, noOfCorrectQuestions,
-					CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId,
-					CommonConstants.USER_LOGIN, userLogin);
-
-			// update the record in userAttemptTopicMaster entity
-			try {
-				updateUserAttemptTopicMasterResp = dispatcher.runSync("updateUserAttemptTopicMaster",
-						updateUserAttemptTopicMasterContext);
-			} catch (GenericServiceException e) {
-
-				e.printStackTrace();
-			}
-
-		}
+		
+		
+		
+		
+		
 
 		// adding all topicwise correct questions for total correct Questions in exam
 		Integer totalCorrectQuestionsInExam = 0;
@@ -360,7 +392,12 @@ public class UserExamMappingEvents {
 			userAttemptMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_MASTER)
 					.where(CommonConstants.PERFORMANCE_ID, performanceId).queryOne();
 		} catch (GenericEntityException e) {
-			e.printStackTrace();
+			String errMsg = "Exception occured while fetching record from UserAttemptMaster entity : "
+					+ e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
 		Integer noOfQuestions = 0;
@@ -373,8 +410,9 @@ public class UserExamMappingEvents {
 		}
 
 		Integer totalWrongAnswersInExam = noOfQuestions - totalCorrectQuestionsInExam;
-
-		double actualPassPercentage = ((double) totalCorrectQuestionsInExam / (double) noOfQuestions) * 100;
+		//Calculating User percentage
+		//double actualUserPercentage = ((double) totalCorrectQuestionsInExam / (double) noOfQuestions) * 100;
+		double actualUserPercentage = ((double) score / (double) totalScore) * 100;
 		GenericValue examMasterGv = null;
 
 		try {
@@ -383,7 +421,12 @@ public class UserExamMappingEvents {
 					.where(CommonConstants.EXAM_ID, examId).queryOne();
 		} catch (GenericEntityException e) {
 
-			e.printStackTrace();
+			String errMsg = "Exception occured while fetching record from ExamMaster : "
+					+ e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
 
 		Double passPercentage = 0.0;
@@ -394,7 +437,7 @@ public class UserExamMappingEvents {
 		}
 
 		// checking user is passed or not
-		if (actualPassPercentage >= passPercentage) {
+		if (actualUserPercentage >= passPercentage) {
 			userPassed = "Y";
 		}
 
@@ -407,17 +450,26 @@ public class UserExamMappingEvents {
 			dispatcher.runSync("updateUserAttemptMaster", updateUserAttemptContext);
 		} catch (GenericServiceException e) {
 
-			e.printStackTrace();
+			String errMsg = "Exception occured while calling updateUserAttemptMaster service : "
+					+ e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
 		}
+		
+		request.setAttribute("totalScore", totalScore);
 		request.setAttribute("totalWrongAnswersInExam", totalWrongAnswersInExam);
 		request.setAttribute("totalCorrectQuestionsInExam", totalCorrectQuestionsInExam);
-		request.setAttribute(CommonConstants.PASS_PERCENTAGE, actualPassPercentage);
+		request.setAttribute("actualUserPercentage", actualUserPercentage);
+		request.setAttribute(CommonConstants.PASS_PERCENTAGE, passPercentage);
 		request.setAttribute(CommonConstants.SCORE, score);
 		request.setAttribute(CommonConstants.USER_PASSED, userPassed);
 		request.setAttribute(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
 		request.setAttribute("noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId);
 		request.setAttribute("evaluatedQuestionList", evaluatedQuestionList);
 		request.setAttribute("noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId);
+		
 		return CommonConstants.SUCCESS;
 	}
 
