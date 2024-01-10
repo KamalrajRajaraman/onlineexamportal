@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import MainContent from "../../common/MainContent"
 import ExamTopicTable from "./ExamTopicTable";
@@ -13,6 +13,8 @@ const EditExam = () => {
   const [examTopicMap, setExamTopicMap] = useState([]);
   //examId is retrieved from url 
   const { examId } = useParams();
+
+ const[refresh,setRefresh]=useState(true);
 
   const initialValue ={
     examId,
@@ -92,7 +94,9 @@ const EditExam = () => {
         setExamTopicMap,
         //setExamList,
         formValues,
-        setFormValues
+        setFormValues,
+        refresh,
+        setRefresh
        
       }}
     >

@@ -16,7 +16,6 @@
 	<vendor></vendor>
 	<version>1.0</version>
 
-	<service engine="" name=""></service>
 
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
@@ -166,7 +165,10 @@
 			optional="true"></auto-attributes>
 	</service>
 
-
+	<service engine="entity-auto" name="updateExamTopicMappingRecord"
+	default-entity-name="ExamTopicMappingMaster" invoke="update" auth="true">
+		<auto-attributes include="all" mode="INOUT" optional="true"></auto-attributes>
+	</service>
 
 	<service name="findExamTopicMappingRecords" engine="java"
 		location="com.vastpro.services.ExamTopicMappingMasterServices"

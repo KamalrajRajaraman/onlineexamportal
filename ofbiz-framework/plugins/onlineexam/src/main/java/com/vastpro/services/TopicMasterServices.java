@@ -1,14 +1,20 @@
 package com.vastpro.services;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityExpr;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.DispatchContext;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -33,8 +39,14 @@ public class TopicMasterServices {
 		Delegator delegator = dctx.getDelegator();
 		List<GenericValue> topicGenericValueList =null;
 		
+		Timestamp currentTime= new Timestamp(System.currentTimeMillis());
+		
+		EntityExpr makeCondition1 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityComparisonOperator.EQUALS,null);
+		EntityExpr makeCondition2 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityComparisonOperator.GREATER_THAN, currentTime);
+		EntityExpr makeCondition = EntityCondition.makeCondition(makeCondition1, EntityComparisonOperator.OR, makeCondition2); 
 		try {
-			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER).queryList();
+			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER)
+					.where(makeCondition).queryList();
 		} 
 		catch (GenericEntityException e) {
 			//Exception occurred while Execute the query

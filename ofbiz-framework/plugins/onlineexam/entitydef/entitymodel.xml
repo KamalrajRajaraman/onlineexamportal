@@ -42,6 +42,7 @@
 		package-name="org.apache.ofbiz.onlineexam">
 		<field name="topicId" type="id"></field>
 		<field name="topicName" type="value"></field>
+		<field name="expirationDate" type="date-time"></field>
 		<prim-key field="topicId" />
 	</entity>
 
