@@ -353,61 +353,60 @@ public class UserExamMappingEvents {
 		for (Map.Entry<String, Integer> entry : noOfCorrectedQuestionsByTopicId.entrySet()) {
 			totalCorrectQuestionsInExam += entry.getValue();
 		}
-			}
-		evaluatedQuestionList.add(questionWithAnswer);	
+
+		GenericValue userAttemptMasterGv = null;
+		// Query for taking noOfQuestions, examId from UserAttemptMaster entity
+		try {
+			userAttemptMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_MASTER)
+					.where(CommonConstants.PERFORMANCE_ID, performanceId).queryOne();
+		} catch (GenericEntityException e) {
+			e.printStackTrace();
 		}
-	}
-	
-	
-	//Find totalQuestions in this topic
-	for (Map.Entry<String,Integer> entry : noOfCorrectedQuestionsByTopicId.entrySet())  {
-        String topicId = entry.getKey();
-        Integer noOfUnAnsweredQuestions = noOfUnAnsweredQuestionsByTopicId.get(topicId);
-        Integer noOfCorrectQuestions = entry.getValue();
-        GenericValue UserAttemptTopicMasterGv = null;
-        try {
-    		 UserAttemptTopicMasterGv =EntityQuery.use(delegator)
-    						.from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER)
-    				.where(CommonConstants.PERFORMANCE_ID, performanceId,CommonConstants.TOPIC_ID, topicId)
-    				.queryOne();
-    		 
-    	} 
-        catch (GenericEntityException e) {
-    		
-    		e.printStackTrace();
-    	}
-        String userPassedThisTopic = null;
-        double actualUserTopicPercentage = 0.0;
-        Map<String, Object> updateUserAttemptTopicMasterResp = null;
-        if(UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
-        	Double userTopicPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
-        	Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv.getInteger(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC);
-        	 actualUserTopicPercentage =  ((double)noOfCorrectQuestions / (double)totalQuestionsInThisTopic)*100;
-        
-        	 //checking user is passed or not in particular topic
-        	 if(actualUserTopicPercentage >= userTopicPercentage) {
-        		 userPassedThisTopic = "Y";
-        	}
-        	else {
-        		 userPassedThisTopic = "N";
-        	}
-        	
-        }
-        
-        Map<String, Object> updateUserAttemptTopicMasterContext =
-        		UtilMisc.toMap(CommonConstants.USER_PASSED_THIS_TOPIC, userPassedThisTopic,
-        						CommonConstants.USER_TOPIC_PERCENTAGE, actualUserTopicPercentage,
-        						CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC, noOfCorrectQuestions,
-        						CommonConstants.PERFORMANCE_ID, performanceId,
-        						CommonConstants.TOPIC_ID, topicId
-        						,CommonConstants.USER_LOGIN, userLogin);
-        
-        //update the record in userAttemptTopicMaster entity
-        try {
-        updateUserAttemptTopicMasterResp	= 
-        		 dispatcher.runSync("updateUserAttemptTopicMaster" , updateUserAttemptTopicMasterContext);
+
+		Integer noOfQuestions = 0;
+		String examId = null;
+
+		// If userAttemptMasterGv is not empty
+		if (UtilValidate.isNotEmpty(userAttemptMasterGv)) {
+			noOfQuestions = userAttemptMasterGv.getInteger(CommonConstants.NO_OF_QUESTIONS);
+			examId = userAttemptMasterGv.getString(CommonConstants.EXAM_ID);
+		}
+
+		Integer totalWrongAnswersInExam = noOfQuestions - totalCorrectQuestionsInExam;
+
+		double actualPassPercentage = ((double) totalCorrectQuestionsInExam / (double) noOfQuestions) * 100;
+		GenericValue examMasterGv = null;
+
+		try {
+			// Taking passpercentage from ExamMaster entity
+			examMasterGv = EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER)
+					.where(CommonConstants.EXAM_ID, examId).queryOne();
+		} catch (GenericEntityException e) {
+
+			e.printStackTrace();
+		}
+
+		Double passPercentage = 0.0;
+		String userPassed = "N";
+
+		if (UtilValidate.isNotEmpty(examMasterGv)) {
+			passPercentage = examMasterGv.getDouble(CommonConstants.PASS_PERCENTAGE);
+		}
+
+		// checking user is passed or not
+		if (actualPassPercentage >= passPercentage) {
+			userPassed = "Y";
+		}
+
+		Map<String, Object> updateUserAttemptContext = UtilMisc.toMap(CommonConstants.PERFORMANCE_ID, performanceId,
+				CommonConstants.USER_PASSED, userPassed, CommonConstants.PASS_PERCENTAGE, passPercentage,
+				CommonConstants.TOTAL_CORRECT, totalCorrectQuestionsInExam, CommonConstants.TOTAL_WRONG,
+				totalWrongAnswersInExam, CommonConstants.SCORE, score, CommonConstants.USER_LOGIN, userLogin);
+		try {
+			// update userAttemptMaster entity
+			dispatcher.runSync("updateUserAttemptMaster", updateUserAttemptContext);
 		} catch (GenericServiceException e) {
-			
+
 			e.printStackTrace();
 		}
 		request.setAttribute("totalWrongAnswersInExam", totalWrongAnswersInExam);
