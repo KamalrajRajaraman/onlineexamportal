@@ -99,19 +99,24 @@ const AttendExam = () => {
       const data = await res.json();
       console.log('final question',data);
       console.log('score:: ', data.score);
-      const valueObject = constructObject(data);
-      navigate(`/user-dashboard/result-page`);
-    } catch (error) {
+     
+      console.log("actualUserPercentage",data.actualUserPercentage);
+      sessionStorage.setItem("actualUserPercentage", data.actualUserPercentage );
+      sessionStorage.setItem("passPercentage", data.passPercentage);
+      navigate(`/user-dashboard/result-page`,{state:{'actualUserPercentage': data.actualUserPercentage, 'passPercentage': data.passPercentage }});
+    } 
+    catch (error) {
       console.log(error);
     }
 
     function constructObject  (data){
-        const valueObject ={
+        const valueObject = {
           noOfQuestions : data.noOfQuestions,
           totalCorrect : data.totalCorrectQuestionsInExam,
           totalWrong : data.totalWrongAnswersInExam,
           score : data.score,
           userPassed : data.userPassed,
+          
         }
 
         return valueObject;

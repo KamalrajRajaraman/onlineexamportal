@@ -62,6 +62,7 @@
 		<field name="answerValue" type="decimal"></field>
 		<field name="topicId" type="id"></field>
 		<field name="negativeMarkValue" type="decimal"></field>
+		<field name="expirationDate" type="date-time"></field>
 		
 		<prim-key field="questionId" />
 		

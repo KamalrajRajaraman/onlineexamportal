@@ -150,10 +150,11 @@
 	
 	<service name="deleteQuestion"
 		default-entity-name="QuestionMaster" engine="entity-auto"
-		invoke="delete" auth="true">
+		invoke="update" auth="true">
 		<description>Delete Question </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
+		<attribute name="expirationDate" type="Timestamp" mode="IN" optional="false"></attribute>
 	</service>
 
 	<service name="addTopicToExam"
