@@ -83,7 +83,7 @@ const ResultPage = () => {
   return (
     <>
   
-  
+  <div><h2>Exam Results</h2></div>
 <div>
      <div class="row mt-3">
       <div class="col-xl-3 col-sm-6 col-12"> 
@@ -126,7 +126,8 @@ const ResultPage = () => {
             <div class="card-body">
               <div class="media d-flex">
                 <div class="align-self-center">
-                  <i class="icon-graph success font-large-2 float-left"></i>
+                <i class="bi bi-award"></i>
+                  
                 </div>
                 <div class="media-body text-right">
                   <h3>64.89 %</h3>
@@ -223,9 +224,10 @@ const ResultPage = () => {
 
 
 
-
-<table class="table table-success table-striped  table-bordered  mt-3">
-  <tr className='border'>
+<div className='mt-3'><h2>Topicwise Results</h2></div>
+<div className='container-fluid'>
+<table class="table table-success table-striped   table-bordered  mt-3">
+  <tr className='border bg-primary'>
     <th>TopicId</th>
     <th>Topic pass percentage</th>
     <th>User topic percentage</th>
@@ -233,7 +235,7 @@ const ResultPage = () => {
   </tr>
 {topicResult && topicResult.map((value)=>{
   return(
-        <tr key={value.topicId}>
+        <tr className='mt-4' key={value.topicId}>
           <td>{value.topicId}</td>
           <td>{value.topicPassPercentage}</td>
           <td>{value.userTopicPercentage}</td>
@@ -243,6 +245,7 @@ const ResultPage = () => {
 })}
 
 </table>
+</div>
 
 
 

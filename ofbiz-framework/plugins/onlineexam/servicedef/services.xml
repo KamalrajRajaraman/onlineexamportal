@@ -25,6 +25,15 @@
 		<auto-attributes include="pk" mode="IN"
 			optional="false" />
 	</service>
+	
+	<service name="deleteUserLogin"
+		default-entity-name="UserLogin" engine="entity-auto" invoke="update"
+		auth="true">
+		<description>Hide UserLogin record by updating disabledDateTime</description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="false" />
+		<attribute name="disabledDateTime" mode="IN" type="Timestamp"></attribute>
+	</service>
 
 	<service name="createExam" default-entity-name="ExamMaster"
 		engine="entity-auto" invoke="create" auth="true">
@@ -58,10 +67,11 @@
 	</service>
 
 	<service name="deleteExam" default-entity-name="ExamMaster"
-		engine="entity-auto" invoke="delete" auth="true">
+		engine="entity-auto" invoke="update" auth="true">
 		<description>Delete Exam </description>
 		<auto-attributes include="pk" mode="IN"
 			optional="false"></auto-attributes>
+		<attribute name="expirationDate" mode="IN" type="Timestamp"></attribute>
 	</service>
 
 

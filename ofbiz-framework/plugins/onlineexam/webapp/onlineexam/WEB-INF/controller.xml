@@ -230,6 +230,15 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
+	<request-map uri="deleteUser">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="com.vastpro.events.OnlineExamEvents"
+			invoke="deleteUser" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
 	
 	
 	<!-- User Exam Mapping Related Request Map -->
