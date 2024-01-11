@@ -16,7 +16,7 @@ const ShowExam = ({ exams, fetchAllExamsForUser }) => {
           <tbody>
             {exams &&
               exams.map((exam) => (
-                <tr className="p-0 m-0">
+                <tr  key={exam.examId}className="p-0 m-0">
                   <div className="row border">
                     <div className="col-2 mx-auto my-auto ">
                       <div className="fw-bold">Exam Name</div>

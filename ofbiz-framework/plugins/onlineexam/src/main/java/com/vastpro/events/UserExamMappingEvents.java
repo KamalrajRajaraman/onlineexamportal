@@ -63,18 +63,36 @@ public class UserExamMappingEvents {
 
 		}
 
-		try {
-			// calling createUserExamMappingRecord service
-			createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
+		if ("POST".equals(request.getMethod())) {
+			try {
+				// calling createUserExamMappingRecord service
+				createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
 
-		} catch (GenericServiceException e) {
+			} catch (GenericServiceException e) {
 
-			// If any exception occur in service, set error as a result in request object
-			Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
-			String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			return CommonConstants.ERROR;
+				// If any exception occur in service, set error as a result in request object
+				Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
+				String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				return CommonConstants.ERROR;
+			}
+		}
+		
+		if ("PUT".equals(request.getMethod())) {
+			try {
+				// calling createUserExamMappingRecord service
+				createUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
+
+			} catch (GenericServiceException e) {
+
+				// If any exception occur in service, set error as a result in request object
+				Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
+				String errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				return CommonConstants.ERROR;
+			}
 		}
 
 		// checking if the createUserExamMappingRecord service is success or not
@@ -267,6 +285,13 @@ public class UserExamMappingEvents {
 						isCorrect = null;
 						questionWithAnswer.put("isCorrect", isCorrect);
 
+						if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
+							totalEvaluatedQuestionsByTopicId.replace(topicId,
+									totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
+						} else {
+							totalEvaluatedQuestionsByTopicId.put(topicId, 1);
+						}
+						
 						if (noOfUnAnsweredQuestionsByTopicId.containsKey(topicId)) {
 							noOfUnAnsweredQuestionsByTopicId.replace(topicId,
 									noOfUnAnsweredQuestionsByTopicId.get(topicId) + 1);
@@ -291,7 +316,7 @@ public class UserExamMappingEvents {
 							
 							// Sum 1 to noOfCorrectedQuestions for this particular topicId key
 							if (noOfCorrectedQuestionsByTopicId.containsKey(topicId)) {
-								noOfCorrectedQuestionsByTopicId.replace(topicId,
+								noOfCorrectedQuestionsByTopicId.replace(topicId,	
 										noOfCorrectedQuestionsByTopicId.get(topicId) + 1);
 							} else {
 								noOfCorrectedQuestionsByTopicId.put(topicId, 1);
@@ -314,7 +339,7 @@ public class UserExamMappingEvents {
 				evaluatedQuestionList.add(questionWithAnswer);
 			}
 		}
-	
+		List<Map<String, Object>> updatedUserAttemptTopicMasterList = new LinkedList<>();
 		// Find totalQuestions in this topic
 				for (Map.Entry<String, Integer> entry : totalEvaluatedQuestionsByTopicId.entrySet()) {
 					String topicId = entry.getKey();
@@ -337,6 +362,7 @@ public class UserExamMappingEvents {
 					String userPassedThisTopic = null;
 					double actualUserTopicPercentage = 0.0;
 					Map<String, Object> updateUserAttemptTopicMasterResp = null;
+					
 					if (UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
 						Double topicPassPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
 						Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv
@@ -371,6 +397,10 @@ public class UserExamMappingEvents {
 						request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 						request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 						return CommonConstants.ERROR;
+					}
+					
+					if(UtilValidate.isNotEmpty(updateUserAttemptTopicMasterResp)){
+						updatedUserAttemptTopicMasterList.add(updateUserAttemptTopicMasterResp);
 					}
 
 				}
@@ -458,19 +488,24 @@ public class UserExamMappingEvents {
 			return CommonConstants.ERROR;
 		}
 		
-		request.setAttribute("totalScore", totalScore);
-		request.setAttribute("totalWrongAnswersInExam", totalWrongAnswersInExam);
-		request.setAttribute("totalCorrectQuestionsInExam", totalCorrectQuestionsInExam);
-		request.setAttribute("actualUserPercentage", actualUserPercentage);
-		request.setAttribute(CommonConstants.PASS_PERCENTAGE, passPercentage);
-		request.setAttribute(CommonConstants.SCORE, score);
-		request.setAttribute(CommonConstants.USER_PASSED, userPassed);
-		request.setAttribute(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
-		request.setAttribute("noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId);
-		request.setAttribute("evaluatedQuestionList", evaluatedQuestionList);
-		request.setAttribute("noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId);
+		Map<String, Object> resultMap =UtilMisc.toMap("totalScore", totalScore,
+									"totalWrongAnswersInExam",totalWrongAnswersInExam,
+									"totalCorrectQuestionsInExam", totalCorrectQuestionsInExam,
+									"actualUserPercentage", actualUserPercentage,
+									CommonConstants.PASS_PERCENTAGE, passPercentage,
+									CommonConstants.SCORE, score,
+									CommonConstants.USER_PASSED, userPassed,
+									CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
+									"noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId,
+									"evaluatedQuestionList", evaluatedQuestionList,
+									"noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId,
+									"updatedUserAttemptTopicMasterList", updatedUserAttemptTopicMasterList
+						);
+		
+		request.setAttribute("resultMap", resultMap);
 		
 		return CommonConstants.SUCCESS;
 	}
+
 
 }
