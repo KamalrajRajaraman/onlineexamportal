@@ -60,7 +60,7 @@ public class ExamMasterServices {
 		
 		if(UtilValidate.isEmpty(examMasterGenericValueList)) {
 			//Retrieved exam list from ExamMaster entity is null or empty
-			String errMsg = "Error in fetching All record from ExamMaster entity";
+			String errMsg = "Records retrieved  from ExamMaster entity is empty";
 			Debug.logError(errMsg ,module);
 			return ServiceUtil.returnError(errMsg + module);
 		}

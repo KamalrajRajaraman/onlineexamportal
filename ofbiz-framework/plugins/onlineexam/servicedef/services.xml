@@ -103,7 +103,7 @@
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
 		<auto-attributes include="nonpk" mode="INOUT"
-			optional="false"></auto-attributes>
+			optional="true"></auto-attributes>
 	</service>
 
 	<service name="findAllTopics" engine="java"

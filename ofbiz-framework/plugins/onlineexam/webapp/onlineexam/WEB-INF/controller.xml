@@ -249,7 +249,8 @@
     	<response name="error" type="request" value="json"/>
     </request-map>
     
-    
+  
+  
     
 	<request-map uri="findAllExamForPartyId">
 			<security https="true" auth="true"/>

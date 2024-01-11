@@ -46,7 +46,7 @@ function User() {
           </button>
         </div>
       </nav>
-      <Outlet/>
+      <Outlet />
     </>
   );
 }
