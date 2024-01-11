@@ -81,50 +81,33 @@ const AttendExam = () => {
   };
 
   const handleSubmit = async () => {
+    navigate(`/user-dashboard/result-page`);
+  }
+    // console.log('questions:::',questions)
 
-    console.log('questions:::',questions)
 
+    // try {
+    //   const res = await fetch(
+    //     `https://localhost:8443/onlineexam/control/evaluateUserAttemptAnswerMaster`,
+    //     {  method: "POST",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //     credentials: "include",
+    //     body: JSON.stringify({})
+    //   }
+    //   );
+    //   const data = await res.json();
+    //   navigate(`/user-dashboard/result-page`,{state:{'actualUserPercentage': data.actualUserPercentage, 'passPercentage': data.passPercentage }});
+    // } 
+    // catch (error) {
+    //   console.log(error);
+    // }
 
-    try {
-      const res = await fetch(
-        `https://localhost:8443/onlineexam/control/evaluateUserAttemptAnswerMaster`,
-        {  method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({})
-      }
-      );
-      const data = await res.json();
-      console.log('final question',data);
-      console.log('score:: ', data.score);
-     
-      console.log("actualUserPercentage",data.actualUserPercentage);
-      sessionStorage.setItem("actualUserPercentage", data.actualUserPercentage );
-      sessionStorage.setItem("passPercentage", data.passPercentage);
-      navigate(`/user-dashboard/result-page`,{state:{'actualUserPercentage': data.actualUserPercentage, 'passPercentage': data.passPercentage }});
-    } 
-    catch (error) {
-      console.log(error);
-    }
-
-    function constructObject  (data){
-        const valueObject = {
-          noOfQuestions : data.noOfQuestions,
-          totalCorrect : data.totalCorrectQuestionsInExam,
-          totalWrong : data.totalWrongAnswersInExam,
-          score : data.score,
-          userPassed : data.userPassed,
-          
-        }
-
-        return valueObject;
-        
-    }
+   
     
     
-  };
+  
 
   return (
     <>

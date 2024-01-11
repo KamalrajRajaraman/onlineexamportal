@@ -179,5 +179,10 @@ public class QuestionMasterEvents {
 		}
 		return CommonConstants.SUCCESS;
 	}
+	
+	public static String updateQuestion(HttpServletRequest request, HttpServletResponse response) {
+		return null;
+		
+	}
 
 }
