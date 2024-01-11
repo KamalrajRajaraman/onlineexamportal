@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.validation.ConstraintViolation;
 
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
+import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
@@ -134,6 +136,9 @@ public class QuestionMasterEvents {
 
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		String questionId = (String) combinedMap.get(CommonConstants.QUESTION_ID);
+		GenericValue userLogin = (GenericValue) combinedMap.get(CommonConstants.USER_LOGIN);
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		Timestamp expirationDate = (Timestamp) combinedMap.get(CommonConstants.EXPIRATION_DATE);
 		
 		if(UtilValidate.isEmpty(questionId)) {
 			String errMsg = "questionId is empty ";
@@ -142,11 +147,15 @@ public class QuestionMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		
 		Map<String, Object> deleteQuestionResp = null;
 
 		// calling deleteQuestion service
 		try {
-			deleteQuestionResp = dispatcher.runSync("deleteQuestion", combinedMap);
+			deleteQuestionResp = dispatcher.runSync("deleteQuestion", 
+							UtilMisc.toMap(CommonConstants.QUESTION_ID, questionId,
+									CommonConstants.EXPIRATION_DATE, currentTime, 
+									CommonConstants.USER_LOGIN,userLogin));
 			Debug.logInfo("Succesfully executed deleteQuestion service", module);
 		} catch (GenericServiceException e) {
 			// If Exception occurred while execute the service, set result as Error in request

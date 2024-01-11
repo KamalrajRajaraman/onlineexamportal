@@ -285,6 +285,13 @@ public class UserExamMappingEvents {
 						isCorrect = null;
 						questionWithAnswer.put("isCorrect", isCorrect);
 
+						if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
+							totalEvaluatedQuestionsByTopicId.replace(topicId,
+									totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
+						} else {
+							totalEvaluatedQuestionsByTopicId.put(topicId, 1);
+						}
+						
 						if (noOfUnAnsweredQuestionsByTopicId.containsKey(topicId)) {
 							noOfUnAnsweredQuestionsByTopicId.replace(topicId,
 									noOfUnAnsweredQuestionsByTopicId.get(topicId) + 1);
