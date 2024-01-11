@@ -43,14 +43,14 @@ public class OnlineExamServices {
 		List<GenericValue> GenericValueList = null;
 		Timestamp currentDateTime = new Timestamp(System.currentTimeMillis());
 		EntityExpr roleTypeCondition = EntityCondition.makeCondition(CommonConstants.ROLE_TYPE_ID, EntityOperator.EQUALS,CommonConstants.PERSON_ROLE);
-		EntityExpr disabledDateTimeCondition1 = EntityCondition.makeCondition("disabledDateTime", EntityOperator.EQUALS,null);
-		EntityExpr disabledDateTimeCondition2= EntityCondition.makeCondition("disabledDateTime", EntityOperator.GREATER_THAN_EQUAL_TO,currentDateTime);
+		EntityExpr disabledDateTimeCondition1 = EntityCondition.makeCondition(CommonConstants.DISABLED_DATE_TIME, EntityOperator.EQUALS,null);
+		EntityExpr disabledDateTimeCondition2= EntityCondition.makeCondition(CommonConstants.DISABLED_DATE_TIME, EntityOperator.GREATER_THAN_EQUAL_TO,currentDateTime);
 		EntityExpr disabledDateTimeOrCondition = EntityCondition.makeCondition(disabledDateTimeCondition1,EntityOperator.OR,disabledDateTimeCondition2);
 		EntityExpr whereCondition = EntityCondition.makeCondition(roleTypeCondition,EntityOperator.AND,disabledDateTimeOrCondition);
 		try {
 			// Retrieve all users based on roleTypeId
 			GenericValueList = EntityQuery.use(delegator).from(CommonConstants.USER_MASTER)
-					.where(whereCondition).queryList();
+					.where(whereCondition).cache().queryList();
 
 		} catch (GenericEntityException e) {
 			// If Exception occurred return error map
@@ -69,17 +69,19 @@ public class OnlineExamServices {
 		if (UtilValidate.isNotEmpty(GenericValueList)) {
 			// If GenericValueList is not empty, iterate the list.
 			for (GenericValue genericValue : GenericValueList) {
-				String firstName = genericValue.getString("firstName");
-				String lastName = genericValue.getString("lastName");
-				String partyId = genericValue.getString("partyId");
-				String roleTypeId = genericValue.getString("roleTypeId");
+				String firstName = genericValue.getString(CommonConstants.FIRST_NAME);
+				String lastName = genericValue.getString(CommonConstants.LAST_NAME);
+				String partyId = genericValue.getString(CommonConstants.PARTY_ID);
+				String roleTypeId = genericValue.getString(CommonConstants.ROLE_TYPE_ID);
+				String userLoginId = genericValue.getString(CommonConstants.USER_LOGIN_ID);
 
 				// Construct a map with required values
 				Map<String, Object> user = new HashMap<>();
-				user.put("firstName", firstName);
-				user.put("lastName", lastName);
-				user.put("partyId", partyId);
-				user.put("roleTypeId", roleTypeId);
+				user.put(CommonConstants.FIRST_NAME, firstName);
+				user.put(CommonConstants.LAST_NAME, lastName);
+				user.put(CommonConstants.PARTY_ID, partyId);
+				user.put(CommonConstants.ROLE_TYPE_ID, roleTypeId);
+				user.put(CommonConstants.USER_LOGIN_ID, userLoginId);
 				userList.add(user);
 			}
 			resultMap.put("userList", userList);

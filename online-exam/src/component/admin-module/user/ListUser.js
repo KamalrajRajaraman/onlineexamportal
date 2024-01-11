@@ -24,14 +24,12 @@ const ListUser = () => {
         setUsers(userList);
       };
     
-      const onEdit = (id) => {
-        navigate(`edit/userId/${id}`);
+      const onEdit = (id,user) => {
+        console.log(user);
+        navigate(`edit/userId/${id}`,{state:user});
       };
 
-      const text = {
-        header: "Users",
-        btnText: "User",
-      };
+    
 
     //Delete Exam
     const onDelete=async(id)=>{

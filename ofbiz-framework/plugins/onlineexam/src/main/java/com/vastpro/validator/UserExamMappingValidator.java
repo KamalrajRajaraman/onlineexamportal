@@ -13,11 +13,6 @@ public class UserExamMappingValidator {
 	@NotEmpty(message="allowedAttempts is missing", groups= {CreateUserExamMappingCheck.class})
 	private String allowedAttempts;
 	
-	@NotEmpty(message="noOfAttempts  is missing", groups= {CreateUserExamMappingCheck.class})
-	private String noOfAttempts;
-	
-	@NotEmpty(message="lastPerformanceDate is missing", groups= {CreateUserExamMappingCheck.class})
-	private String lastPerformanceDate;
 	
 	@NotEmpty(message="timeoutDays is missing", groups= {CreateUserExamMappingCheck.class})
 	private String timeoutDays;
@@ -56,26 +51,6 @@ public class UserExamMappingValidator {
 
 	public void setAllowedAttempts(String allowedAttempts) {
 		this.allowedAttempts = allowedAttempts;
-	}
-
-	public String getNoOfAttempts() {
-		return noOfAttempts;
-	}
-
-	public void setNoOfAttempts(String noOfAttempts) {
-		this.noOfAttempts = noOfAttempts;
-	}
-
-	public String getLastPerformanceDate() {
-		return lastPerformanceDate;
-	}
-
-	public void setLastPerformanceDate(String lastPerformanceDate) {
-		this.lastPerformanceDate = lastPerformanceDate;
-	}
-
-	public String getTimeoutDays() {
-		return timeoutDays;
 	}
 
 	public void setTimeoutDays(String timeoutDays) {

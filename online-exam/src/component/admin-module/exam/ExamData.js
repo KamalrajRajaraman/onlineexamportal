@@ -14,9 +14,15 @@ export const ExamProvider  = ({children})=>{
         "https://localhost:8443/onlineexam/control/findAllExams",
         { credentials: 'include'}
       );
-      const data = await res.json();
-      console.log(data);
-      console.log(document.cookie)
+      console.log(res.status)
+      if (res.status === 401) {
+        console.log("ClientSide error");
+      }
+      if (res.status === 500) {
+        console.log("SERVER_ERROR");
+      }
+      const data = await res.json();   
+        
       return data;
     };
 

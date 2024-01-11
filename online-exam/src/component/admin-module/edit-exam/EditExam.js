@@ -9,7 +9,7 @@ export const EditExamContext = createContext();
 const EditExam = () => {
   const examRecord =useLocation().state;
   const  [examDetails, setExamDetails] = useState(examRecord);
-  //const [examList, setExamList] = useState([]);
+ 
   const [examTopicMap, setExamTopicMap] = useState([]);
   //examId is retrieved from url 
   const { examId } = useParams();
@@ -87,12 +87,10 @@ const EditExam = () => {
   return (
     <EditExamContext.Provider
       value={{
-       // examList,
         examId,
         onCreateExamTopicMappingMaster,
         examTopicMap,
         setExamTopicMap,
-        //setExamList,
         formValues,
         setFormValues,
         refresh,
