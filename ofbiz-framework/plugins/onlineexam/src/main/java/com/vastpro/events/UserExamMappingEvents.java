@@ -39,6 +39,7 @@ public class UserExamMappingEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = request.getLocale();
+		Map<String, Object> createUserExamMappingRecordResp = null;
 
 		// Map to get and store the objects from request
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -62,38 +63,18 @@ public class UserExamMappingEvents {
 
 		}
 
-		Map<String, Object> createUserExamMappingRecordResp = null;
-		
-		if ("POST".equals(request.getMethod())) {
-			try {
-				// calling createUserExamMappingRecord service
-				createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
+		try {
+			// calling createUserExamMappingRecord service
+			createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
 
-			} catch (GenericServiceException e) {
+		} catch (GenericServiceException e) {
 
-				// If any exception occur in service, set error as a result in request object
-				Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
-				String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				return CommonConstants.ERROR;
-			}
-		}
-		
-		if ("PUT".equals(request.getMethod())) {
-			try {
-				// calling createUserExamMappingRecord service
-				createUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
-
-			} catch (GenericServiceException e) {
-
-				// If any exception occur in service, set error as a result in request object
-				Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
-				String errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				return CommonConstants.ERROR;
-			}
+			// If any exception occur in service, set error as a result in request object
+			Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
+			String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			return CommonConstants.ERROR;
 		}
 
 		// checking if the createUserExamMappingRecord service is success or not
@@ -218,9 +199,9 @@ public class UserExamMappingEvents {
 		List<Map<String, Object>> evaluatedQuestionList = new LinkedList<>();
 		Map<String, Integer> noOfCorrectedQuestionsByTopicId = new HashMap<String, Integer>();
 		Map<String, Integer> noOfUnAnsweredQuestionsByTopicId = new HashMap<String, Integer>();
-		Map<String, Integer> totalEvaluatedQuestionsByTopicId = new HashMap<String, Integer>();
+		Map<String, Integer> totalEvaluatedQuestionsByTopicId = new HashMap<String,Integer>();
 		Double score = 0.0;
-		Double totalScore = 0.0;
+		Double totalScore =0.0;
 		// If the userAttemptAnswerMasterList is empty, set the result as Error in
 		// request
 		if (UtilValidate.isEmpty(userAttemptAnswerMasterList)) {
@@ -235,7 +216,7 @@ public class UserExamMappingEvents {
 		if (UtilValidate.isNotEmpty(userAttemptAnswerMasterList)) {
 			Integer noOfCorrectQuestions = 0;
 			Boolean isCorrect = false;
-
+			
 			// Iterate the userAttemptAnswerMasterList and taking the question wise
 			// submittedAnswer
 			for (GenericValue question : userAttemptAnswerMasterList) {
@@ -275,23 +256,17 @@ public class UserExamMappingEvents {
 					String topicId = questionDetail.getString(CommonConstants.TOPIC_ID);
 					String answer = questionDetail.getString(CommonConstants.ANSWER);
 					Double answerValue = questionDetail.getDouble(CommonConstants.ANSWER_VALUE);
-
+					
 					totalScore += answerValue;
 					questionWithAnswer.put(CommonConstants.TOPIC_ID, topicId);
 					questionWithAnswer.put(CommonConstants.ANSWER, answer);
-
+					
+					
 					// If submittedAnswer is empty, which is unAnswered
 					if (UtilValidate.isEmpty(submittedAnswer)) {
 						isCorrect = null;
 						questionWithAnswer.put("isCorrect", isCorrect);
 
-						if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
-							totalEvaluatedQuestionsByTopicId.replace(topicId,
-									totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
-						} else {
-							totalEvaluatedQuestionsByTopicId.put(topicId, 1);
-						}
-						
 						if (noOfUnAnsweredQuestionsByTopicId.containsKey(topicId)) {
 							noOfUnAnsweredQuestionsByTopicId.replace(topicId,
 									noOfUnAnsweredQuestionsByTopicId.get(topicId) + 1);
@@ -313,10 +288,10 @@ public class UserExamMappingEvents {
 							} else {
 								totalEvaluatedQuestionsByTopicId.put(topicId, 1);
 							}
-
+							
 							// Sum 1 to noOfCorrectedQuestions for this particular topicId key
 							if (noOfCorrectedQuestionsByTopicId.containsKey(topicId)) {
-								noOfCorrectedQuestionsByTopicId.replace(topicId,	
+								noOfCorrectedQuestionsByTopicId.replace(topicId,
 										noOfCorrectedQuestionsByTopicId.get(topicId) + 1);
 							} else {
 								noOfCorrectedQuestionsByTopicId.put(topicId, 1);
@@ -326,7 +301,7 @@ public class UserExamMappingEvents {
 						else {
 							isCorrect = false;
 							questionWithAnswer.put("isCorrect", isCorrect);
-
+							
 							if (totalEvaluatedQuestionsByTopicId.containsKey(topicId)) {
 								totalEvaluatedQuestionsByTopicId.replace(topicId,
 										totalEvaluatedQuestionsByTopicId.get(topicId) + 1);
@@ -339,17 +314,17 @@ public class UserExamMappingEvents {
 				evaluatedQuestionList.add(questionWithAnswer);
 			}
 		}
-		List<Map<String, Object>> updatedUserAttemptTopicMasterList = new LinkedList<>();
+	
 		// Find totalQuestions in this topic
-		for (Map.Entry<String, Integer> entry : totalEvaluatedQuestionsByTopicId.entrySet()) {
-			String topicId = entry.getKey();
-			Integer noOfUnAnsweredQuestions = noOfUnAnsweredQuestionsByTopicId.get(topicId);
-			Integer noOfCorrectQuestions = noOfCorrectedQuestionsByTopicId.get(topicId);
-			GenericValue UserAttemptTopicMasterGv = null;
-			try {
-				UserAttemptTopicMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER)
-						.where(CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId)
-						.queryOne();
+				for (Map.Entry<String, Integer> entry : totalEvaluatedQuestionsByTopicId.entrySet()) {
+					String topicId = entry.getKey();
+					Integer noOfUnAnsweredQuestions = noOfUnAnsweredQuestionsByTopicId.get(topicId);
+					Integer noOfCorrectQuestions = noOfCorrectedQuestionsByTopicId.get(topicId);
+					GenericValue UserAttemptTopicMasterGv = null;
+					try {
+						UserAttemptTopicMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER)
+								.where(CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId)
+								.queryOne();
 
 					} catch (GenericEntityException e) {
 						String errMsg = "Exception occured while fetching the record from UserAttemptTopicMaster entity: "+ e.getMessage();
@@ -362,7 +337,6 @@ public class UserExamMappingEvents {
 					String userPassedThisTopic = null;
 					double actualUserTopicPercentage = 0.0;
 					Map<String, Object> updateUserAttemptTopicMasterResp = null;
-					
 					if (UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
 						Double topicPassPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
 						Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv
@@ -398,53 +372,13 @@ public class UserExamMappingEvents {
 						request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 						return CommonConstants.ERROR;
 					}
-					
-					if(UtilValidate.isNotEmpty(updateUserAttemptTopicMasterResp)){
-						updatedUserAttemptTopicMasterList.add(updateUserAttemptTopicMasterResp);
-					}
 
-			}
-			String userPassedThisTopic = null;
-			double actualUserTopicPercentage = 0.0;
-			Map<String, Object> updateUserAttemptTopicMasterResp = null;
-			if (UtilValidate.isNotEmpty(UserAttemptTopicMasterGv)) {
-				Double topicPassPercentage = UserAttemptTopicMasterGv.getDouble(CommonConstants.TOPIC_PASS_PERCENTAGE);
-				Integer totalQuestionsInThisTopic = UserAttemptTopicMasterGv
-						.getInteger(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC);
-				if (UtilValidate.isNotEmpty(noOfCorrectQuestions)) {
-					actualUserTopicPercentage = ((double) noOfCorrectQuestions / (double) totalQuestionsInThisTopic)
-							* 100;
 				}
-				// checking user is passed or not in particular topic
-				if (actualUserTopicPercentage >= topicPassPercentage) {
-					userPassedThisTopic = "Y";
-				} else {
-					userPassedThisTopic = "N";
-				}
-
-			}
-
-			Map<String, Object> updateUserAttemptTopicMasterContext = UtilMisc.toMap(
-					CommonConstants.USER_PASSED_THIS_TOPIC, userPassedThisTopic, CommonConstants.USER_TOPIC_PERCENTAGE,
-					actualUserTopicPercentage, CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC, noOfCorrectQuestions,
-					CommonConstants.PERFORMANCE_ID, performanceId, CommonConstants.TOPIC_ID, topicId,
-					CommonConstants.USER_LOGIN, userLogin);
-
-			// update the record in userAttemptTopicMaster entity
-			try {
-				updateUserAttemptTopicMasterResp = dispatcher.runSync("updateUserAttemptTopicMaster",
-						updateUserAttemptTopicMasterContext);
-			} catch (GenericServiceException e) {
-
-				String errMsg = "Exception occured while calling updateUserAttemptTopicMaster service : "
-						+ e.getMessage();
-				Debug.logError(e, errMsg, module);
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				return CommonConstants.ERROR;
-			}
-
-		}
+		
+		
+		
+		
+		
 
 		// adding all topicwise correct questions for total correct Questions in exam
 		Integer totalCorrectQuestionsInExam = 0;
@@ -458,7 +392,8 @@ public class UserExamMappingEvents {
 			userAttemptMasterGv = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_MASTER)
 					.where(CommonConstants.PERFORMANCE_ID, performanceId).queryOne();
 		} catch (GenericEntityException e) {
-			String errMsg = "Exception occured while fetching record from UserAttemptMaster entity : " + e.getMessage();
+			String errMsg = "Exception occured while fetching record from UserAttemptMaster entity : "
+					+ e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -475,9 +410,8 @@ public class UserExamMappingEvents {
 		}
 
 		Integer totalWrongAnswersInExam = noOfQuestions - totalCorrectQuestionsInExam;
-		// Calculating User percentage
-		// double actualUserPercentage = ((double) totalCorrectQuestionsInExam /
-		// (double) noOfQuestions) * 100;
+		//Calculating User percentage
+		//double actualUserPercentage = ((double) totalCorrectQuestionsInExam / (double) noOfQuestions) * 100;
 		double actualUserPercentage = ((double) score / (double) totalScore) * 100;
 		GenericValue examMasterGv = null;
 
@@ -487,7 +421,8 @@ public class UserExamMappingEvents {
 					.where(CommonConstants.EXAM_ID, examId).queryOne();
 		} catch (GenericEntityException e) {
 
-			String errMsg = "Exception occured while fetching record from ExamMaster : " + e.getMessage();
+			String errMsg = "Exception occured while fetching record from ExamMaster : "
+					+ e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -515,28 +450,25 @@ public class UserExamMappingEvents {
 			dispatcher.runSync("updateUserAttemptMaster", updateUserAttemptContext);
 		} catch (GenericServiceException e) {
 
-			String errMsg = "Exception occured while calling updateUserAttemptMaster service : " + e.getMessage();
+			String errMsg = "Exception occured while calling updateUserAttemptMaster service : "
+					+ e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
 		
-		Map<String, Object> resultMap =UtilMisc.toMap("totalScore", totalScore,
-									"totalWrongAnswersInExam",totalWrongAnswersInExam,
-									"totalCorrectQuestionsInExam", totalCorrectQuestionsInExam,
-									"actualUserPercentage", actualUserPercentage,
-									CommonConstants.PASS_PERCENTAGE, passPercentage,
-									CommonConstants.SCORE, score,
-									CommonConstants.USER_PASSED, userPassed,
-									CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
-									"noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId,
-									"evaluatedQuestionList", evaluatedQuestionList,
-									"noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId,
-									"updatedUserAttemptTopicMasterList", updatedUserAttemptTopicMasterList
-						);
-		
-		request.setAttribute("resultMap", resultMap);
+		request.setAttribute("totalScore", totalScore);
+		request.setAttribute("totalWrongAnswersInExam", totalWrongAnswersInExam);
+		request.setAttribute("totalCorrectQuestionsInExam", totalCorrectQuestionsInExam);
+		request.setAttribute("actualUserPercentage", actualUserPercentage);
+		request.setAttribute(CommonConstants.PASS_PERCENTAGE, passPercentage);
+		request.setAttribute(CommonConstants.SCORE, score);
+		request.setAttribute(CommonConstants.USER_PASSED, userPassed);
+		request.setAttribute(CommonConstants.NO_OF_QUESTIONS, noOfQuestions);
+		request.setAttribute("noOfUnAnsweredQuestionsByTopicId", noOfUnAnsweredQuestionsByTopicId);
+		request.setAttribute("evaluatedQuestionList", evaluatedQuestionList);
+		request.setAttribute("noOfCorrectedQuestionsByTopicId", noOfCorrectedQuestionsByTopicId);
 		
 		return CommonConstants.SUCCESS;
 	}
