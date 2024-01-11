@@ -29,6 +29,7 @@ import Error from "./component/common/Error";
 import ResultPage from "./component/userModule/exam-page/ResultPage";
 
 
+
 function App() {
   return (
     <AuthProvider>
@@ -80,8 +81,10 @@ function App() {
         <Route path="exam-page" element={<ExamPage />} />
       
         <Route path="*" element={<NoMatch />} />
+
       </Routes>
     </AuthProvider>
+    
    
   );
 }
