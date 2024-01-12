@@ -27,13 +27,45 @@ import ShowExam from "./component/admin-module/user/ShowExam";
 import RequiredAuth from "./component/common/RequiredAuth";
 import Error from "./component/common/Error";
 import ResultPage from "./component/userModule/exam-page/ResultPage";
+import Alert from "./component/common/Alert";
+import { useState } from "react";
+
 
 
 
 function App() {
+
+  const [alertInfo,setAlertInfo]=useState({});
+
+  const alert=(alertInfo)=>{
+
+    setAlertInfo(alertInfo)
+    document.getElementById("alert-button").click();
+    if(alertInfo?.timer){
+      setTimeout(function() { document.getElementById("alert-button").click()}, alertInfo.timer);
+    }
+    // alert({
+    //   header:"Success",
+    //   content:"Exam created successfully",
+    //   color:"alert-success",
+      
+    //      }) 
+
+    // <button onClick={()=>alert(
+    //   {
+    //       header:"Success",
+    //       content:"Exam created successfully",
+    //       color:"alert-success",
+          
+    //          }
+    // )}>click</button>
+  }
   return (
     <AuthProvider>
+      
       <Header />
+      
+      {alertInfo && <Alert alertInfo ={alertInfo}/>}
       <Routes>
       <Route index element={<Login />} />
         <Route path="login" element={<Login />} />
@@ -81,10 +113,11 @@ function App() {
         <Route path="exam-page" element={<ExamPage />} />
       
         <Route path="*" element={<NoMatch />} />
-
+       
       </Routes>
+      
     </AuthProvider>
-    
+   
    
   );
 }

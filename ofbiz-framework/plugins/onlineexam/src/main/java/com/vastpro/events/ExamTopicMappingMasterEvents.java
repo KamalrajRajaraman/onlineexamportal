@@ -163,11 +163,11 @@ public class ExamTopicMappingMasterEvents {
 		//Retrieving noOfQuestion from ExamMaster Entity to calculate questionPerExam
 		Map<String, Object> noOfQuestionResp = null;
 		try {
-			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamID", addTopicToExamContextMap);
-			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamID Service", module);
+			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", addTopicToExamContextMap);
+			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamId Service", module);
 		} catch (GenericServiceException e) {
 			
-			String errMsg = "Failed to execute findNoOfQuestionCountByExamID service : " + e.getMessage();
+			String errMsg = "Failed to execute findNoOfQuestionCountByExamId service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
