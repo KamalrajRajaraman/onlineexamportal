@@ -323,7 +323,62 @@ public class ExamTopicMappingMasterEvents {
 	public static String updateExamTopicMappingRecord(HttpServletRequest request,HttpServletResponse response){
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Map<String, Object> updateExamTopicMappingRecordResp = null;
+		Map<String, Object> findPercentageListInExamTopicMappingMasterResp=null;
+		Map<String, Object> findNoOfQuestionsFromExamMasterResp= null;
+		List<BigDecimal> PercentageList=null;
+		BigDecimal totalPercentage = new BigDecimal(0);
+		BigDecimal totalTopics= new BigDecimal(-1);
+		
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		if(!combinedMap.containsKey(CommonConstants.PERCENTAGE)) {
+			String errMsg = "Percentage is not available, please enter a percentage ";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		BigDecimal percentage= new BigDecimal(combinedMap.get(CommonConstants.PERCENTAGE).toString());
+		
+		try {
+			findPercentageListInExamTopicMappingMasterResp = 
+					dispatcher.runSync("findPercentageListInExamTopicMappingMaster", combinedMap);
+			/
+		} catch (GenericServiceException e1) {
+			Debug.logError(e1.getMessage(), module);
+		}
+		catch (Exception e) {
+			Debug.logError(e.getMessage(), module);
+		}
+		PercentageList= (List<BigDecimal>) findPercentageListInExamTopicMappingMasterResp.get("percentageList");
+		BigDecimal percentageToBeUpdated= (BigDecimal) findPercentageListInExamTopicMappingMasterResp.get("percentageToBeUpdated");
+		
+		if(UtilValidate.isNotEmpty(PercentageList)) {
+			for(BigDecimal Topicpercentage:PercentageList) {
+				totalPercentage.add(Topicpercentage);
+				totalTopics.add(new BigDecimal(1));
+			}
+			totalPercentage.subtract(percentageToBeUpdated);
+			
+			int percentageDifference= (((((totalPercentage.divide(totalTopics)).multiply(new BigDecimal(100))).add(percentage))).compareTo(new BigDecimal(100)));
+						
+			if(percentageDifference>1|| percentageDifference==0) {
+				String errMsg = "Percentage exceeds maximum limit, please enter a lower percentage ";
+				Debug.logError(errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+			try {
+				findNoOfQuestionsFromExamMasterResp = dispatcher.runSync("findNoOfQuestionsFromExamMaster", combinedMap);
+			} catch (GenericServiceException e) {
+				
+			}
+			Long noOfQuestions = Long.parseLong((findNoOfQuestionsFromExamMasterResp.get(CommonConstants.NO_OF_QUESTIONS)).toString());
+			Long questionsPerExam= noOfQuestions* percentage.longValue();
+			
+			combinedMap.put(CommonConstants.QUESTION_PER_EXAM, questionsPerExam);
+		}
 		
 		try {
 			updateExamTopicMappingRecordResp = dispatcher.runSync("updateExamTopicMappingRecord", combinedMap);

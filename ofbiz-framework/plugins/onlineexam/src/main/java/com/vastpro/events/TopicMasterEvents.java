@@ -1,5 +1,6 @@
 package com.vastpro.events;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -203,6 +204,7 @@ public class TopicMasterEvents {
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		String topicId = request.getParameter(CommonConstants.TOPIC_ID);
+		Timestamp expirationDate = new Timestamp(System.currentTimeMillis());
 		
 		if(UtilValidate.isEmpty(topicId)) {
 			//If the topicId is empty, set the result as error in request
@@ -217,6 +219,7 @@ public class TopicMasterEvents {
 		Map<String, Object> deleteTopicContext = new HashMap<>();
 		deleteTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 		deleteTopicContext.put(CommonConstants.TOPIC_ID, topicId);
+		deleteTopicContext.put(CommonConstants.EXPIRATION_DATE, expirationDate);
 		Map<String, Object> deleteTopicResp = null;
 		try {
 			// calling deleteTopic service

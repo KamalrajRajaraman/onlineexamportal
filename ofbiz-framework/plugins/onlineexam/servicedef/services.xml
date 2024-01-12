@@ -125,10 +125,12 @@
 	</service>
 
 	<service name="deleteTopic" default-entity-name="TopicMaster"
-		engine="entity-auto" invoke="delete" auth="true">
+		engine="entity-auto" invoke="update" auth="true">
 		<description>Delete Topic </description>
 		<auto-attributes include="pk" mode="IN"
-			optional="false"></auto-attributes>
+			optional="false"/>
+			<auto-attributes include="nonpk" mode="IN"
+			optional="true"/>
 	</service>
 
 	<service name="createQuestion"
@@ -176,9 +178,11 @@
 			optional="true"></auto-attributes>
 	</service>
 
-	<service engine="entity-auto" name="updateExamTopicMappingRecord"
-	default-entity-name="ExamTopicMappingMaster" invoke="update" auth="true">
-		<auto-attributes include="all" mode="INOUT" optional="true"></auto-attributes>
+	<service engine="java" name="findPercentageListInExamTopicMappingMaster" location="com.vastpro.services.ExamTopicMappingMasterServices"
+	default-entity-name="ExamTopicMappingMaster" invoke="findNoOfQuestionsFromExamMaster" auth="true">
+		<auto-attributes include="pk" mode="IN" optional="false"/>
+		<attribute name="percentageToBeUpdated" mode="OUT" type="BigDecimal"/>
+		<attribute name="percentageList" mode="OUT" type="List"></attribute>
 	</service>
 
 	<service name="findExamTopicMappingRecords" engine="java"
