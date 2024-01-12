@@ -342,7 +342,7 @@ public class ExamTopicMappingMasterEvents {
 		try {
 			findPercentageListInExamTopicMappingMasterResp = 
 					dispatcher.runSync("findPercentageListInExamTopicMappingMaster", combinedMap);
-			/
+			
 		} catch (GenericServiceException e1) {
 			Debug.logError(e1.getMessage(), module);
 		}
