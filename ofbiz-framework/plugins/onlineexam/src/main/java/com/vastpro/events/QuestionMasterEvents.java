@@ -39,7 +39,28 @@ public class QuestionMasterEvents {
 		// Create a combined map from request
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
-
+		Map<String, Object> createQuestionResp = null;
+		
+		Integer questionId = (Integer) combinedMap.get(CommonConstants.QUESTION_ID);	
+		if(UtilValidate.isNotEmpty(questionId)) {
+			try {
+				createQuestionResp = dispatcher.runSync("updateQuestion", combinedMap);
+			} catch (GenericServiceException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(UtilValidate.isEmpty(createQuestionResp)) {
+			String errMsg = "UpdateQuestion response map is null or empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		if(UtilValidate.isNotEmpty(createQuestionResp)) {
+			return CommonConstants.SUCCESS;
+		}
+		
 		//Hibernate validation for create question input values
 		QuestionMasterValidator questionForm = HibernateHelper.populateBeanFromMap(combinedMap,
 				QuestionMasterValidator.class);
@@ -61,7 +82,7 @@ public class QuestionMasterEvents {
 		}
 
 		// calling createQuestion service for creating question
-		Map<String, Object> createQuestionResp = null;
+		
 		try {
 			createQuestionResp = dispatcher.runSync("createQuestion", combinedMap);
 			Debug.logInfo("Succesfully executed createQuestion service", module);

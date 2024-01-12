@@ -40,14 +40,16 @@ const ResultPage = () => {
       const resultDetails = data.resultMap;
       
       setTopicResult(...topicResult, resultDetails.updatedUserAttemptTopicMasterList);
-
+      
+      
+      const resultStatus = (resultDetails.userPassed)==='Y' ? 'Pass': 'Fail' ;
       setResult({noOfQuestions:resultDetails.noOfQuestions, 
                 score:resultDetails.score, 
                 totalCorrect : resultDetails.totalCorrectQuestionsInExam,
                 totalWrong : resultDetails.totalWrongAnswersInExam,
-                userPassed : resultDetails.userPassed,
                 passPercentage : resultDetails.passPercentage,
-                actualUserPercentage : resultDetails.actualUserPercentage
+                actualUserPercentage : resultDetails.actualUserPercentage,
+                userPassed :resultStatus ,
               });
 
   
@@ -173,6 +175,24 @@ const ResultPage = () => {
           </div>
         </div>
       </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card border-secondary">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-speech warning font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3><BsClipboard2XFill />{result.userPassed}</h3>
+                  <span>Result</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
    
     </div>
   
@@ -180,7 +200,7 @@ const ResultPage = () => {
 
 <div className='mt-3'><h2>Topicwise Results</h2></div>
 
-<table class="table table-success table-striped table-bordered  mt-3">
+<table class="table table-success table-striped table-bordered  table-striped table-hover mt-3">
   <tr className='border bg-primary '>
     <th>TopicId</th>
     <th>Topic pass percentage</th>

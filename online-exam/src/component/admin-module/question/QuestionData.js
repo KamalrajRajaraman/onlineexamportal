@@ -16,13 +16,13 @@ export const QuestionProvider =({children})=>{
     }
 
     const onEdit=async(id, object)=>{
-      const res = await fetch(`https://localhost:8443/onlineexam/control/updateQuestion`,
+      const res = await fetch(`https://localhost:8443/onlineexam/control/createQuestion`,
       { method: "PUT",
       headers: {
         'Content-type':"application/json"
       },
        credentials: 'include',
-      body: JSON.stringify(Object)})
+      body: JSON.stringify(object)})
       const data = await res.json();
       const {result} = data
       if(result==="success"){

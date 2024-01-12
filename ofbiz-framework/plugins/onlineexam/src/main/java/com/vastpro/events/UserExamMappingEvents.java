@@ -443,6 +443,7 @@ public class UserExamMappingEvents {
 		//Calculating User percentage
 		//double actualUserPercentage = ((double) totalCorrectQuestionsInExam / (double) noOfQuestions) * 100;
 		double actualUserPercentage = ((double) score / (double) totalScore) * 100;
+		actualUserPercentage = Math.round(actualUserPercentage);
 		GenericValue examMasterGv = null;
 
 		try {

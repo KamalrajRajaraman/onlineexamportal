@@ -3,12 +3,15 @@ import MainContent from "../../common/MainContent";
 import AccordinMaker from "../../common/AccordinMaker";
 import { useQuestionContext } from "./QuestionData";
 import FormInput from "../../common/FormInput";
+import { useTopicContext } from "../topic/TopicData";
 
 
 const Questions = () => {
   const [questionId, setQuestionId] = useState([]);
   const {questions, setQuestions,onDelete, onEdit} = useQuestionContext();
+  const { topics,setTopics,fetchTopic } = useTopicContext();
   const initialValue ={
+    questionId:"",
     questionDetail:"",
     optionA:"",
     optionB:"",
@@ -32,9 +35,25 @@ const Questions = () => {
     }
   },[])
 
+  useEffect(() => {
+    getTopics();
+   
+   return () => {
+     setTopics([]);
+   };
+ }, []);
+
+ const getTopics = async () => {
+   const topicList = await fetchTopic();
+   setTopics([...topicList]);
+  
+ };
+
   const modalEdit = async(id, object)=>{
       setQuestionId(id);
-      setFormValues({questionDetail: object.questionDetail, 
+      setFormValues({ 
+                      questionId  : id,
+                      questionDetail: object.questionDetail, 
                       optionA     : object.optionA,
                       optionB     : object.optionB,
                       optionC     : object.optionC,
@@ -48,6 +67,7 @@ const Questions = () => {
                       negativeMarkValue : object.negativeMarkValue,
                       difficultyLevel : object.questionType
       })
+      console.log("questionId:::",questionId);
       document.getElementById('buttonId').click();
   }
 
@@ -88,14 +108,21 @@ const Questions = () => {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Question Edit</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
       <form onSubmit={handleSubmit}>
-        <div className="row pt-2">
-          <div className="col-6">
-           
+       
+        
+           <FormInput
+           id="questionId"
+           name="questionId"
+           type={"text"}
+           text={"questionId"}
+           value={formValues.questionId}
+           />
+
             <FormInput
               id="questionDetail"
               name="questionDetail"
@@ -150,8 +177,8 @@ const Questions = () => {
               onChange={handleChange}
               
             />
-          </div>
-          <div className="col-6">
+         
+          
             <FormInput
              name="answer"
               id="answer"
@@ -162,20 +189,12 @@ const Questions = () => {
              
 
             />
-            <FormInput
-             name="numAnswers"
-              id="numAnswers"
-              type={"text"}
-              text={"Num Answers"}
-              value={formValues.numAnswers}
-              onChange={handleChange}
-              
-            />
+          
             <div className="row">
-            <div className="mb-3 col">
-              <label htmlFor="questionType" className="form-label">
-                Question Type
-              </label>
+              <div className="mb-3 col">
+                 <label htmlFor="questionType" className="form-label">
+                     Question Type
+                  </label>
               <select
                 className="form-control"
                 id="questionType"
@@ -203,16 +222,29 @@ const Questions = () => {
                 value={formValues.topicId}
                 onChange={handleChange}
               ><option value="">None</option>
-                {/* { topics.map((topic) => (
+                { topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>{topic.topicName}</option>
-                ))} */}
+                ))}
               </select>
               
             </div>
-
-
             </div>
-           
+
+            <div className="row">
+            <div className="mb-3 col">
+            <FormInput
+             name="numAnswers"
+              id="numAnswers"
+              type={"text"}
+              text={"Num Answers"}
+              value={formValues.numAnswers}
+              onChange={handleChange}
+              
+            />
+            </div>
+
+          
+            <div className="mb-3 col">
             <FormInput
               id="difficultyLevel"
               name="difficultyLevel"
@@ -222,6 +254,10 @@ const Questions = () => {
               onChange={handleChange}
              
             />
+            </div>
+            </div>
+            <div className="row">
+            <div className="mb-3 col">
             <FormInput
               id="answerValue"
               name="answerValue"
@@ -231,9 +267,10 @@ const Questions = () => {
               onChange={handleChange}
              
             />
+            </div>
 
           
-
+            <div className="mb-3 col">
             <FormInput
              name="negativeMarkValue"
               id="negativeMarkValue"
@@ -243,14 +280,16 @@ const Questions = () => {
               onChange={handleChange}
              
             />
-          </div>
+            </div>
+            </div>
+         
 
           <div className="col-2 mx-auto  d-grid gap-2 ">
             <button className="btn btn-primary" type="submit">
               Submit
             </button>
           </div>
-        </div>
+       
       </form>
       </div>
       <div class="modal-footer">
