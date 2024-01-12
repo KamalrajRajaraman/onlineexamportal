@@ -103,7 +103,7 @@
 		<auto-attributes include="pk" mode="INOUT"
 			optional="true"></auto-attributes>
 		<auto-attributes include="nonpk" mode="INOUT"
-			optional="false"></auto-attributes>
+			optional="true"></auto-attributes>
 	</service>
 
 	<service name="findAllTopics" engine="java"
@@ -142,6 +142,13 @@
 		<auto-attributes include="nonpk" mode="INOUT"
 			optional="true"></auto-attributes>
 	</service>
+
+	<service name="updateQuestion" engine="entity-auto"  default-entity-name="QuestionMaster"
+	 invoke="update" auth="true">
+	 <description>Edit Question</description>
+	 <auto-attributes include="pk" mode="INOUT" optional="false"></auto-attributes>
+	  <auto-attributes include="nonpk" mode="INOUT" optional="true"></auto-attributes>
+	 </service>
 
 	<service name="findAllQuestions" engine="java"
 		location="com.vastpro.services.QuestionMasterServices"

@@ -29,6 +29,7 @@ import Error from "./component/common/Error";
 import ResultPage from "./component/userModule/exam-page/ResultPage";
 
 
+
 function App() {
   return (
     <AuthProvider>
@@ -60,12 +61,12 @@ function App() {
           <Route
             path="user/list-user/edit/userId/:partyId"
             element={<EditUser />}
-          > <Route index element={<ShowExam />} />
+          >
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
             <Route path="view-all-exam" element={<ShowExam />} />
           </Route>
           <Route path="user/edit/userId/:partyId" element={<EditUser />}>
-            <Route index element={<ShowExam />} />
+           
             <Route path="add-exam-to-user" element={<AddExamToUser />} />
             <Route path="view-all-exam" element={<ShowExam />} />
           </Route>
@@ -80,8 +81,10 @@ function App() {
         <Route path="exam-page" element={<ExamPage />} />
       
         <Route path="*" element={<NoMatch />} />
+
       </Routes>
     </AuthProvider>
+    
    
   );
 }

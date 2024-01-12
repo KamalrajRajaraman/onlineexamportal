@@ -4,6 +4,7 @@ import AccordinMaker from "../../common/AccordinMaker";
 import { useExamContext } from "./ExamData";
 import { useNavigate } from "react-router-dom";
 import  Alert  from "../../common/Alert";
+import { computeHeadingLevel } from "@testing-library/react";
 
 const Exam = () => {
 
@@ -18,9 +19,15 @@ const Exam = () => {
   },[]);
 
   const getExams = async () => {
-    const result = await fetchExam();
-    const examList = result.examList;
-    setExams(examList);
+    const dataFetched = await fetchExam();
+    if(dataFetched.result==="success"){
+      const examList = dataFetched.examList;
+      setExams(examList);
+    }else{
+      setExams(null);
+    }
+   
+    
   };
 
   const onEdit = (id,exam) => {
@@ -43,7 +50,7 @@ const Exam = () => {
         onDelete={onDelete}
         onEdit={onEdit}
         path={"viewExam"}
-      />:"No Exams Found"}
+      />:"No Exams Found.Please Add Exams"}
     </div>
   );
 };

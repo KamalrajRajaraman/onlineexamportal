@@ -11,88 +11,53 @@ import { PiPercentFill } from "react-icons/pi";
 
 
 const ResultPage = () => {
- const {state} = useLocation();
- const {actualUserPercentage, passPercentage} = state;
-  // const actualUserPercentage = sessionStorage.getItem("actualUserPercentage");
-  // const passPercentage = sessionStorage.getItem("passPercentage");
- 
-  
+//  const {state} = useLocation();
+//  const {actualUserPercentage, passPercentage} = state;
  
   const [result, setResult] = useState({
-    noOfQuestions:'', score : '', totalCorrect : '', totalWrong : '', userPassed:''
+    noOfQuestions:'', score : '', totalCorrect : '', totalWrong : '', userPassed:'', passPercentage : '', actualUserPercentage : '',
   });
   const [topicResult, setTopicResult, topicResultRef] =  useStateRef([])
 
 
 
    useEffect(()=>{
-      fetchTopicResults();
-      fetchResults();
+        fetchResult();
   }
   ,[])
 
-  const fetchTopicResults = async () => {
-    
+  const fetchResult = async () => {
+
+  
     try {
       const res = await fetch(
-        `https://localhost:8443/onlineexam/control/findUserAttemptTopicMasterRecordsForReport`,
-        { credentials: "include" }
+        `https://localhost:8443/onlineexam/control/evaluateUserAttemptAnswerMaster`,
+        { 
+        credentials: "include"
+      }
       );
       const data = await res.json();
-      console.log(data);
+      const resultDetails = data.resultMap;
+      
+      setTopicResult(...topicResult, resultDetails.updatedUserAttemptTopicMasterList);
 
-      const { topicWiseResultDetails } = data;
-      setTopicResult(topicWiseResultDetails);
-      if(data.result==="error"){
-      
-        
-      }
-        if(data.result==="success"){
-        console.log(data);
-      
-        
-        // const setFirstQuestion =questionsRef.current[0] 
-        // setActiveQuestion({ ...setFirstQuestion ,isViewed:true});
-        // setShowExam(true);
-       
-      }
-    } catch (error) {
+      setResult({noOfQuestions:resultDetails.noOfQuestions, 
+                score:resultDetails.score, 
+                totalCorrect : resultDetails.totalCorrectQuestionsInExam,
+                totalWrong : resultDetails.totalWrongAnswersInExam,
+                userPassed : resultDetails.userPassed,
+                passPercentage : resultDetails.passPercentage,
+                actualUserPercentage : resultDetails.actualUserPercentage
+              });
+
+  
+    } 
+    catch (error) {
       console.log(error);
-    }
-    console.log('topicResultRef.topicPassPercentage', topicResultRef.topicPassPercentage);
-  }
+    } 
+  };
 
-  const fetchResults = async () => {
-    
-    try {
-      const res = await fetch(
-        `https://localhost:8443/onlineexam/control/findUserAttemptMasterRecordsForReport`,
-        { credentials: "include" }
-      );
-      const data = await res.json();
-   console.log('data', data.AttemptMasterResultDetails);
-   const values = data.AttemptMasterResultDetails;
-   result.noOfQuestions = values.noOfQuestions;
-  result.score = values.score;
-  result.totalCorrect =values.totalCorrect;
-  result.totalWrong = values.totalWrong;
-  result.userPassed = values.userPassed;
-
-  console.log( result.noOfQuestions, result.score,  result.totalCorrect ,result.totalWrong,result.userPassed);
-   
-      if(data.result==="error"){
-      
-        
-      }
-        if(data.result==="success"){
-        console.log(data);
-       
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+ 
 
 
   return (
@@ -102,7 +67,7 @@ const ResultPage = () => {
 <div>
      <div class="row mt-3">
       <div class="col-xl-3 col-sm-6 col-12"> 
-        <div class="card  border-info  ">
+        <div class="card  border-info">
           <div class="card-content  ">
             <div class="card-body">
               <div class="media d-flex">
@@ -110,6 +75,7 @@ const ResultPage = () => {
                   <i class="icon-pencil primary font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
+            
                   <h3> <FaHashtag />{result.noOfQuestions}</h3>
                   <span>No of Questions</span>
                 </div>
@@ -127,6 +93,7 @@ const ResultPage = () => {
                
                 </div>
                 <div class="media-body text-right">
+             
                   <h3> <BsAward />{result.score}</h3>
                   <span>Score</span>
                 </div>
@@ -145,7 +112,7 @@ const ResultPage = () => {
                   
                 </div>
                 <div class="media-body text-right">
-                  <h3><HiMiniReceiptPercent />{passPercentage}</h3>
+                  <h3><HiMiniReceiptPercent />{result.passPercentage}</h3>
                   <span>Pass percentage</span>
                 </div>
               </div>
@@ -162,7 +129,7 @@ const ResultPage = () => {
                   <i class="icon-pointer danger font-large-2 float-left"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3><PiPercentFill />{actualUserPercentage}</h3>
+                  <h3><PiPercentFill />{result.actualUserPercentage}</h3>
                   <span>User percentage</span>
                 </div>
               </div>

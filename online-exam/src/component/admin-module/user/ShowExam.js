@@ -1,61 +1,84 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { EditUserContext } from './EditUser';
+import React, { useContext, useEffect, useState } from "react";
+import { EditUserContext } from "./EditUser";
+import { TiEdit } from "react-icons/ti";
+import AddExamToUser from "./AddExamToUser";
+import EditUserExam from "./EditUserExam";
 
-const ShowExam = () => {
-    const {partyId} =useContext(EditUserContext);
-    const [exams, setExams] =useState([]);
-    const param=useParams();
-   
-    useEffect(()=>{
-        fetch(`https://localhost:8443/onlineexam/control/findAllExamForPartyId`,
-        {
-          method:'POST', 
-          headers:
-          {'Content-type':'application/json'},
-          credentials: 'include',
-         body: JSON.stringify({partyId})
-        }
-        )
-        .then(response=>{ return response.json()})
-        .then(data=>{
-          console.log('final data:::', data);
-          setExams(data.examList);
-           console.log(data.examList)
-         
-        })
-      },[])
+const ShowExam = ({ exams, fetchAllExamsForUser }) => {
+  useEffect(() => {
+    fetchAllExamsForUser();
+  }, []);
 
   return (
-    <div>
-       <div className='card-body'>
-            <table className='table table-bordered'>
-                <thead className='bg-dark text-white'>
-                    <tr>
-                         <th> Exam ID</th>
-                         <th> Exam Name</th>
-                        
-                    </tr>
-                    </thead>
+    <>
+      <div class="container table-responsive py-2">
+        <table className="table table-striped ">
+          <tbody>
+            {exams &&
+              exams.map((exam) => (
+                <tr  key={exam.examId}className="p-0 m-0">
+                  <div className="row border">
+                    <div className="col-2 mx-auto my-auto ">
+                      <div className="fw-bold">Exam Name</div>
+                      <div>{exam.examName}</div>
+                    </div>
+                    <div className="col">
+                      <div className="row  fw-bold">
+                        <div className="col">Allowed Attempts</div>
+                        <div className="col">No Of Attempts</div>
+                        <div className="col">Last PerformanceDate</div>
+                        <div className="col">Timeout Days</div>
+                      </div>
+                      <div className="row ">
+                        <div className="col">{exam.allowedAttempts}</div>
+                        <div className="col">{exam.noOfAttempts}</div>
+                        <div className="col">{exam.lastPerformanceDate}</div>
+                        <div className="col">{exam.timeoutDays}</div>
+                      </div>
+                      <div className="row  fw-bold">
+                        <div className="col">Password Changes Auto</div>
+                        <div className="col">Can Split Exams</div>
+                        <div className="col">Can See Detailed Results</div>
+                        <div className="col">Max Split Attempts</div>
+                      </div>
+                      <div className="row   ">
+                        <div className="col">{exam.passwordChangesAuto}</div>
+                        <div className="col">{exam.canSplitExams}</div>
+                        <div className="col">{exam.canSeeDetailedResults}</div>
+                        <div className="col">{exam.maxSplitAttempts}</div>
+                      </div>
+                    </div>
+                    <div className="col-1 mx-auto my-auto">
+                      <div className="fw-bold">Edit</div>
+                      <div>
+                        <TiEdit
+                          type="button"
+                          data-bs-toggle="modal"
+                           data-bs-target={`#Modal${exam.examId}`}
+                        />
+                        <div
+                          className="modal fade"
+                          id={`Modal${exam.examId}`}
+                          tabIndex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                              <EditUserExam userExamMapping ={exam}/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};
 
-      <tbody>
-       {exams&&
-
-       
-        exams.map((exam)=>(
-          
-            <tr key={exam.examId}>
-              <td>{exam.examId}</td>
-              <td>{exam.examName}</td>
-            </tr>
-            )
-        )
-       }
-       </tbody>
-       </table>
-       </div>
-    </div>
-  )
-}
-
-export default ShowExam
+export default ShowExam;

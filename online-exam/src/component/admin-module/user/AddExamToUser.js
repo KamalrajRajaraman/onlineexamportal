@@ -2,17 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { EditUserContext } from "./EditUser";
 import { useExamContext } from "../exam/ExamData";
 import FormInput from "../../common/FormInput";
-
+import Swal from "sweetalert2";
 
 const AddExamToUser = () => {
-  const { partyId } = useContext(EditUserContext);
+  const { exams, setExams, fetchExam } = useExamContext();
+  const { partyId, fetchAllExamsForUser } = useContext(EditUserContext);
   const [formErrors, setFormErrors] = useState({});
   const initialValues = {
     partyId,
     examId: "",
+    noOfAttempts: 0,
     allowedAttempts: "",
-    noOfAttempts: "",
-    lastPerformanceDate: "",
     timeoutDays: "",
     passwordChangesAuto: "Y",
     canSplitExams: "Y",
@@ -20,7 +20,7 @@ const AddExamToUser = () => {
     maxSplitAttempts: "",
   };
 
-  const { exams, setExams, fetchExam } = useExamContext();
+  
   const [formValues, setFormValues] = useState(initialValues);
 
   const [isSubmit, setIsSubmit] = useState(false);
@@ -36,6 +36,7 @@ const AddExamToUser = () => {
     setFormErrors(validate(formValues));
     setIsSubmit(true);
   };
+  
   useEffect(() => {
     getExams();
     return () => {
@@ -44,9 +45,10 @@ const AddExamToUser = () => {
   }, []);
 
   useEffect(() => {
+    console.log(formErrors);
     console.log(Object.keys(formErrors).length);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      fetchExamsForUser(formValues);
+      createUserExamMappingRecord(formValues);
       // getExams();
     }
   }, [formErrors]);
@@ -55,18 +57,13 @@ const AddExamToUser = () => {
     console.log("validate called");
     const errors = {};
 
-    if (!formValues.examId) {
+    if (!formValues.examId || formValues.examId === "00") {
       errors.examId = "Exam id required!";
     }
     if (!formValues.allowedAttempts) {
       errors.allowedAttempts = "Allowed attempts is required!";
     }
-    if (!formValues.noOfAttempts) {
-      errors.noOfAttempts = "No of attempts is required!";
-    }
-    if (!formValues.lastPerformanceDate) {
-      errors.lastPerformanceDate = "Last performance date is required!";
-    }
+
     if (!formValues.timeoutDays) {
       errors.timeoutDays = "Timeout days is required!";
     }
@@ -86,12 +83,16 @@ const AddExamToUser = () => {
   };
 
   const getExams = async () => {
-    const result = await fetchExam();
-    const examList = result.examList;
-    setExams([...exams, ...examList]);
+    const dataFetched = await fetchExam();
+    if (dataFetched.result === "success") {
+      const examList = dataFetched.examList;
+      setExams(examList);
+    } else {
+      setExams(null);
+    }
   };
 
-  const fetchExamsForUser = async (formValues) => {
+  const createUserExamMappingRecord = async (formValues) => {
     console.log("fetchexams for user called");
     const res = await fetch(
       "https://localhost:8443/onlineexam/control/createUserExamMappingRecord",
@@ -106,21 +107,28 @@ const AddExamToUser = () => {
     );
 
     const data = await res.json();
-      if(data.result==="success"){
-        setFormValues(initialValues);
-      }
+    if (data.result === "success") {
+      Swal.fire({
+        title: "Good job!",
+        text: "Exam added to user  successfully!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      fetchAllExamsForUser();
+      setFormValues(initialValues);
+    }
     console.log(data);
   };
 
- 
   return (
-    <div className="fluid-container mt-2  fw-bold">
+    <div className="fluid-container mt-2 p-2 fw-bold border">
       <form id="addExamToUser" onSubmit={handleSubmit}>
-        <div className="row col-10 mx-auto pt-2 border ">
+        <div className="row   ">
           <div className="col">
             <div className="mb-3 ">
               <label htmlFor="examId" className="form-label">
-                examId
+                Exam Name
               </label>
               <select
                 className="form-control"
@@ -128,103 +136,17 @@ const AddExamToUser = () => {
                 name="examId"
                 value={formValues.examId}
                 onChange={handleChange}
-                error={formErrors.examId}
               >
                 <option value="00">None</option>
-                {exams.map((exam) => (
-                  <option key={exam.examId} value={exam.examId}>
-                    {exam.examName}
-                  </option>
-                ))}
+                {exams &&
+                  exams.map((exam) => (
+                    <option key={exam.examId} value={exam.examId}>
+                      {exam.examName}
+                    </option>
+                  ))}
               </select>
+              <small className="text-danger">{formErrors.examId}</small>
             </div>
-
-            <div class="mb-3 ">
-              <FormInput
-                name={"allowedAttempts"}
-                value={formValues.allowedAttempts}
-                type="text"
-                text="Allowed attempts"
-                class="form-control"
-                onChange={handleChange}
-                error={formErrors.allowedAttempts}
-              />
-
-             
-            </div>
-
-            <div class="mb-3  ">
-              <FormInput
-                name={"noOfAttempts"}
-                value={formValues.noOfAttempts}
-                text="No of attempts"
-                type="text"
-                class="form-control"
-                onChange={handleChange}
-                error={formErrors.noOfAttempts}
-              />
-
-              
-            </div>
-
-            <div className="row ">
-              <div className="mb-3 col">
-                <label htmlFor="passwordChangesAuto" className="form-label">
-                  passwordChangesAuto
-                </label>
-                <select
-                  className="form-control"
-                  id="passwordChangesAuto"
-                  name="passwordChangesAuto"
-                  class="form-control"
-                  onChange={handleChange}
-                  value={formValues.passwordChangesAuto}
-                >
-                  <option value="Y">Yes</option>
-                  <option value="N">NO</option>
-                </select>
-                <small className="text-danger">
-                  {formErrors.passwordChangesAuto}
-                </small>
-              </div>
-
-              <div className="mb-3 col">
-                <label htmlFor="canSplitExams" className="form-label">
-                  canSplitExams
-                </label>
-                <select
-                  className="form-control"
-                  id="canSplitExams"
-                  name="canSplitExams"
-                  class="form-control"
-                  value={formValues.canSplitExams}
-                  onChange={handleChange}
-                >
-                  <option value="Y">Yes</option>
-                  <option value="N">NO</option>
-                </select>
-                <small className="text-danger">
-                  {formErrors.canSplitExams}
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <div className="col">
-            <div class="mb-3  ">
-              <FormInput
-                name={"lastPerformanceDate"}
-                value={formValues.lastPerformanceDate}
-                type="date"
-                text="Last performance date"
-                class="form-control"
-                onChange={handleChange}
-                error={formErrors.lastPerformanceDate}
-              />
-             
-            </div>
-
-          
             <div className="mb-3 ">
               <FormInput
                 name={"timeoutDays"}
@@ -235,9 +157,20 @@ const AddExamToUser = () => {
                 onChange={handleChange}
                 error={formErrors.timeoutDays}
               />
-            
             </div>
-
+          </div>
+          <div className="col">
+            <div class="mb-3 ">
+              <FormInput
+                name={"allowedAttempts"}
+                value={formValues.allowedAttempts}
+                type="text"
+                text="Allowed attempts"
+                class="form-control"
+                onChange={handleChange}
+                error={formErrors.allowedAttempts}
+              />
+            </div>
             <div className="mb-3 ">
               <FormInput
                 name={"maxSplitAttempts"}
@@ -248,9 +181,28 @@ const AddExamToUser = () => {
                 onChange={handleChange}
                 error={formErrors.maxSplitAttempts}
               />
-             
             </div>
-
+          </div>
+          <div className="col">
+            <div className="mb-3 col">
+              <label htmlFor="passwordChangesAuto" className="form-label">
+                passwordChangesAuto
+              </label>
+              <select
+                className="form-control"
+                id="passwordChangesAuto"
+                name="passwordChangesAuto"
+                class="form-control"
+                onChange={handleChange}
+                value={formValues.passwordChangesAuto}
+              >
+                <option value="Y">Yes</option>
+                <option value="N">NO</option>
+              </select>
+              <small className="text-danger">
+                {formErrors.passwordChangesAuto}
+              </small>
+            </div>
             <div className="mb-3 col-6">
               <label htmlFor="canSeeDetailedResults" className="form-label">
                 canSeeDetailedResults
@@ -271,14 +223,32 @@ const AddExamToUser = () => {
               </small>
             </div>
           </div>
-
+          <div className="col">
+            <div className="mb-3 col">
+              <label htmlFor="canSplitExams" className="form-label">
+                canSplitExams
+              </label>
+              <select
+                className="form-control"
+                id="canSplitExams"
+                name="canSplitExams"
+                class="form-control"
+                value={formValues.canSplitExams}
+                onChange={handleChange}
+              >
+                <option value="Y">Yes</option>
+                <option value="N">NO</option>
+              </select>
+              <small className="text-danger">{formErrors.canSplitExams}</small>
+            </div>
+            
           </div>
-          <div className="d-grid gap-2 col-4 mx-auto mb-2">
-            <button className="btn btn-primary" type="submit">
-              Submit
-            </button>
-          </div>
-        
+        </div>
+        <div className="d-grid gap-2 col-4 mx-auto mb-2">
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

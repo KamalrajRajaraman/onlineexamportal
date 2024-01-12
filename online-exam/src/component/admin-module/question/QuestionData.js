@@ -6,15 +6,31 @@ export const QuestionProvider =({children})=>{
     const [questions, setQuestions] = useState([]);
 
     const onDelete=async(id)=>{
-      const res = await fetch(`https://localhost:8443/onlineexam/control/deleteQuestion?questionId=${id}`,{method:'DELETE', credentials: 'include'})
+      const res = await fetch(`https://localhost:8443/onlineexam/control/deleteQuestion?questionId=${id}`,
+      {method:'DELETE', credentials: 'include'})
       const data = await res.json();
       const {result} = data
       if(result==="success"){
-        setQuestions(questions.filter(question=>question.questionId!==id));
+        setQuestions(questions.filter(question=> question.questionId!==id));
+      }
+    }
+
+    const onEdit=async(id, object)=>{
+      const res = await fetch(`https://localhost:8443/onlineexam/control/updateQuestion`,
+      { method: "PUT",
+      headers: {
+        'Content-type':"application/json"
+      },
+       credentials: 'include',
+      body: JSON.stringify(Object)})
+      const data = await res.json();
+      const {result} = data
+      if(result==="success"){
+        
       }
     }
     
-    return<QuestionContext.Provider value={{questions,setQuestions,onDelete}}>
+    return<QuestionContext.Provider value={{questions,setQuestions,onDelete,onEdit}}>
         {children}
     </QuestionContext.Provider>
      

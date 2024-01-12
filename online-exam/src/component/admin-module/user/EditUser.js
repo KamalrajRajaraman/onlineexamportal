@@ -1,10 +1,31 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
+import MainContent from "../../common/MainContent"
 
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import ListUser from './ListUser';
+import ShowExam from './ShowExam';
+import UserDetails from './UserDetails';
 export const EditUserContext=createContext();
 const EditUser = () => {
   const { partyId } = useParams();
-  const navigate = useNavigate();
+  const [exams, setExams] = useState([]);
+  const fetchAllExamsForUser =()=>{
+    fetch(`https://localhost:8443/onlineexam/control/findAllExamForPartyId`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ partyId }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("final data:::", data);
+        setExams(data.examList);
+        console.log(data.examList);
+      });
+  }
+ 
 
   const text ={
     header:"User Exam Mapping",
@@ -12,45 +33,10 @@ const EditUser = () => {
    }
    
   return (
-   <EditUserContext.Provider value={{partyId}}>
-    <div className="row">
-        <div className="col p-0 border-bottom border-3 border-dark">
-          <h2 className="p-2">User Details</h2>
-        </div>
-      </div>
-      <nav>
-        <div className="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2" id="nav-tab" role="tablist">
-        
-          <button
-            className="nav-link  text-dark active"
-            id="nav-home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#nav-home"
-            type="button"
-            role="tab"
-           
-            onClick={()=>navigate("view-all-exam")}
-          >
-            
-           User Exam Details
-          </button>
-          <button
-            className="nav-link  text-dark "
-            id="nav-profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
-            type="button"
-            role="tab"
-            onClick={()=>navigate("add-exam-to-user")}
-          >
-            Add Exam to User
-          </button>
-
-        
-          
-        </div>
-      </nav>
-      <Outlet/>
+   <EditUserContext.Provider value={{partyId,fetchAllExamsForUser}}>
+      <UserDetails />
+      <MainContent  text={text} to="add-exam-to-user" back={`/admin/user/edit/userId/${partyId}`}/>
+      <ShowExam  exams ={exams} fetchAllExamsForUser={fetchAllExamsForUser}/>
 
    </EditUserContext.Provider>
   )
