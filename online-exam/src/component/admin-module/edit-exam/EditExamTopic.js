@@ -48,7 +48,6 @@ const EditExamTopic = ({obj}) => {
                 }
                 else {
                     Swal.fire({
-                        
                         title: "Error!",
                         text: "Failed updating Exam-Topic details!",
                         icon: "error",
