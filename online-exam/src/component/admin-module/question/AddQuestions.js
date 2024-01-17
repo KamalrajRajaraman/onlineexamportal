@@ -3,7 +3,7 @@ import FormInput from "../../common/FormInput";
 import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
 import Swal from "sweetalert2";
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const AddQuestions = () => {
   
   const {questions, setQuestions} = useQuestionContext();
@@ -47,8 +47,8 @@ const AddQuestions = () => {
   const onCreateQuestion = async (questionDetail) => {
    console.log(questionDetail)
    try{
-    const res = await fetch(
-      "https://localhost:8443/onlineexam/control/createQuestion",
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+      "createQuestion",
       {
         method: "POST",
         headers: {

@@ -4,6 +4,7 @@ import MainContent from "../../common/MainContent"
 import ExamTopicTable from "./ExamTopicTable";
 import Swal from "sweetalert2";
 import ViewExam from "../exam/ViewExam";
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 
 export const EditExamContext = createContext();
 const EditExam = () => {
@@ -33,7 +34,7 @@ const EditExam = () => {
   };
 
   const editExam = (props)=>{
-    fetch("https://localhost:8443/onlineexam/control/editExam",{
+    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"editExam",{
       method:"POST",
       headers: {
         "Content-type": "application/json",
@@ -50,8 +51,8 @@ const EditExam = () => {
   //creating examtopicMapping Record 
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
     console.log(examTopicMappingDetails);
-    const res = await fetch(
-      "https://localhost:8443/onlineexam/control/createExamTopicMappingMasterRecord",
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+      "createExamTopicMappingMasterRecord",
       {
         method: "POST",
         headers: {

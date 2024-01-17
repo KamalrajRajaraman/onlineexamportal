@@ -1,10 +1,11 @@
 import React from 'react'
 import {  NavLink } from 'react-router-dom'
 import { useAuth } from '../../auth/Auth';
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const UserSideBar = () => {
   const {logout} = useAuth();
   const onlogout =async() =>{
-    const res = await fetch("https://localhost:8443/onlineexam/control/onlineExamLogout",{credentials:"include"});
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"onlineExamLogout",{credentials:"include"});
     const data = await res.json();
     console.log(data);
     if(data.result==="success"){

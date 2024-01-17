@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
 import Swal from "sweetalert2";
 import { EditUserContext } from "./EditUser";
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const EditUserExam = ({ userExamMapping }) => {
     const {fetchAllExamsForUser } = useContext(EditUserContext);
   const [formErrors, setFormErrors] = useState({});
@@ -62,8 +62,8 @@ const EditUserExam = ({ userExamMapping }) => {
 
   const createUserExamMappingRecord = async (formValues) => {
     console.log("fetchexams for user called");
-    const res = await fetch(
-      "https://localhost:8443/onlineexam/control/createUserExamMappingRecord",
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+      "createUserExamMappingRecord",
       {
         method: "PUT",
         headers: {

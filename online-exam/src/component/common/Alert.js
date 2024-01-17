@@ -1,27 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
-const Alert = ({close,message,color}) => {
+const Alert = ({alertInfo}) => {
+
+
+
+  
+  
+
   return (
-    <div className= {`alert ${color} mt-2 z-3 col-8 top-0 end-0 position-absolute `} role="alert">
-    <div className="row ">
-      <div className="col-10">
-        <h4 className="alert-heading">Well done!</h4>
-      </div>
-      <div className="col-2 d-grid gap-2 d-md-flex justify-content-md-end">   
-        <button
-          type="button"
-          className="btn-close "
-          aria-label="Close"
-          onClick={()=>close(false)}
-        ></button>
-      </div>
-    </div>
-    <p>
-        {message}
-    </p>
-   
-  </div>
-  )
-}
+    <>
+      <button
+        id="alert-button"
+        type="button"
+        class="btn btn-primary d-none"
+        data-bs-toggle="modal"
+        data-bs-target="#Modal"
+      >
+        Launch demo modal
+      </button>
 
-export default Alert
+      <div
+        class="modal fade "
+        id="Modal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog  modal-dialog-centered col">
+          <div class={`alert col alert-dismissible fade show ${alertInfo.color}`} role="alert">
+            <h4 class="alert-heading">{alertInfo.header}</h4>
+            <p>
+              {alertInfo.content}
+            </p>
+            
+            <button id ="close-alert" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+
+    
+    </>
+  );
+};
+
+export default Alert;

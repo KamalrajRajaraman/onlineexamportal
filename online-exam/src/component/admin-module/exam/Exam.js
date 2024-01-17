@@ -4,30 +4,23 @@ import AccordinMaker from "../../common/AccordinMaker";
 import { useExamContext } from "./ExamData";
 import { useNavigate } from "react-router-dom";
 import  Alert  from "../../common/Alert";
-import { computeHeadingLevel } from "@testing-library/react";
 
 const Exam = () => {
 
   const navigate = useNavigate();
-  const { exams, setExams, onDelete,alert,setAlert,fetchExam} = useExamContext();
+  const { exams, setExams, onDelete,alert,setAlert,fetchExam,refresh} = useExamContext();
 
   useEffect(() => {
     getExams();
     return () => {
       setExams([]);
     };
-  },[]);
+  },[refresh]);
 
   const getExams = async () => {
-    const dataFetched = await fetchExam();
-    if(dataFetched.result==="success"){
-      const examList = dataFetched.examList;
-      setExams(examList);
-    }else{
-      setExams(null);
-    }
-   
-    
+    const result = await fetchExam();
+    const examList = result.examList;
+    setExams(examList);
   };
 
   const onEdit = (id,exam) => {
@@ -43,14 +36,14 @@ const Exam = () => {
     <div className="position-relative" >
     {alert &&<Alert color={"alert-success"} close={setAlert} message ={"Aww yeah, you successfully created Exam"}/>}
       <MainContent text={text} to="add-exam" back="/admin/exam" />
-      {exams ? <AccordinMaker
+      <AccordinMaker
         objects={exams}
         id={"examId"}
         name={"examName"}
         onDelete={onDelete}
         onEdit={onEdit}
         path={"viewExam"}
-      />:"No Exams Found.Please Add Exams"}
+      />
     </div>
   );
 };

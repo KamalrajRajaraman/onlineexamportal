@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FormInput from '../../common/FormInput';
 import Swal from 'sweetalert2';
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 
 const UserRegister = () => {
    
@@ -61,7 +61,7 @@ const UserRegister = () => {
   const onRegister =async (userRegisterationDetails)=>{
 
     
-    const res = await fetch("https://localhost:8443/onlineexam/control/createPersonAndUserLogin", {
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createPersonAndUserLogin", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

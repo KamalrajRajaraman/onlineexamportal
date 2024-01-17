@@ -40,7 +40,7 @@ public class QuestionMasterEvents {
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
 
-		//Hibernate validation for create question input values
+		// Hibernate validation for create question input values
 		QuestionMasterValidator questionForm = HibernateHelper.populateBeanFromMap(combinedMap,
 				QuestionMasterValidator.class);
 		Set<ConstraintViolation<QuestionMasterValidator>> checkValidationErrors = HibernateHelper
@@ -52,7 +52,7 @@ public class QuestionMasterEvents {
 
 		// Checking form has errors or not
 		if (hasFormErrors) {
-			
+
 			String errMsg = "Error founded while executing hibernate validation in create question form ";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -60,26 +60,46 @@ public class QuestionMasterEvents {
 			return CommonConstants.ERROR;
 		}
 
-		// calling createQuestion service for creating question
+		Integer questionId = (Integer) combinedMap.get(CommonConstants.QUESTION_ID);
+		
 		Map<String, Object> createQuestionResp = null;
-		try {
-			createQuestionResp = dispatcher.runSync("createQuestion", combinedMap);
-			Debug.logInfo("Succesfully executed createQuestion service", module);
-
-		} catch (GenericServiceException e) {
-			Debug.logError(e, "Failed to execute createQuestion service", module);
-			String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			return CommonConstants.ERROR;
+		if (UtilValidate.isNotEmpty(questionId)) {
+			
+			try {
+				createQuestionResp = dispatcher.runSync("updateQuestion", combinedMap);
+			} catch (GenericServiceException e) {
+				
+				Debug.logError(e, "Failed to execute updateQuestion service", module);
+				String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
 		}
+		else {
+			
+			try {
+				createQuestionResp = dispatcher.runSync("createQuestion", combinedMap);
+				Debug.logInfo("Succesfully executed createQuestion service", module);
+
+			} catch (GenericServiceException e) {
+				Debug.logError(e, "Failed to execute createQuestion service", module);
+				String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+		}
+
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(createQuestionResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("question", createQuestionResp);
 		} else {
 			// If the service return Error, set the result as error in request
-			String errMsg = "Error occured while running createQuestion service";
+			String errMsg = "Error occured while running createQuestion or updateQuestion  service";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -104,8 +124,7 @@ public class QuestionMasterEvents {
 		try {
 			findAllQuestionsResp = dispatcher.runSync("findAllQuestions", findAllQuestionContext);
 			Debug.logInfo("Succesfully executed findAllQuestions service", module);
-		} 
-		catch (GenericServiceException e) {
+		} catch (GenericServiceException e) {
 			// If Exception occurred while execute the service
 			String errMsg = "Failed to execute findAllQuestions service " + e.getMessage();
 			Debug.logError(e, errMsg, module);
@@ -117,8 +136,7 @@ public class QuestionMasterEvents {
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute("questionList", findAllQuestionsResp.get("questionList"));
-		} 
-		else {
+		} else {
 			// If the service returns error, set the result as error in request
 			String errMsg = "Error occured while running findAllQuestions service";
 			Debug.logError(errMsg, module);
@@ -139,27 +157,26 @@ public class QuestionMasterEvents {
 		GenericValue userLogin = (GenericValue) combinedMap.get(CommonConstants.USER_LOGIN);
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		Timestamp expirationDate = (Timestamp) combinedMap.get(CommonConstants.EXPIRATION_DATE);
-		
-		if(UtilValidate.isEmpty(questionId)) {
+
+		if (UtilValidate.isEmpty(questionId)) {
 			String errMsg = "questionId is empty ";
-			Debug.logError( errMsg, module);
+			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
-		
+
 		Map<String, Object> deleteQuestionResp = null;
 
 		// calling deleteQuestion service
 		try {
-			deleteQuestionResp = dispatcher.runSync("deleteQuestion", 
-							UtilMisc.toMap(CommonConstants.QUESTION_ID, questionId,
-									CommonConstants.EXPIRATION_DATE, currentTime, 
-									CommonConstants.USER_LOGIN,userLogin));
+			deleteQuestionResp = dispatcher.runSync("deleteQuestion", UtilMisc.toMap(CommonConstants.QUESTION_ID,
+					questionId, CommonConstants.EXPIRATION_DATE, currentTime, CommonConstants.USER_LOGIN, userLogin));
 			Debug.logInfo("Succesfully executed deleteQuestion service", module);
 		} catch (GenericServiceException e) {
-			// If Exception occurred while execute the service, set result as Error in request
-			
+			// If Exception occurred while execute the service, set result as Error in
+			// request
+
 			String errMsg = "Failed to execute deleteQuestion service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -179,10 +196,7 @@ public class QuestionMasterEvents {
 		}
 		return CommonConstants.SUCCESS;
 	}
+
 	
-	public static String updateQuestion(HttpServletRequest request, HttpServletResponse response) {
-		return null;
-		
-	}
 
 }

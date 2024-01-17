@@ -37,7 +37,7 @@
 	
 	<request-map uri="evaluateUserAttemptAnswerMaster">
 		<security https="true" auth="true"/>
-		<event type="java" path="com.vastpro.events.UserExamMappingEvents" invoke="evaluateUserAttemptAnswerMaster"/>
+		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="evaluateUserAttemptAnswerMaster"/>
 		<response name="success" type="request" value="json"/>
 		<response name="error" type="request" value="json" />
 	</request-map>
@@ -173,14 +173,7 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
-	<request-map uri="updateQuestion">
-		<security https="true" auth="true" />
-		<event type="java"
-			path="com.vastpro.events.QuestionMasterEvents"
-			invoke="updateQuestion" />
-		<response name="success" type="request" value="json" />
-		<response name="error" type="request" value="json" />
-	</request-map>
+	
 
 	<request-map uri="findAllQuestions">
 		<security https="true" auth="true" />

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useExamContext } from "./ExamData";
 import FormInput from "../../common/FormInput";
 import Swal from "sweetalert2";
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const AddExam = () => {
   //consuming data from useExamContext
   const { exams, setExams, setAlert } = useExamContext();
@@ -91,7 +91,7 @@ const AddExam = () => {
 
   //Create Exam
   function onCreateExam(exam) {
-    fetch("https://localhost:8443/onlineexam/control/createExam", {
+    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createExam", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

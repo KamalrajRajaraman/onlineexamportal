@@ -16,7 +16,7 @@
 	<vendor></vendor>
 	<version>1.0</version>
 
-
+	<!--User Related  Services  -->
 	<service name="createPartyRoleRecord"
 		default-entity-name="PartyRole" engine="entity-auto" invoke="create"
 		auth="false">
@@ -35,6 +35,7 @@
 		<attribute name="disabledDateTime" mode="IN" type="Timestamp"></attribute>
 	</service>
 
+	<!--Exam Master Related Services  -->
 	<service name="createExam" default-entity-name="ExamMaster"
 		engine="entity-auto" invoke="create" auth="true">
 		<description>Create Exam </description>
@@ -97,6 +98,8 @@
 	</service>
 
 
+	<!--Topic Master Related Services  -->
+
 	<service name="createTopic" default-entity-name="TopicMaster"
 		engine="entity-auto" invoke="create" auth="true">
 		<description>Create Topic </description>
@@ -133,6 +136,7 @@
 			optional="true"/>
 	</service>
 
+	<!-- Question Master Related Services  -->
 	<service name="createQuestion"
 		default-entity-name="QuestionMaster" engine="entity-auto"
 		invoke="create" auth="true">
@@ -175,9 +179,20 @@
 		<attribute name="expirationDate" type="Timestamp" mode="IN" optional="false"></attribute>
 	</service>
 
+	<!-- ExamTopicMappingMaster Related Services  -->
 	<service name="addTopicToExam"
 		default-entity-name="ExamTopicMappingMaster" engine="entity-auto"
 		invoke="create" auth="true">
+		<description>Add Topic To Exam </description>
+		<auto-attributes include="pk" mode="INOUT"
+			optional="false"></auto-attributes>
+		<auto-attributes include="nonpk" mode="INOUT"
+			optional="true"></auto-attributes>
+	</service>
+	
+	<service name="updateExamTopicMappingMaster"
+		default-entity-name="ExamTopicMappingMaster" engine="entity-auto"
+		invoke="update" auth="true">
 		<description>Add Topic To Exam </description>
 		<auto-attributes include="pk" mode="INOUT"
 			optional="false"></auto-attributes>

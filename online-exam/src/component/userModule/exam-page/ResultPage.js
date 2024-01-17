@@ -1,211 +1,127 @@
-import React, { useEffect, useState } from 'react'
-import useStateRef from 'react-usestateref';
-import { useLocation } from 'react-router-dom';
-import { BsAward } from "react-icons/bs";
-import { FaHashtag } from "react-icons/fa6";
-import { BsClipboardCheckFill } from "react-icons/bs";
-import { BsClipboard2XFill } from "react-icons/bs";
-import { BsAwardFill } from "react-icons/bs";
-import { HiMiniReceiptPercent } from "react-icons/hi2";
-import { PiPercentFill } from "react-icons/pi";
+import React, { useEffect, useState } from "react";
+import useStateRef from "react-usestateref";
 
+import {
+  CONTROL_SERVLET,
+  DOMAIN_NAME,
+  PORT_NO,
+  PROTOCOL,
+  WEB_APPLICATION,
+} from "../../common/CommonConstant";
 
 const ResultPage = () => {
-//  const {state} = useLocation();
-//  const {actualUserPercentage, passPercentage} = state;
- 
+  
+
   const [result, setResult] = useState({
-    noOfQuestions:'', score : '', totalCorrect : '', totalWrong : '', userPassed:'', passPercentage : '', actualUserPercentage : '',
+    noOfQuestions: "",
+    score: "",
+    totalCorrect: "",
+    totalWrong: "",
+    userPassed: "",
+    passPercentage: "",
+    actualUserPercentage: "",
   });
-  const [topicResult, setTopicResult, topicResultRef] =  useStateRef([])
+  const [topicResult, setTopicResult, topicResultRef] = useStateRef([]);
 
-
-
-   useEffect(()=>{
-        fetchResult();
-  }
-  ,[])
+  useEffect(() => {
+    fetchResult();
+  }, []);
 
   const fetchResult = async () => {
-
-  
     try {
       const res = await fetch(
-        `https://localhost:8443/onlineexam/control/evaluateUserAttemptAnswerMaster`,
-        { 
-        credentials: "include"
-      }
+        PROTOCOL +
+          DOMAIN_NAME +
+          PORT_NO +
+          WEB_APPLICATION +
+          CONTROL_SERVLET +
+          "evaluateUserAttemptAnswerMaster",
+        {
+          credentials: "include",
+        }
       );
       const data = await res.json();
       const resultDetails = data.resultMap;
-      
-      setTopicResult(...topicResult, resultDetails.updatedUserAttemptTopicMasterList);
 
-      setResult({noOfQuestions:resultDetails.noOfQuestions, 
-                score:resultDetails.score, 
-                totalCorrect : resultDetails.totalCorrectQuestionsInExam,
-                totalWrong : resultDetails.totalWrongAnswersInExam,
-                userPassed : resultDetails.userPassed,
-                passPercentage : resultDetails.passPercentage,
-                actualUserPercentage : resultDetails.actualUserPercentage
-              });
+      setTopicResult(
+        ...topicResult,
+        resultDetails.updatedUserAttemptTopicMasterList
+      );
 
-  
-    } 
-    catch (error) {
+      const resultStatus = resultDetails.userPassed === "Y" ? "Pass" : "Fail";
+      setResult({
+        noOfQuestions: resultDetails.noOfQuestions,
+        score: resultDetails.score,
+        totalCorrect: resultDetails.totalCorrectQuestionsInExam,
+        totalWrong: resultDetails.totalWrongAnswersInExam,
+        passPercentage: resultDetails.passPercentage,
+        actualUserPercentage: resultDetails.actualUserPercentage,
+        userPassed: resultStatus,
+      });
+    } catch (error) {
       console.log(error);
-    } 
+    }
   };
 
- 
-
-
   return (
-    <>
-  
-  <div><h2>Exam Results</h2></div>
-<div>
-     <div class="row mt-3">
-      <div class="col-xl-3 col-sm-6 col-12"> 
-        <div class="card  border-info">
-          <div class="card-content  ">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-pencil primary font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
+    <div className="container-fluid border mt-2">
+      <div>
+        <h2>Exam Results</h2>
+      </div>
+      <table className="table table-striped border">
+        <thead>
+          <tr>
+            <th scope="col">Exam Name</th>
+            <th scope="col">Total Correct</th>
+            <th scope="col">Total Wrong</th>
+            <th scope="col">Total Question</th>
+            <th scope="col">Score</th>
+            <th scope="col">Result</th>
             
-                  <h3> <FaHashtag />{result.noOfQuestions}</h3>
-                  <span>No of Questions</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Java</th>
+            <td> {result.totalCorrect}</td>
+            <td> {result.totalWrong}</td>
+            <td> {result.noOfQuestions}</td>
+            <td> {result.score}</td>
+            <td>{result.userPassed}</td>
+          </tr>
+         
+        </tbody>
+      </table>
+      <div className="mt-3">
+        <h4>Topicwise Results</h4>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card border-primary">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-               
-                </div>
-                <div class="media-body text-right">
-             
-                  <h3> <BsAward />{result.score}</h3>
-                  <span>Score</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card border-secondary">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                <i class="bi bi-award"></i>
-                  
-                </div>
-                <div class="media-body text-right">
-                  <h3><HiMiniReceiptPercent />{result.passPercentage}</h3>
-                  <span>Pass percentage</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card border-warning">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-pointer danger font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3><PiPercentFill />{result.actualUserPercentage}</h3>
-                  <span>User percentage</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <table class="table table-striped border ">
+      <thead>
+         
+        <tr >
+          <th scope="col">TopicId</th>
+          <th scope="col">Topic pass percentage</th>
+          <th scope="col">User topic percentage</th>
+          <th scope="col">User passed this topic</th>
+        </tr>
+        </thead>
+        <tbody>
+        {topicResult &&
+          topicResult.map((value) => {
+            return (
+              <tr className="mt-4" key={value.topicId}>
+                <td>{value.topicId}</td>
+                <td>{value.topicPassPercentage}</td>
+                <td>{value.userTopicPercentage}</td>
+                <td>{value.userPassedThisTopic}</td>
+              </tr>
+            );
+          })}</tbody>
+      </table>
+     
+
     </div>
-    <div class="row mt-3">
-      <div class="col-xl-3 col-sm-6 col-12"> 
-        <div class="card border-secondary">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-pencil primary font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3><BsClipboardCheckFill /> {result.totalCorrect}</h3>
-                  <span>Total correct Questions</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card border-secondary">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex">
-                <div class="align-self-center">
-                  <i class="icon-speech warning font-large-2 float-left"></i>
-                </div>
-                <div class="media-body text-right">
-                  <h3><BsClipboard2XFill />{result.totalWrong}</h3>
-                  <span>Total wrong questions</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-   
-    </div>
-  
-  </div>
+  );
+};
 
-<div className='mt-3'><h2>Topicwise Results</h2></div>
-
-<table class="table table-success table-striped table-bordered  mt-3">
-  <tr className='border bg-primary '>
-    <th>TopicId</th>
-    <th>Topic pass percentage</th>
-    <th>User topic percentage</th>
-    <th>User passed this topic</th>
-  </tr>
-{topicResult && topicResult.map((value)=>{
-  return(
-        <tr className='mt-4' key={value.topicId}>
-          <td>{value.topicId}</td>
-          <td>{value.topicPassPercentage}</td>
-          <td>{value.userTopicPercentage}</td>
-          <td>{value.userPassedThisTopic}</td>
-           </tr>
-  )
-})}
-
-</table>
-
-
-
-
-    </>
-  )
-}
-
-
-export default ResultPage
+export default ResultPage;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const Question = ({
   question,
   onSequenceNumClick,
@@ -20,8 +20,8 @@ const Question = ({
   }, [question]);
 
   const submitAnswerAndNext = async (answeredQuestion, sequenceNum) => {
-    const response = await fetch(
-      "https://localhost:8443/onlineexam/control/updateAnswerInUserAttemptAnswerMaster",
+    const response = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+      "updateAnswerInUserAttemptAnswerMaster",
       {
         method: "POST",
         headers: {
@@ -176,12 +176,12 @@ const Question = ({
                 className="form-check-input"
                 type="radio"
                 name="optionE"
-                id="flexRadioDefault4"
+                id="flexRadioDefault5"
                 value={question.optionE}
                 checked={"optionE" === submittedAnswer}
                 onChange={(e) => setSubmittedAnswer(e.target.name)}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault4">
+              <label className="form-check-label" htmlFor="flexRadioDefault5">
                 {question.optionE}
               </label>
             </div>
@@ -260,14 +260,14 @@ const Question = ({
                 className="form-check-input"
                 type="checkbox"
                 name="optionE"
-                id="flexRadioDefault4"
+                id="flexRadioDefault5"
                 value={question.optionE}
                 checked={submittedAnswer && submittedAnswer.includes("optionE")}
                 onChange={(e) =>
                   setSubmittedAnswer([...submittedAnswer, e.target.name])
                 }
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault4">
+              <label className="form-check-label" htmlFor="flexRadioDefault5">
                 {question.optionE}
               </label>
             </div>
@@ -282,12 +282,12 @@ const Question = ({
                 className="form-check-input"
                 type="radio"
                 name="optionA"
-                id="flexRadioDefault1"
-                value={question.optionA}
+                id="flexRadioDefault6"
+                value={"True"}
                 checked={"optionA" === submittedAnswer}
                 onChange={(e) => setSubmittedAnswer(e.target.name)}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
+              <label className="form-check-label" htmlFor="flexRadioDefault6">
                 {question.optionA}
               </label>
             </div>
@@ -296,12 +296,12 @@ const Question = ({
                 className="form-check-input"
                 type="radio"
                 name="optionB"
-                id="flexRadioDefault2"
+                id="flexRadioDefault7"
                 value={question.optionB}
                 checked={"optionB" === submittedAnswer}
                 onChange={(e) => setSubmittedAnswer(e.target.name)}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
+              <label className="form-check-label" htmlFor="flexRadioDefault7">
                 {question.optionB}
               </label>
             </div>
@@ -314,6 +314,7 @@ const Question = ({
           <div>
             <div className="col-6">
               <input
+               autocomplete="off"
                 className="form-control"
                 type="text"
                 name="answer"
@@ -334,6 +335,7 @@ const Question = ({
           <div>
             <div className="form-check">
               <input
+               autocomplete="off"
                 className="form-input"
                 type="textarea"
                 name="flexRadioDefault"
