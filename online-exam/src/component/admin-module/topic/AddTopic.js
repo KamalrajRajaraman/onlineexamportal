@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTopicContext } from "./TopicData";
 import FormInput from "../../common/FormInput";
 import Swal from "sweetalert2";
+import { CONTROL_SERVLET, DOMAIN_NAME,  PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 
 const Addtopic = () => {
   const initialValues = { topicName:''};
@@ -39,7 +40,8 @@ const validate = (values)=>{
 }
 
   const onCreateTopic =async (topicDetails)=>{
-    const res = await fetch("https://localhost:8443/onlineexam/control/createTopic",{
+    console.log(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+ "createTopic");
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+ "createTopic",{
       method:"POST",
       headers:{
         'Content-type':"application/json"

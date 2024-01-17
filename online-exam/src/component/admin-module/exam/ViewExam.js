@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const ViewExam = ({ examDetails }) => {
 
     const navigate=useNavigate();
@@ -14,13 +14,13 @@ const ViewExam = ({ examDetails }) => {
     const [durationMinutes, setDurationMinutes] = useState(examDetails.durationMinutes);
     const [passPercentage, setPassPercentage] = useState(examDetails.passPercentage);
     const [questionsRandomized, setQuestionsRandomized] = useState(examDetails.questionsRandomized);
-    const [answersMust, setAnswersMust] = useState(examDetails.setAnswersMust);
+    const [answersMust, setAnswersMust] = useState(examDetails.answersMust);
     const [enableNegativeMark, setEnableNegativeMark] = useState(examDetails.enableNegativeMark);
     const [negativeMarkValue, setNegativeMarkValue] = useState(examDetails.negativeMarkValue);
 
     async function updateExam(data) {
 
-        await fetch('https://localhost:8443/onlineexam/control/editExam', {
+        await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+'editExam', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

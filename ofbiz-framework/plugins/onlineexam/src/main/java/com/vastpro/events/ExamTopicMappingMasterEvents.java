@@ -84,36 +84,48 @@ public class ExamTopicMappingMasterEvents {
 		 * and Topic to exam percentage should not be more than available percentage that can be added
 		 * */
 		//retrieving List of percentage from ExamTopicMappingMaster for given examID and TopicId 
-		List<GenericValue> percentageList  =null;
+		
+		List<GenericValue> examTopicMasterGV  =null;
 		try {
-				percentageList  = EntityQuery
+			examTopicMasterGV  = EntityQuery
 								.use(delegator)
-								.select(CommonConstants.PERCENTAGE)
 								.from(CommonConstants.EXAM_TOPIC_MAPPING_MASTER)
-								.where(CommonConstants.EXAM_ID,examId)
+								.where(CommonConstants.EXAM_ID,examId).cache()
 								.queryList();
 
 		} catch (GenericEntityException e) {
-			Debug.logError(e, "Failed retrieve List of percentage from ExamTopicMappingMaster for given examID and TopicId ", module);
-			String errMsg = "Failed retrieve List of percentage from ExamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
+			Debug.logError(e, "Failed retrieve records from ExamTopicMappingMaster for given examID and TopicId ", module);
+			String errMsg = "Failed retrieve records from ExamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
 		
+		
+		boolean isUpdateExamTopicMappingMaster =false;
+		BigDecimal existingPercentage =null;
 
-		if(UtilValidate.isNotEmpty(percentageList)) {
+		if(UtilValidate.isNotEmpty(examTopicMasterGV)) {
 			//Total topic to exam percentage is calculated 
 			BigDecimal totalPercentageAdded = new BigDecimal(0);
-			for(GenericValue percent :percentageList) {
-				totalPercentageAdded = totalPercentageAdded.add(percent.getBigDecimal(CommonConstants.PERCENTAGE));			
+			for(GenericValue examTopicMasterRecord :examTopicMasterGV) {
+				String topicIdfromETMM = examTopicMasterRecord.getString(CommonConstants.TOPIC_ID);
+				if(topicId.equals(topicIdfromETMM)) {
+					isUpdateExamTopicMappingMaster=true;
+					existingPercentage =examTopicMasterRecord.getBigDecimal(CommonConstants.PERCENTAGE);			
+				}
+				totalPercentageAdded = totalPercentageAdded.add(examTopicMasterRecord.getBigDecimal(CommonConstants.PERCENTAGE));			
 			}
 			
 			//Normally total percentage will be 100
 			BigDecimal totalPercentage = new BigDecimal(100);
+			if(isUpdateExamTopicMappingMaster) {
+				totalPercentageAdded = totalPercentageAdded.subtract(existingPercentage);
+			}
 			
 			//Available percentage is calculated by subtracting totalPercentageAdded from totalPercentage
 			BigDecimal availablePercentage = totalPercentage.subtract(totalPercentageAdded);
+			
 			
 			
 			/*Before converting BigDecimal to Double,
@@ -177,7 +189,7 @@ public class ExamTopicMappingMasterEvents {
 		
 		//Returned and terminated the method if Response from findNoOfQuestionCountByExamId service is error 
 		if(ServiceUtil.isError(noOfQuestionResp)) {
-			String errMsg = "Error while executing findNoOfQuestionCountByExamID service";
+			String errMsg = "Error while executing findNoOfQuestionCountByExamId service";
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -189,23 +201,46 @@ public class ExamTopicMappingMasterEvents {
 
 			// questionPerExam calculated using the business logic
 			Long noOfQuestion = (Long) noOfQuestionResp.get(CommonConstants.NO_OF_QUESTIONS);
-			Integer percentageOfTopic = Integer.parseInt(percentage);
-			Long questionPerExam = ((noOfQuestion * percentageOfTopic) / 100);
+			Double percentageOfTopic = Double.parseDouble(percentage);
+			Long questionPerExam = (long) ((noOfQuestion * percentageOfTopic) / 100);
 			addTopicToExamContextMap.put(CommonConstants.QUESTION_PER_EXAM, questionPerExam);
 
+			
+			
 			// creating examTopicMapping records
 			Map<String, Object> addTopicToExamResp = null;
-			try {
-				addTopicToExamResp = dispatcher.runSync("addTopicToExam", addTopicToExamContextMap);
-				Debug.logInfo("Successfully executed addTopicToExam Service", module);
+			if(isUpdateExamTopicMappingMaster) {
+				try {
+					addTopicToExamResp = dispatcher.runSync("updateExamTopicMappingMaster", addTopicToExamContextMap);
+					
+				} catch (GenericServiceException e) {
+					
+					String errMsg = "Failed to execute updateExamTopicMappingMaster service : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					return CommonConstants.ERROR;
+				}
 				
-			} catch (GenericServiceException e) {
-				Debug.logError(e, "Failed to execute addTopicToExam service", module);
-				String errMsg = "Failed to execute addTopicToExam service : " + e.getMessage();
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				return CommonConstants.ERROR;
+				
+			}else {
+				
+				try {
+					addTopicToExamResp = dispatcher.runSync("addTopicToExam", addTopicToExamContextMap);
+					Debug.logInfo("Successfully executed addTopicToExam Service", module);
+					
+				} catch (GenericServiceException e) {
+					Debug.logError(e, "Failed to execute addTopicToExam service", module);
+					String errMsg = "Failed to execute addTopicToExam service : " + e.getMessage();
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					return CommonConstants.ERROR;
+				}
 			}
+			
+			
+			
+			
 			//if error occurred while executing addTopicToExam service ,return is returned (method terminated)
 			if(ServiceUtil.isError(addTopicToExamResp)) {
 				String errMsg = "Error while executing addTopicToExam service";
@@ -320,86 +355,89 @@ public class ExamTopicMappingMasterEvents {
 
 		return CommonConstants.SUCCESS;
 	}
-	public static String updateExamTopicMappingRecord(HttpServletRequest request,HttpServletResponse response){
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
-		Map<String, Object> updateExamTopicMappingRecordResp = null;
-		Map<String, Object> findPercentageListInExamTopicMappingMasterResp=null;
-		Map<String, Object> findNoOfQuestionsFromExamMasterResp= null;
-		List<BigDecimal> PercentageList=null;
-		BigDecimal totalPercentage = new BigDecimal(0);
-		BigDecimal totalTopics= new BigDecimal(-1);
-		
-		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
-		if(!combinedMap.containsKey(CommonConstants.PERCENTAGE)) {
-			String errMsg = "Percentage is not available, please enter a percentage ";
-			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			return CommonConstants.ERROR;
-		}
-		BigDecimal percentage= new BigDecimal(combinedMap.get(CommonConstants.PERCENTAGE).toString());
-		
-		try {
-			findPercentageListInExamTopicMappingMasterResp = 
-					dispatcher.runSync("findPercentageListInExamTopicMappingMaster", combinedMap);
-			
-		} catch (GenericServiceException e1) {
-			Debug.logError(e1.getMessage(), module);
-		}
-		catch (Exception e) {
-			Debug.logError(e.getMessage(), module);
-		}
-		PercentageList= (List<BigDecimal>) findPercentageListInExamTopicMappingMasterResp.get("percentageList");
-		BigDecimal percentageToBeUpdated= (BigDecimal) findPercentageListInExamTopicMappingMasterResp.get("percentageToBeUpdated");
-		
-		if(UtilValidate.isNotEmpty(PercentageList)) {
-			for(BigDecimal Topicpercentage:PercentageList) {
-				totalPercentage.add(Topicpercentage);
-				totalTopics.add(new BigDecimal(1));
-			}
-			totalPercentage.subtract(percentageToBeUpdated);
-			
-			int percentageDifference= (((((totalPercentage.divide(totalTopics)).multiply(new BigDecimal(100))).add(percentage))).compareTo(new BigDecimal(100)));
-						
-			if(percentageDifference>1|| percentageDifference==0) {
-				String errMsg = "Percentage exceeds maximum limit, please enter a lower percentage ";
-				Debug.logError(errMsg, module);
-				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-				return CommonConstants.ERROR;
-			}
-			
-			try {
-				findNoOfQuestionsFromExamMasterResp = dispatcher.runSync("findNoOfQuestionsFromExamMaster", combinedMap);
-			} catch (GenericServiceException e) {
-				
-			}
-			Long noOfQuestions = Long.parseLong((findNoOfQuestionsFromExamMasterResp.get(CommonConstants.NO_OF_QUESTIONS)).toString());
-			Long questionsPerExam= noOfQuestions* percentage.longValue();
-			
-			combinedMap.put(CommonConstants.QUESTION_PER_EXAM, questionsPerExam);
-		}
-		
-		try {
-			updateExamTopicMappingRecordResp = dispatcher.runSync("updateExamTopicMappingRecord", combinedMap);
-		} catch (GenericServiceException e) {
-			String errMsg = "Failed to execute editExamTopicMapping service : " + e.getMessage();
-			Debug.logError(e, errMsg, module);
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			return CommonConstants.ERROR;
-		}
-		if(ServiceUtil.isSuccess(updateExamTopicMappingRecordResp)) {
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("updateExamTopicMappingRecord", updateExamTopicMappingRecordResp);
-		}
-		if(ServiceUtil.isError(updateExamTopicMappingRecordResp)) {
-			String errMsg = "Error returned while executing editExamTopicMapping";
-			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			return CommonConstants.ERROR;
-		}
-		return CommonConstants.SUCCESS;
-	}
+	
+	
+//	
+//	public static String updateExamTopicMappingRecord(HttpServletRequest request,HttpServletResponse response){
+//		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+//		Map<String, Object> updateExamTopicMappingRecordResp = null;
+//		Map<String, Object> findPercentageListInExamTopicMappingMasterResp=null;
+//		Map<String, Object> findNoOfQuestionsFromExamMasterResp= null;
+//		List<BigDecimal> PercentageList=null;
+//		BigDecimal totalPercentage = new BigDecimal(0);
+//		BigDecimal totalTopics= new BigDecimal(-1);
+//		
+//		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+//		if(!combinedMap.containsKey(CommonConstants.PERCENTAGE)) {
+//			String errMsg = "Percentage is not available, please enter a percentage ";
+//			Debug.logError(errMsg, module);
+//			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//			return CommonConstants.ERROR;
+//		}
+//		BigDecimal percentage= new BigDecimal(combinedMap.get(CommonConstants.PERCENTAGE).toString());
+//		
+//		try {
+//			findPercentageListInExamTopicMappingMasterResp = 
+//					dispatcher.runSync("findPercentageListInExamTopicMappingMaster", combinedMap);
+//			
+//		} catch (GenericServiceException e1) {
+//			Debug.logError(e1.getMessage(), module);
+//		}
+//		catch (Exception e) {
+//			Debug.logError(e.getMessage(), module);
+//		}
+//		PercentageList= (List<BigDecimal>) findPercentageListInExamTopicMappingMasterResp.get("percentageList");
+//		BigDecimal percentageToBeUpdated= (BigDecimal) findPercentageListInExamTopicMappingMasterResp.get("percentageToBeUpdated");
+//		
+//		if(UtilValidate.isNotEmpty(PercentageList)) {
+//			for(BigDecimal Topicpercentage:PercentageList) {
+//				totalPercentage.add(Topicpercentage);
+//				totalTopics.add(new BigDecimal(1));
+//			}
+//			totalPercentage.subtract(percentageToBeUpdated);
+//			
+//			int percentageDifference= (((((totalPercentage.divide(totalTopics)).multiply(new BigDecimal(100))).add(percentage))).compareTo(new BigDecimal(100)));
+//						
+//			if(percentageDifference>1|| percentageDifference==0) {
+//				String errMsg = "Percentage exceeds maximum limit, please enter a lower percentage ";
+//				Debug.logError(errMsg, module);
+//				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//				return CommonConstants.ERROR;
+//			}
+//			
+//			try {
+//				findNoOfQuestionsFromExamMasterResp = dispatcher.runSync("findNoOfQuestionsFromExamMaster", combinedMap);
+//			} catch (GenericServiceException e) {
+//				
+//			}
+//			Long noOfQuestions = Long.parseLong((findNoOfQuestionsFromExamMasterResp.get(CommonConstants.NO_OF_QUESTIONS)).toString());
+//			Long questionsPerExam= noOfQuestions* percentage.longValue();
+//			
+//			combinedMap.put(CommonConstants.QUESTION_PER_EXAM, questionsPerExam);
+//		}
+//		
+//		try {
+//			updateExamTopicMappingRecordResp = dispatcher.runSync("updateExamTopicMappingMaster", combinedMap);
+//		} catch (GenericServiceException e) {
+//			String errMsg = "Failed to execute updateExamTopicMappingMaster service : " + e.getMessage();
+//			Debug.logError(e, errMsg, module);
+//			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//			return CommonConstants.ERROR;
+//		}
+//		if(ServiceUtil.isSuccess(updateExamTopicMappingRecordResp)) {
+//			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+//			request.setAttribute("updateExamTopicMappingRecord", updateExamTopicMappingRecordResp);
+//		}
+//		if(ServiceUtil.isError(updateExamTopicMappingRecordResp)) {
+//			String errMsg = "Error returned while executing editExamTopicMapping";
+//			Debug.logError(errMsg, module);
+//			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+//			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+//			return CommonConstants.ERROR;
+//		}
+//		return CommonConstants.SUCCESS;
+//	}
 }

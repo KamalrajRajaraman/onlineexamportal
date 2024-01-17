@@ -5,12 +5,13 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import ListUser from './ListUser';
 import ShowExam from './ShowExam';
 import UserDetails from './UserDetails';
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 export const EditUserContext=createContext();
 const EditUser = () => {
   const { partyId } = useParams();
   const [exams, setExams] = useState([]);
   const fetchAllExamsForUser =()=>{
-    fetch(`https://localhost:8443/onlineexam/control/findAllExamForPartyId`, {
+    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`findAllExamForPartyId`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       credentials: "include",

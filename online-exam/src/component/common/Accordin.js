@@ -7,26 +7,28 @@ const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
     setToggle(!toggle);
   };
 
+
  
   return (
     <div className=" bg-white border">
       <div className="accordion accordion-flush">
         <div className="accordion-item">
-          <h2 className="accordion-header position-relative ">
+          <h2 className="accordion-header ">
             <button
               onClick={onClick}
-              className={`accordion-button ${toggle && "collapsed"}`}
+              className={`accordion-button ${ "collapsed"}`}
               type="button"
             >
-              <h5>{object[name]}</h5>
+              <h5 className="col-10">{object[name]}</h5>
               <p></p>
-            </button>
-            <div className="  row z-3 position-absolute end-0 me-5  top-0 mt-3 ">
-              <button   onClick={()=>onEdit(object[id], object)} className="btn btn-outline-success  btn-sm me-4 col">Edit</button>
-              <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger btn-sm me-3 col ">Delete</button>
+              <div className=" ms-1 row    ">
+              <button   onClick={()=>onEdit(object[id], object)} className="btn  btn-outline-success  btn-sm me-4 col">Edit</button>
+              <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger  btn-sm me-3 col ">Delete</button>
             </div>
+            </button>
+           
           </h2>
-          <div className={`accordion-collapse ${toggle && "collapse"}`}>
+          <div className={`accordion-collapse ${ "collapse"}`}>
             <div className="accordion-body">
             
             </div>

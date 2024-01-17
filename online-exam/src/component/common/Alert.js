@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 const Alert = ({alertInfo}) => {
 
 
-  const [time,setTime] =useState(0)
-  const [seconds,setSeconds] = useState(0);
+
   
   
 

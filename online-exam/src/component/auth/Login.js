@@ -3,7 +3,7 @@ import Input from "../common/Input";
 import { useAuth } from "./Auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../common/CommonConstant"
 const Login = () => {
   const auth = useAuth();
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ const Login = () => {
   const onLogin = async (userDetails) => {
     console.log(userDetails);
 
-    const res = await fetch(
-      `https://localhost:8443/onlineexam/control/onlineExamLogin`,
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+      "onlineExamLogin",
       {
         method: "POST",
         headers: {
