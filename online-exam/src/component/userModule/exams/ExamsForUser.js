@@ -4,7 +4,7 @@ import ExamAccordion from "./ExamAccordion";
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const ExamsForUser = () => {
   const [exams, setExams] = useState([]);
-  const navigate = useNavigate();
+  
  
   useEffect(() => {
     fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"findAllExamForPartyId", {
@@ -27,7 +27,7 @@ const ExamsForUser = () => {
       <div className="mt-1 ">
       {exams.map((exam) => (
 
-        <ExamAccordion object={exam} />
+        <ExamAccordion key ={exam.examId}object={exam} />
        
             // <h2  key={exam.examId} className ="accordion-header border py-3 px-3" id="headingOne">
             //   <div className="row">

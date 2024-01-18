@@ -270,6 +270,22 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
+	<request-map uri="findAllUserAttemptByPartyId">
+		<security https="true" auth="true" />
+		<event type="java" path="com.vastpro.events.UserAttemptEvents"
+			invoke="findAllUserAttemptByPartyId" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
+	<request-map uri="findUserAttemptTopicMasterByPerforamceId">
+		<security https="true" auth="true" />
+		<event type="java" path="com.vastpro.events.UserAttemptEvents"
+			invoke="findUserAttemptTopicMasterByPerforamceId" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	
     <request-map uri="updateAnswerInUserAttemptAnswerMaster">
 		<security https="true" auth="true"/>
 		<event type="java" path="com.vastpro.events.UserAttemptEvents" invoke="updateAnswerInUserAttemptAnswerMaster"/>

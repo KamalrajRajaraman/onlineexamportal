@@ -8,6 +8,7 @@ import {
   PROTOCOL,
   WEB_APPLICATION,
 } from "../../common/CommonConstant";
+import UserAttemptDetailsTable from "../user-dashboard/UserAttemptDetailsTable";
 
 const ResultPage = () => {
   
@@ -50,6 +51,7 @@ const ResultPage = () => {
 
       const resultStatus = resultDetails.userPassed === "Y" ? "Pass" : "Fail";
       setResult({
+        examName:resultDetails.examName,
         noOfQuestions: resultDetails.noOfQuestions,
         score: resultDetails.score,
         totalCorrect: resultDetails.totalCorrectQuestionsInExam,
@@ -68,56 +70,9 @@ const ResultPage = () => {
       <div>
         <h2>Exam Results</h2>
       </div>
-      <table className="table table-striped border">
-        <thead>
-          <tr>
-            <th scope="col">Exam Name</th>
-            <th scope="col">Total Correct</th>
-            <th scope="col">Total Wrong</th>
-            <th scope="col">Total Question</th>
-            <th scope="col">Score</th>
-            <th scope="col">Result</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Java</th>
-            <td> {result.totalCorrect}</td>
-            <td> {result.totalWrong}</td>
-            <td> {result.noOfQuestions}</td>
-            <td> {result.score}</td>
-            <td>{result.userPassed}</td>
-          </tr>
-         
-        </tbody>
-      </table>
-      <div className="mt-3">
-        <h4>Topicwise Results</h4>
-      </div>
-      <table class="table table-striped border ">
-      <thead>
-         
-        <tr >
-          <th scope="col">TopicId</th>
-          <th scope="col">Topic pass percentage</th>
-          <th scope="col">User topic percentage</th>
-          <th scope="col">User passed this topic</th>
-        </tr>
-        </thead>
-        <tbody>
-        {topicResult &&
-          topicResult.map((value) => {
-            return (
-              <tr className="mt-4" key={value.topicId}>
-                <td>{value.topicId}</td>
-                <td>{value.topicPassPercentage}</td>
-                <td>{value.userTopicPercentage}</td>
-                <td>{value.userPassedThisTopic}</td>
-              </tr>
-            );
-          })}</tbody>
-      </table>
+
+      <UserAttemptDetailsTable userAttemptRecord={result} topicResult={topicResult} />
+      
      
 
     </div>

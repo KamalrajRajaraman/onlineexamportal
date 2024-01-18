@@ -4,10 +4,12 @@ import Swal from "sweetalert2";
 import { EditUserContext } from "./EditUser";
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const EditUserExam = ({ userExamMapping }) => {
-    const {fetchAllExamsForUser } = useContext(EditUserContext);
+
+  const {fetchAllExamsForUser } = useContext(EditUserContext);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [formValues, setFormValues] = useState(userExamMapping);
+  
   useEffect(() => {
     console.log(formErrors);
     console.log(Object.keys(formErrors).length);
