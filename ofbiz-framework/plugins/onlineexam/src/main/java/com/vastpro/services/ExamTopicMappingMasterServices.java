@@ -41,7 +41,7 @@ public class ExamTopicMappingMasterServices {
 		
 		try {
 			//Query for fetching record from ExamTopicMappingViewEntity based on examId
-			genericValueList =  EntityQuery.use(delegator).from("ExamTopicMappingViewEntity").where(CommonConstants.EXAM_ID,examIdPK).queryList();
+			genericValueList =  EntityQuery.use(delegator).from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY).where(CommonConstants.EXAM_ID,examIdPK).queryList();
 		} 
 		catch (GenericEntityException e) {
 			//Exception occured while fetching record from entity
@@ -83,7 +83,7 @@ public class ExamTopicMappingMasterServices {
 				examTopicMappingRecordList.add(examTopicMappingRecord);
 						
 			}
-			result.put("examTopicMappingRecordList", examTopicMappingRecordList);
+			result.put(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST, examTopicMappingRecordList);
 			
 		}
 		return result;
@@ -100,11 +100,14 @@ public class ExamTopicMappingMasterServices {
 		Map<String, Object> serviceResultMap=ServiceUtil.returnSuccess();
 		
 		try {
-			findPercentageBeforeUpdateGV = EntityQuery.use(delegator).select(CommonConstants.PERCENTAGE).from(CommonConstants.EXAM_TOPIC_MAPPING_MASTER).where(CommonConstants.EXAM_ID, examId, CommonConstants.TOPIC_ID, topicId).queryOne();
+			findPercentageBeforeUpdateGV = EntityQuery.use(delegator).select(CommonConstants.PERCENTAGE).
+								from(CommonConstants.EXAM_TOPIC_MAPPING_MASTER).
+								where(CommonConstants.EXAM_ID, examId, CommonConstants.TOPIC_ID, topicId)
+								.queryOne();
 		} catch (GenericEntityException e) {
 			Debug.logError(e, module);
 		}
-		serviceResultMap.put("percentageToBeUpdated", findPercentageBeforeUpdateGV.getBigDecimal(CommonConstants.PERCENTAGE));
+		serviceResultMap.put(CommonConstants.PERCENTAGE_TO_BE_UPDATED, findPercentageBeforeUpdateGV.getBigDecimal(CommonConstants.PERCENTAGE));
 		
 		try {
 			topicPercentageListGV= EntityQuery.use(delegator).select(CommonConstants.PERCENTAGE).from(CommonConstants.EXAM_TOPIC_MAPPING_MASTER).queryList();
@@ -115,7 +118,7 @@ public class ExamTopicMappingMasterServices {
 		for(GenericValue topicPercentage: topicPercentageListGV) {
 			topicPercentageList.add(topicPercentage.getBigDecimal(CommonConstants.PERCENTAGE));
 		}
-		serviceResultMap.put("percentageList", topicPercentageList);
+		serviceResultMap.put(CommonConstants.PERCENTAGE_LIST, topicPercentageList);
 		return serviceResultMap;
 	}
 

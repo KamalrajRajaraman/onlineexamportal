@@ -101,6 +101,8 @@ public interface CommonConstants {
 
 	//--------------------------------------View Entity Name Constant-------------------
 	public static final String USER_MASTER = "UserMaster";
+	public static final String EXAM_TOPIC_MAPPING_VIEW_ENTITY = "ExamTopicMappingViewEntity";
+	
 	
 	//--------------------------USER EXAM MAPPING ENTITY CONSTANT----------------------------
 	public static final String ALLOWED_ATTEMPTS ="allowedAttempts";
@@ -142,5 +144,44 @@ public interface CommonConstants {
 	
 	//constant 
 	public static final String PARTY_ROLE_TYPE_ID="partyRoleTypeId";
+	
+	//Service names
+	public static final String FIND_ALL_EXAMS = "findAllExams";
+	public static final String FIND_EXAM_BY_ID= "findExamById";
+	public static final String DELETE_EXAM="deleteExam";
+	public static final String EDIT_EXAM = "editExam";
+	public static final String UPDATE_TOPIC ="updateTopic";
+	public static final String CREATE_TOPIC = "createTopic";
+	public static final String FIND_ALL_TOPICS = "findAllTopics";
+	public static final String FIND_TOPIC_BY_ID = "findTopicById";
+	public static final String DELETE_TOPIC = "deleteTopic";
+	public static final String UPDATE_QUESTION = "updateQuestion";
+	public static final String CREATE_QUESTION = "createQuestion";
+	public static final String FIND_ALL_QUESTIONS = "findAllQuestions";
+	public static final String DELETE_QUESTION = "deleteQuestion";
+	public static final String FIND_NO_OF_QUESTION_COUNT_BY_EXAM_ID = "findNoOfQuestionCountByExamId";
+	public static final String UPDATE_EXAM_TOPIC_MAPPING_MASTER = "updateExamTopicMappingMaster";
+	public static final String ADD_TOPIC_TO_EXAM = "addTopicToExam";
+	public static final String CREATE_PERSON_AND_USER_LOGIN = "createPersonAndUserLogin";
+	public static final String CREATE_PARTY_ROLE_RECORD = "createPartyRoleRecord";
+	public static final String FIND_ALL_USER = "findAllUser";
+	public static final String DELETE_USER_LOGIN = "deleteUserLogin";
+	
+	
+	//Event's constants
+	public static final String EXAM = "exam";
+	public static final String EXAM_LIST = "examList";
+	public static final String TOPIC = "topic";
+	public static final String TOPIC_LIST = "topicList";
+	public static final String QUESTION = "question";
+	public static final String QUESTION_LIST ="questionList";
+	public static final String EXAM_TOPIC_MAPPING_MASTER_RECORD = "examTopicMappingMasterRecord";
+	public static final String EXAM_TOPIC_MAPPING_RECORD_LIST = "examTopicMappingRecordList";
+	public static final String PERSON_AND_USER_LOGIN_MAP = "personAndUserLoginMap";
+	public static final String PARTY_ROLE_RECORD_MAP = "partyRoleRecordMap";
+	public static final String USER_LIST = "userList";
+	public static final String QUESTION_ID_LIST = "questionIdList";
+	public static final String PERCENTAGE_TO_BE_UPDATED = "percentageToBeUpdated";
+	public static final String PERCENTAGE_LIST = "percentageList";
 	
 }

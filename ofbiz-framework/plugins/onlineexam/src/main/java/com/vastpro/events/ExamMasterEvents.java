@@ -110,7 +110,7 @@ public class ExamMasterEvents {
 			exam.put(CommonConstants.ANSWER_MUST,createExamResp.get(CommonConstants.ANSWER_MUST) );
 			exam.put(CommonConstants.ENABLE_NEGATIVE_MARK,createExamResp.get(CommonConstants.ENABLE_NEGATIVE_MARK) );
 			exam.put(CommonConstants.NEGATIVE_MARK_VALUE,createExamResp.get(CommonConstants.NEGATIVE_MARK_VALUE) );		
-			request.setAttribute("exam", exam);
+			request.setAttribute(CommonConstants.EXAM, exam);
 			
 		}
 		else {
@@ -138,7 +138,7 @@ public class ExamMasterEvents {
 		//Calling the service which in return provides the list of exams
 		Map<String, Object> findAllExamsResp = null;
 		try {
-			findAllExamsResp = dispatcher.runSync("findAllExams", findExamContext);	
+			findAllExamsResp = dispatcher.runSync(CommonConstants.FIND_ALL_EXAMS, findExamContext);	
 			Debug.logInfo("Successfully executed findAllExams service", module);
 		} catch (GenericServiceException e) {
 			 Debug.logError(e, "Failed to execute findAllExams service", module);
@@ -150,7 +150,7 @@ public class ExamMasterEvents {
 		//If the service returns success result and  examList is added to the request
 		if (ServiceUtil.isSuccess(findAllExamsResp)) {	
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("examList", findAllExamsResp.get("examList"));
+			request.setAttribute(CommonConstants.EXAM_LIST, findAllExamsResp.get(CommonConstants.EXAM_LIST));
 		}
 		else {
 			//If the service returns error ,result and response Map Object is added to request Object
@@ -190,7 +190,7 @@ public class ExamMasterEvents {
 		//Calling the findExamById  service which  return the exam detail for given the examId
 		Map<String, Object> findExamByIdResp = null;
 		try {
-			findExamByIdResp = dispatcher.runSync("findExamById", findExamByIdContext);
+			findExamByIdResp = dispatcher.runSync(CommonConstants.FIND_EXAM_BY_ID, findExamByIdContext);
 			Debug.logInfo("Successfully executed findExamById service", module);
 		} catch (GenericServiceException e) {			
 			 Debug.logError(e, "Failed to execute findExamById service", module);
@@ -204,7 +204,7 @@ public class ExamMasterEvents {
 		//If the service returns success result and exam record is added to the request
 		if (ServiceUtil.isSuccess(findExamByIdResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("exam", findExamByIdResp.get("exam"));
+			request.setAttribute(CommonConstants.EXAM, findExamByIdResp.get(CommonConstants.EXAM));
 		}
 		else {
 			//If the service returns error ,result and response Map Object is added to request Object
@@ -245,7 +245,7 @@ public class ExamMasterEvents {
 		
 		//Calling the service which deletes the exam
 		try {
-			deleteExamResp = dispatcher.runSync("deleteExam", deleteExamContext);
+			deleteExamResp = dispatcher.runSync(CommonConstants.DELETE_EXAM , deleteExamContext);
 			Debug.logInfo("Successfully executed deleteExam service", module);
 			
 		} catch (GenericServiceException e) {
@@ -289,10 +289,11 @@ public class ExamMasterEvents {
              return CommonConstants.ERROR;
 		}
 		try {
-			editExamResp = dispatcher.runSync("editExam", combinedMap);
-			
-			
-		} catch (GenericServiceException e) {
+			editExamResp = dispatcher.runSync(CommonConstants.EDIT_EXAM, combinedMap);
+			Debug.logInfo("Successfully executed editExam service", module);
+					
+		} 
+		catch (GenericServiceException e) {
 			String errMsg = "Failed to execute editExam service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -306,7 +307,7 @@ public class ExamMasterEvents {
 		}
 		else {
 			//If the service returns error ,result and response Map Object is added to request Object
-			String errMsg = "Error while executing deleteExam service";
+			String errMsg = "Error while executing editExam service";
 			Debug.logError(errMsg, module);	
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg); 
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);

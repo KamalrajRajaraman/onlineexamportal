@@ -61,11 +61,12 @@ public class ExamTopicMappingMasterEvents {
 									"MandatoryFieldErrMsg", 
 									CommonConstants.RESOURCE_ERROR,false);
 		
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 		
 		if(hasFormErrors) {
-			Debug.logError( "Invalid Input", module);
+			
 			String errMsg = "Invalid Input";
+			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;		
@@ -94,8 +95,8 @@ public class ExamTopicMappingMasterEvents {
 								.queryList();
 
 		} catch (GenericEntityException e) {
-			Debug.logError(e, "Failed retrieve records from ExamTopicMappingMaster for given examID and TopicId ", module);
 			String errMsg = "Failed retrieve records from ExamTopicMappingMaster for given examID and TopicId : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
@@ -162,8 +163,6 @@ public class ExamTopicMappingMasterEvents {
 			}
 		}
 		
-	
-		
 		// creating map to pass required context to the service called
 		Map<String, Object> addTopicToExamContextMap = new HashMap<>();
 		addTopicToExamContextMap.put(CommonConstants.EXAM_ID, examId);
@@ -175,7 +174,7 @@ public class ExamTopicMappingMasterEvents {
 		//Retrieving noOfQuestion from ExamMaster Entity to calculate questionPerExam
 		Map<String, Object> noOfQuestionResp = null;
 		try {
-			noOfQuestionResp = dispatcher.runSync("findNoOfQuestionCountByExamId", addTopicToExamContextMap);
+			noOfQuestionResp = dispatcher.runSync(CommonConstants.FIND_NO_OF_QUESTION_COUNT_BY_EXAM_ID, addTopicToExamContextMap);
 			Debug.logInfo("Successfully executed findNoOfQuestionCountByExamId Service", module);
 		} catch (GenericServiceException e) {
 			
@@ -211,8 +210,8 @@ public class ExamTopicMappingMasterEvents {
 			Map<String, Object> addTopicToExamResp = null;
 			if(isUpdateExamTopicMappingMaster) {
 				try {
-					addTopicToExamResp = dispatcher.runSync("updateExamTopicMappingMaster", addTopicToExamContextMap);
-					
+					addTopicToExamResp = dispatcher.runSync(CommonConstants.UPDATE_EXAM_TOPIC_MAPPING_MASTER, addTopicToExamContextMap);
+					Debug.logInfo("Successfully executed updateExamTopicMappingMaster Service", module);
 				} catch (GenericServiceException e) {
 					
 					String errMsg = "Failed to execute updateExamTopicMappingMaster service : " + e.getMessage();
@@ -226,12 +225,12 @@ public class ExamTopicMappingMasterEvents {
 			}else {
 				
 				try {
-					addTopicToExamResp = dispatcher.runSync("addTopicToExam", addTopicToExamContextMap);
+					addTopicToExamResp = dispatcher.runSync(CommonConstants.ADD_TOPIC_TO_EXAM, addTopicToExamContextMap);
 					Debug.logInfo("Successfully executed addTopicToExam Service", module);
 					
 				} catch (GenericServiceException e) {
-					Debug.logError(e, "Failed to execute addTopicToExam service", module);
 					String errMsg = "Failed to execute addTopicToExam service : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -255,12 +254,12 @@ public class ExamTopicMappingMasterEvents {
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 				GenericValue insertedRecordGenericValue = null;
 				try {
-					insertedRecordGenericValue = EntityQuery.use(delegator).from("ExamTopicMappingViewEntity")
+					insertedRecordGenericValue = EntityQuery.use(delegator).from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY)
 							.where(CommonConstants.EXAM_ID, examId, CommonConstants.TOPIC_ID, topicId).queryOne();
 					Debug.logInfo("Successfully retrieved  records from ExamTopicMappingViewEntity", module);
 				} catch (GenericEntityException e) {
-					Debug.logError(e, "Failed to retrieve records from ExamTopicMappingViewEntity ", module);
 					String errMsg = "Failed to retrieve records from ExamTopicMappingViewEntity : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -294,7 +293,7 @@ public class ExamTopicMappingMasterEvents {
 					examTopicMappingRecord.put(CommonConstants.TOPIC_PASS_PERCENTAGE, topicPassPercentage);
 					examTopicMappingRecord.put(CommonConstants.QUESTION_PER_EXAM, questionPerExam);
 
-					request.setAttribute("examTopicMappingMasterRecord", examTopicMappingRecord);
+					request.setAttribute(CommonConstants.EXAM_TOPIC_MAPPING_MASTER_RECORD, examTopicMappingRecord);
 				}
 			}
 		}
@@ -318,8 +317,8 @@ public class ExamTopicMappingMasterEvents {
 		    return CommonConstants.ERROR;		
 		}
 		
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> findAllContextMap = new HashMap<>();
 		findAllContextMap.put(CommonConstants.EXAM_ID, examId);
@@ -331,8 +330,8 @@ public class ExamTopicMappingMasterEvents {
 			findExamTopicMappingResp = dispatcher.runSync("findExamTopicMappingRecords", findAllContextMap);
 			Debug.logInfo("Successfully executed findExamTopicMappingRecords Service", module);
 		} catch (GenericServiceException e) {
-			Debug.logError(e, "Failed to execute findExamTopicMappingRecords service", module);
 			String errMsg = "Failed to execute findExamTopicMappingRecords service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
@@ -341,7 +340,7 @@ public class ExamTopicMappingMasterEvents {
 		if (ServiceUtil.isSuccess(findExamTopicMappingResp)) {
 			
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("examTopicMappingRecordList", findExamTopicMappingResp.get("examTopicMappingRecordList"));
+			request.setAttribute(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST, findExamTopicMappingResp.get(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST));
 		}
 		else {
 			//if findExamTopicMappingRecords Service result is error ,error message is set in request and return error

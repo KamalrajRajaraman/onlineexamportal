@@ -50,7 +50,7 @@ public class OnlineExamEvents {
 		Set<ConstraintViolation<LoginValidator>> checkValidationErrors = HibernateHelper.checkValidationErrors(loginForm, Loggable.class);
 		
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 		
 		if(hasFormErrors) {
 			String errMsg = "Invalid Input" + module;
@@ -82,14 +82,13 @@ public class OnlineExamEvents {
 					 roleTypeList = EntityQuery
 								.use(delegator)
 								.select(CommonConstants.ROLE_TYPE_ID)
-								.from("UserMaster")
+								.from(CommonConstants.USER_MASTER)
 								.where(CommonConstants.PARTY_ID,partyId)
 								.queryList();
 				}
 				catch (GenericEntityException e) {
-					
-					Debug.logError(e, "Unable to retrieve RoleTypeId  from UserMaster ", module);	
 					String errMsg = "Unable to retrieve RoleTypeId  from UserMaster: " + e.getMessage();
+					Debug.logError(e, errMsg, module);	
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -163,11 +162,11 @@ public class OnlineExamEvents {
 		//createPersonAndUserLogin service is executed
 		Map<String, Object> createPersonAndUserLoginResp = null;
 		try {
-			createPersonAndUserLoginResp = dispatcher.runSync("createPersonAndUserLogin", combinedMap);
+			createPersonAndUserLoginResp = dispatcher.runSync(CommonConstants.CREATE_PERSON_AND_USER_LOGIN, combinedMap);
 			Debug.logInfo("Successfully executed createPersonAndUserLogin service", module);
 		} catch (GenericServiceException e) {			
-			Debug.logError(e, "Failed to execute createPersonAndUserLogin service", module);
 			String errMsg = "Failed to execute createPersonAndUserLogin service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
             return CommonConstants.ERROR;
@@ -187,7 +186,7 @@ public class OnlineExamEvents {
 		 *then createPartyRole services is executed*/
 		if (ServiceUtil.isSuccess(createPersonAndUserLoginResp)) {
 			
-			request.setAttribute("PersonAndUserLoginMap", createPersonAndUserLoginResp);
+			request.setAttribute(CommonConstants.PERSON_AND_USER_LOGIN_MAP, createPersonAndUserLoginResp);
 			
 			//partyId Of created user is available in createPersonAndUserLoginResp Map
 			String partyId = (String) createPersonAndUserLoginResp.get(CommonConstants.PARTY_ID);
@@ -202,7 +201,7 @@ public class OnlineExamEvents {
 			 * */
 			Map<String, Object> createPartyRoleRecordResp = null;
 			try {
-				createPartyRoleRecordResp = dispatcher.runSync("createPartyRoleRecord", createRoleCtx);
+				createPartyRoleRecordResp = dispatcher.runSync(CommonConstants.CREATE_PARTY_ROLE_RECORD, createRoleCtx);
 				Debug.logInfo("Successfully executed createPartyRoleRecord service", module);
 				
 			} catch (GenericServiceException e) {
@@ -220,7 +219,7 @@ public class OnlineExamEvents {
 				//If the service returns success, success message is added to the request
 				Debug.logInfo("Role for the user is set successfully!", module);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-				request.setAttribute("PartyRoleRecordMap", createPartyRoleRecordResp);
+				request.setAttribute(CommonConstants.PARTY_ROLE_RECORD_MAP, createPartyRoleRecordResp);
 			}
 			else {
 				String errMsg = "Error occured while executing createPartyRoleRecord service";
@@ -246,7 +245,7 @@ public class OnlineExamEvents {
 		Map<String, Object> serviceResult = null;
 		try {
 
-			serviceResult = dispatcher.runSync("findAllUser", findAllUserContext);
+			serviceResult = dispatcher.runSync(CommonConstants.FIND_ALL_USER, findAllUserContext);
 			Debug.logInfo("Successfully execute findAllUser service", module);
 
 		} catch (GenericServiceException e) {
@@ -259,7 +258,7 @@ public class OnlineExamEvents {
 		}
 		if (ServiceUtil.isSuccess(serviceResult)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("userList", serviceResult.get("userList"));
+			request.setAttribute(CommonConstants.USER_LIST, serviceResult.get(CommonConstants.USER_LIST));
 		}
 		else {
 			String errMsg = "Error occured while executing findAllUser service";
@@ -290,7 +289,7 @@ public class OnlineExamEvents {
 		}
 		GenericValue userLoginId =null;
 		try {
-			userLoginId = EntityQuery.use(delegator).select(CommonConstants.USER_LOGIN_ID).from("UserLogin").where(CommonConstants.PARTY_ID,partyId).queryOne();
+			userLoginId = EntityQuery.use(delegator).select(CommonConstants.USER_LOGIN_ID).from(CommonConstants.USER_LOGIN).where(CommonConstants.PARTY_ID,partyId).queryOne();
 		} catch (GenericEntityException e) {
 			String errMsg = "Failed to retrieve userLoginId from  UserMaster View Entity" + e.getMessage();
 			Debug.logError(e, errMsg, module);
@@ -312,7 +311,7 @@ public class OnlineExamEvents {
 
 		// calling deleteUserLogin service
 		try {
-			deleteUserLoginResp = dispatcher.runSync("deleteUserLogin", combinedMap);
+			deleteUserLoginResp = dispatcher.runSync(CommonConstants.DELETE_USER_LOGIN, combinedMap);
 			Debug.logInfo("Succesfully executed deleteUserLogin service", module);
 		} catch (GenericServiceException e) {
 			// If Exception occurred while execute the service, set result as Error in request
