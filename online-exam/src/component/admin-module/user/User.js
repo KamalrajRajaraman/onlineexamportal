@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import "./styles/User.css"
 
 export const UserContext = createContext(null);
 function User() {
@@ -12,14 +13,14 @@ function User() {
           <h2 className="p-2">User</h2>
         </div>
       </div>
-      <nav>
+      <nav className="">
         <div
-          className="nav nav-tabs mt-2 border navbar-light bg-light fw-bold   px-2 pt-2"
+          className="nav bg-secondary nav-tabs mt-2 border  fw-bold   px-2 pt-2"
           id="nav-tab"
           role="tablist"
         >
           <button
-            className="nav-link  text-dark active"
+            className="nav-link text-dark active"
             id="nav-home-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-home"
