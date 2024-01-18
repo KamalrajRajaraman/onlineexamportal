@@ -91,12 +91,12 @@ const ViewExam = ({ examDetails }) => {
                     </tr>
 
                     <tr>
-                        <td>{examId}</td>
-                        <td>{examName}</td>
-                        <td>{description}</td>
-                        <td>{creationDate}</td>
-                        <td>{expirationDate}</td>
-                        <td>{noOfQuestions}</td>
+                        <td>{examDetails.examId}</td>
+                        <td>{examDetails.examName}</td>
+                        <td>{examDetails.description}</td>
+                        <td>{examDetails.creationDate}</td>
+                        <td>{examDetails.expirationDate}</td>
+                        <td>{examDetails.noOfQuestions}</td>
 
                     </tr>
                     <tr>
@@ -108,12 +108,12 @@ const ViewExam = ({ examDetails }) => {
                         <th>Negative Mark Value</th>
                     </tr>
                     <tr>
-                        <td>{durationMinutes}</td>
-                        <td>{passPercentage}</td>
-                        <td>{questionsRandomized}</td>
-                        <td>{answersMust}</td>
-                        <td>{enableNegativeMark}</td>
-                        <td>{negativeMarkValue}</td>
+                        <td>{examDetails.durationMinutes}</td>
+                        <td>{examDetails.passPercentage}</td>
+                        <td>{examDetails.questionsRandomized}</td>
+                        <td>{examDetails.answersMust}</td>
+                        <td>{examDetails.enableNegativeMark}</td>
+                        <td>{examDetails.negativeMarkValue}</td>
                     </tr>
                 </tbody>
             </table>

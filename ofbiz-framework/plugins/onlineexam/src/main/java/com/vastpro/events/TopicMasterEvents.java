@@ -55,7 +55,7 @@ public class TopicMasterEvents {
 		
 		addTopicContext.put(CommonConstants.TOPIC_NAME, topicName);
 		addTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
-		Map<String, Object> createTopicResp = null;
+		Map<String, Object> createUpdateTopicResp = null;
 		
 		if (hasFormErrors) {
 			//If hasFormErrors is true, set result as Error in request
@@ -66,9 +66,25 @@ public class TopicMasterEvents {
 			return CommonConstants.ERROR;
 		} 
 		
+		if(combinedMap.containsKey(CommonConstants.TOPIC_ID)) {
+			
+			try {
+				createUpdateTopicResp = dispatcher.runSync("updateTopic", combinedMap);
+				
+				} catch (GenericServiceException e) {
+				
+					Debug.logError(e, "Failed to execute updateTopic service", module);
+					String errMsg = "Failed to execute updateTopic service : " + e.getMessage();
+					request.setAttribute(CommonConstants._ERROR_MESSAGE_,  errMsg);
+					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+					return CommonConstants.ERROR;
+				}		
+			}
+		else {
+		
 			try {
 				// calling createTopic service
-				createTopicResp = dispatcher.runSync("createTopic", addTopicContext);
+				createUpdateTopicResp = dispatcher.runSync("createTopic", addTopicContext);
 				
 				Debug.logInfo("=======createTopic method ran successfully=========",module);
 			}
@@ -81,15 +97,16 @@ public class TopicMasterEvents {
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
 			}
+		}
 			
 			//If createTopic service is success
-			if (ServiceUtil.isSuccess(createTopicResp)) {
+			if (ServiceUtil.isSuccess(createUpdateTopicResp)) {
 				
 				Map<String, Object> topic = UtilMisc.toMap(
-						CommonConstants.TOPIC_ID, createTopicResp.get(CommonConstants.TOPIC_ID), 
-						CommonConstants.TOPIC_NAME, createTopicResp.get(CommonConstants.TOPIC_NAME));
+						CommonConstants.TOPIC_ID, createUpdateTopicResp.get(CommonConstants.TOPIC_ID), 
+						CommonConstants.TOPIC_NAME, createUpdateTopicResp.get(CommonConstants.TOPIC_NAME));
 				request.setAttribute("topic", topic);
-				request.setAttribute(CommonConstants.RESULT, createTopicResp.get(CommonConstants.RESPONSE_MESSAGE));
+				request.setAttribute(CommonConstants.RESULT, createUpdateTopicResp.get(CommonConstants.RESPONSE_MESSAGE));
 			}
 			else {	
 				//If the service returns Error, set result as Error in request

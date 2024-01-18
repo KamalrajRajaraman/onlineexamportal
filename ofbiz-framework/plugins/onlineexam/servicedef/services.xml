@@ -108,6 +108,12 @@
 		<auto-attributes include="nonpk" mode="INOUT"
 			optional="true"></auto-attributes>
 	</service>
+	
+	<service engine="entity-auto" name="updateTopic" default-entity-name="TopicMaster"
+		invoke="update" auth="true">
+		<auto-attributes mode="IN" include="all" optional="false" />
+		<override name="expirationDate" optional="true" />
+	</service>
 
 	<service name="findAllTopics" engine="java"
 		location="com.vastpro.services.TopicMasterServices"
