@@ -20,6 +20,9 @@ const UserSideBar = () => {
         <NavLink to="exams" className="list-group-item list-group-item-action">
           Exams
         </NavLink>
+        <NavLink to="performance-report" className="list-group-item list-group-item-action">
+         Performance Report
+        </NavLink>
 
         <button  onClick = {onlogout}type="button" className="list-group-item list-group-item-action" >Logout</button>
       

@@ -1,6 +1,7 @@
 package com.vastpro.events;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -179,8 +180,7 @@ public class UserAttemptEvents {
 
 			// If the createUserAttemptMaster Service is executed successfully
 			// Converting the Generic value to String
-			// performanceId =
-			// String.valueOf(createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID));
+			
 			performanceId = (Integer) createUserAttemptMasterResp.get(CommonConstants.PERFORMANCE_ID);
 			// findAllExamTopicMappingRecordsByExamId
 			String eventResp = OnlineExamHelper.findAllExamTopicMappingRecordsByExamId(request);
@@ -544,6 +544,7 @@ public class UserAttemptEvents {
 
 		}
 		
+		String examName =examMasterGv.getString(CommonConstants.EXAM_NAME);
 		String enableNegativeMark = examMasterGv.getString(CommonConstants.ENABLE_NEGATIVE_MARK);
 		
 		//Taking record from userAttemptAnswerMaster entity based on performanceId
@@ -718,7 +719,7 @@ public class UserAttemptEvents {
 			}
 
 			if (ServiceUtil.isError(updateUserAttemptTopicMasterResp)) {
-
+				
 				String errMsg = "error occured while running updateUserAttemptTopicMaster service ";
 				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
@@ -730,6 +731,21 @@ public class UserAttemptEvents {
 			if (updateUserAttemptTopicMasterResp.get(CommonConstants.USER_PASSED_THIS_TOPIC).equals("N")) {
 				userPassed = "N";
 			}
+			
+			GenericValue topicGV = null;
+			try {
+				topicGV=EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER).where(CommonConstants.TOPIC_ID,topicId).queryOne();
+			} catch (GenericEntityException e) {
+				String errMsg = "Exception occured while fetching the record from TopicMaster entity: "
+						+ e.getMessage();
+				Debug.logError(e, errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+			String topicName = topicGV.getString(CommonConstants.TOPIC_NAME);
+			updateUserAttemptTopicMasterResp.put(CommonConstants.TOPIC_NAME,topicName );
 			updatedUserAttemptTopicMasterList.add(updateUserAttemptTopicMasterResp);
 
 		}
@@ -773,7 +789,8 @@ public class UserAttemptEvents {
 
 		}
 
-		Map<String, Object> resultMap = UtilMisc.toMap("totalScore", totalScore, "totalWrongAnswersInExam", totalWrong,
+		Map<String, Object> resultMap = UtilMisc.toMap(CommonConstants.EXAM_NAME,examName,
+				"totalScore", totalScore, "totalWrongAnswersInExam", totalWrong,
 				"totalCorrectQuestionsInExam", totalCorrect, "actualUserPercentage", score,
 				CommonConstants.PASS_PERCENTAGE, passPercentage, CommonConstants.SCORE, score,
 				CommonConstants.USER_PASSED, userPassed, CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
@@ -785,6 +802,174 @@ public class UserAttemptEvents {
 		return CommonConstants.SUCCESS;
 
 	}
+	
+	public static String findAllUserAttemptByPartyId(HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		
+		String partyId = userLogin.getString(CommonConstants.PARTY_ID);
+		List<GenericValue> userAttemptMasterGVList =null;
+		try {
+			userAttemptMasterGVList = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_MASTER).where(CommonConstants.PARTY_ID,partyId).cache().queryList();
+		} catch (GenericEntityException e) {
+			String errMsg = "Exception occured while fetching the record from UserAttemptMaster entity: "
+					+ e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		if(UtilValidate.isEmpty(userAttemptMasterGVList)) {
+			String errMsg = "Fetched record from  UserAttemptMaster entity is null or empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+	
+		
+		
+		List<Map<String,Object>> userAttemptMasterList = new ArrayList<>();
+		for(GenericValue userAttemptMasterGV:userAttemptMasterGVList ) {
+			String examId = userAttemptMasterGV.getString(CommonConstants.EXAM_ID);
+			GenericValue examMasterGv =null; 
+			try {
+				examMasterGv=EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER).where(CommonConstants.EXAM_ID,examId).cache().queryOne();
+			} catch (GenericEntityException e) {
+				String errMsg = "Exception occured while fetching the record from ExamMaster entity: "
+						+ e.getMessage();
+				Debug.logError(e, errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+			if(UtilValidate.isEmpty(examMasterGv)) {
+				String errMsg = "Fetched record from  ExamMaster entity is null or empty";
+				Debug.logError(errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			String examName = examMasterGv.getString(CommonConstants.EXAM_NAME);
+			
+			Map<String,Object> userAttemptMasterRecord = new HashMap<>();
+			
+			userAttemptMasterRecord.put(CommonConstants.EXAM_NAME, examName);
+			userAttemptMasterRecord.put(CommonConstants.EXAM_ID,examId);
+			userAttemptMasterRecord.put(CommonConstants.PERFORMANCE_ID,userAttemptMasterGV.getInteger(CommonConstants.PERFORMANCE_ID) );
+			userAttemptMasterRecord.put(CommonConstants.ATTEMPT_NUMBER, userAttemptMasterGV.getLong(CommonConstants.ATTEMPT_NUMBER));
+			userAttemptMasterRecord.put(CommonConstants.PARTY_ID,  userAttemptMasterGV.getString(CommonConstants.PARTY_ID));
+			userAttemptMasterRecord.put(CommonConstants.SCORE,userAttemptMasterGV.getBigDecimal(CommonConstants.SCORE));
+			userAttemptMasterRecord.put(CommonConstants.COMPLETED_DATE, userAttemptMasterGV.getTimestamp(CommonConstants.COMPLETED_DATE));
+			userAttemptMasterRecord.put(CommonConstants.NO_OF_QUESTIONS,  userAttemptMasterGV.getInteger(CommonConstants.NO_OF_QUESTIONS));
+			userAttemptMasterRecord.put(CommonConstants.TOTAL_CORRECT,  userAttemptMasterGV.getInteger(CommonConstants.TOTAL_CORRECT));
+			userAttemptMasterRecord.put(CommonConstants.TOTAL_WRONG,  userAttemptMasterGV.getInteger(CommonConstants.TOTAL_WRONG));
+			userAttemptMasterRecord.put(CommonConstants.USER_PASSED,  userAttemptMasterGV.getString(CommonConstants.USER_PASSED));
+			
+			
+			
+			userAttemptMasterList.add(userAttemptMasterRecord);
+			
+		}
+		request.setAttribute("userAttemptMasterList",userAttemptMasterList );
+		request.setAttribute(CommonConstants.RESULT,  CommonConstants.SUCCESS);
+		return CommonConstants.SUCCESS;
+	}
+	
+	public static String findUserAttemptTopicMasterByPerforamceId(HttpServletRequest request, HttpServletResponse response) {
+		
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		
+		Integer perforamceId = Integer.valueOf((String)combinedMap.get(CommonConstants.PERFORMANCE_ID));
+		
+		if(UtilValidate.isEmpty(perforamceId)) {
+			String errMsg = "performanceId  is null or empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+			
+		}
+		
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
+		List<GenericValue> userAttemptTopicMasterGVList=null; 
+		try {
+			userAttemptTopicMasterGVList = EntityQuery.use(delegator).from(CommonConstants.USER_ATTEMPT_TOPIC_MASTER).where(CommonConstants.PERFORMANCE_ID,perforamceId).queryList();
+		} 
+		catch (GenericEntityException e) {
+			String errMsg = "Exception occured while fetching the record from UserAttemptTopicMaster entity: "
+					+ e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+			
+			
+		}
+		
+		if(UtilValidate.isEmpty(userAttemptTopicMasterGVList)) {
+			String errMsg = "Fetched record from  UserAttemptTopicMaster entity is null or empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+			
+			
+		}
+		
+		
+		List<Map<String,Object>> userAttemptTopicMasterList = new ArrayList<>();
+		for(GenericValue userAttemptTopicMasterGV :userAttemptTopicMasterGVList ) {
+			
+			String topicId = userAttemptTopicMasterGV.getString(CommonConstants.TOPIC_ID);
+			
+			Map<String,Object> userAttemptTopicMasterRecord = new HashMap<>();
+			userAttemptTopicMasterRecord.put(CommonConstants.TOPIC_ID, topicId);
+			userAttemptTopicMasterRecord.put(CommonConstants.PERFORMANCE_ID, userAttemptTopicMasterGV.get(CommonConstants.PERFORMANCE_ID));
+			userAttemptTopicMasterRecord.put(CommonConstants.TOPIC_PASS_PERCENTAGE, userAttemptTopicMasterGV.get(CommonConstants.TOPIC_PASS_PERCENTAGE));
+			userAttemptTopicMasterRecord.put(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC, userAttemptTopicMasterGV.get(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC));
+			userAttemptTopicMasterRecord.put(CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC, userAttemptTopicMasterGV.get(CommonConstants.CORRECT_QUESTIONS_IN_THIS_TOPIC));
+			userAttemptTopicMasterRecord.put(CommonConstants.USER_TOPIC_PERCENTAGE, userAttemptTopicMasterGV.get(CommonConstants.USER_TOPIC_PERCENTAGE));
+			userAttemptTopicMasterRecord.put(CommonConstants.USER_PASSED_THIS_TOPIC, userAttemptTopicMasterGV.get(CommonConstants.USER_PASSED_THIS_TOPIC));
+			
+			GenericValue topicMasterGV = null;
+			try {
+				topicMasterGV=EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER).where(CommonConstants.TOPIC_ID,topicId).queryOne();
+			} catch (GenericEntityException e) {
+				String errMsg = "Exception occured while fetching the record from TopicMaster entity: "
+						+ e.getMessage();
+				Debug.logError(e, errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+			}
+			
+			if(UtilValidate.isEmpty(topicMasterGV)) {
+				String errMsg = "Fetched record from  TopicMaster entity is null or empty";
+				Debug.logError(errMsg, module);
+				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+				return CommonConstants.ERROR;
+				
+				
+			}
+			
+			userAttemptTopicMasterRecord.put(CommonConstants.TOPIC_NAME, topicMasterGV.getString(CommonConstants.TOPIC_NAME));
+			userAttemptTopicMasterList.add(userAttemptTopicMasterRecord);
+			
+		}
+		request.setAttribute("userAttemptTopicMasterList", userAttemptTopicMasterList);
+		request.setAttribute(CommonConstants.RESULT,  CommonConstants.SUCCESS);
+		return  CommonConstants.SUCCESS;
+		
+	}
+	
+	
 
 //	public static String evaluateUserAttemptAnswerMaster(HttpServletRequest request, HttpServletResponse response) {
 //		

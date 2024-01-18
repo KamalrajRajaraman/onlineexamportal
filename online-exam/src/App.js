@@ -29,6 +29,8 @@ import Error from "./component/common/Error";
 import ResultPage from "./component/userModule/exam-page/ResultPage";
 import Alert from "./component/common/Alert";
 import { useState } from "react";
+import PerformanceReport from "./component/userModule/performance-report/PerformanceReport";
+import AttemptDetails from "./component/userModule/performance-report/AttemptDetails";
 
 
 
@@ -107,6 +109,10 @@ function App() {
           <Route index element={<Navigate to="exams" />}/>
           <Route path="exams" element={<ExamsForUser />} />
           <Route path="result-page" element={<ResultPage />} />
+          <Route path="performance-report" element={<PerformanceReport />} />
+            
+         
+          <Route path="performance-report/view-details/:performanceId" element={<AttemptDetails />} />
         </Route>
       
         <Route path="user-dashboard/exams/exam-page/:examId" element={<ExamPage />} />
