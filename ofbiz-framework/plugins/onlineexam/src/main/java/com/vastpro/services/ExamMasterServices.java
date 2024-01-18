@@ -99,7 +99,7 @@ public class ExamMasterServices {
 		}
 		
 		//Adds the exam list to the result map
-		result.put("examList", examList);
+		result.put(CommonConstants.EXAM_LIST, examList);
 		return result;
 
 	}
@@ -163,7 +163,7 @@ public class ExamMasterServices {
 					enableNegativeMark, CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
 			
 			//Adds the exam to the result map
-			result.put("exam", exam);
+			result.put(CommonConstants.EXAM, exam);
 		}
 		return result;
 	}
@@ -223,7 +223,7 @@ public class ExamMasterServices {
 		Map<String, Object> resultMap = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
 		
-		List<Map<String,Object>> topicList = (List<Map<String,Object>>) context.get("topicList");		
+		List<Map<String,Object>> topicList = (List<Map<String,Object>>) context.get(CommonConstants.TOPIC_LIST);		
 		List<GenericValue> questionIdListGV=null;			
 		
 		for (Map<String,Object> topic : topicList) {
@@ -265,11 +265,11 @@ public class ExamMasterServices {
 			}
 			
 			//The questionIdList is returned to its mapped topic
-			topic.put("questionIdList", questionIdList);
+			topic.put(CommonConstants.QUESTION_ID_LIST, questionIdList);
 		}
 		
 		//The list of topics is returned to the event
-		resultMap.put("topicList", topicList);
+		resultMap.put(CommonConstants.TOPIC_LIST, topicList);
 
 		return resultMap;
 	}

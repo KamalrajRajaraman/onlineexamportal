@@ -46,7 +46,7 @@ public class TopicMasterEvents {
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
 				locale, "MandatoryFieldErrMsgTopicForm", CommonConstants.RESOURCE_ERROR, false);
 
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		String topicName = (String) combinedMap.get(CommonConstants.TOPIC_NAME);
 		
@@ -69,7 +69,7 @@ public class TopicMasterEvents {
 		if(combinedMap.containsKey(CommonConstants.TOPIC_ID)) {
 			
 			try {
-				createUpdateTopicResp = dispatcher.runSync("updateTopic", combinedMap);
+				createUpdateTopicResp = dispatcher.runSync(CommonConstants.UPDATE_TOPIC, combinedMap);
 				
 				} catch (GenericServiceException e) {
 				
@@ -84,7 +84,7 @@ public class TopicMasterEvents {
 		
 			try {
 				// calling createTopic service
-				createUpdateTopicResp = dispatcher.runSync("createTopic", addTopicContext);
+				createUpdateTopicResp = dispatcher.runSync(CommonConstants.CREATE_TOPIC, addTopicContext);
 				
 				Debug.logInfo("=======createTopic method ran successfully=========",module);
 			}
@@ -105,7 +105,7 @@ public class TopicMasterEvents {
 				Map<String, Object> topic = UtilMisc.toMap(
 						CommonConstants.TOPIC_ID, createUpdateTopicResp.get(CommonConstants.TOPIC_ID), 
 						CommonConstants.TOPIC_NAME, createUpdateTopicResp.get(CommonConstants.TOPIC_NAME));
-				request.setAttribute("topic", topic);
+				request.setAttribute(CommonConstants.TOPIC, topic);
 				request.setAttribute(CommonConstants.RESULT, createUpdateTopicResp.get(CommonConstants.RESPONSE_MESSAGE));
 			}
 			else {	
@@ -132,7 +132,7 @@ public class TopicMasterEvents {
 		Map<String, Object> topicList = null;
 		try {
 			// calling service by name findAllTopics
-			topicList = dispatcher.runSync("findAllTopics", findAllTopicContext);
+			topicList = dispatcher.runSync(CommonConstants.FIND_ALL_TOPICS, findAllTopicContext);
 
 		} catch (GenericServiceException e) {
 			// If exception occurred, error set as result in request object
@@ -146,7 +146,7 @@ public class TopicMasterEvents {
 		// checking the service is success or not
 		if (ServiceUtil.isSuccess(topicList)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("topicList", topicList.get("topicList"));
+			request.setAttribute(CommonConstants.TOPIC_LIST, topicList.get(CommonConstants.TOPIC_LIST));
 		}
 		else {
 			//If the service returns Error, set result as Error in request
@@ -183,7 +183,7 @@ public class TopicMasterEvents {
 		Map<String, Object> findTopicByIdResp = null;
 		// calling findTopicById service
 		try {
-			findTopicByIdResp = dispatcher.runSync("findTopicById", findTopicContext);
+			findTopicByIdResp = dispatcher.runSync(CommonConstants.FIND_TOPIC_BY_ID, findTopicContext);
 
 			Debug.logInfo("========findTopicById method executed successfully========", module);
 		} catch (GenericServiceException e) {
@@ -201,7 +201,7 @@ public class TopicMasterEvents {
 			Map<String, Object> topic = UtilMisc.toMap(CommonConstants.TOPIC_ID,
 					findTopicByIdResp.get(CommonConstants.TOPIC_ID), CommonConstants.TOPIC_NAME,
 					findTopicByIdResp.get(CommonConstants.TOPIC_NAME));
-			request.setAttribute("topic", topic);
+			request.setAttribute(CommonConstants.TOPIC, topic);
 
 		}
 		else {
@@ -240,7 +240,7 @@ public class TopicMasterEvents {
 		Map<String, Object> deleteTopicResp = null;
 		try {
 			// calling deleteTopic service
-			deleteTopicResp = dispatcher.runSync("deleteTopic", deleteTopicContext);
+			deleteTopicResp = dispatcher.runSync(CommonConstants.DELETE_TOPIC, deleteTopicContext);
 			
 		} catch (GenericServiceException e) {
 			// If Exception occurred, error set as result in request attribute
@@ -248,7 +248,7 @@ public class TopicMasterEvents {
 			String errMsg = "Failed to execute deleteTopic service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
 			request.setAttribute("_ERROR_MESSAGE_", errMsg);
-			request.setAttribute("result", CommonConstants.ERROR);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
 		

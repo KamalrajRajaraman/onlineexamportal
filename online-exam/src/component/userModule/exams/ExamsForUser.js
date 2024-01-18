@@ -21,7 +21,7 @@ const ExamsForUser = () => {
 
   return (
     <div className="container-fluid ">
-      <div className="container-fluid border-bottom border-dark border-3">
+      <div className="container-wells border-bottom border-dark border-3">
         <h2 className="p-2 ">Scheduled Exams</h2>
       </div>
       <div className="mt-1 ">

@@ -84,7 +84,7 @@ public class OnlineExamServices {
 				user.put(CommonConstants.USER_LOGIN_ID, userLoginId);
 				userList.add(user);
 			}
-			resultMap.put("userList", userList);
+			resultMap.put(CommonConstants.USER_LIST, userList);
 
 		}
 

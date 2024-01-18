@@ -1,0 +1,8 @@
+.nav-link{
+    columns: white;
+
+}
+.nav-link.active{
+    columns:black;
+    
+}

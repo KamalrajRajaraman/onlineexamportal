@@ -1,9 +1,9 @@
 import React from 'react'
 
 const UserAttemptDetailsTable = ({userAttemptRecord,topicResult}) => {
-  return (<>
-    <table className="table table-striped border">
-        <thead>
+  return (<div className='container mt-2'>
+    <table className="table table-bordered  border">
+        <thead className='table-dark  '>
           <tr>
             <th scope="col">Exam Name</th>
             <th scope="col">Total Correct</th>
@@ -29,8 +29,8 @@ const UserAttemptDetailsTable = ({userAttemptRecord,topicResult}) => {
       <div className="mt-3">
         <h4>Topicwise Results</h4>
       </div>
-      <table class="table table-striped border ">
-      <thead>
+      <table class="table table-bordered table-striped border ">
+      <thead className='table-dark'>
          
         <tr >
           <th scope="col">TopicId</th>
@@ -51,7 +51,7 @@ const UserAttemptDetailsTable = ({userAttemptRecord,topicResult}) => {
               </tr>
             
           ))}</tbody>
-      </table></>
+      </table></div>
   )
 }
 

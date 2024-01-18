@@ -10,7 +10,7 @@ const ExamAccordion = ({ object, name, onDelete, id, onEdit }) => {
   };
 
   return (
-    <div className=" bg-white border">
+    <div className=" container bg-white border">
       <div className="accordion accordion-flush">
         <div className="accordion-item">
           <h2 className="accordion-header position-relative ">

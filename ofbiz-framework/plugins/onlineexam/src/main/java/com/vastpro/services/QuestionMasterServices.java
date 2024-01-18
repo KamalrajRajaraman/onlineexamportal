@@ -115,7 +115,7 @@ public class QuestionMasterServices {
 
 	
 	/**
-	 * This helper method is used to 
+	 * This helper method is used to convert Question GV to Map
 	 * @param GenericValue 
 	 * @return Map<String,Object>	
 	 */

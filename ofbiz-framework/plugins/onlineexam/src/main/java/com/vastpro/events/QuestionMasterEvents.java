@@ -48,7 +48,7 @@ public class QuestionMasterEvents {
 
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
 				locale, "MandatoryFieldErrMsgQuestionForm", CommonConstants.RESOURCE_ERROR, false);
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		// Checking form has errors or not
 		if (hasFormErrors) {
@@ -66,7 +66,7 @@ public class QuestionMasterEvents {
 		if (UtilValidate.isNotEmpty(questionId)) {
 			
 			try {
-				createQuestionResp = dispatcher.runSync("updateQuestion", combinedMap);
+				createQuestionResp = dispatcher.runSync(CommonConstants.UPDATE_QUESTION, combinedMap);
 			} catch (GenericServiceException e) {
 				
 				Debug.logError(e, "Failed to execute updateQuestion service", module);
@@ -80,7 +80,7 @@ public class QuestionMasterEvents {
 		else {
 			
 			try {
-				createQuestionResp = dispatcher.runSync("createQuestion", combinedMap);
+				createQuestionResp = dispatcher.runSync(CommonConstants.CREATE_QUESTION, combinedMap);
 				Debug.logInfo("Succesfully executed createQuestion service", module);
 
 			} catch (GenericServiceException e) {
@@ -96,7 +96,7 @@ public class QuestionMasterEvents {
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(createQuestionResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("question", createQuestionResp);
+			request.setAttribute(CommonConstants.QUESTION, createQuestionResp);
 		} else {
 			// If the service return Error, set the result as error in request
 			String errMsg = "Error occured while running createQuestion or updateQuestion  service";
@@ -122,7 +122,7 @@ public class QuestionMasterEvents {
 
 		// calling findAllQuestions
 		try {
-			findAllQuestionsResp = dispatcher.runSync("findAllQuestions", findAllQuestionContext);
+			findAllQuestionsResp = dispatcher.runSync(CommonConstants.FIND_ALL_QUESTIONS, findAllQuestionContext);
 			Debug.logInfo("Succesfully executed findAllQuestions service", module);
 		} catch (GenericServiceException e) {
 			// If Exception occurred while execute the service
@@ -135,7 +135,7 @@ public class QuestionMasterEvents {
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("questionList", findAllQuestionsResp.get("questionList"));
+			request.setAttribute(CommonConstants.QUESTION_LIST, findAllQuestionsResp.get("questionList"));
 		} else {
 			// If the service returns error, set the result as error in request
 			String errMsg = "Error occured while running findAllQuestions service";
@@ -170,9 +170,9 @@ public class QuestionMasterEvents {
 
 		// calling deleteQuestion service
 		try {
-			deleteQuestionResp = dispatcher.runSync("deleteQuestion", UtilMisc.toMap(CommonConstants.QUESTION_ID,
+			deleteQuestionResp = dispatcher.runSync(CommonConstants.DELETE_QUESTION, UtilMisc.toMap(CommonConstants.QUESTION_ID,
 					questionId, CommonConstants.EXPIRATION_DATE, currentTime, CommonConstants.USER_LOGIN, userLogin));
-			Debug.logInfo("Succesfully executed deleteQuestion service", module);
+			Debug.logInfo("Successfully executed deleteQuestion service", module);
 		} catch (GenericServiceException e) {
 			// If Exception occurred while execute the service, set result as Error in
 			// request
@@ -186,7 +186,7 @@ public class QuestionMasterEvents {
 		// If the deleteQuestion service is success, set result as success in request
 		if (ServiceUtil.isSuccess(deleteQuestionResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("resultMap", deleteQuestionResp);
+			request.setAttribute(CommonConstants.RESULT_MAP, deleteQuestionResp);
 		} else {
 			// If the deleteQuestion service returns Error, set result as error in request
 			String errMsg = "Error occured in deleteQuestion service";
