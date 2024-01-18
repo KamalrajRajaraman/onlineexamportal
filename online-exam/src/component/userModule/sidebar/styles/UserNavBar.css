@@ -1,0 +1,19 @@
+.custom-user-nav{
+    background-color:#6c7e92;
+}
+.nav-link.custom-nav-text{
+    color :white
+   
+}
+
+.nav-link.custom-nav-text.active,.nav-link:hover.custom-nav-text:hover{
+    color :black;
+}
+.btn-logout{
+    background-color: transparent;
+    border:transparent;
+    color: white;
+}
+.btn-logout:hover{
+    color: black;
+}

@@ -50,22 +50,7 @@ const Questions = () => {
 
   const modalEdit = async (id, object) => {
     setQuestionId(id);
-    setFormValues({
-      questionId: id,
-      questionDetail: object.questionDetail,
-      optionA: object.optionA,
-      optionB: object.optionB,
-      optionC: object.optionC,
-      optionD: object.optionD,
-      optionE: object.optionE,
-      answer: object.answer,
-      numAnswers: object.numAnswers,
-      questionType: object.questionType,
-      answerValue: object.answerValue,
-      topicId: object.topicId,
-      negativeMarkValue: object.negativeMarkValue,
-      difficultyLevel: object.questionType,
-    });
+    setFormValues(object);
     console.log("questionId:::", questionId);
     document.getElementById("buttonId").click();
   };

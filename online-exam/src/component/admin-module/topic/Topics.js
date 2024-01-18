@@ -45,9 +45,9 @@ const Topics = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    onEdit(formValues);
+    await onEdit(formValues);
     setRefresh(!refresh);
   };
 

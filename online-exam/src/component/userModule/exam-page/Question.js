@@ -34,28 +34,31 @@ const Question = ({
     if (response.status === 200) {
       const data = await response.json();
       console.log(data);
+      
       if (data.result === "success") {
         if (data.isFlagged === 1) {
           setIsFlagged(true);
         } else {
           setIsFlagged(false);
         }
-
+        const userAttemptAnswerMasterRecord = data.submittedQuestion;
+        setQuestions(
+          questions.map((question) =>
+            question.sequenceNum === sequenceNum ? {...answeredQuestion,...userAttemptAnswerMasterRecord}: question
+          )
+        );
+        //works for reset
         if (answeredQuestion.submittedAnswer === "") {
           setQuestions(
             questions.map((question) =>
               question.sequenceNum === sequenceNum
-                ? { answeredQuestion }
+                ? {... answeredQuestion }
                 : question
             )
           );
           setSubmittedAnswer("");
         }
-        setQuestions(
-          questions.map((question) =>
-            question.sequenceNum === sequenceNum ? answeredQuestion : question
-          )
-        );
+       
       }
     }
     if (response.status === 401) {

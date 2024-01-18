@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./styles/PerformanceReport.css";
 import { BiDetail } from "react-icons/bi";
 import {
   CONTROL_SERVLET,
@@ -37,10 +38,10 @@ const PerformanceReport = () => {
       <div className="container-fluid border-bottom border-dark border-3">
         <h2 className="p-2 ">Performance Report</h2>
       </div>
-      <div className="container-fluid border">
+      <div className="container">
         
-        <table className="table border mt-2 table-striped">
-          <thead>
+        <table className="table   mt-2 table-striped table-bordered  shadow-lg rounded-3">
+          <thead className="table-dark ">
             <tr className="align-content-center ">
               <th scope="col">Attempt Number</th>
               <th scope="col">Performance Id</th>

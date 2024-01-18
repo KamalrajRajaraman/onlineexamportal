@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/Auth";
+import "./styles/UserNavBar.css"
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
@@ -29,12 +30,12 @@ const UserNavBar = () => {
     }
   };
   return (
-    <div className="row ">
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button
+    <div className="">
+      <nav  className="">
+        <div class="nav nav-tabs custom-user-nav container-fluid fw-bold" id="nav-tab" role="tablist">
+         <button
           onClick={()=>{navigate("exams")}}
-            class="nav-link active"
+            class="nav-link custom-nav-text active"
             id="nav-home-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-home"
@@ -47,7 +48,7 @@ const UserNavBar = () => {
           </button>
           <button
             onClick={()=>{navigate("performance-report")}}
-            class="nav-link"
+            class="nav-link custom-nav-text"
             id="nav-profile-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-profile"
@@ -58,9 +59,10 @@ const UserNavBar = () => {
           >
              Performance Report
           </button>
+
           <button
             onClick={onlogout}
-            class="nav-link "
+            class="btn-logout ms-auto  fw-bold"
             id="nav-contact-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-contact"
@@ -71,8 +73,12 @@ const UserNavBar = () => {
           >
             Logout
           </button>
-          
         </div>
+         
+       
+          
+        
+      
       </nav>
      
     </div>
