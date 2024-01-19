@@ -68,7 +68,7 @@ public class QuestionMasterServices {
 				questionList.add(question);
 			}
 		}
-		serviceResultMap.put("questionList", questionList);
+		serviceResultMap.put(CommonConstants.QUESTION_LIST, questionList);
 		return serviceResultMap;
 
 	}
@@ -89,7 +89,7 @@ public class QuestionMasterServices {
 		GenericValue questionMasterGV = null;
 		try {
 			//Execute the query to find question
-			questionMasterGV = EntityQuery.use(delegator).from("QuestionMaster")
+			questionMasterGV = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER)
 					.where(CommonConstants.QUESTION_ID, questionId).queryOne();
 
 		} catch (GenericEntityException e) {
@@ -107,8 +107,7 @@ public class QuestionMasterServices {
 		}
 		
 		Map<String, Object> questionMap = getQuestionFromGenericValue(questionMasterGV);
-		serviceResultMap.put("question", questionMap);
-
+		serviceResultMap.put(CommonConstants.QUESTION, questionMap);
 		return serviceResultMap;
 
 	}

@@ -36,8 +36,8 @@ public class OnlineExamHelper {
 		    return CommonConstants.ERROR;		
 		}
 		
-		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
-		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 
 		Map<String, Object> findAllContextMap = new HashMap<>();
 		findAllContextMap.put(CommonConstants.EXAM_ID, examId);

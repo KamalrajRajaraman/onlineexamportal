@@ -3,8 +3,7 @@ package com.vastpro.constants;
 /**
  * CommonContanst Interface contains all commonly used String Objects.
  * Note:
- * Any variable declared inside interface are by default public ,static and final
- * 
+ * Any variable declared inside interface are by default public ,static and final 
  */
 public interface CommonConstants {
 	
@@ -160,6 +159,7 @@ public interface CommonConstants {
 	public static final String DELETE_TOPIC = "deleteTopic";
 	public static final String UPDATE_QUESTION = "updateQuestion";
 	public static final String CREATE_QUESTION = "createQuestion";
+	public static final String FIND_QUESTION_BY_ID = "findQuestionById";
 	public static final String FIND_ALL_QUESTIONS = "findAllQuestions";
 	public static final String DELETE_QUESTION = "deleteQuestion";
 	public static final String FIND_NO_OF_QUESTION_COUNT_BY_EXAM_ID = "findNoOfQuestionCountByExamId";
@@ -169,6 +169,18 @@ public interface CommonConstants {
 	public static final String CREATE_PARTY_ROLE_RECORD = "createPartyRoleRecord";
 	public static final String FIND_ALL_USER = "findAllUser";
 	public static final String DELETE_USER_LOGIN = "deleteUserLogin";
+	public static final String CREATE_USER_EXAM_MAPPING_RECORD ="createUserExamMappingRecord";
+	public static final String UPDATE_USER_EXAM_MAPPING_RECORD = "updateUserExamMappingRecord";
+	public static final String FIND_ALL_EXAM_FOR_PARTY_ID = "findAllExamForPartyId";
+	public static final String FIND_USER_EXAM_MAPPING_RECORD = "findUserExamMappingRecord";
+	public static final String CREATE_USER_ATTEMPT_MASTER = "createUserAttemptMaster";
+	public static final String CREATE_USER_ATTEMPT_TOPIC_MASTER = "createUserAttemptTopicMaster";
+	public static final String FIND_QUESTIONS_BY_TOPIC_IDS = "findQuestionsByTopicIds";
+	public static final String CREATE_USER_ATTEMPT_ANSWER_MASTER_SERVICE = "createUserAttemptAnswerMasterService";
+	public static final String UPDATE_USER_ATTEMPT_ANSWER_MASTER = "updateUserAttemptAnswerMaster";
+	public static final String UPDATE_USER_ATTEMPT_TOPIC_MASTER = "updateUserAttemptTopicMaster";
+	public static final String UPDATE_USER_ATTEMPT_MASTER = "updateUserAttemptMaster";
+	
 	
 	
 	//Event's constants
@@ -187,4 +199,19 @@ public interface CommonConstants {
 	public static final String PERCENTAGE_TO_BE_UPDATED = "percentageToBeUpdated";
 	public static final String PERCENTAGE_LIST = "percentageList";
 	
+	//Service's Constants
+	public static final String CREATE_USER_EXAM_MAPPING_RECORD_MAP = "createUserExamMappingRecordMap";
+	public static final String USER_EXAM_MAPPING_RECORD = "userExamMappingRecord";
+	public static final String SELECTED_QUESTION = "selectedQuestion";
+	public static final String SUBMITTED_QUESTION = "submittedQuestion";
+	public static final String TOTAL_SCORE ="totalScore";
+	public static final String TOTAL_WRONG_ANSWERS_IN_EXAM = "totalWrongAnswersInExam";
+	public static final String TOTAL_CORRECT_QUESTIONS_IN_EXAM = "totalCorrectQuestionsInExam";
+	public static final String USER_ATTEMPT_MASTER_LIST = "userAttemptMasterList";
+	public static final String USER_ATTEMPT_TOPIC_MASTER_LIST = "userAttemptTopicMasterList";
+	public static final String ACTUAL_USER_PERCENTAGE = "actualUserPercentage";
+	public static final String NO_OF_CORRECTED_QUESTIONS_BY_TOPIC_ID = "noOfCorrectedQuestionsByTopicId";
+	public static final String UPDATED_USER_ATTEMPT_TOPIC_MASTER_LIST = "updatedUserAttemptTopicMasterList";
+	
+
 }

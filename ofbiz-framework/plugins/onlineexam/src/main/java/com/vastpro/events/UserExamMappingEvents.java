@@ -52,21 +52,24 @@ public class UserExamMappingEvents {
 				.checkValidationErrors(validateUserExamMapping, CreateUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
 				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		if (hasFormErrors) {
 			// Set error message in request in case of empty fields
 			String errMsg = "Values are not assigned to every fields!";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			Debug.logError("Values are not assigned to every fields! ", module);
+			Debug.logError(errMsg, module);
 			return CommonConstants.ERROR;
 
 		}
 		String partyId = (String) combinedMap.get(CommonConstants.PARTY_ID);
 		String examId= (String) combinedMap.get(CommonConstants.EXAM_ID);
 		try {
-			findPartyIdExamIdResp = EntityQuery.use(delegator).from(CommonConstants.USER_EXAM_MAPPING_MASTER).where(CommonConstants.PARTY_ID,partyId,CommonConstants.EXAM_ID,examId).queryOne();
+			findPartyIdExamIdResp = EntityQuery.use(delegator)
+					.from(CommonConstants.USER_EXAM_MAPPING_MASTER)
+					.where(CommonConstants.PARTY_ID,partyId,CommonConstants.EXAM_ID,examId)
+					.queryOne();
 		} catch (GenericEntityException e1) {
 			String errMsg = "Error finding Party Id and Exam Id";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -79,13 +82,13 @@ public class UserExamMappingEvents {
 		if (UtilValidate.isEmpty(findPartyIdExamIdResp)) {
 			try {
 				// calling createUserExamMappingRecord service
-				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
+				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync(CommonConstants.CREATE_USER_EXAM_MAPPING_RECORD, combinedMap);
 
 			} catch (GenericServiceException e) {
 
 				// If any exception occur in service, set error as a result in request object
-				Debug.logError(e, "Failed to execute createUserExamMappingRecord service", module);
 				String errMsg = "Failed to execute createUserExamMappingRecord service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				return CommonConstants.ERROR;
@@ -94,9 +97,9 @@ public class UserExamMappingEvents {
 		
 		else {
 			try {
-				// calling updateUserExamMappingRecord service
-				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
-
+				// calling createUserExamMappingRecord service
+				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync(CommonConstants.UPDATE_USER_EXAM_MAPPING_RECORD, combinedMap);
+				
 			} catch (GenericServiceException e) {
 
 				// If any exception occur in service, set error as a result in request object
@@ -110,7 +113,7 @@ public class UserExamMappingEvents {
 
 		// checking if the createUserExamMappingRecord service is success or not
 		if (ServiceUtil.isSuccess(createOrUpdateUserExamMappingRecordResp)) {
-			request.setAttribute("createUserExamMappingRecordMap", createOrUpdateUserExamMappingRecordResp);
+			request.setAttribute(CommonConstants.CREATE_USER_EXAM_MAPPING_RECORD_MAP, createOrUpdateUserExamMappingRecordResp);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			Debug.logInfo("CreateUserExamMappingRecord service has been executed successfully! ", module);
 
@@ -160,7 +163,7 @@ public class UserExamMappingEvents {
 				.checkValidationErrors(userExamMappingValidator, FindUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
 				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
-		request.setAttribute("hasFormErrors", hasFormErrors);
+		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		if (hasFormErrors) {
 			// Set error message in request in case of empty fields
@@ -174,8 +177,8 @@ public class UserExamMappingEvents {
 		// calling showExamsForPartyId service for showing exams
 		Map<String, Object> findAllExamForPartyIdResp = null;
 		try {
-			findAllExamForPartyIdResp = dispatcher.runSync("findAllExamForPartyId", findExamContext);
-			Debug.logInfo("showExamsForPartyId service has been executed successfully!", module);
+			findAllExamForPartyIdResp = dispatcher.runSync(CommonConstants.FIND_ALL_EXAM_FOR_PARTY_ID, findExamContext);
+			Debug.logInfo("findAllExamsForPartyId service has been executed successfully!", module);
 
 		} catch (GenericServiceException e) {
 			// If any exception occur in service, set error as a result in request object
@@ -187,20 +190,19 @@ public class UserExamMappingEvents {
 		}
 
 		if (ServiceUtil.isSuccess(findAllExamForPartyIdResp)) {
-			request.setAttribute("examList", findAllExamForPartyIdResp.get("examList"));
+			request.setAttribute(CommonConstants.EXAM_LIST, findAllExamForPartyIdResp.get(CommonConstants.EXAM_LIST));
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "showExamsForPartyId service executed successfully");
+			request.setAttribute(CommonConstants.RESPONSE_MESSAGE, "showExamsForPartyId service executed successfully");
 		} else {
-			request.setAttribute("createUserExamMappingRecordMap", null);
+			String errMsg = "Error while executing showExamsForPartyId service";
+			request.setAttribute(CommonConstants.CREATE_USER_EXAM_MAPPING_RECORD_MAP, null);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "Error while executing showExamsForPartyId service");
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			Debug.logError(errMsg, module);
 			return CommonConstants.ERROR;
 		}
 		return CommonConstants.SUCCESS;
 
 	}
-
-	
-
 
 }
