@@ -12,12 +12,14 @@ public interface CommonConstants {
 	public static final String SUCCESS = "success";
 	public static final String ERROR = "error";
 	public static final String RESPONSE_MESSAGE="responseMessage";
+	public static final String SUCCESS_MESSAGE = "successMessage";
 	public static final String USER_LOGIN_ID="userLoginId";
 	public static final String PARTY_AND_USER_LOGIN ="PartyAndUserLogin";
 	public static final String RESOURCE_ERROR = "OnlineexamUiLabels";
 	public static final String _ERROR_MESSAGE_ ="_ERROR_MESSAGE_";
 	public static final String HAS_FORM_ERROR ="hasFormErrors";
 	public static final String RESULT_MAP ="resultMap";
+	public static final String RESPOND_EMPTY = "empty";
 	
 	//Session Common Attribute 
 	public static final String USER_LOGIN="userLogin";

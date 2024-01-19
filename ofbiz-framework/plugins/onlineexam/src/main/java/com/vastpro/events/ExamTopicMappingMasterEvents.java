@@ -336,6 +336,14 @@ public class ExamTopicMappingMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		String responseMessage = (String) findExamTopicMappingResp.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) findExamTopicMappingResp.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
 		
 		//if findExamTopicMappingRecords Service result is success ,examTopicMappingRecordList is set in request
 		if (ServiceUtil.isSuccess(findExamTopicMappingResp)) {
@@ -352,7 +360,7 @@ public class ExamTopicMappingMasterEvents {
 			return CommonConstants.ERROR;
 			
 		}
-
+		
 		return CommonConstants.SUCCESS;
 	}
 	
