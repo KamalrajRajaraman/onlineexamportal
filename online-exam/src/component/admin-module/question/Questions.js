@@ -209,7 +209,7 @@ const Questions = () => {
                       onChange={handleChange}
                     >
                       <option value="">None</option>
-                      {topics.map((topic) => (
+                      {topics && topics.map((topic) => (
                         <option key={topic.topicId} value={topic.topicId}>
                           {topic.topicName}
                         </option>

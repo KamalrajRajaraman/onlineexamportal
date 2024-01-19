@@ -129,10 +129,10 @@ public class TopicMasterEvents {
 		Map<String, Object> findAllTopicContext = new HashMap<>();
 		findAllTopicContext.put(CommonConstants.USER_LOGIN, userLogin);
 
-		Map<String, Object> topicList = null;
+		Map<String, Object> findAllTopicsResp = null;
 		try {
 			// calling service by name findAllTopics
-			topicList = dispatcher.runSync(CommonConstants.FIND_ALL_TOPICS, findAllTopicContext);
+			findAllTopicsResp = dispatcher.runSync(CommonConstants.FIND_ALL_TOPICS, findAllTopicContext);
 
 		} catch (GenericServiceException e) {
 			// If exception occurred, error set as result in request object
@@ -142,11 +142,21 @@ public class TopicMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
-
+		
+		//if service returns empty
+		String responseMessage = (String) findAllTopicsResp.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) findAllTopicsResp.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
 		// checking the service is success or not
-		if (ServiceUtil.isSuccess(topicList)) {
+		if (ServiceUtil.isSuccess(findAllTopicsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute(CommonConstants.TOPIC_LIST, topicList.get(CommonConstants.TOPIC_LIST));
+			request.setAttribute(CommonConstants.TOPIC_LIST, findAllTopicsResp.get(CommonConstants.TOPIC_LIST));
 		}
 		else {
 			//If the service returns Error, set result as Error in request
@@ -188,8 +198,8 @@ public class TopicMasterEvents {
 			Debug.logInfo("========findTopicById method executed successfully========", module);
 		} catch (GenericServiceException e) {
 			// If exception occurred, error set as result in request object
-			Debug.logError(e, "Failed to execute findTopicById service", module);
-			String errMsg = "Failed to execute findTopicById service : " + e.getMessage();
+			String errMsg = "Failed to execute findTopicById service";
+			Debug.logError(e, errMsg , module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;

@@ -7,7 +7,7 @@ import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from
 const AddQuestions = () => {
   
   const {questions, setQuestions} = useQuestionContext();
-  const { topics,setTopics,fetchTopic } = useTopicContext();
+  const { topics,setTopics,fetchTopic,getTopics } = useTopicContext();
 
   const initialValue ={
     questionDetail:"",
@@ -38,11 +38,7 @@ const AddQuestions = () => {
     };
   }, []);
 
-  const getTopics = async () => {
-    const topicList = await fetchTopic();
-    setTopics([...topicList]);
-   
-  };
+ 
 
   const onCreateQuestion = async (questionDetail) => {
    console.log(questionDetail)
@@ -259,7 +255,7 @@ const AddQuestions = () => {
                 value={formValues.topicId}
                 onChange={handleChange}
               ><option value="">None</option>
-                { topics.map((topic) => (
+                { topics&& topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>{topic.topicName}</option>
                 ))}
               </select>
