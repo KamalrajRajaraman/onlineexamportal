@@ -39,7 +39,8 @@ public class UserExamMappingEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute(CommonConstants.DISPATCHER);
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Locale locale = request.getLocale();
-		Map<String, Object> createUserExamMappingRecordResp = null;
+		Map<String, Object> createOrUpdateUserExamMappingRecordResp = null;
+		GenericValue findPartyIdExamIdResp= null;
 
 		// Map to get and store the objects from request
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
@@ -62,11 +63,23 @@ public class UserExamMappingEvents {
 			return CommonConstants.ERROR;
 
 		}
+		String partyId = (String) combinedMap.get(CommonConstants.PARTY_ID);
+		String examId= (String) combinedMap.get(CommonConstants.EXAM_ID);
+		try {
+			findPartyIdExamIdResp = EntityQuery.use(delegator).from(CommonConstants.USER_EXAM_MAPPING_MASTER).where(CommonConstants.PARTY_ID,partyId,CommonConstants.EXAM_ID,examId).queryOne();
+		} catch (GenericEntityException e1) {
+			String errMsg = "Error finding Party Id and Exam Id";
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			Debug.logError(errMsg, module);
+			return CommonConstants.ERROR;
+		}
+		
 
-		if ("POST".equals(request.getMethod())) {
+		if (UtilValidate.isEmpty(findPartyIdExamIdResp)) {
 			try {
 				// calling createUserExamMappingRecord service
-				createUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
+				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync("createUserExamMappingRecord", combinedMap);
 
 			} catch (GenericServiceException e) {
 
@@ -79,25 +92,25 @@ public class UserExamMappingEvents {
 			}
 		}
 		
-		if ("PUT".equals(request.getMethod())) {
+		else {
 			try {
 				// calling createUserExamMappingRecord service
-				createUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
+				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
 
 			} catch (GenericServiceException e) {
 
 				// If any exception occur in service, set error as a result in request object
-				Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
 				String errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+				Debug.logError(e, errMsg, module);
 				return CommonConstants.ERROR;
 			}
 		}
 
 		// checking if the createUserExamMappingRecord service is success or not
-		if (ServiceUtil.isSuccess(createUserExamMappingRecordResp)) {
-			request.setAttribute("createUserExamMappingRecordMap", createUserExamMappingRecordResp);
+		if (ServiceUtil.isSuccess(createOrUpdateUserExamMappingRecordResp)) {
+			request.setAttribute("createUserExamMappingRecordMap", createOrUpdateUserExamMappingRecordResp);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			Debug.logInfo("CreateUserExamMappingRecord service has been executed successfully! ", module);
 
@@ -106,8 +119,6 @@ public class UserExamMappingEvents {
 			// If the createUserExamMappingRecord service returns Error, set result as error
 			// in request
 			String errMsg = "Error occured in createUserExamMappingRecord service";
-			Debug.logError(errMsg, module);
-
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			Debug.logError(errMsg, module);
@@ -162,9 +173,9 @@ public class UserExamMappingEvents {
 		}
 
 		// calling showExamsForPartyId service for showing exams
-		Map<String, Object> showExamsForPartyIdResp = null;
+		Map<String, Object> findAllExamForPartyIdResp = null;
 		try {
-			showExamsForPartyIdResp = dispatcher.runSync("findAllExamForPartyId", findExamContext);
+			findAllExamForPartyIdResp = dispatcher.runSync("findAllExamForPartyId", findExamContext);
 			Debug.logInfo("showExamsForPartyId service has been executed successfully!", module);
 
 		} catch (GenericServiceException e) {
@@ -176,8 +187,8 @@ public class UserExamMappingEvents {
 			return CommonConstants.ERROR;
 		}
 
-		if (ServiceUtil.isSuccess(showExamsForPartyIdResp)) {
-			request.setAttribute("examList", showExamsForPartyIdResp.get("examList"));
+		if (ServiceUtil.isSuccess(findAllExamForPartyIdResp)) {
+			request.setAttribute("examList", findAllExamForPartyIdResp.get("examList"));
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, "showExamsForPartyId service executed successfully");
 		} else {
