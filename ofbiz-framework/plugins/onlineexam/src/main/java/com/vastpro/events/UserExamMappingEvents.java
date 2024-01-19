@@ -107,7 +107,7 @@ public class UserExamMappingEvents {
 				return CommonConstants.ERROR;
 			}
 		}
-
+		
 		// checking if the createUserExamMappingRecord service is success or not
 		if (ServiceUtil.isSuccess(createOrUpdateUserExamMappingRecordResp)) {
 			request.setAttribute("createUserExamMappingRecordMap", createOrUpdateUserExamMappingRecordResp);
