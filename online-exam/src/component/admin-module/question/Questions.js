@@ -9,7 +9,7 @@ import { useTopicContext } from "../topic/TopicData";
 const Questions = () => {
   const [questionId, setQuestionId] = useState([]);
   const { questions, setQuestions, onDelete, onEdit ,fetchQuestion} = useQuestionContext();
-  const { topics, setTopics, fetchTopic } = useTopicContext();
+  const { getTopics, topics, setTopics, fetchTopic } = useTopicContext();
   const initialValue = {
     questionId: "",
     questionDetail: "",
@@ -43,10 +43,7 @@ const Questions = () => {
     };
   }, []);
 
-  const getTopics = async () => {
-    const topicList = await fetchTopic();
-    setTopics([...topicList]);
-  };
+ 
 
   const modalEdit = async (id, object) => {
     setQuestionId(id);
@@ -84,7 +81,7 @@ const Questions = () => {
 
       <button
         type="button"
-        class="btn btn-primary d-none"
+        className="btn btn-primary d-none"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
         id="buttonId"
@@ -93,27 +90,27 @@ const Questions = () => {
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Question Edit
               </h5>
               <button
                 type="button"
                 id="modal-close"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form onSubmit={handleSubmit}>
                 <FormInput
                   id="questionId"

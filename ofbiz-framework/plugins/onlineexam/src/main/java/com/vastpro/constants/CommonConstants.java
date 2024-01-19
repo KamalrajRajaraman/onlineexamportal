@@ -98,6 +98,9 @@ public interface CommonConstants {
 	public static final String USER_ATTEMPT_TOPIC_MASTER="UserAttemptTopicMaster";
 	public static final String USER_ATTEMPT_ANSWER_MASTER="UserAttemptAnswerMaster";
 	public static final String USER_EXAM_MAPPING_MASTER="UserExamMappingMaster";
+	public static final String USER_LOGIN_ENTITY="UserLogin";
+	
+	
 
 	//--------------------------------------View Entity Name Constant-------------------
 	public static final String USER_MASTER = "UserMaster";

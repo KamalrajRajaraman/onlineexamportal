@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 import Swal from "sweetalert2";
 const QuestionContext = createContext(null);
 
@@ -12,7 +12,15 @@ export const QuestionProvider =({children})=>{
       const data = await res.json();
       const {result} = data
       if(result==="success"){
-        setQuestions(questions.filter(question=> question.questionId!==id));
+        Swal.fire({
+          title: "Good job!",
+          text: "Question Deleted successfully!",
+          icon: "success",
+          timer:2000,
+          showConfirmButton:false});
+        fetchQuestion();
+
+        // setQuestions(questions.filter(question=> question.questionId!==id));
       }
     }
 
@@ -23,8 +31,8 @@ export const QuestionProvider =({children})=>{
           PORT_NO +
           WEB_APPLICATION +
           CONTROL_SERVLET +
-          "findAllQuestions",
-        { credentials: "include" }
+          "findAllQuestions",GET
+       
       );
       const data = await res.json();
   

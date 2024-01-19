@@ -46,21 +46,7 @@ function App() {
     if(alertInfo?.timer){
       setTimeout(function() { document.getElementById("alert-button").click()}, alertInfo.timer);
     }
-    // alert({
-    //   header:"Success",
-    //   content:"Exam created successfully",
-    //   color:"alert-success",
-      
-    //      }) 
-
-    // <button onClick={()=>alert(
-    //   {
-    //       header:"Success",
-    //       content:"Exam created successfully",
-    //       color:"alert-success",
-          
-    //          }
-    // )}>click</button>
+   
   }
   return (
     <AuthProvider>

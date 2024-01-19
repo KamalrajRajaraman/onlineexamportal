@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { EditUserContext } from "./EditUser";
+import React, {  useEffect } from "react";
+
 import { TiEdit } from "react-icons/ti";
-import AddExamToUser from "./AddExamToUser";
+
 import EditUserExam from "./EditUserExam";
 
 const ShowExam = ({ exams, fetchAllExamsForUser }) => {

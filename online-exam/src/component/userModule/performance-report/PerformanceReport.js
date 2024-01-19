@@ -13,9 +13,9 @@ import { useNavigate } from "react-router-dom";
 const PerformanceReport = () => {
     const navigate =useNavigate();
     const [userAttemptList,setUserAttemptList] = useState([]);
-  useEffect(() => {
-    fetchUserAttemptList();
-  }, []);
+    useEffect(() => {
+      fetchUserAttemptList();
+    }, []);
 
   const fetchUserAttemptList = async () => {
     const res = await fetch(

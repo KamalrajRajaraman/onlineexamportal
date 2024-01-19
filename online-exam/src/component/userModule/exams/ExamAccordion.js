@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ExamAccordion = ({ object, name, onDelete, id, onEdit }) => {
+const ExamAccordion = ({ object }) => {
   const navigate = useNavigate();
 
   const [toggle, setToggle] = useState(true);

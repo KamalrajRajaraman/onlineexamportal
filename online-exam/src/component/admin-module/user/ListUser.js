@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import AccordinMaker from '../../common/AccordinMaker';
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import Swal from 'sweetalert2';
 const ListUser = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
@@ -40,6 +41,13 @@ const ListUser = () => {
       console.log(data);
       const {result} = data
       if(result==="success"){
+        Swal.fire({
+          title: "Good job!",
+          text: "Deleted User successfully!",
+          icon: "success",
+          timer:2000,
+          showConfirmButton:false
+        });
         fetchUsers();
       }
     }

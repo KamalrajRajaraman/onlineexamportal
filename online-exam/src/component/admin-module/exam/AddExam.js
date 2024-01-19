@@ -209,11 +209,12 @@ const AddExam = () => {
                   id="questionsRandomized "
                   value={examValues.questionsRandomized}
                   onChange={handleChange}
-                  error={formErrors.questionsRandomized}
+                 
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
                 </select>
+                <small className='text-danger'>{formErrors.questionsRandomized}</small>
               </div>
             </div>
             <div className="col-4">
@@ -227,11 +228,12 @@ const AddExam = () => {
                   id="answersMust"
                   value={examValues.answersMust}
                   onChange={handleChange}
-                  error={formErrors.answersMust}
+                  
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
                 </select>
+                <small className='text-danger'>{formErrors.answersMust}</small>
               </div>
 
               <div className="mb-3">
@@ -244,11 +246,12 @@ const AddExam = () => {
                   id="enableNegativeMark"
                   value={examValues.enableNegativeMark}
                   onChange={handleChange}
-                  error={formErrors.enableNegativeMark}
+                
                 >
                   <option value="Y">Yes</option>
                   <option value="N">NO</option>
                 </select>
+                <small className='text-danger'>{formErrors.enableNegativeMark}</small>
               </div>
 
               <FormInput

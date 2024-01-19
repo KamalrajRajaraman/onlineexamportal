@@ -14,7 +14,7 @@ const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
       <div className="accordion accordion-flush">
         <div className="accordion-item">
           <h2 className="accordion-header ">
-            <button
+            <div
               onClick={onClick}
               className={`accordion-button ${ "collapsed"}`}
               type="button"
@@ -25,7 +25,7 @@ const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
               <button   onClick={()=>onEdit(object[id], object)} className="btn  btn-outline-success  btn-sm me-4 col">Edit</button>
               <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger  btn-sm me-3 col ">Delete</button>
             </div>
-            </button>
+            </div>
            
           </h2>
           <div className={`accordion-collapse ${ "collapse"}`}>

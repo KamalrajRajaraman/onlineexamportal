@@ -11,8 +11,6 @@ import {
 import UserAttemptDetailsTable from "../user-dashboard/UserAttemptDetailsTable";
 
 const ResultPage = () => {
-  
-
   const [result, setResult] = useState({
     noOfQuestions: "",
     score: "",
@@ -51,7 +49,7 @@ const ResultPage = () => {
 
       const resultStatus = resultDetails.userPassed === "Y" ? "Pass" : "Fail";
       setResult({
-        examName:resultDetails.examName,
+        examName: resultDetails.examName,
         noOfQuestions: resultDetails.noOfQuestions,
         score: resultDetails.score,
         totalCorrect: resultDetails.totalCorrectQuestionsInExam,
@@ -71,10 +69,10 @@ const ResultPage = () => {
         <h2>Exam Results</h2>
       </div>
 
-      <UserAttemptDetailsTable userAttemptRecord={result} topicResult={topicResult} />
-      
-     
-
+      <UserAttemptDetailsTable
+        userAttemptRecord={result}
+        topicResult={topicResult}
+      />
     </div>
   );
 };
