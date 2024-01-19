@@ -63,7 +63,7 @@ public class ExamMasterServices {
 			String errMsg = "Records retrieved  from ExamMaster entity is empty";
 			Debug.logError(errMsg ,module);
 			return ServiceUtil.returnMessage( CommonConstants.RESPOND_EMPTY, errMsg + module );
-		//	return ServiceUtil.returnError(errMsg + module);
+		
 		}
 		
 		
