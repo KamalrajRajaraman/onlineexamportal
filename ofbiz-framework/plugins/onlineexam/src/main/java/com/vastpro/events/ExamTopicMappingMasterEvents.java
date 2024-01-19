@@ -336,6 +336,7 @@ public class ExamTopicMappingMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		
 		//if findExamTopicMappingRecords Service result is success ,examTopicMappingRecordList is set in request
 		if (ServiceUtil.isSuccess(findExamTopicMappingResp)) {
 			

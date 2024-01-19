@@ -108,6 +108,7 @@ public class UserAttemptEvents {
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
 			}
+			
 			Map<String, Object> userExamMappingRecord = (Map<String, Object>) findUserExamMappingRecordResp
 					.get(CommonConstants.USER_EXAM_MAPPING_RECORD);
 			Long allowedAttempt = (Long) userExamMappingRecord.get(CommonConstants.ALLOWED_ATTEMPTS);

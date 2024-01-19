@@ -20,6 +20,12 @@ public class OnlineExamHelper {
 	
 	private static final String module = OnlineExamHelper.class.getName();
 	
+	
+	/**
+	 *Helps to find All ExamTopicMappingRecords By ExamId 
+	 * @param request
+	 * @return
+	 */
 	public static String findAllExamTopicMappingRecordsByExamId(HttpServletRequest request) {
 
 		String examId = (String) request.getAttribute(CommonConstants.EXAM_ID);
