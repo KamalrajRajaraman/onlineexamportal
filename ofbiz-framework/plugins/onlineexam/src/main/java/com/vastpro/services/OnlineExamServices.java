@@ -61,9 +61,10 @@ public class OnlineExamServices {
 
 		if (UtilValidate.isEmpty(GenericValueList)) {
 			// If Retrieved GenericValueList is empty or null
-			String errMsg = "Retrieved user List from UserMaster view entity is empty or null ";
-			Debug.logError(errMsg, module);
-			return ServiceUtil.returnError(errMsg + module);
+			String errMsg = "Retrieved user List from UserMaster view entity is empty or null";
+			Debug.logError(errMsg ,module);
+			return ServiceUtil.returnMessage( CommonConstants.RESPOND_EMPTY, errMsg + module );
+		
 		}
 
 		if (UtilValidate.isNotEmpty(GenericValueList)) {

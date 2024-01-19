@@ -256,6 +256,16 @@ public class OnlineExamEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
             return CommonConstants.ERROR;
 		}
+		
+		String responseMessage = (String) serviceResult.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) serviceResult.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
 		if (ServiceUtil.isSuccess(serviceResult)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 			request.setAttribute(CommonConstants.USER_LIST, serviceResult.get(CommonConstants.USER_LIST));

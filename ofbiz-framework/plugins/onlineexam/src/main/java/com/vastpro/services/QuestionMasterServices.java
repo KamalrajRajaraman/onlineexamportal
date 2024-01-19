@@ -57,8 +57,8 @@ public class QuestionMasterServices {
 
 		if (UtilValidate.isEmpty(questionGenericValueList)) {
 			String errMsg = "Retreived question List from Question Master entity is null or empty";
-			Debug.logError(errMsg, module);
-			return ServiceUtil.returnError(errMsg + module);
+			Debug.logWarning(errMsg, module);
+			return ServiceUtil.returnMessage(CommonConstants.RESPOND_EMPTY,errMsg + module);
 		}
 		
 		

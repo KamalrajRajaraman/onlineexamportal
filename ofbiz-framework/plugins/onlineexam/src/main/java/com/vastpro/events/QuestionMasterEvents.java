@@ -131,6 +131,16 @@ public class QuestionMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		//if service returns empty or null 
+		String responseMessage = (String) findAllQuestionsResp.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) findAllQuestionsResp.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
