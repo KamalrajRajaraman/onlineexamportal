@@ -76,7 +76,7 @@ public class UserExamMappingMasterServices {
 				examList.add(userExamMappingRecord); 
 			}
 			//adding the list of exams to the result map
-			result.put("examList", examList);
+			result.put(CommonConstants.EXAM_LIST, examList);
 			
 		}
 		
@@ -125,7 +125,7 @@ public class UserExamMappingMasterServices {
 		userExamMappingRecord.put(CommonConstants.CAN_SEE_DETAILED_RESULTS,userExamMappingGenericValue.getString(CommonConstants.CAN_SEE_DETAILED_RESULTS));
 		userExamMappingRecord.put(CommonConstants.MAX_SPLIT_ATTEMPTS,userExamMappingGenericValue.getInteger(CommonConstants.MAX_SPLIT_ATTEMPTS));
 		
-		resultMap.put("userExamMappingRecord", userExamMappingRecord);
+		resultMap.put(CommonConstants.USER_EXAM_MAPPING_RECORD, userExamMappingRecord);
 		
 		return resultMap;
 		

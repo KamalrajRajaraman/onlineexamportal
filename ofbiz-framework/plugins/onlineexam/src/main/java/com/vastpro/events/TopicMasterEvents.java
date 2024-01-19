@@ -247,7 +247,7 @@ public class TopicMasterEvents {
 			
 			String errMsg = "Failed to execute deleteTopic service : " + e.getMessage();
 			Debug.logError(e, errMsg, module);
-			request.setAttribute("_ERROR_MESSAGE_", errMsg);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}

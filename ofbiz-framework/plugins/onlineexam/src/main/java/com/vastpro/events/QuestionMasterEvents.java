@@ -68,9 +68,8 @@ public class QuestionMasterEvents {
 			try {
 				createQuestionResp = dispatcher.runSync(CommonConstants.UPDATE_QUESTION, combinedMap);
 			} catch (GenericServiceException e) {
-				
-				Debug.logError(e, "Failed to execute updateQuestion service", module);
 				String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -84,8 +83,8 @@ public class QuestionMasterEvents {
 				Debug.logInfo("Succesfully executed createQuestion service", module);
 
 			} catch (GenericServiceException e) {
-				Debug.logError(e, "Failed to execute createQuestion service", module);
 				String errMsg = "Failed to execute createQuestion service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -196,8 +195,5 @@ public class QuestionMasterEvents {
 		}
 		return CommonConstants.SUCCESS;
 	}
-//	public static String findQuestionsByTopicId(HttpServletRequest request)
-
-	
 
 }
