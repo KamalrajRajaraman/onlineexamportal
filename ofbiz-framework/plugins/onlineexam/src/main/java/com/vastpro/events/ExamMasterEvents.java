@@ -148,8 +148,14 @@ public class ExamMasterEvents {
              return CommonConstants.ERROR;
 		}
 		 
-//		String responseMessage = (String) findAllExamsResp.get(CommonConstants.RESPONSE_MESSAGE);
-//		if(responseMessage.equals(CommonConstants.))
+		String responseMessage = (String) findAllExamsResp.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) findAllExamsResp.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
 		
 		//If the service returns success result and  examList is added to the request
 		if (ServiceUtil.isSuccess(findAllExamsResp)) {	
