@@ -70,8 +70,8 @@ public class UserExamMappingEvents {
 					.from(CommonConstants.USER_EXAM_MAPPING_MASTER)
 					.where(CommonConstants.PARTY_ID,partyId,CommonConstants.EXAM_ID,examId)
 					.queryOne();
-		} catch (GenericEntityException e1) {
-			String errMsg = "Error finding Party Id and Exam Id";
+		} catch (GenericEntityException e) {
+			String errMsg = "Error while Fetching record from userExamMappingMaster "+e.getMessage();
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			Debug.logError(errMsg, module);
