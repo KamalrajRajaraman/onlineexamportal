@@ -1,5 +1,6 @@
 package com.vastpro.onlineexam.helper;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +92,12 @@ public class OnlineExamHelper {
 		return CommonConstants.SUCCESS;
 	}
 	
-	
+	/**
+	 * Create a userExamMapping Record Map if userExamMappingMaster Generic Value is given
+	 * @param userExamMappingGV
+	 * @return
+	 * @author Kamalraj
+	 */
 	public static  Map<String,Object> populateUserExamMappingMapFromGenericValue(GenericValue userExamMappingGV){
 		
 		Map<String, Object> userExamMappingRecord = new HashedMap<>();
@@ -118,5 +124,94 @@ public class OnlineExamHelper {
 		return userExamMappingRecord;
 		
 	}
+	
+	/**
+	 * findExamById method is run findExamById service and returns the result as Map Object
+	 * @param dispatcher
+	 * @param findExamByIdContext
+	 * @return
+	 */
+	public static Map<String,Object> findExamById(LocalDispatcher dispatcher , Map<String,? extends Object> findExamByIdContext){
+		Map<String, Object> findExamByIdResp = null;
+		try {
+			findExamByIdResp = dispatcher.runSync(CommonConstants.FIND_EXAM_BY_ID, findExamByIdContext);
+			Debug.logInfo("Successfully executed findExamById service", module);
+		} catch (GenericServiceException e) {			
+			 String errMsg = "Failed to execute findExamById service : " + e.getMessage();
+			 return ServiceUtil.returnError(errMsg);
+             
+       
+		}
+		return findExamByIdResp;
+		
+	}
+	
+	/**
+	 * findTopicById method is run findTopicById service and returns the result as Map Object
+	 * @param dispatcher
+	 * @param findExamByIdContext
+	 * @return
+	 * 
+	 * @author Kamalraj
+	 */
+	public static Map<String,Object> findTopicById(LocalDispatcher dispatcher , Map<String,? extends Object> findExamByIdContext){
+		Map<String, Object> findTopicByIdResp = null;
+		try {
+			findTopicByIdResp = dispatcher.runSync(CommonConstants.FIND_TOPIC_BY_ID, findExamByIdContext);
+			Debug.logInfo("Successfully executed findExamById service", module);
+		} catch (GenericServiceException e) {			
+			 String errMsg = "Failed to execute findExamById service : " + e.getMessage();
+			 return ServiceUtil.returnError(errMsg);
+             
+       
+		}
+		return findTopicByIdResp;
+		
+	}
+	
+	
+	/**
+	 * This helper method is used to convert Question GV to Map
+	 * @param GenericValue 
+	 * @return Map<String,Object>	
+	 */
+	public static Map<String, Object> getQuestionFromGenericValue(GenericValue genericValue) {
+		//Extract question fields from genericValue object 
+		Long questionId = genericValue.getLong(CommonConstants.QUESTION_ID);
+		String questionDetail = genericValue.getString(CommonConstants.QUESTION_DETAIL);
+		String optionA = genericValue.getString(CommonConstants.OPTION_A);
+		String optionB = genericValue.getString(CommonConstants.OPTION_B);
+		String optionC = genericValue.getString(CommonConstants.OPTION_C);
+		String optionD = genericValue.getString(CommonConstants.OPTION_D);
+		String optionE = genericValue.getString(CommonConstants.OPTION_E);
+		String answer = genericValue.getString(CommonConstants.ANSWER);
+		Long numAnswers = genericValue.getLong(CommonConstants.NUM_ANSWERS);
+		String questionType = genericValue.getString(CommonConstants.QUESTION_TYPE);
+		Integer difficultyLevel = genericValue.getInteger(CommonConstants.DIFFICULTY_LEVEL);
+		BigDecimal answerValue = genericValue.getBigDecimal(CommonConstants.ANSWER_VALUE);
+		String topicId = genericValue.getString(CommonConstants.TOPIC_ID);
+		BigDecimal negativeMarkValue = genericValue.getBigDecimal(CommonConstants.NEGATIVE_MARK_VALUE);
+
+		//Construct a map with the fields
+		Map<String, Object> question = new HashMap<>();
+		question.put(CommonConstants.QUESTION_ID, questionId);
+		question.put(CommonConstants.QUESTION_DETAIL, questionDetail);
+		question.put(CommonConstants.OPTION_A, optionA);
+		question.put(CommonConstants.OPTION_B, optionB);
+		question.put(CommonConstants.OPTION_C, optionC);
+		question.put(CommonConstants.OPTION_D, optionD);
+		question.put(CommonConstants.OPTION_E, optionE);
+		question.put(CommonConstants.ANSWER, answer);
+		question.put(CommonConstants.NUM_ANSWERS, numAnswers);
+		question.put(CommonConstants.QUESTION_TYPE, questionType);
+		question.put(CommonConstants.DIFFICULTY_LEVEL, difficultyLevel);
+		question.put(CommonConstants.ANSWER_VALUE, answerValue);
+		question.put(CommonConstants.TOPIC_ID, topicId);
+		question.put(CommonConstants.NEGATIVE_MARK_VALUE, negativeMarkValue);
+		
+		return question;
+	}
+
+	
 
 }

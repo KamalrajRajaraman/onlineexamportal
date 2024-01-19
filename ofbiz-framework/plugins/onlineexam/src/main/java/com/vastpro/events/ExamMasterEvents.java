@@ -18,9 +18,11 @@ import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
+import org.apache.ofbiz.service.ModelService;
 import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstants;
+import com.vastpro.onlineexam.helper.OnlineExamHelper;
 import com.vastpro.validator.ExamMasterCheck;
 import com.vastpro.validator.ExamMasterValidator;
 import com.vastpro.validator.HibernateHelper;
@@ -196,19 +198,8 @@ public class ExamMasterEvents {
 		findExamByIdContext.put(CommonConstants.EXAM_ID, examId);
 		
 		//Calling the findExamById  service which  return the exam detail for given the examId
-		Map<String, Object> findExamByIdResp = null;
-		try {
-			findExamByIdResp = dispatcher.runSync(CommonConstants.FIND_EXAM_BY_ID, findExamByIdContext);
-			Debug.logInfo("Successfully executed findExamById service", module);
-		} catch (GenericServiceException e) {			
-			 String errMsg = "Failed to execute findExamById service : " + e.getMessage();
-			 Debug.logError(e, errMsg, module);
-			 request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
-			 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-             return CommonConstants.ERROR;
-       
-		}
-		
+		Map<String, Object> findExamByIdResp = OnlineExamHelper.findExamById(dispatcher, findExamByIdContext);
+
 		//If the service returns success result and exam record is added to the request
 		if (ServiceUtil.isSuccess(findExamByIdResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
@@ -216,7 +207,7 @@ public class ExamMasterEvents {
 		}
 		else {
 			//If the service returns error ,result and response Map Object is added to request Object
-			String errMsg = "Error while executing findExamById service";
+			String errMsg = (String) findExamByIdResp.get(ModelService.ERROR_MESSAGE);
 			Debug.logError(errMsg, module);	
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg); 
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -228,6 +219,13 @@ public class ExamMasterEvents {
 	}
 
 	//Method to delete an exam from ExamMaster entity
+	/**
+	 * Runs deleteExam Service ,which just update expirationDate.
+	 * The ExamMaster Record is not deleted really instead it is hidden by filtering by date 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public static String deleteExam(HttpServletRequest request, HttpServletResponse response) {
 		
 		//Getting the examId  from the request	

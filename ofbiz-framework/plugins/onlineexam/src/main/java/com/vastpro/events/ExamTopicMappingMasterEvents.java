@@ -255,8 +255,12 @@ public class ExamTopicMappingMasterEvents {
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 				GenericValue insertedRecordGenericValue = null;
 				try {
-					insertedRecordGenericValue = EntityQuery.use(delegator).from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY)
-							.where(CommonConstants.EXAM_ID, examId, CommonConstants.TOPIC_ID, topicId).queryOne();
+					insertedRecordGenericValue = EntityQuery
+												.use(delegator)
+												.from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY)
+												.where(CommonConstants.EXAM_ID, examId, CommonConstants.TOPIC_ID, topicId)
+												.cache()
+												.queryOne();
 					Debug.logInfo("Successfully retrieved  records from ExamTopicMappingViewEntity", module);
 				} catch (GenericEntityException e) {
 					String errMsg = "Failed to retrieve records from ExamTopicMappingViewEntity : " + e.getMessage();

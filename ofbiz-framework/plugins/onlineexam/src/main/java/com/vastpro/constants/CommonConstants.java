@@ -152,6 +152,8 @@ public interface CommonConstants {
 	//Service names
 	public static final String FIND_ALL_EXAMS = "findAllExams";
 	public static final String FIND_EXAM_BY_ID= "findExamById";
+	
+	
 	public static final String DELETE_EXAM="deleteExam";
 	public static final String EDIT_EXAM = "editExam";
 	public static final String UPDATE_TOPIC ="updateTopic";

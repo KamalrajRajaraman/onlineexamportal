@@ -115,6 +115,9 @@ public class OnlineExamServices {
 		}
 
 		if (UtilValidate.isEmpty(questionDetail)) {
+			String errMsg = "Retrieved record from QuestionMaster entity is empty or null";
+			Debug.logError(errMsg ,module);
+			return ServiceUtil.returnMessage( CommonConstants.RESPOND_EMPTY, errMsg + module );
 
 		}
 
