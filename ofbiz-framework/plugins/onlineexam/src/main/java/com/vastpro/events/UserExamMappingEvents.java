@@ -94,7 +94,7 @@ public class UserExamMappingEvents {
 		
 		else {
 			try {
-				// calling createUserExamMappingRecord service
+				// calling updateUserExamMappingRecord service
 				createOrUpdateUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord", combinedMap);
 
 			} catch (GenericServiceException e) {
@@ -116,8 +116,7 @@ public class UserExamMappingEvents {
 
 		} else {
 
-			// If the createUserExamMappingRecord service returns Error, set result as error
-			// in request
+			// If the createUserExamMappingRecord service returns Error, set result as error  in request
 			String errMsg = "Error occured in createUserExamMappingRecord service";
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
