@@ -37,7 +37,7 @@ const EditUser = () => {
    <EditUserContext.Provider value={{partyId,fetchAllExamsForUser}}>
       <UserDetails />
       <MainContent  text={text} to="add-exam-to-user" back={`/admin/user/edit/userId/${partyId}`}/>
-      <ShowExam  exams ={exams} fetchAllExamsForUser={fetchAllExamsForUser}/>
+      {exams?<ShowExam  exams ={exams} fetchAllExamsForUser={fetchAllExamsForUser}/>:"No Exams added to this user"}
 
    </EditUserContext.Provider>
   )

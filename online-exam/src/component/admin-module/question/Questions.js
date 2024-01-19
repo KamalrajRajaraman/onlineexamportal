@@ -37,7 +37,6 @@ const Questions = () => {
 
   useEffect(() => {
     getTopics();
-
     return () => {
       setTopics([]);
     };
@@ -71,13 +70,13 @@ const Questions = () => {
   return (
     <>
       <MainContent text={text} to="add-questions" back="/admin/questions" />
-      <AccordinMaker
+      {questions.length ? <AccordinMaker
         objects={questions}
         id={"questionId"}
         name={"questionDetail"}
         onEdit={modalEdit}
         onDelete={onDelete}
-      />
+      />:"No Questions.Please Add Question"}
 
       <button
         type="button"

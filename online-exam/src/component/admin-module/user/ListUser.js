@@ -53,13 +53,13 @@ const ListUser = () => {
     }
 
   return (
-    <>  <AccordinMaker
+    <> {users? <AccordinMaker
     objects={users}
     id={"partyId"}
     name={"firstName"}
     onDelete={onDelete}
     onEdit={onEdit}
-  /></>
+  />:"No user Found .Please Add User"}</>
   )
 }
 

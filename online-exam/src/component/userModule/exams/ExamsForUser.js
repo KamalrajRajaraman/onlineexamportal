@@ -38,9 +38,9 @@ const ExamsForUser = () => {
         <h2 className="p-2 ">Scheduled Exams</h2>
       </div>
       <div className="mt-1 ">
-        {exams&& exams.map((exam) => (
+        {exams?exams.map((exam) => (
           <ExamAccordion key={exam.examId} object={exam} />
-        ))}
+        )):"No Exams allocated for you..."}
       </div>
     </div>
   );

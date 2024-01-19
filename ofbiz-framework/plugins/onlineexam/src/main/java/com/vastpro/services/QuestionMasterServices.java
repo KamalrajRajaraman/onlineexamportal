@@ -20,8 +20,6 @@ import org.apache.ofbiz.service.ServiceUtil;
 
 import com.vastpro.constants.CommonConstants;
 
-import groovy.xml.Entity;
-
 public class QuestionMasterServices {
 
 	public static final String module = QuestionMasterServices.class.getName();

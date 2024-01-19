@@ -91,7 +91,7 @@ const EditExam = () => {
         to="add-topic-to-Exam"
         back={`/admin/exam/edit/examId/${examId}`}
       />
-      <ExamTopicTable examId={examId} examTopicMap={examTopicMap} setExamTopicMap={setExamTopicMap}/>
+     { examTopicMap.length ? <ExamTopicTable examId={examId} examTopicMap={examTopicMap} setExamTopicMap={setExamTopicMap}/>:"No Topic mapped to Exam.Please Add Topic To This Exam"}
      
     </EditExamContext.Provider>
   );

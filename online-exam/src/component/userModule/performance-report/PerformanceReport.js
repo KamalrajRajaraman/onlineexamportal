@@ -40,7 +40,7 @@ const PerformanceReport = () => {
       </div>
       <div className="container">
         
-        <table className="table   mt-2 table-striped table-bordered  shadow-lg rounded-3">
+      { userAttemptList.length ? <table className="table   mt-2 table-striped table-bordered  shadow-lg rounded-3">
           <thead className="table-dark ">
             <tr className="align-content-center ">
               <th scope="col">Attempt Number</th>
@@ -70,7 +70,7 @@ const PerformanceReport = () => {
             </tr>)}
 
           </tbody>
-        </table>
+        </table>:"No Attempts records..."}
       </div>
     </>
   );
