@@ -9,12 +9,12 @@ const Addtopic = () => {
   const [topicValues, setTopicValues] = useState(initialValues);
   const [formErrors, setFormErrors] =  useState({})
   const [isSubmit, setIsSubmit] = useState(false);
- const{topics,setTopics,setAlert} =useTopicContext();
+  const{topics,setTopics,setAlert} =useTopicContext();
   
  const handleChange = (e)=>{
   const {name, value} = e.target;
   setTopicValues({...topicValues, [name]:value});
-}
+ }
 
 const handleSubmit = (e)=>{
 e.preventDefault();

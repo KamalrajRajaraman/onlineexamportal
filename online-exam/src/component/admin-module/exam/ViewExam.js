@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-const ViewExam = ({ examDetails }) => {
+import Swal from 'sweetalert2';
+const ViewExam = ({ examDetails,setExamDetails }) => {
 
-    const navigate=useNavigate();
+
 
     const [examId, setExamId] = useState(examDetails.examId);
     const [examName, setExamName] = useState(examDetails.examName);
@@ -32,13 +32,25 @@ const ViewExam = ({ examDetails }) => {
             .then((res) => {
                 console.log(res);
                 if (res.result === "success") {
-                    alert("Exam updated successfully!");
-
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Exam  updated successfully!",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                      });
+                    setExamDetails(res.resultMap);
                 }
                 else {
-                    alert("Failed updated exam!")
+                    Swal.fire({
+                        title: "Error!",
+                        text: res._ERROR_MESSAGE_,
+                        icon: "error",
+                        timer: 2000,
+                        showConfirmButton: false,
+                      });
                 }
-                navigate("/admin/exam/edit/examId/111")
+                
             })
     }
 

@@ -73,7 +73,7 @@ public class TopicMasterServices {
 			}
 		}
 		
-		serviceResultMap.put("topicList", topicList);
+		serviceResultMap.put(CommonConstants.TOPIC_LIST, topicList);
 		return serviceResultMap;		
 	}
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { TiEdit } from "react-icons/ti"
-import { useState } from "react";
+
 import EditExamTopic from "./EditExamTopic";
 
 const TableRowMaker = ({ array }) => {

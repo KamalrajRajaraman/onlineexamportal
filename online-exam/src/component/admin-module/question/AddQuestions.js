@@ -75,10 +75,7 @@ const AddQuestions = () => {
    }catch(error){
     console.error('error occured in creating question ', error);
    }
-
-   
-     
-   
+  
   };
 
   const handleChange =(e)=>{

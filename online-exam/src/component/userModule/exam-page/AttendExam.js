@@ -14,6 +14,7 @@ import {
   PROTOCOL,
   WEB_APPLICATION,
 } from "../../common/CommonConstant";
+
 const AttendExam = () => {
   const navigate = useNavigate();
   const { examId } = useParams();
@@ -69,7 +70,6 @@ const AttendExam = () => {
         navigate("/user-dashboard/exams");
       }
       if (data.result === "success") {
-       
         setMin(data.durationMinutes);
         const { selectedQuestion } = data;
         setQuestions(selectedQuestion);

@@ -87,8 +87,8 @@ public class ExamMasterEvents {
 			createExamResp = dispatcher.runSync(CommonConstants.CREATE_EXAM, addExamContext);	
 			Debug.logInfo("Successfully executed createExam Service", module);
 		} catch (GenericServiceException e) {
-			 Debug.logError(e, "Failed to execute createExam service", module);
-			 String errMsg = "Failed to execute createExam service : " + e.getMessage();
+			String errMsg = "Failed to execute createExam service : " + e.getMessage();
+			 Debug.logError(e, errMsg, module);
 			 request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
              return CommonConstants.ERROR;
@@ -193,8 +193,8 @@ public class ExamMasterEvents {
 			findExamByIdResp = dispatcher.runSync(CommonConstants.FIND_EXAM_BY_ID, findExamByIdContext);
 			Debug.logInfo("Successfully executed findExamById service", module);
 		} catch (GenericServiceException e) {			
-			 Debug.logError(e, "Failed to execute findExamById service", module);
 			 String errMsg = "Failed to execute findExamById service : " + e.getMessage();
+			 Debug.logError(e, errMsg, module);
 			 request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
              return CommonConstants.ERROR;

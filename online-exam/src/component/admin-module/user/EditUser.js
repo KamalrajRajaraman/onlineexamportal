@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react'
 import MainContent from "../../common/MainContent"
 
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import ListUser from './ListUser';
+import { useParams } from 'react-router-dom';
+
 import ShowExam from './ShowExam';
 import UserDetails from './UserDetails';
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";

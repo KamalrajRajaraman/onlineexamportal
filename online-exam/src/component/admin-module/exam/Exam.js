@@ -4,12 +4,12 @@ import AccordinMaker from "../../common/AccordinMaker";
 import { useExamContext } from "./ExamData";
 import { useNavigate } from "react-router-dom";
 import  Alert  from "../../common/Alert";
-import { computeHeadingLevel } from "@testing-library/react";
+
 
 const Exam = () => {
 
   const navigate = useNavigate();
-  const { exams, setExams, onDelete,alert,setAlert,fetchExam} = useExamContext();
+  const {getExams, exams, setExams, onDelete,alert,setAlert,fetchExam} = useExamContext();
 
   useEffect(() => {
     getExams();
@@ -18,17 +18,7 @@ const Exam = () => {
     };
   },[]);
 
-  const getExams = async () => {
-    const dataFetched = await fetchExam();
-    if(dataFetched.result==="success"){
-      const examList = dataFetched.examList;
-      setExams(examList);
-    }else{
-      setExams(null);
-    }
-   
-    
-  };
+  
 
   const onEdit = (id,exam) => {
     navigate(`edit/examId/${id}`,{state:exam});

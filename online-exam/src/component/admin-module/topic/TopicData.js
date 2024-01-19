@@ -8,6 +8,11 @@ export const TopicProvider =({children})=>{
     const [topics, setTopics] = useState([]);
     const [alert, setAlert] = useState(false);
 
+    const getTopics = async () => {
+      const topicList = await fetchTopic();
+      setTopics(topicList);
+    };
+
       const fetchTopic = async () => {
         const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
           "findAllTopics",{credentials: 'include',}
@@ -18,12 +23,20 @@ export const TopicProvider =({children})=>{
         return topicList;
       };
 
+      //Deletes Topic and fetch All topics after deleting
       const onDelete=async(id)=>{
         const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`/deleteTopic?topicId=${id}`,{method:'DELETE', credentials: 'include'})
         const data = await res.json();
         const {result} = data
         if(result==="success"){
-          setTopics(topics.filter(topic=>topic.topicId!==id));
+          Swal.fire({
+            title: "Good job!",
+            text: "Topic Deleted successfully!",
+            icon: "success",
+            timer:2000,
+            showConfirmButton:false
+          });
+          getTopics();
         }
       }
 
@@ -49,7 +62,7 @@ export const TopicProvider =({children})=>{
         }
       }
 
-    return <TopicContext.Provider value={{topics,setTopics,fetchTopic,onDelete,alert,setAlert,onEdit}}>
+    return <TopicContext.Provider value={{getTopics,topics,setTopics,fetchTopic,onDelete,alert,setAlert,onEdit}}>
         {children}
     </TopicContext.Provider>
 

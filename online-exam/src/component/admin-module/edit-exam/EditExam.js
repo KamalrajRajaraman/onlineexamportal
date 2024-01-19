@@ -8,15 +8,14 @@ import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from
 
 export const EditExamContext = createContext();
 const EditExam = () => {
-  const examRecord =useLocation().state;
-  const  [examDetails, setExamDetails] = useState(examRecord);
- 
-  const [examTopicMap, setExamTopicMap] = useState([]);
   //examId is retrieved from url 
   const { examId } = useParams();
+  const examRecord =useLocation().state;
+  const  [examDetails, setExamDetails] = useState(examRecord);
+  const [examTopicMap, setExamTopicMap] = useState([]);
+  const[refresh,setRefresh]=useState(true);
 
- const[refresh,setRefresh]=useState(true);
-
+  //used for adding topic to exam
   const initialValue ={
     examId,
     topicId:"",
@@ -32,21 +31,6 @@ const EditExam = () => {
     header: "Exam-Topic-Mapping",
     btnText: "Topic to Exam ",
   };
-
-  const editExam = (props)=>{
-    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"editExam",{
-      method:"POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(props)
-    }).then((response)=>{return response.json();})
-    .then((data)=>{console.log(data)})
-      // if(data.result==="success"){
-      //   setExamDetails(data.examDetails)
-      //   }})
-  }
 
   //creating examtopicMapping Record 
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
@@ -72,6 +56,7 @@ const EditExam = () => {
         timer:2000,
         showConfirmButton:false
       });
+      
       setFormValues(initialValue);
       const { examTopicMappingMasterRecord } = data;
       setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
@@ -100,7 +85,7 @@ const EditExam = () => {
       }}
     >
       
-      <ViewExam examDetails={examDetails} onEdit={editExam}/>
+      <ViewExam examDetails={examDetails} setExamDetails={setExamDetails} />
       <MainContent
         text={text}
         to="add-topic-to-Exam"

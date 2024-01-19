@@ -90,10 +90,11 @@ public class UserAttemptEvents {
 			Map<String, Object> findUserExamMappingRecordResp = null;
 
 			try {
-				findUserExamMappingRecordResp = dispatcher.runSync("findUserExamMappingRecord", attemptMasterCtx);
+				findUserExamMappingRecordResp = dispatcher.runSync(CommonConstants.FIND_USER_EXAM_MAPPING_RECORD, attemptMasterCtx);
 			} catch (GenericServiceException e) {
-				Debug.logError(e, "Failed to execute findUserExamMappingRecord service", module);
+			
 				errMsg = "Failed to execute findUserExamMappingRecord service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -108,13 +109,13 @@ public class UserAttemptEvents {
 				return CommonConstants.ERROR;
 			}
 			Map<String, Object> userExamMappingRecord = (Map<String, Object>) findUserExamMappingRecordResp
-					.get("userExamMappingRecord");
+					.get(CommonConstants.USER_EXAM_MAPPING_RECORD);
 			Long allowedAttempt = (Long) userExamMappingRecord.get(CommonConstants.ALLOWED_ATTEMPTS);
 			Long noOfAttempt = (Long) userExamMappingRecord.get(CommonConstants.NO_OF_ATTEMPTS);
 
 			// if noOfAttempt is greater or equal allowed attempt return error
 			if (noOfAttempt >= allowedAttempt) {
-				errMsg = "Error: User has reached Maximum Allowed Attempt";
+				errMsg = "User has reached Maximum Allowed Attempt";
 				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -130,11 +131,11 @@ public class UserAttemptEvents {
 			// examId
 			Map<String, Object> findExamByIdResp = null;
 			try {
-				findExamByIdResp = dispatcher.runSync("findExamById", attemptMasterCtx);
+				findExamByIdResp = dispatcher.runSync(CommonConstants.FIND_EXAM_BY_ID, attemptMasterCtx);
 				Debug.logInfo("Successfully executed findExamById service", module);
 			} catch (GenericServiceException e) {
-				Debug.logError(e, "Failed to execute findExamById service", module);
 				errMsg = "Failed to execute findExamById service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -152,21 +153,19 @@ public class UserAttemptEvents {
 			}
 
 			// If the findNoOfQuestionCountByExamId Service is executed successfully
-			Map<String, Object> exam = (Map<String, Object>) findExamByIdResp.get("exam");
-			request.setAttribute("durationMinutes", exam.get(CommonConstants.DURATION_MINUTES));
+			Map<String, Object> exam = (Map<String, Object>) findExamByIdResp.get(CommonConstants.EXAM);
+			request.setAttribute(CommonConstants.DURATION_MINUTES, exam.get(CommonConstants.DURATION_MINUTES));
 			// creating UserAttemptMaster record
 
 			Long noOfQuestion = (Long) exam.get(CommonConstants.NO_OF_QUESTIONS);
 			attemptMasterCtx.put(CommonConstants.NO_OF_QUESTIONS, noOfQuestion);
 			Map<String, Object> createUserAttemptMasterResp = null;
 			try {
-
 				// Call the service to create the entries provided through the map
-				createUserAttemptMasterResp = dispatcher.runSync("createUserAttemptMaster", attemptMasterCtx);
+				createUserAttemptMasterResp = dispatcher.runSync(CommonConstants.CREATE_USER_ATTEMPT_MASTER, attemptMasterCtx);
 			} catch (GenericServiceException e) {
-
-				Debug.logError(e, "Failed to execute createUserAttemptMaster service", module);
 				errMsg = "Failed to execute createUserAttemptMaster service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -203,7 +202,7 @@ public class UserAttemptEvents {
 			// creating UserAttemptTopicMaster
 
 			List<Map<String, Object>> examTopicMappingRespList = (List<Map<String, Object>>) request
-					.getAttribute("examTopicMappingRecordList");
+					.getAttribute(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST);
 			List<Map<String, Object>> topicList = new LinkedList<>();
 			Map<String, Object> createUserAttemptTopicMasterResp = null;
 
@@ -221,12 +220,11 @@ public class UserAttemptEvents {
 
 				try {
 					// The service to create entries in the UserAttemptTopicMaster is called
-					createUserAttemptTopicMasterResp = dispatcher.runSync("createUserAttemptTopicMaster",
+					createUserAttemptTopicMasterResp = dispatcher.runSync(CommonConstants.CREATE_USER_ATTEMPT_TOPIC_MASTER,
 							attemptMasterCtx);
 				} catch (GenericServiceException e) {
-
-					Debug.logError(e, "Failed to execute createUserAttemptTopicMaster service", module);
 					errMsg = "Failed to execute createUserAttemptTopicMaster service : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -243,7 +241,7 @@ public class UserAttemptEvents {
 			}
 
 			if (UtilValidate.isEmpty(topicList)) {
-				errMsg = "Error : created topicList is empty ,after executing createUserAttemptTopicMaster service";
+				errMsg = "created topicList is empty ,after executing createUserAttemptTopicMaster service";
 				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -252,15 +250,14 @@ public class UserAttemptEvents {
 			}
 
 			// If TopicList is Not Empty
-			attemptMasterCtx.put("topicList", topicList);
+			attemptMasterCtx.put(CommonConstants.TOPIC_LIST, topicList);
 
 			Map<String, Object> findQuestionsByTopicIdsResp = null;
 			try {
-				findQuestionsByTopicIdsResp = dispatcher.runSync("findQuestionsByTopicIds", attemptMasterCtx);
+				findQuestionsByTopicIdsResp = dispatcher.runSync(CommonConstants.FIND_QUESTIONS_BY_TOPIC_IDS, attemptMasterCtx);
 			} catch (GenericServiceException e) {
-
-				Debug.logError(e, "Failed to execute findQuestionsByTopicIds service", module);
 				errMsg = "Failed to execute findQuestionsByTopicIds service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -282,11 +279,11 @@ public class UserAttemptEvents {
 			List<String> randomQuestions = new LinkedList<>();
 
 			List<Map<String, Object>> topicWiseQuestions = (List<Map<String, Object>>) findQuestionsByTopicIdsResp
-					.get("topicList");
+					.get(CommonConstants.TOPIC_LIST);
 			for (Map<String, Object> topic : topicWiseQuestions) {
 
 				Integer totalQuestionsInThisTopic = (Integer) topic.get(CommonConstants.TOTAL_QUESTIONS_IN_THIS_TOPIC);
-				List<String> questionIdList = (List<String>) topic.get("questionIdList");
+				List<String> questionIdList = (List<String>) topic.get(CommonConstants.QUESTION_ID_LIST);
 
 				Random rd = new Random();
 				// checking totalQuestionsInThisTopic is not null
@@ -304,7 +301,7 @@ public class UserAttemptEvents {
 			}
 
 			if (UtilValidate.isEmpty(randomQuestions)) {
-				errMsg = "Error: randamQuestion list created is empty or null";
+				errMsg = "RandamQuestion list created is empty or null";
 				Debug.logError(errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
@@ -320,15 +317,16 @@ public class UserAttemptEvents {
 				Map<String, Object> createUAAMSResp = null;
 				try {
 
-					createUAAMSResp = dispatcher.runSync("createUserAttemptAnswerMasterService",
+					createUAAMSResp = dispatcher.runSync(CommonConstants.CREATE_USER_ATTEMPT_ANSWER_MASTER_SERVICE,
 							UtilMisc.toMap(CommonConstants.QUESTION_ID, questionId, CommonConstants.PERFORMANCE_ID,
 									performanceId, CommonConstants.SEQUENCE_NUM, sequenceNum++,
 									CommonConstants.IS_FLAGGED, isFlagged, CommonConstants.USER_LOGIN, userLogin));
 
 				} catch (GenericServiceException e) {
 
-					Debug.logError(e, "Failed to execute createUserAttemptAnswerMasterService service", module);
+					
 					errMsg = "Failed to execute createUserAttemptAnswerMasterService service : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -363,11 +361,11 @@ public class UserAttemptEvents {
 			userExamMappingRecord.put(CommonConstants.NO_OF_ATTEMPTS, attemptNumber);
 			userExamMappingRecord.put(CommonConstants.LAST_PERFORMANCE_DATE, lastPerformanceDate);
 			try {
-				Map<String, Object> updateUserExamMappingRecordResp = dispatcher.runSync("updateUserExamMappingRecord",
+				Map<String, Object> updateUserExamMappingRecordResp = dispatcher.runSync(CommonConstants.UPDATE_USER_EXAM_MAPPING_RECORD,
 						userExamMappingRecord);
 			} catch (GenericServiceException e) {
-				Debug.logError(e, "Failed to execute updateUserExamMappingRecord service", module);
 				errMsg = "Failed to execute updateUserExamMappingRecord service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -382,8 +380,8 @@ public class UserAttemptEvents {
 						.where(CommonConstants.PERFORMANCE_ID, Integer.valueOf(performanceId)).queryList();
 
 			} catch (GenericEntityException e) {
-				Debug.logError(e, "Failed to retrieve Records from UserAttemptAnswerMaster service", module);
 				errMsg = "Failed to retrieve Records from UserAttemptAnswerMaster service : " + e.getMessage();
+				Debug.logError(e, errMsg, module);
 				request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 				request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 				return CommonConstants.ERROR;
@@ -415,11 +413,10 @@ public class UserAttemptEvents {
 				RetriveQuestions.put(CommonConstants.QUESTION_ID, question.get(CommonConstants.QUESTION_ID));
 				Map<String, Object> resultMap = null;
 				try {
-					resultMap = dispatcher.runSync("findQuestionById", RetriveQuestions);
+					resultMap = dispatcher.runSync(CommonConstants.FIND_QUESTION_BY_ID, RetriveQuestions);
 				} catch (GenericServiceException e) {
-
-					Debug.logError(e, "Failed to execute findQuestionById service", module);
 					errMsg = "Failed to execute findQuestionById service : " + e.getMessage();
+					Debug.logError(e, errMsg, module);
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 					return CommonConstants.ERROR;
@@ -428,7 +425,7 @@ public class UserAttemptEvents {
 
 				if (ServiceUtil.isSuccess(resultMap)) {
 					request.setAttribute("result", resultMap.get(CommonConstants.RESPONSE_MESSAGE));
-					Map<String, Object> questionResult = (Map<String, Object>) resultMap.get("question");
+					Map<String, Object> questionResult = (Map<String, Object>) resultMap.get(CommonConstants.QUESTION);
 					question.put(CommonConstants.QUESTION_ID, questionResult.get(CommonConstants.QUESTION_ID));
 					question.put(CommonConstants.QUESTION_DETAIL, questionResult.get(CommonConstants.QUESTION_DETAIL));
 					question.put(CommonConstants.OPTION_A, questionResult.get(CommonConstants.OPTION_A));
@@ -444,7 +441,7 @@ public class UserAttemptEvents {
 		}
 		Collections.sort(insertedQuestions, (o1, o2) -> Long.compare((Long) o1.get(CommonConstants.SEQUENCE_NUM),
 				(Long) o2.get(CommonConstants.SEQUENCE_NUM)));
-		request.setAttribute("selectedQuestion", insertedQuestions);
+		request.setAttribute(CommonConstants.SELECTED_QUESTION, insertedQuestions);
 
 		return CommonConstants.SUCCESS;
 	}
@@ -477,7 +474,7 @@ public class UserAttemptEvents {
 			
 
 		try {
-			updateAnswerInUserAttemptAnswerMasterResp = dispatcher.runSync("updateUserAttemptAnswerMaster",
+			updateAnswerInUserAttemptAnswerMasterResp = dispatcher.runSync(CommonConstants.UPDATE_USER_ATTEMPT_ANSWER_MASTER,
 					combinedMap);
 
 		} catch (GenericServiceException e) {
@@ -491,9 +488,9 @@ public class UserAttemptEvents {
 
 		if (ServiceUtil.isError(updateAnswerInUserAttemptAnswerMasterResp)) {
 			String errMsg = "Error while updating answer in UserAttemptAnswerMaster";
-			Debug.logInfo(errMsg, module);
+			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
-			request.setAttribute(CommonConstants.RESPONSE_MESSAGE, errMsg);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			return CommonConstants.ERROR;
 		}
 		
@@ -510,7 +507,7 @@ public class UserAttemptEvents {
 		
 		
 		
-		request.setAttribute("submittedQuestion",updateAnswerInUserAttemptAnswerMasterResp );
+		request.setAttribute(CommonConstants.SUBMITTED_QUESTION,updateAnswerInUserAttemptAnswerMasterResp );
 		request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
 		return CommonConstants.SUCCESS;
 	}
@@ -731,7 +728,7 @@ public class UserAttemptEvents {
 			// update the record in userAttemptTopicMaster entity
 			Map<String, Object> updateUserAttemptTopicMasterResp = null;
 			try {
-				updateUserAttemptTopicMasterResp = dispatcher.runSync("updateUserAttemptTopicMaster",
+				updateUserAttemptTopicMasterResp = dispatcher.runSync(CommonConstants.UPDATE_USER_ATTEMPT_TOPIC_MASTER,
 						updateUserAttemptTopicMasterContext);
 			} catch (GenericServiceException e) {
 
@@ -794,7 +791,7 @@ public class UserAttemptEvents {
 		Map<String, Object> updateUserAttemptMasterRep = null;
 		try {
 			// update userAttemptMaster entity
-			updateUserAttemptMasterRep = dispatcher.runSync("updateUserAttemptMaster", updateUserAttemptContext);
+			updateUserAttemptMasterRep = dispatcher.runSync(CommonConstants.UPDATE_USER_ATTEMPT_MASTER, updateUserAttemptContext);
 		} catch (GenericServiceException e) {
 
 			String errMsg = "Exception occured while calling updateUserAttemptMaster service : " + e.getMessage();
@@ -815,14 +812,14 @@ public class UserAttemptEvents {
 		}
 
 		Map<String, Object> resultMap = UtilMisc.toMap(CommonConstants.EXAM_NAME,examName,
-				"totalScore", totalScore, "totalWrongAnswersInExam", totalWrong,
-				"totalCorrectQuestionsInExam", totalCorrect, "actualUserPercentage", score,
+				CommonConstants.TOTAL_SCORE, totalScore, CommonConstants.TOTAL_WRONG_ANSWERS_IN_EXAM, totalWrong,
+				CommonConstants.TOTAL_CORRECT_QUESTIONS_IN_EXAM, totalCorrect, CommonConstants.ACTUAL_USER_PERCENTAGE, score,
 				CommonConstants.PASS_PERCENTAGE, passPercentage, CommonConstants.SCORE, score,
 				CommonConstants.USER_PASSED, userPassed, CommonConstants.NO_OF_QUESTIONS, noOfQuestions,
-				"noOfCorrectedQuestionsByTopicId", correctQuestionsTopicWise, "updatedUserAttemptTopicMasterList",
+				CommonConstants.NO_OF_CORRECTED_QUESTIONS_BY_TOPIC_ID, correctQuestionsTopicWise, CommonConstants.UPDATED_USER_ATTEMPT_TOPIC_MASTER_LIST,
 				updatedUserAttemptTopicMasterList);
 
-		request.setAttribute("resultMap", resultMap);
+		request.setAttribute(CommonConstants.RESULT_MAP, resultMap);
 		request.getSession().removeAttribute(CommonConstants.PERFORMANCE_ID);
 		return CommonConstants.SUCCESS;
 
@@ -899,7 +896,7 @@ public class UserAttemptEvents {
 			userAttemptMasterList.add(userAttemptMasterRecord);
 			
 		}
-		request.setAttribute("userAttemptMasterList",userAttemptMasterList );
+		request.setAttribute(CommonConstants.USER_ATTEMPT_MASTER_LIST,userAttemptMasterList);
 		request.setAttribute(CommonConstants.RESULT,  CommonConstants.SUCCESS);
 		return CommonConstants.SUCCESS;
 	}
@@ -988,9 +985,9 @@ public class UserAttemptEvents {
 			userAttemptTopicMasterList.add(userAttemptTopicMasterRecord);
 			
 		}
-		request.setAttribute("userAttemptTopicMasterList", userAttemptTopicMasterList);
+		request.setAttribute(CommonConstants.USER_ATTEMPT_TOPIC_MASTER_LIST, userAttemptTopicMasterList);
 		request.setAttribute(CommonConstants.RESULT,  CommonConstants.SUCCESS);
-		return  CommonConstants.SUCCESS;
+		return CommonConstants.SUCCESS;
 		
 	}
 	

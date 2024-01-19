@@ -3,6 +3,7 @@ import { EditExamContext } from "./EditExam";
 import Swal from "sweetalert2";
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
 const EditExamTopic = ({ obj }) => {
+  
   const { refresh, setRefresh } = useContext(EditExamContext);
   const examId = obj["examId"];
   const topicId = obj["topicId"];
@@ -121,7 +122,7 @@ const EditExamTopic = ({ obj }) => {
 
           <div className="mb-3">
             <label htmlFor="topicPassPercentage" className="form-label">
-              {" "}
+              
               topicPassPercentage
             </label>
             <input

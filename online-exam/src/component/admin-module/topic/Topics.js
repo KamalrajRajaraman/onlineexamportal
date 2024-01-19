@@ -3,11 +3,10 @@ import MainContent from "../../common/MainContent";
 import AccordinMaker from "../../common/AccordinMaker";
 import { useTopicContext } from "./TopicData";
 import Alert from "../../common/Alert";
-import { useNavigate } from "react-router-dom";
 import FormInput from "../../common/FormInput";
 
 const Topics = () => {
-  const { topics, setTopics, fetchTopic, onDelete, alert, setAlert,onEdit } = useTopicContext();
+  const {getTopics, topics, setTopics, fetchTopic, onDelete, alert, setAlert,onEdit } = useTopicContext();
 
   const initialValue = {
     topicId: "",
@@ -24,10 +23,7 @@ const Topics = () => {
     };
   }, [refresh]);
 
-  const getTopics = async () => {
-    const topicList = await fetchTopic();
-    setTopics(topicList);
-  };
+ 
   const text = {
     header: "Topic",
     btnText: "Topic"
@@ -45,6 +41,7 @@ const Topics = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
     await onEdit(formValues);

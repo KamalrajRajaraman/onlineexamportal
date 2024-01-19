@@ -289,7 +289,7 @@ public class OnlineExamEvents {
 		}
 		GenericValue userLoginId =null;
 		try {
-			userLoginId = EntityQuery.use(delegator).select(CommonConstants.USER_LOGIN_ID).from(CommonConstants.USER_LOGIN).where(CommonConstants.PARTY_ID,partyId).queryOne();
+			userLoginId = EntityQuery.use(delegator).select(CommonConstants.USER_LOGIN_ID).from(CommonConstants.USER_LOGIN_ENTITY).where(CommonConstants.PARTY_ID,partyId).queryOne();
 		} catch (GenericEntityException e) {
 			String errMsg = "Failed to retrieve userLoginId from  UserMaster View Entity" + e.getMessage();
 			Debug.logError(e, errMsg, module);
