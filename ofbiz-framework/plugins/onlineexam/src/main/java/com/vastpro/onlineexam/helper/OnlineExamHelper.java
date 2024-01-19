@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.common.authentication.AuthHelper;
@@ -62,6 +63,8 @@ public class OnlineExamHelper {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		
+		
 		String responseMessage = (String) findExamTopicMappingResp.get(CommonConstants.RESPONSE_MESSAGE);
 		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
 			String errMsg = (String) findExamTopicMappingResp.get(CommonConstants.SUCCESS_MESSAGE);
@@ -88,6 +91,34 @@ public class OnlineExamHelper {
 		}
 		
 		return CommonConstants.SUCCESS;
+	}
+	
+	
+	public static  Map<String,Object> populateUserExamMappingMapFromGenericValue(GenericValue userExamMappingGV){
+		
+		Map<String, Object> userExamMappingRecord = new HashedMap<>();
+		userExamMappingRecord.put(CommonConstants.PARTY_ID,
+				userExamMappingGV.getString(CommonConstants.PARTY_ID));
+		userExamMappingRecord.put(CommonConstants.EXAM_ID,
+				userExamMappingGV.getString(CommonConstants.EXAM_ID));
+		userExamMappingRecord.put(CommonConstants.ALLOWED_ATTEMPTS,
+				userExamMappingGV.getLong(CommonConstants.ALLOWED_ATTEMPTS));
+		userExamMappingRecord.put(CommonConstants.NO_OF_ATTEMPTS,
+				userExamMappingGV.getLong(CommonConstants.NO_OF_ATTEMPTS));
+		userExamMappingRecord.put(CommonConstants.LAST_PERFORMANCE_DATE,
+				userExamMappingGV.getTimestamp(CommonConstants.LAST_PERFORMANCE_DATE));
+		userExamMappingRecord.put(CommonConstants.TIMEOUT_DAYS,
+				userExamMappingGV.getLong(CommonConstants.TIMEOUT_DAYS));
+		userExamMappingRecord.put(CommonConstants.PASSWORD_CHANGES_AUTO,
+				userExamMappingGV.getString(CommonConstants.PASSWORD_CHANGES_AUTO));
+		userExamMappingRecord.put(CommonConstants.CAN_SPLIT_EXAMS,
+				userExamMappingGV.getString(CommonConstants.CAN_SPLIT_EXAMS));
+		userExamMappingRecord.put(CommonConstants.CAN_SEE_DETAILED_RESULTS,
+				userExamMappingGV.getString(CommonConstants.CAN_SEE_DETAILED_RESULTS));
+		userExamMappingRecord.put(CommonConstants.MAX_SPLIT_ATTEMPTS,
+				userExamMappingGV.getInteger(CommonConstants.MAX_SPLIT_ATTEMPTS));	
+		return userExamMappingRecord;
+		
 	}
 
 }

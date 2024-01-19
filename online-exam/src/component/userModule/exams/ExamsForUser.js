@@ -38,7 +38,7 @@ const ExamsForUser = () => {
         <h2 className="p-2 ">Scheduled Exams</h2>
       </div>
       <div className="mt-1 ">
-        {exams.map((exam) => (
+        {exams&& exams.map((exam) => (
           <ExamAccordion key={exam.examId} object={exam} />
         ))}
       </div>

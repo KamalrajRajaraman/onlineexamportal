@@ -46,7 +46,7 @@ public class TopicMasterServices {
 		EntityExpr makeCondition = EntityCondition.makeCondition(makeCondition1, EntityComparisonOperator.OR, makeCondition2); 
 		try {
 			topicGenericValueList = EntityQuery.use(delegator).from(CommonConstants.TOPIC_MASTER)
-					.where(makeCondition).queryList();
+					.where(makeCondition).cache().queryList();
 		} 
 		catch (GenericEntityException e) {
 			//Exception occurred while Execute the query
@@ -55,12 +55,17 @@ public class TopicMasterServices {
 			return ServiceUtil.returnError(errMsg + module);
 		}
 		
+		
 		//If the Retrieved topics are empty
 		if(UtilValidate.isEmpty(topicGenericValueList)) {
-			String errMsg = "Retrieved topics from TopicMaster entity is null or empty";
-			Debug.logError(errMsg, module);
-			return ServiceUtil.returnError(errMsg + module);
+			//If the genericValueList is empty return error map
+			String errMsg = "Retreived record list from TopicMasterEntity is null or empty";
+			Debug.logWarning(errMsg, module);
+			return ServiceUtil.returnMessage(CommonConstants.RESPOND_EMPTY,errMsg + module);
 		}
+		
+		
+		
 		
 		//If the Retrieved topics are not empty 
 		if(UtilValidate.isNotEmpty(topicGenericValueList)) {
