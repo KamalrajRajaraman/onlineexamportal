@@ -53,8 +53,8 @@ public class ExamTopicMappingMasterServices {
 		if(UtilValidate.isEmpty(genericValueList)) {
 			//If the genericValueList is empty return error map
 			String errMsg = "Retreived record list from ExamTopicMappingViewEntity is null or empty";
-			Debug.logError(errMsg, module);
-			return ServiceUtil.returnError(errMsg + module);
+			Debug.logWarning(errMsg, module);
+			return ServiceUtil.returnMessage(CommonConstants.RESPOND_EMPTY,errMsg + module);
 		}
 		
 		if (UtilValidate.isNotEmpty(genericValueList)) {

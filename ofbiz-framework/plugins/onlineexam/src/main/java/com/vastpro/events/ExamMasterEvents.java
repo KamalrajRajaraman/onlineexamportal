@@ -147,6 +147,10 @@ public class ExamMasterEvents {
 			 request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
              return CommonConstants.ERROR;
 		}
+		 
+//		String responseMessage = (String) findAllExamsResp.get(CommonConstants.RESPONSE_MESSAGE);
+//		if(responseMessage.equals(CommonConstants.))
+		
 		//If the service returns success result and  examList is added to the request
 		if (ServiceUtil.isSuccess(findAllExamsResp)) {	
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
