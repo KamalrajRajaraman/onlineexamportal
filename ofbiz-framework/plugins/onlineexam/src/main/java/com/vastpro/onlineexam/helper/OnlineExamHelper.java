@@ -20,7 +20,14 @@ public class OnlineExamHelper {
 	
 	private static final String module = OnlineExamHelper.class.getName();
 	
+	
+	/**
+	 *Helps to find All ExamTopicMappingRecords By ExamId 
+	 * @param request
+	 * @return
+	 */
 	public static String findAllExamTopicMappingRecordsByExamId(HttpServletRequest request) {
+
 
 		String examId = (String) request.getAttribute(CommonConstants.EXAM_ID);
 		if (examId == null) {
@@ -49,29 +56,37 @@ public class OnlineExamHelper {
 			findExamTopicMappingResp = dispatcher.runSync("findExamTopicMappingRecords", findAllContextMap);
 			Debug.logInfo("Successfully executed findExamTopicMappingRecords Service", module);
 		} catch (GenericServiceException e) {
-			Debug.logError(e, "Failed to execute findExamTopicMappingRecords service", module);
 			String errMsg = "Failed to execute findExamTopicMappingRecords service : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 		}
+		String responseMessage = (String) findExamTopicMappingResp.get(CommonConstants.RESPONSE_MESSAGE);
+		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
+			String errMsg = (String) findExamTopicMappingResp.get(CommonConstants.SUCCESS_MESSAGE);
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
 		//if findExamTopicMappingRecords Service result is success ,examTopicMappingRecordList is set in request
 		if (ServiceUtil.isSuccess(findExamTopicMappingResp)) {
 			
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute("examTopicMappingRecordList", findExamTopicMappingResp.get("examTopicMappingRecordList"));
+			request.setAttribute(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST, findExamTopicMappingResp.get(CommonConstants.EXAM_TOPIC_MAPPING_RECORD_LIST));
 		}
 		else {
 			//if findExamTopicMappingRecords Service result is error ,error message is set in request and return error
 			String errMsg = "Error returned while executing findExamTopicMappingRecords";
 			Debug.logError(errMsg, module);
-			request.setAttribute(CommonConstants.RESULT_MAP, findExamTopicMappingResp);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 			return CommonConstants.ERROR;
 			
 		}
-
+		
 		return CommonConstants.SUCCESS;
 	}
 
