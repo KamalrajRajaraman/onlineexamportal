@@ -49,7 +49,7 @@ public class ExamMasterServices {
 		try {
 			//Query to fetch all the exams from ExamMaster entity
 			examMasterGenericValueList = EntityQuery.use(delegator)
-					.from(CommonConstants.EXAM_MASTER).where(expirationDateCondition).queryList();
+					.from(CommonConstants.EXAM_MASTER).where(expirationDateCondition).cache().queryList();
 
 		} catch (GenericEntityException e) {
 			
@@ -122,7 +122,7 @@ public class ExamMasterServices {
 			
 			//Query to fetch an exam from ExamMaster entity for the provided examId
 			examGenericValue = EntityQuery.use(delegator).from(CommonConstants.EXAM_MASTER)
-					.where(CommonConstants.EXAM_ID, examIdPK).queryOne();
+					.where(CommonConstants.EXAM_ID, examIdPK).cache().queryOne();
 
 			}
 

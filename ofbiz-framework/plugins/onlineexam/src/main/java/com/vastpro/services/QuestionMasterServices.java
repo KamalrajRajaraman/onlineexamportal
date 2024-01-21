@@ -43,7 +43,7 @@ public class QuestionMasterServices {
 		EntityCondition condition2 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityOperator.GREATER_THAN, currentTime );
 		EntityCondition condition = EntityCondition.makeCondition(condition1, EntityOperator.OR, condition2);
 		try {
-			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).where(condition).queryList();
+			questionGenericValueList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).where(condition).cache().queryList();
 		} 
 		catch (GenericEntityException e) {
 			//If Exception occurred return error map
@@ -76,7 +76,7 @@ public class QuestionMasterServices {
 	 * @param Map<String, ? extends Object>
 	 * @return Map<String,Object>	
 	 */
-	public static Map<String, Object> findQuestion(DispatchContext dctx, Map<String, ? extends Object> context) {
+	public static Map<String, Object> findQuestionById(DispatchContext dctx, Map<String, ? extends Object> context) {
 
 		Map<String, Object> serviceResultMap = ServiceUtil.returnSuccess();
 		Delegator delegator = dctx.getDelegator();
@@ -87,7 +87,7 @@ public class QuestionMasterServices {
 		try {
 			//Execute the query to find question
 			questionMasterGV = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER)
-					.where(CommonConstants.QUESTION_ID, questionId).queryOne();
+					.where(CommonConstants.QUESTION_ID, questionId).cache().queryOne();
 
 		} catch (GenericEntityException e) {
 			//If Exception occurred return error map

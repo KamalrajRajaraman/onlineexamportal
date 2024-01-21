@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
+const Accordin = ({ object ,name ,onDelete,id,onEdit,showDetails}) => {
   
   const [toggle, setToggle] = useState(true);
   const onClick = () => {
@@ -22,8 +22,9 @@ const Accordin = ({ object ,name ,onDelete,id,onEdit}) => {
               <h5 className="col-10">{object[name]}</h5>
               <p></p>
               <div className=" ms-1 row    ">
-              <button   onClick={()=>onEdit(object[id], object)} className="btn  btn-outline-success  btn-sm me-4 col">Edit</button>
-              <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger  btn-sm me-3 col ">Delete</button>
+                {showDetails && <button onClick={()=>showDetails(object[id], object)} className="btn  btn-outline-success  btn-sm me-2 col">Details</button>}
+              <button   onClick={()=>onEdit(object[id], object)} className="btn  btn-outline-success  btn-sm me-2 col">Edit</button>
+              <button onClick={()=>onDelete(object[id])} className="btn btn-outline-danger  btn-sm me-2 col ">Delete</button>
             </div>
             </div>
            

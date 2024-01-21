@@ -24,6 +24,11 @@ const AddQuestions = () => {
     topicId:"",
     negativeMarkValue:""
   }
+
+  //this is for create question from topic
+  if(props.topicId){
+    initialValue.topicId = props.topicId
+  }
   const [formValues,setFormValues] =useState(initialValue);
   const [formErrors,setFormErrors] =useState({});
   const [isSumbit,setIsSumbit] =useState(false);

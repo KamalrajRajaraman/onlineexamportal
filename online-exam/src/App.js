@@ -31,6 +31,9 @@ import Alert from "./component/common/Alert";
 import { useState } from "react";
 import PerformanceReport from "./component/userModule/performance-report/PerformanceReport";
 import AttemptDetails from "./component/userModule/performance-report/AttemptDetails";
+import EditTopic from "./component/admin-module/edit-topic/EditTopic";
+import AddQuestionToTopic from "./component/admin-module/edit-topic/AddQuestionToTopic";
+import EditQuestion from "./component/admin-module/question/EditQuestion";
 
 
 
@@ -68,8 +71,14 @@ function App() {
           <Route path="topic" element={<Topics/>}>
             <Route path="add-topic" element={<Addtopic />} />
           </Route>
+
+          <Route path="topic/edit-topic/:topicId" element={<EditTopic/>}>
+          <Route path="add-question-to-topic" element={<AddQuestionToTopic />} /> 
+          </Route>
+
           <Route path="questions" element={<Questions />}>
             <Route path="add-questions" element={<AddQuestions />} />
+            <Route path="edit-question/:questionId" element={<EditQuestion/>}/>
           </Route>
           <Route path="user" element={<User />}>
             <Route index element={<ListUser />} />

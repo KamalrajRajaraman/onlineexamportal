@@ -192,6 +192,14 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
+	<request-map uri="findQuestionsByTopicId">
+		<security https="true" auth="true" />
+		<event type="java"
+			path="com.vastpro.events.QuestionMasterEvents"
+			invoke="findQuestionsByTopicId" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
 	
 
 	<request-map uri="findAllQuestions">

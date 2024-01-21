@@ -7,7 +7,7 @@ const QuestionContext = createContext(null);
 export const QuestionProvider =({children})=>{
   const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
-
+    const [question, setQuestion] = useState(null);
     const onDelete=async(id)=>{
       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`deleteQuestion?questionId=${id}`,
       DELETE);
@@ -58,6 +58,7 @@ export const QuestionProvider =({children})=>{
       const {result} = data
       
       if(result==="success"){
+        setQuestion(null);
         document.getElementById("modal-close").click();
         fetchQuestion();
         vanishAlert("Good job!", "question updated  successfully!","success", 2000, false);   
@@ -68,7 +69,7 @@ export const QuestionProvider =({children})=>{
       
     }
     
-    return<QuestionContext.Provider value={{questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
+    return<QuestionContext.Provider value={{setQuestion,question,questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
         {children}
     </QuestionContext.Provider>
      
