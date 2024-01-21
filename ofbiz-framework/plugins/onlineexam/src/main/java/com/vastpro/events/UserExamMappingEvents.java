@@ -63,8 +63,13 @@ public class UserExamMappingEvents {
 		String partyId = (String) combinedMap.get(CommonConstants.PARTY_ID);
 		String examId = (String) combinedMap.get(CommonConstants.EXAM_ID);
 		try {
-			findPartyIdExamIdResp = EntityQuery.use(delegator).from(CommonConstants.USER_EXAM_MAPPING_MASTER)
-					.where(CommonConstants.PARTY_ID, partyId, CommonConstants.EXAM_ID, examId).queryOne();
+			findPartyIdExamIdResp = EntityQuery
+									.use(delegator)
+									.from(CommonConstants.USER_EXAM_MAPPING_MASTER)
+									.where(CommonConstants.PARTY_ID, partyId, CommonConstants.EXAM_ID, examId)
+									.cache()
+									.queryOne();
+			
 		} catch (GenericEntityException e) {
 			String errMsg = "Error while Fetching record from userExamMappingMaster " + e.getMessage();
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);

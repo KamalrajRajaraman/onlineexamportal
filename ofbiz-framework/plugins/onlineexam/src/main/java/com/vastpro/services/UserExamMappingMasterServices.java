@@ -51,20 +51,21 @@ public class UserExamMappingMasterServices {
 
 		// If the Retrieved userExamMappingGenericValueList is empty
 		if (UtilValidate.isEmpty(userExamMappingGenericValueList)) {
-			
+
 			String errMsg = "Retreived record list from UserExamMappingViewEntity is null or empty";
 			Debug.logWarning(errMsg, module);
 			return ServiceUtil.returnMessage(CommonConstants.RESPOND_EMPTY, errMsg + module);
 		}
-		
+
 		if (UtilValidate.isNotEmpty(userExamMappingGenericValueList)) {
 
 			// Creating a list, containing the map of exams
 			for (GenericValue userExamMappingGenericValue : userExamMappingGenericValueList) {
 
-				Map<String, Object> userExamMappingRecord = OnlineExamHelper.populateUserExamMappingMapFromGenericValue(userExamMappingGenericValue);
+				Map<String, Object> userExamMappingRecord = OnlineExamHelper
+						.populateUserExamMappingMapFromGenericValue(userExamMappingGenericValue);
 				userExamMappingRecord.put(CommonConstants.EXAM_NAME,
-						
+
 						userExamMappingGenericValue.getString(CommonConstants.EXAM_NAME));
 				examList.add(userExamMappingRecord);
 			}
@@ -104,7 +105,8 @@ public class UserExamMappingMasterServices {
 			return ServiceUtil.returnError(errMsg + module);
 		}
 
-		Map<String, Object> userExamMappingRecord = OnlineExamHelper.populateUserExamMappingMapFromGenericValue(userExamMappingGenericValue);
+		Map<String, Object> userExamMappingRecord = OnlineExamHelper
+				.populateUserExamMappingMapFromGenericValue(userExamMappingGenericValue);
 
 		resultMap.put(CommonConstants.USER_EXAM_MAPPING_RECORD, userExamMappingRecord);
 

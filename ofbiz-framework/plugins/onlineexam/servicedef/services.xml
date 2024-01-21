@@ -125,12 +125,12 @@
 
 	<service name="findTopicById" engine="java"
 		location="com.vastpro.services.TopicMasterServices"
-		invoke="findExamById" auth="true">
+		invoke="findTopicById" auth="true">
 		<description>Find Topic </description>
-		<attribute name="topicId" mode="IN" type="String"
+		<attribute name="topicId" mode="INOUT" type="String"
 			optional="false"></attribute>
-		<attribute name="topic" mode="OUT" optional="true"
-			type="Map"></attribute>
+		<attribute name="topicName" mode="OUT" optional="true"
+			type="String" ></attribute>
 	</service>
 
 	<service name="deleteTopic" default-entity-name="TopicMaster"
