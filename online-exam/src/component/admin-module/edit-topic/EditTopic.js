@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { TiEdit } from 'react-icons/ti';
+
 import { useLocation, useParams } from 'react-router-dom'
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION } from '../../common/CommonConstant';
+
+import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION } from '../../common/CommonConstants';
 import MainContent from '../../common/MainContent';
 import AccordinMaker from '../../common/AccordinMaker';
 import useStateRef from 'react-usestateref';
@@ -38,14 +38,7 @@ const EditTopic = () => {
             PORT_NO +
             WEB_APPLICATION +
             CONTROL_SERVLET +
-            `findQuestionsByTopicId?topicId=${topicId}`, {
-              method: 'POST',
-            
-              credentials:'include'
-             
-         
-            })
-
+            `findQuestionsByTopicId?topicId=${topicId}`,GET)
 
         const data = await res.json();
     
@@ -53,14 +46,23 @@ const EditTopic = () => {
           const questionList = data.questionList;
           console.log('questionList:::', questionList);
           setQuestions(questionList);
+        }else{
+          setQuestions([]);
         }
       };
 
       const modalEdit = async (id, question) => {
         setQuestion(question);
       };
-   
- 
+
+      const HandleDeleteQuestion = async (id)=>{
+         const result = await onDelete(id);
+        if(result==="success"){
+          fetchQuestion(topicId);
+        }
+
+      }
+
     return (
        
         <div>
@@ -73,7 +75,7 @@ const EditTopic = () => {
         objects={questions}
         id={"questionId"}
         name={"questionDetail"}
-        onDelete={onDelete}
+        onDelete={HandleDeleteQuestion}
         onEdit={modalEdit}
       />:"No Questions.Please Add Question"}
       {question && <EditQuestion question={question} setQuestion={setQuestion}/>}

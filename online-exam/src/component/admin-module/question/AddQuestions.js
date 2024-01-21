@@ -4,7 +4,7 @@ import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
 import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
 import { useNavigate } from "react-router-dom";
-const AddQuestions = () => {
+const AddQuestions = (props) => {
   const navigate = useNavigate();
   const {questions, setQuestions} = useQuestionContext();
   const { topics,setTopics,getTopics } = useTopicContext();
@@ -29,6 +29,8 @@ const AddQuestions = () => {
   if(props.topicId){
     initialValue.topicId = props.topicId
   }
+
+
   const [formValues,setFormValues] =useState(initialValue);
   const [formErrors,setFormErrors] =useState({});
   const [isSumbit,setIsSumbit] =useState(false);
