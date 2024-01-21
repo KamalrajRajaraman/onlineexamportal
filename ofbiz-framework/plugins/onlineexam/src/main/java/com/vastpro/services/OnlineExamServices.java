@@ -105,7 +105,7 @@ public class OnlineExamServices {
 		try {
 			// Retrieve all users based on roleTypeId
 			questionDetail = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER)
-					.where(CommonConstants.QUESTION_ID, questionId).queryOne();
+					.where(CommonConstants.QUESTION_ID, questionId).cache().queryOne();
 
 		} catch (GenericEntityException e) {
 			// If Exception occurred return error map

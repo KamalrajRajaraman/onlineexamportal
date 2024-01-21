@@ -2,6 +2,7 @@ package com.vastpro.events;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,11 @@ import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
+import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityOperator;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -144,7 +149,7 @@ public class QuestionMasterEvents {
 		// If the service is success, set the result as success in request
 		if (ServiceUtil.isSuccess(findAllQuestionsResp)) {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
-			request.setAttribute(CommonConstants.QUESTION_LIST, findAllQuestionsResp.get("questionList"));
+			request.setAttribute(CommonConstants.QUESTION_LIST, findAllQuestionsResp.get(CommonConstants.QUESTION_LIST));
 		} else {
 			// If the service returns error, set the result as error in request
 			String errMsg = "Error occured while running findAllQuestions service";
@@ -204,6 +209,61 @@ public class QuestionMasterEvents {
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
 		}
 		return CommonConstants.SUCCESS;
+	}
+	
+	
+	public static String findQuestionsByTopicId(HttpServletRequest request, HttpServletResponse response) {
+		
+		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
+		String topicId = (String) combinedMap.get(CommonConstants.TOPIC_ID);
+		
+		if(UtilValidate.isEmpty(topicId)){
+		topicId = request.getParameter(CommonConstants.TOPIC_ID);
+		}
+	
+		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
+		if (UtilValidate.isEmpty(topicId)) {
+			String errMsg = "topicId is empty ";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		
+		EntityCondition condition1 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityOperator.EQUALS, null);
+		EntityCondition condition2 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE, EntityOperator.GREATER_THAN, currentTime );
+		EntityCondition condition3 = EntityCondition.makeCondition(CommonConstants.TOPIC_ID, EntityOperator.EQUALS,topicId);
+		EntityCondition condition = EntityCondition.makeCondition(condition1, EntityOperator.OR, condition2);
+		
+		List<GenericValue> questionList=null;
+		try {
+			 questionList = EntityQuery.use(delegator).from(CommonConstants.QUESTION_MASTER).where(condition3, condition ).cache().queryList();
+		} catch (GenericEntityException e) {
+			String errMsg = "Exception occurred in fetching record from QuestionMaster entity : " + e.getMessage();
+			Debug.logError(e, errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}	
+		
+		if (UtilValidate.isEmpty(questionList)) {
+			//If Exception occurred return error map
+			String errMsg = "Retrieved Questions from QuestionMaster entity is null or empty";
+			Debug.logError(errMsg, module);
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
+			return CommonConstants.ERROR;
+		}
+		
+		if(UtilValidate.isNotEmpty(questionList)) {
+			request.setAttribute(CommonConstants.QUESTION_LIST, questionList);
+			request.setAttribute(CommonConstants.RESULT, CommonConstants.SUCCESS);
+		}
+		
+		return CommonConstants.SUCCESS;
+		
 	}
 
 }

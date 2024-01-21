@@ -5,7 +5,7 @@ const QuestionContext = createContext(null);
 
 export const QuestionProvider =({children})=>{
     const [questions, setQuestions] = useState([]);
-
+    const [question, setQuestion] = useState(null);
     const onDelete=async(id)=>{
       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`deleteQuestion?questionId=${id}`,
       {method:'DELETE', credentials: 'include'})
@@ -54,6 +54,7 @@ export const QuestionProvider =({children})=>{
       const {result} = data
       
       if(result==="success"){
+        setQuestion(null);
         document.getElementById("modal-close").click();
         fetchQuestion();
         Swal.fire({
@@ -68,7 +69,7 @@ export const QuestionProvider =({children})=>{
       
     }
     
-    return<QuestionContext.Provider value={{questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
+    return<QuestionContext.Provider value={{setQuestion,question,questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
         {children}
     </QuestionContext.Provider>
      

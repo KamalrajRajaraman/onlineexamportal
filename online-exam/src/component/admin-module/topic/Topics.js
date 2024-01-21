@@ -4,10 +4,11 @@ import AccordinMaker from "../../common/AccordinMaker";
 import { useTopicContext } from "./TopicData";
 import Alert from "../../common/Alert";
 import FormInput from "../../common/FormInput";
+import { useNavigate } from "react-router-dom";
 
 const Topics = () => {
   const {getTopics, topics, setTopics, fetchTopic, onDelete, alert, setAlert,onEdit } = useTopicContext();
-
+  const navigate = useNavigate();
   const initialValue = {
     topicId: "",
     topicName: ""
@@ -37,6 +38,10 @@ const Topics = () => {
     document.getElementById("buttonId").click();
   };
 
+  const showDetails = (id, topic)=>{
+    navigate(`edit-topic/${id}`,{state:topic})
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -52,7 +57,7 @@ const Topics = () => {
     <div className="position-relative">
       {alert && <Alert color={"alert-success"} close={setAlert} message={"Aww yeah, you successfully Topic Exam"} />}
       <MainContent text={text} to="add-topic" back="/admin/topic" />
-      {topics ? <AccordinMaker objects={topics} id={"topicId"} name={"topicName"} onDelete={onDelete} onEdit={modalEdit} />:"No Topics Found.Please Add Exams"}
+      {topics ? <AccordinMaker objects={topics} id={"topicId"} name={"topicName"} onDelete={onDelete} onEdit={modalEdit} showDetails={showDetails} />:"No Topics Found.Please Add Exams"}
       <button
         type="button"
         class="btn btn-primary d-none"

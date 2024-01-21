@@ -4,7 +4,7 @@ import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
 import Swal from "sweetalert2";
 import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-const AddQuestions = () => {
+const AddQuestions = (props) => {
   
   const {questions, setQuestions} = useQuestionContext();
   const { topics,setTopics,fetchTopic,getTopics } = useTopicContext();
@@ -23,6 +23,11 @@ const AddQuestions = () => {
     answerValue:"",
     topicId:"",
     negativeMarkValue:""
+  }
+
+  //this is for create question from topic
+  if(props.topicId){
+    initialValue.topicId = props.topicId
   }
   const [formValues,setFormValues] =useState(initialValue);
   const [formErrors,setFormErrors] =useState({});

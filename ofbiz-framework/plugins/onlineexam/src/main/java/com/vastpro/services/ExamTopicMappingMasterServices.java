@@ -41,7 +41,11 @@ public class ExamTopicMappingMasterServices {
 		
 		try {
 			//Query for fetching record from ExamTopicMappingViewEntity based on examId
-			genericValueList =  EntityQuery.use(delegator).from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY).where(CommonConstants.EXAM_ID,examIdPK).queryList();
+			genericValueList =  EntityQuery.use(delegator)
+								.from(CommonConstants.EXAM_TOPIC_MAPPING_VIEW_ENTITY)
+								.where(CommonConstants.EXAM_ID,examIdPK)
+								.cache()
+								.queryList();
 		} 
 		catch (GenericEntityException e) {
 			//Exception occured while fetching record from entity
