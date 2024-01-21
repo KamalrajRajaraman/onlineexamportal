@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
 import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+import { useNavigate } from "react-router-dom";
 const AddQuestions = () => {
-  
+  const navigate = useNavigate();
   const {questions, setQuestions} = useQuestionContext();
-  const { topics,setTopics,fetchTopic,getTopics } = useTopicContext();
+  const { topics,setTopics,getTopics } = useTopicContext();
 
   const initialValue ={
     questionDetail:"",
@@ -44,28 +44,20 @@ const AddQuestions = () => {
    console.log(questionDetail)
    try{
     const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createQuestion",
-      {
-        method: "POST",
-        headers: {
-          'Content-type':"application/json"
-        },
-         credentials: 'include',
-        body: JSON.stringify(questionDetail)
-      }
-    );
+      "createQuestion",{...POST,body: JSON.stringify(questionDetail)});
+    if (res.status === 401) {
+      navigate("/login");
+    }
     const data = await res.json();
+
     if(data.result==="success"){
-      Swal.fire({
-        title: "Good job!",
-        text: "Question created successfully!",
-        icon: "success",
-        timer:2000,
-        showConfirmButton:false
-      });
+      vanishAlert("Good job!","Question created successfully!","success",2000,false);
       setFormValues(initialValue);
       const {question} =data;
       setQuestions([...questions,question])
+    } 
+    else if (data.result==="error"){
+      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
     }
     
    }catch(error){

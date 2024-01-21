@@ -1,27 +1,32 @@
 import React, { createContext, useState } from 'react'
 import MainContent from "../../common/MainContent"
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import ShowExam from './ShowExam';
 import UserDetails from './UserDetails';
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { POST,CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION, alert, swalFireAlert } from "../../common/CommonConstants";
+
 export const EditUserContext=createContext();
+
 const EditUser = () => {
+
+  const navigate = useNavigate();
   const { partyId } = useParams();
   const [exams, setExams] = useState([]);
   const fetchAllExamsForUser =()=>{
-    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`findAllExamForPartyId`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ partyId }),
-    })
+    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`findAllExamForPartyId`,
+    {...POST,body: JSON.stringify({ partyId }),})
       .then((response) => {
+        if (response.status === 401) {
+          navigate("/login");
+        }
         return response.json();
       })
       .then((data) => {
-        console.log("final data:::", data);
+        if (data.result==="error"){
+          swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
+        }
         setExams(data.examList);
         console.log(data.examList);
       });
@@ -38,7 +43,6 @@ const EditUser = () => {
       <UserDetails />
       <MainContent  text={text} to="add-exam-to-user" back={`/admin/user/edit/userId/${partyId}`}/>
       {exams?<ShowExam  exams ={exams} fetchAllExamsForUser={fetchAllExamsForUser}/>:"No Exams added to this user"}
-
    </EditUserContext.Provider>
   )
 }

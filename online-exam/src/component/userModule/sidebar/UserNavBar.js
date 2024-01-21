@@ -5,13 +5,14 @@ import "./styles/UserNavBar.css"
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
+  GET,
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+} from "../../common/CommonConstants";
 
 const UserNavBar = () => {
-    const navigate = useNavigate();
+   const navigate = useNavigate();
   const { logout } = useAuth();
   const onlogout = async () => {
     const res = await fetch(
@@ -21,7 +22,7 @@ const UserNavBar = () => {
         WEB_APPLICATION +
         CONTROL_SERVLET +
         "onlineExamLogout",
-      { credentials: "include" }
+     GET
     );
     const data = await res.json();
     console.log(data);

@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-import Swal from 'sweetalert2';
+import { POST,CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION, vanishAlert } from "../../common/CommonConstants";
+import { useNavigate } from 'react-router-dom';
 const ViewExam = ({ examDetails,setExamDetails }) => {
-
-
-
+    const navigate = useNavigate();
     const [examId, setExamId] = useState(examDetails.examId);
     const [examName, setExamName] = useState(examDetails.examName);
     const [description, setDescription] = useState(examDetails.description);
@@ -20,35 +18,22 @@ const ViewExam = ({ examDetails,setExamDetails }) => {
 
     async function updateExam(data) {
 
-        await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+'editExam', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials:"include",
-            body: JSON.stringify(data),
-        })
+        await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+'editExam', 
+        {...POST, body: JSON.stringify(data),})
             .then((response) => { return response.json() })
             .then((res) => {
                 console.log(res);
+                if (res.status === 401) {
+                    navigate("/login");
+                }
+             
                 if (res.result === "success") {
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Exam  updated successfully!",
-                        icon: "success",
-                        timer: 2000,
-                        showConfirmButton: false,
-                      });
+                    vanishAlert("Good job!", "Exam  updated successfully!","success",2000,false);
+    
                     setExamDetails(res.resultMap);
                 }
                 else {
-                    Swal.fire({
-                        title: "Error!",
-                        text: res._ERROR_MESSAGE_,
-                        icon: "error",
-                        timer: 2000,
-                        showConfirmButton: false,
-                      });
+                    vanishAlert("Error!", res._ERROR_MESSAGE_,"error",2000, false);
                 }
                 
             })

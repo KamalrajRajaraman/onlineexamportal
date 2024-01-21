@@ -1,10 +1,11 @@
 import { createContext, useContext, useState } from "react";
-import { CONTROL_SERVLET, DOMAIN_NAME,  PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-import Swal from "sweetalert2";
+import {PUT, CONTROL_SERVLET, DELETE, DOMAIN_NAME,  GET,  PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert ,alert, swalFireAlert} from "../../common/CommonConstants";
+
+import { useNavigate } from "react-router-dom";
 const TopicContext = createContext(null);
 
 export const TopicProvider =({children})=>{
-
+  const navigate = useNavigate();
     const [topics, setTopics] = useState([]);
     const [alert, setAlert] = useState(false);
 
@@ -15,50 +16,50 @@ export const TopicProvider =({children})=>{
 
       const fetchTopic = async () => {
         const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-          "findAllTopics",{credentials: 'include',}
+          "findAllTopics",GET
         );
+        if (res.status === 401) {
+          navigate("/login");
+        }
         const data = await res.json();
-      
+        if (data.result==="error"){
+          swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
+        }
         const { topicList } = data;
         return topicList;
       };
 
       //Deletes Topic and fetch All topics after deleting
       const onDelete=async(id)=>{
-        const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`/deleteTopic?topicId=${id}`,{method:'DELETE', credentials: 'include'})
+        const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`/deleteTopic?topicId=${id}`,DELETE)
+        if (res.status === 401) {
+          navigate("/login");
+        }
         const data = await res.json();
         const {result} = data
         if(result==="success"){
-          Swal.fire({
-            title: "Good job!",
-            text: "Topic Deleted successfully!",
-            icon: "success",
-            timer:2000,
-            showConfirmButton:false
-          });
+          vanishAlert("Good job!","Topic Deleted successfully!","success",2000,false);
           getTopics();
+        }else if (result==="error"){
+          swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
         }
       }
 
+      //On Editing topic 
       const onEdit=async(object)=>{
         console.log(object)
-        const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createTopic",{method: "PUT",
-        headers: {
-          'Content-type':"application/json"
-        },
-         credentials: 'include',
-        body: JSON.stringify(object)})
+        const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createTopic",
+        {...PUT,body: JSON.stringify(object)});
+        if (res.status === 401) {
+          navigate("/login");
+        }
         const data = await res.json();
         const {result} = data
         if(result==="success"){
           fetchTopic();
-          Swal.fire({
-            position: "top",
-            title: "Good job!",
-            text: "Exam-Topic details updated successfully!",
-            timer: 2000,
-            showConfirmButton: false,
-        });
+          vanishAlert("Good job!","Exam-Topic details updated successfully!","success",2000,false);
+        }else if (result==="error"){
+          swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
         }
       }
 

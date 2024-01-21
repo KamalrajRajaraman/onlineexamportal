@@ -9,7 +9,7 @@ import  Alert  from "../../common/Alert";
 const Exam = () => {
 
   const navigate = useNavigate();
-  const {getExams, exams, setExams, onDelete,alert,setAlert,fetchExam} = useExamContext();
+  const {getExams, exams, setExams, onDelete,alert,setAlert} = useExamContext();
 
   useEffect(() => {
     getExams();

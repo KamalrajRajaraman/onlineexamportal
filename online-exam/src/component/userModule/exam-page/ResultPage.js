@@ -4,10 +4,11 @@ import useStateRef from "react-usestateref";
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
+  GET,
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+} from "../../common/CommonConstants";
 import UserAttemptDetailsTable from "../user-dashboard/UserAttemptDetailsTable";
 
 const ResultPage = () => {
@@ -35,9 +36,7 @@ const ResultPage = () => {
           WEB_APPLICATION +
           CONTROL_SERVLET +
           "evaluateUserAttemptAnswerMaster",
-        {
-          credentials: "include",
-        }
+        GET
       );
       const data = await res.json();
       const resultDetails = data.resultMap;

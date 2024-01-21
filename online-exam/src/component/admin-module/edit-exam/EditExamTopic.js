@@ -1,9 +1,18 @@
-import React, { Children, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { EditExamContext } from "./EditExam";
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import {
+  CONTROL_SERVLET,
+  POST,
+  DOMAIN_NAME,
+  PORT_NO,
+  PROTOCOL,
+  vanishAlert,
+  WEB_APPLICATION,
+} from "../../common/CommonConstants";
+import { useNavigate } from "react-router-dom";
+
 const EditExamTopic = ({ obj }) => {
-  
+  const navigate = useNavigate();
   const { refresh, setRefresh } = useContext(EditExamContext);
   const examId = obj["examId"];
   const topicId = obj["topicId"];
@@ -14,7 +23,7 @@ const EditExamTopic = ({ obj }) => {
   const [questionsPerExam, setQuestionsPerExam] = useState(
     obj["questionsPerExam"]
   );
-
+  
   function submitExamTopicForm(e) {
     e.preventDefault();
     updateExamTopic({
@@ -27,41 +36,36 @@ const EditExamTopic = ({ obj }) => {
   }
 
   async function updateExamTopic(data) {
-    console.log(data);
-    await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createExamTopicMappingMasterRecord",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      }
+    
+    await fetch(
+      PROTOCOL +
+        DOMAIN_NAME +
+        PORT_NO +
+        WEB_APPLICATION +
+        CONTROL_SERVLET +
+        "createExamTopicMappingMasterRecord",
+      { ...POST, body: JSON.stringify(data) }
     )
       .then((response) => {
+        if (response.status === 401) {
+          navigate("/login");
+        }
         return response.json();
       })
       .then((res) => {
         console.log(res);
         if (res.result === "success") {
           setRefresh(!refresh);
-          Swal.fire({
-            title: "Good job!",
-            text: "Exam-Topic details updated successfully!",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false,
-          });
+          vanishAlert(
+            "Good job!",
+            "Exam-Topic details updated successfully!",
+            "success",
+            2000,
+            false
+          );
         }
         if (res.result === "error") {
-          Swal.fire({
-            title: "Error!",
-            text: res._ERROR_MESSAGE_,
-            icon: "error",
-            timer: 2000,
-            showConfirmButton: false,
-          });
+          vanishAlert("Error!", res._ERROR_MESSAGE_, "error", 2000, false);
         }
       });
   }
@@ -122,7 +126,6 @@ const EditExamTopic = ({ obj }) => {
 
           <div className="mb-3">
             <label htmlFor="topicPassPercentage" className="form-label">
-              
               topicPassPercentage
             </label>
             <input

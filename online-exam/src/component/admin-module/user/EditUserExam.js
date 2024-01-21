@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
-import Swal from "sweetalert2";
 import { EditUserContext } from "./EditUser";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-const EditUserExam = ({ userExamMapping }) => {
+import {PUT, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+import { useNavigate } from "react-router-dom";
 
+
+const EditUserExam = ({ userExamMapping }) => {
+  const navigate = useNavigate();
   const {fetchAllExamsForUser } = useContext(EditUserContext);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -16,7 +18,6 @@ const EditUserExam = ({ userExamMapping }) => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
         createUserExamMappingRecord(formValues);
-      // getExams();
     }
   }, [formErrors]);
 
@@ -65,31 +66,20 @@ const EditUserExam = ({ userExamMapping }) => {
   const createUserExamMappingRecord = async (formValues) => {
     console.log("fetchexams for user called");
     const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createUserExamMappingRecord",
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formValues),
-      }
-    );
-
+      "createUserExamMappingRecord",{...PUT, body: JSON.stringify(formValues),} );
+    if (res.status === 401) {
+      navigate("/login");
+    }
     const data = await res.json();
     if (data.result === "success") {
-      Swal.fire({
-        title: "Good job!",
-        text: "Exam added to user  successfully!",
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+      vanishAlert("Good job!","Edit successfully!","success",2000,false);
       document.getElementById(`close${formValues.examId}`).click();
       fetchAllExamsForUser();
      
+    }else if (data.result==="error"){
+      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
     }
-    console.log(data);
+  
   };
   return (
     <div className="container-fluid fw-bold">

@@ -7,17 +7,9 @@ import UserNavBar from '../sidebar/UserNavBar'
 
 const UserDashboard = () => {
   return (
-    <div className="container-fluid p-0">
-   
-      {/* <div className="col-2 p-0">
-        <UserSideBar />
-      </div> */}
-      
+    <div className="container-fluid p-0">   
      <UserNavBar/>
       <Outlet/>       
-     
-   
-
   </div>
   )
 }

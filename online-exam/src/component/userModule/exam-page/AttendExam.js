@@ -6,14 +6,17 @@ import QuestionPalette from "./QuestionPalette";
 import { useNavigate, useParams } from "react-router-dom";
 import useStateRef from "react-usestateref";
 import "./Styles/examPage.css";
-import Swal from "sweetalert2";
+
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
+  GET,
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+  swalFireAlert,
+ 
+} from "../../common/CommonConstants";
 
 const AttendExam = () => {
   const navigate = useNavigate();
@@ -57,16 +60,12 @@ const AttendExam = () => {
           WEB_APPLICATION +
           CONTROL_SERVLET +
           `createAttemptMasterRecords?examId=${examId}`,
-        { credentials: "include" }
+        GET
       );
       const data = await res.json();
       console.log(data);
       if (data.result === "error") {
-        Swal.fire({
-          title: "Error",
-          text: data._ERROR_MESSAGE_,
-          icon: "error",
-        });
+        swalFireAlert("Error",data._ERROR_MESSAGE_,"error");  
         navigate("/user-dashboard/exams");
       }
       if (data.result === "success") {

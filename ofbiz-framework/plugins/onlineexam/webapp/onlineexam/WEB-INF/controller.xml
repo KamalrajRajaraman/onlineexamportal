@@ -24,16 +24,35 @@
 	<description>Onlineexam Component Site Configuration File</description>
 
 	<!-- Events to run on every request before security (chains exempt) -->
-	<!-- <preprocessor> </preprocessor> -->
+	<preprocessor> 
+		 <event name="checkAccess" type="java" path="com.vastpro.events.OnlineExamEvents" invoke="checkAccess"/>
+		 
+	</preprocessor>
 	<!-- Events to run on every request after all other processing (chains exempt) -->
 	<!-- <event name="test" type="java" path="org.apache.ofbiz.webapp.event.TestEvent" 
 		invoke="test"/> </postprocessor> -->
 
 	<!-- Request Mappings -->
+	
+	<request-map uri="returnJsonResponse">
+        <description>Call json request-map </description>   
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+    
 	<request-map uri="main">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="main" />
 	</request-map>
+	
+	  <request-map uri="checkLogin">
+        <description>Verify a user is logged in.</description>
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="extensionCheckLogin"/>
+        <response name="success" type="request" value="json"/>
+        <response name="impersonated" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
 	
 	<request-map uri="evaluateUserAttemptAnswerMaster">
 		<security https="true" auth="true"/>

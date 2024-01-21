@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import FormInput from '../../common/FormInput';
-import Swal from 'sweetalert2';
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION,  vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+import { useNavigate } from 'react-router-dom';
 
 const UserRegister = () => {
-   
+  const navigate = useNavigate();
   const initialValues={
     firstName:'', lastName:'', userLoginId:'', currentPassword:''
 , currentPasswordVerify:''  }
@@ -37,19 +37,19 @@ const UserRegister = () => {
    const validate=(values)=>{
     const errors={}
 
-    if(!userValues.firstName){
+    if(!values.firstName){
       errors.firstName = "First name is required!"
     }
-    if(!userValues.lastName){
+    if(!values.lastName){
       errors.lastName = "Last name is required!"
     }
-    if(!userValues.userLoginId){
+    if(!values.userLoginId){
       errors.userLoginId = "UserLogin Id is required!"
     }
-    if(!userValues.currentPassword){
+    if(!values.currentPassword){
       errors.currentPassword = "Current password is required!"
     }
-    if(!userValues.currentPasswordVerify){
+    if(!values.currentPasswordVerify){
       errors.currentPasswordVerify = "Current password verify is required!"
     }
 
@@ -57,49 +57,30 @@ const UserRegister = () => {
    }
 
 
-    //User Registeration 
+  //User Registeration 
   const onRegister =async (userRegisterationDetails)=>{
 
-    
-    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createPersonAndUserLogin", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: 'include',
-      body: JSON.stringify(userRegisterationDetails),
-    });
-
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createPersonAndUserLogin",
+    {...POST, body: JSON.stringify(userRegisterationDetails),}
+   );
+    if (res.status === 401) {
+      navigate("/login");
+    }
     const data = await res.json();
 
     console.log(data);
     if(data.result==="success"){
-      Swal.fire({
-        title: "Good job!",
-        text: "User is added to exam created successfully!",
-        icon: "success",
-        timer:2000,
-        showConfirmButton:false
-      });
+      vanishAlert("Good job!", "User is added to exam created successfully!","success",2000,false);
       setUserValues(initialValues);
     }
-    if(data.result==="error"){
+    else if(data.result==="error"){
       const errorFields = data.ERRORED_FIELD_NAMES
       let errMsg ="";
       errorFields.forEach(errorField => {
         errMsg =errMsg+data[errorField]+".";
       })
-      Swal.fire({
-        icon: "error",
-        title:data._ERROR_MESSAGE_,
-        text: errMsg
-      });
-
-
+      swalFireAlert(data._ERROR_MESSAGE_,errMsg, "error",);
     }
-
-
-
   }
   return (
     <div className="container-fluid ">

@@ -1,26 +1,27 @@
 import { createContext, useContext, useState } from "react";
-import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
-import Swal from "sweetalert2";
+import { PUT,CONTROL_SERVLET, DELETE, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+
+import { useNavigate } from "react-router-dom";
 const QuestionContext = createContext(null);
 
 export const QuestionProvider =({children})=>{
+  const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
 
     const onDelete=async(id)=>{
       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`deleteQuestion?questionId=${id}`,
-      {method:'DELETE', credentials: 'include'})
+      DELETE);
+      if (res.status === 401) {
+        navigate("/login");
+      }
       const data = await res.json();
       const {result} = data
       if(result==="success"){
-        Swal.fire({
-          title: "Good job!",
-          text: "Question Deleted successfully!",
-          icon: "success",
-          timer:2000,
-          showConfirmButton:false});
+        vanishAlert("Good job!","Question Deleted successfully!","success",2000,false);
         fetchQuestion();
-
-        // setQuestions(questions.filter(question=> question.questionId!==id));
+      }
+      else if (result==="error"){
+        swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
       }
     }
 
@@ -40,30 +41,29 @@ export const QuestionProvider =({children})=>{
         const questionList = data.questionList;
         setQuestions(questionList);
       }
+       else if (data.result==="error"){
+        swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
+      }
     };
 
     const onEdit=async(id, object)=>{
       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`createQuestion`,
-      { method: "PUT",
-      headers: {
-        'Content-type':"application/json"
-      },
-       credentials: 'include',
-      body: JSON.stringify(object)})
+      {...PUT, body: JSON.stringify(object)}
+      )
+
+      if (res.status === 401) {
+        navigate("/login");
+      }
       const data = await res.json();
       const {result} = data
       
       if(result==="success"){
         document.getElementById("modal-close").click();
         fetchQuestion();
-        Swal.fire({
-          title: "Good job!",
-          text: "question updated  successfully!",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false,
-        });   
+        vanishAlert("Good job!", "question updated  successfully!","success", 2000, false);   
 
+      } else if (data.result==="error"){
+        swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
       }
       
     }

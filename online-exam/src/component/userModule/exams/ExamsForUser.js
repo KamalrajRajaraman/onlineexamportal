@@ -4,10 +4,11 @@ import ExamAccordion from "./ExamAccordion";
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
+  GET,
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+} from "../../common/CommonConstants";
 const ExamsForUser = () => {
   const [exams, setExams] = useState([]);
 
@@ -18,16 +19,13 @@ const ExamsForUser = () => {
         PORT_NO +
         WEB_APPLICATION +
         CONTROL_SERVLET +
-        "findAllExamForPartyId",
-      {
-        credentials: "include",
-      }
+        "findAllExamForPartyId",GET
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        console.log("data.examlist::::", data.examList);
+        
         setExams(data.examList);
       });
   }, []);

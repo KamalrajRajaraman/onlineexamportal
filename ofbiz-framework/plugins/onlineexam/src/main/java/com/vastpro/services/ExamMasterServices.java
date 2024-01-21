@@ -12,6 +12,7 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityComparisonOperator;
 import org.apache.ofbiz.entity.condition.EntityCondition;
 import org.apache.ofbiz.entity.condition.EntityExpr;
 import org.apache.ofbiz.entity.condition.EntityOperator;
@@ -227,16 +228,31 @@ public class ExamMasterServices {
 		List<Map<String,Object>> topicList = (List<Map<String,Object>>) context.get(CommonConstants.TOPIC_LIST);		
 		List<GenericValue> questionIdListGV=null;			
 		
+		
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		
+	
+		EntityExpr makeCondition1 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE,
+				EntityComparisonOperator.EQUALS, null);
+		EntityExpr makeCondition2 = EntityCondition.makeCondition(CommonConstants.EXPIRATION_DATE,
+				EntityComparisonOperator.GREATER_THAN, currentTime);
+		EntityExpr makeCondition = EntityCondition.makeCondition(makeCondition1, EntityComparisonOperator.OR,
+				makeCondition2);
+		
 		for (Map<String,Object> topic : topicList) {
+			
 			List<String> questionIdList = new LinkedList<>();
 			String topicId =(String) topic.get(CommonConstants.TOPIC_ID);
+			
+			EntityExpr topicIdEqual = EntityCondition.makeCondition(CommonConstants.TOPIC_ID, EntityOperator.EQUALS, topicId);
+			EntityExpr whereCondition = EntityCondition.makeCondition(topicIdEqual,EntityOperator.AND,makeCondition);
 			try {
 				
 				//Query to fetch list of question IDs assigned to each
 				questionIdListGV = EntityQuery.use(delegator)
 						.select(CommonConstants.QUESTION_ID)
 						.from(CommonConstants.QUESTION_MASTER)
-						.where(CommonConstants.TOPIC_ID, topicId)
+						.where(whereCondition)
 						.queryList();
 
 			} 

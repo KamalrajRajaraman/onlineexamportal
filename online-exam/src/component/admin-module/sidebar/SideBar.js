@@ -1,15 +1,24 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/Auth";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO,  PROTOCOL, WEB_APPLICATION, swalFireAlert } from "../../common/CommonConstants";
+
 const SideBar = () => {
+
+  const navigate =useNavigate();
   const {logout} = useAuth();
   const onlogout =async() =>{
-    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"onlineExamLogout",{credentials:"include"});
+    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"onlineExamLogout",GET);
+    if (res.status === 401) {
+      navigate("/login");
+    }
     const data = await res.json();
-    console.log(data);
+    
     if(data.result==="success"){
       logout();
+     
+    } else if (data.result==="error"){
+      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
     }
   }
 

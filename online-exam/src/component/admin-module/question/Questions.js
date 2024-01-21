@@ -47,7 +47,6 @@ const Questions = () => {
   const modalEdit = async (id, object) => {
     setQuestionId(id);
     setFormValues(object);
-    console.log("questionId:::", questionId);
     document.getElementById("buttonId").click();
   };
 
@@ -55,6 +54,7 @@ const Questions = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     onEdit(questionId, formValues);

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { TiEdit } from 'react-icons/ti';
-import { useLocation } from 'react-router-dom'
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from '../../common/CommonConstant';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { POST,CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert } from '../../common/CommonConstants';
 
 
 const EditTopic = () => {
-
+    const navigate = useNavigate();
     let state = useLocation().state;
     const [topicId, setTopicId] = useState(state.topicId);
     const [topicName, setTopicName] = useState(state.topicName);
@@ -14,39 +13,25 @@ const EditTopic = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateTopic({ topicId, topicName });
-
     }
 
     function updateTopic(data) {
-        fetch(PROTOCOL + DOMAIN_NAME + PORT_NO + WEB_APPLICATION + CONTROL_SERVLET + "createTopic", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: 'include',
-            body: JSON.stringify(data)
-        }).then((res) => {
+        fetch(PROTOCOL + DOMAIN_NAME + PORT_NO + WEB_APPLICATION + CONTROL_SERVLET + "createTopic", 
+        {...POST,body: JSON.stringify(data)}).then((res) => {
+            if (response.status === 401) {
+                navigate("/login");
+            }
             return res.json()
         }).then((data) => {
             if (data.result === "success") {
-                Swal.fire({
-                    position: "top",
-                    title: "Good job!",
-                    text: "Exam-Topic details updated successfully!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                });
+                vanishAlert("Good job!", "Exam-Topic details updated successfully!","success",2000,false);
             }
-
-            else {
-                Swal.fire({
-                    title: "Error!",
-                    text: data._ERROR_MESSAGE_,
-                    timer: 2000,
-                    showConfirmButton: false,
-                });
+            else if (data.result === "error"){
+                vanishAlert("Error!",data._ERROR_MESSAGE_,"error",2000,false);
                 setTopicName(state.topicName)
             }
+        }).catch(e=>{
+            console.log(e.message);
         })
     }
     return (

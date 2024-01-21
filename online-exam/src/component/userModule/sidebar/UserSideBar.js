@@ -1,7 +1,7 @@
 import React from 'react'
 import {  NavLink } from 'react-router-dom'
 import { useAuth } from '../../auth/Auth';
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstants";
 const UserSideBar = () => {
   const {logout} = useAuth();
   const onlogout =async() =>{

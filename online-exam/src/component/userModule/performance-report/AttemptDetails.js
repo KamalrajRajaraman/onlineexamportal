@@ -8,7 +8,7 @@ import {
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+} from "../../common/CommonConstants";
 
   const AttemptDetails = () => {
   const { performanceId } = useParams();

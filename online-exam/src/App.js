@@ -48,12 +48,10 @@ function App() {
     }
    
   }
+  
   return (
     <AuthProvider>
-      
       <Header />
-      
-      {alertInfo && <Alert alertInfo ={alertInfo}/>}
       <Routes>
       <Route index element={<Login />} />
         <Route path="login" element={<Login />} />

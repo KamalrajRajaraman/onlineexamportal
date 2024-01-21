@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { useExamContext } from "./ExamData";
 import FormInput from "../../common/FormInput";
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+
+import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION, vanishAlert ,swalFireAlert} from "../../common/CommonConstants";
+import { useNavigate } from "react-router-dom";
 const AddExam = () => {
+  const navigate = useNavigate();
+
   //consuming data from useExamContext
-  const { exams, setExams, setAlert } = useExamContext();
+  const { exams, setExams,  } = useExamContext();
 
   const initialValues = {
     examId: "",
@@ -91,33 +94,30 @@ const AddExam = () => {
 
   //Create Exam
   function onCreateExam(exam) {
-    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createExam", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(exam), })
+    fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+"createExam", 
+    {...POST, body: JSON.stringify(exam)})
       .then((response) =>{
+        if (response.status === 401) {
+          navigate("/login");
+        }
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json() })
        .then((data) => {
             if (data.result === "success") {
-              Swal.fire({
-                title: "Good job!",
-                text: "Exam created successfully!",
-                icon: "success",
-                timer:2000,
-                showConfirmButton:false
-              });
+              vanishAlert("Good job!","Exam created successfully!","success",2000,false);
               setExamValues(initialValues);
               const { exam } = data;
               setExams([...exams, exam]);
-            } })
+            } 
+            else if (data.result==="error"){
+              swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
+            }
+          })
          .catch((error) => {
-                  alert(error);});
+                  console.log(error);
+          });
   }
 
   return (

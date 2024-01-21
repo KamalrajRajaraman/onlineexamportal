@@ -1,91 +1,110 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Input from "../common/Input";
 import { useAuth } from "./Auth";
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../common/CommonConstant"
+
+import {
+  CONTROL_SERVLET,
+  DOMAIN_NAME,
+  PORT_NO,
+  PROTOCOL,
+  WEB_APPLICATION,
+  POST, swalFireAlert
+} from "../common/CommonConstants";
+
+const initialState = {
+  loading: false,
+  error: "",
+  data: {},
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "FETCHING":
+      return { loading: true, error: "", data: {} };
+    case "FETCH_SUCCESS":
+      return { loading: false, error: "", data: action.payload };
+    case "FETCH_ERROR":
+      return { loading: false, error: action.error, data: {} };
+    default:
+      return initialState;
+  }
+};
+
 const Login = () => {
+  const [fetchedData, dispatch] = useReducer(reducer, initialState);
+  
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  
 
-  const onLogin = async (userDetails) => {
-    console.log(userDetails);
+  const onLogin = (userDetails) => {
+    dispatch({ type: "FETCHING" });
+    fetch(
+      PROTOCOL +
+        DOMAIN_NAME +
+        PORT_NO +
+        WEB_APPLICATION +
+        CONTROL_SERVLET +
+        "onlineExamLogin",
+      { ...POST, body: JSON.stringify(userDetails) }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
+      })
+      .catch((e) => {
+        dispatch({ type: "FETCH_ERROR", error: e.message });
+      });
+  };
 
-    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "onlineExamLogin",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-         
-        },
-        credentials: 'include',
-        body: JSON.stringify(userDetails),
-      }
-    );
+  useEffect(() => {
+   
+    FetchSucess();
+  }, [fetchedData]);
 
-    const data = await res.json();
+  const FetchSucess = () => {
+    const { _LOGIN_PASSED_, USERNAME, partyRoleTypeId, _ERROR_MESSAGE_ } =
+      fetchedData.data;
+    if (_LOGIN_PASSED_ === "TRUE") {
+      console.log("hi");
+      auth.login(USERNAME, partyRoleTypeId);
 
-    if (data._LOGIN_PASSED_ === "TRUE") {
-      auth.login(data.USERNAME,data.partyRoleTypeId);
-
-      if(data.partyRoleTypeId==="PERSON_ROLE"){
+      if (partyRoleTypeId === "PERSON_ROLE") {
         const redirectPath = location.state?.path || "/user-dashboard";
 
-        if(redirectPath.startsWith("/user-dashboard")){
+        if (redirectPath.startsWith("/user-dashboard")) {
           navigate(redirectPath, { replace: true });
-        }
-        else{
+        } else {
           navigate("/error/user-credentials");
         }
       }
 
-      if(data.partyRoleTypeId==="ADMIN"){
+      if (partyRoleTypeId === "ADMIN") {
         const redirectPath = location.state?.path || "/admin";
-        if(redirectPath.startsWith("/admin")){
-             navigate(redirectPath, { replace: true });
-        }
-        else{
+        if (redirectPath.startsWith("/admin")) {
+          navigate(redirectPath, { replace: true });
+        } else {
           navigate("/error/admin-credentials");
         }
       }
-     
-     
     }
-    if (data._ERROR_MESSAGE_) {
-      Swal.fire({
-        title:"Error",
-        text:data._ERROR_MESSAGE_,
-        icon: "error"
-      });
-      
+    if (_ERROR_MESSAGE_) {
+      swalFireAlert("Error",_ERROR_MESSAGE_, "error");
     }
-
-    console.log(data);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (!user) {
-      Swal.fire({
-        title:"Missing credential",
-        text:"Please enter user name...",
-        icon: "question"
-      });
-      
+      swalFireAlert("Missing credential","Please enter user name...","question");
       return;
     }
     if (!pass) {
-      Swal.fire({
-        title:"Missing credential",
-        text:"please enter password...",
-        icon: "question"
-      });
+      swalFireAlert("Missing credential","please enter password...","question");
       return;
     }
 
@@ -98,41 +117,53 @@ const Login = () => {
     setPass("");
   };
 
-  return (<>
-    <div className="container">
-      <div className="row mt-5 align-items-center justify-content-center">
-        <div className="col-5 mt-5  rounded-2 shadow-lg">
-              <h4 className="text-center  fw-bold   p-3 border-bottom ">Login</h4>
+  
 
-          <form className="p-2" onSubmit={onSubmit}>
-            <Input
-              name={"user"}
-              text="User"
-              state={user}
-              setStateFun={setUser}
-              type={"text"}
-              placeholder={""}
-            />
-            <Input
-              name={"InputPassword"}
-              text="Password"
-              state={pass}
-              setStateFun={setPass}
-              type={"password"}
-              placeholder={""}
-              passView={true}
-            />
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
-          </form>
+  return (
+    <>{fetchedData.loading ?
+    <div class="d-flex justify-content-center" style={{marginTop:220}}>
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+      
+  :<>
+      <div className="container">
+        <div className="row mt-5 align-items-center justify-content-center">
+          <div className="col-5 mt-5  rounded-2 shadow-lg">
+            <h4 className="text-center  fw-bold   p-3 border-bottom ">Login</h4>
+
+            <form className="p-2" onSubmit={onSubmit}>
+              <Input
+                name={"user"}
+                text="User"
+                state={user}
+                setStateFun={setUser}
+                type={"text"}
+                placeholder={""}
+              />
+              <Input
+                name={"InputPassword"}
+                text="Password"
+                state={pass}
+                setStateFun={setPass}
+                type={"password"}
+                placeholder={""}
+                passView={true}
+              />
+              <button type="submit" className="btn btn-primary">
+                Login
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark  p-3 " style={{marginTop:137}}>
-      <p className='float-end ' ></p>
-      
-    </nav>
+      <nav
+        className="navbar navbar-expand-lg navbar-dark bg-dark  p-3 "
+        style={{ marginTop: 78 }}
+      >
+        <p className="float-end "></p>
+      </nav></>}
     </>
   );
 };

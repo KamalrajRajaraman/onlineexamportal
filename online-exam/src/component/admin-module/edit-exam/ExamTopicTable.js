@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import TableRowMaker from './TableRowMaker'
 import { EditExamContext } from './EditExam';
-import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { CONTROL_SERVLET, DOMAIN_NAME, GET, PORT_NO,  PROTOCOL, WEB_APPLICATION, swalFireAlert } from "../../common/CommonConstants";
+import { useNavigate } from 'react-router-dom';
 const ExamTopicTable = () => {
+  const navigate = useNavigate();
     //Consuming data from EditExamContext
     const {examId,examTopicMap,setExamTopicMap,refresh} = useContext(EditExamContext);
     
@@ -21,10 +23,13 @@ const ExamTopicTable = () => {
     
     const fetchExamTopicMappingRecords=async ()=>{
         const res =await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`findAllExamTopicMappingMasterRecordByExamId?examId=${examId}`,GET);
+        if (res.status === 401) {
+          navigate("/login");
+        }
         const data = await res.json();
         const{_ERROR_MESSAGE_}=data;
         if(_ERROR_MESSAGE_){
-          console.log(_ERROR_MESSAGE_);
+          swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
         }
         else{
           const{examTopicMappingRecordList}=data;
@@ -32,7 +37,7 @@ const ExamTopicTable = () => {
         }
     }
 
-  return (
+  return (<>{examTopicMap.length ?
     <div className="mt-2">
     <table className="table table-bordered">
       <thead>
@@ -51,7 +56,7 @@ const ExamTopicTable = () => {
         <TableRowMaker array={examTopicMap} />
       </tbody>
     </table>
-    </div>
+    </div>:"No Rec"}</>
   )
 }
 

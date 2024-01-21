@@ -1,12 +1,16 @@
 package com.vastpro.events;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,13 +22,12 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
-import org.apache.ofbiz.entity.condition.EntityCondition;
-import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.ofbiz.webapp.control.LoginWorker;
+
 
 import com.vastpro.constants.CommonConstants;
 import com.vastpro.validator.HibernateHelper;
@@ -38,6 +41,80 @@ public class OnlineExamEvents {
 
 	public static final String module = OnlineExamEvents.class.getName();
 	
+	/**
+	 * Checks whether the person has the required access to uri.If not error message is given back.
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static String checkAccess(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		String access = (String) session.getAttribute(CommonConstants.ACCESS);
+		
+		if(UtilValidate.isEmpty(access)) {
+			return  CommonConstants.SUCCESS;
+		}
+		
+		String requestUri = request.getRequestURI();
+		boolean blockAccessing =false;
+		String errMsg = null;
+		if(CommonConstants.USER.equals(access)) {
+			
+			List<String> adminAccessUriList = new ArrayList<>();
+			adminAccessUriList.add(CommonConstants.FIND_ALL_EXAMS_URI);
+			adminAccessUriList.add(CommonConstants.CREATE_EXAM_URI);
+			adminAccessUriList.add(CommonConstants.EDIT_EXAM_URI);
+			adminAccessUriList.add(CommonConstants.DELETE_EXAM_URI);
+			adminAccessUriList.add(CommonConstants.FIND_EXAM_BY_ID_URI);
+			adminAccessUriList.add(CommonConstants.FIND_ALL_TOPICS_URI);
+			adminAccessUriList.add(CommonConstants.DELETE_TOPIC_URI);	
+			adminAccessUriList.add(CommonConstants.CREATE_QUESTION_URI);
+			adminAccessUriList.add(CommonConstants.FIND_ALL_QUESTIONS_URI);
+			adminAccessUriList.add(CommonConstants.DELETE_QUESTION_URI);
+			adminAccessUriList.add(CommonConstants.CREATE_EXAM_TOPIC_MAPPING_MASTER_RECORD_URI);
+			adminAccessUriList.add(CommonConstants.UPDATE_EXAM_TOPIC_MAPPING_MASTER_RECORD_URI);
+			adminAccessUriList.add(CommonConstants.FIND_ALL_EXAM_TOPIC_MAPPING_MASTER_RECORD_BY_EXAM_ID_URI);
+			adminAccessUriList.add(CommonConstants.FIND_ALL_USERS_URI);
+			adminAccessUriList.add(CommonConstants.DELETE_USER_URI);
+			adminAccessUriList.add(CommonConstants.CREATE_USER_EXAM_MAPPING_RECORD_URI);
+			
+			
+			
+			blockAccessing = adminAccessUriList.stream().anyMatch(requestUri::equalsIgnoreCase);
+			
+			errMsg ="To Access This Url you must login as Admin";
+		}
+		
+		
+		if(CommonConstants.ADMIN.equals(access)) {
+			List<String> userAccessUriList = new ArrayList<>();
+			userAccessUriList.add(CommonConstants.CREATE_ATTEMPT_MASTER_RECORDS_URI);
+			userAccessUriList.add(CommonConstants.FIND_ALL_USER_ATTEMPT_BY_PARTY_ID_URI);
+			userAccessUriList.add(CommonConstants.FIND_USER_ATTEMPT_TOPIC_MASTER_BY_PERFORMANCE_ID_URI);
+			userAccessUriList.add(CommonConstants.UPDATE_ANSWER_IN_USER_ATTEMPT_ANSWER_MASTER_URI);
+			
+			blockAccessing  = userAccessUriList.stream().anyMatch(requestUri::equalsIgnoreCase);
+			
+			errMsg ="To Access This Url you must login as User";
+		}
+		
+		
+
+		if(blockAccessing) {
+			
+			request.setAttribute(CommonConstants.RESULT,CommonConstants.ERROR );
+			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
+			RequestDispatcher rs = request.getRequestDispatcher(CommonConstants.RETURN_JSON_RESPONSE_URI);
+			try {
+				rs.forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}		
+		}		
+		return  CommonConstants.SUCCESS;
+	}
+
 
 	// used to login 
 	public static String login(HttpServletRequest request, HttpServletResponse response) {
@@ -64,9 +141,9 @@ public class OnlineExamEvents {
 		
 		//If logged in checking role type
 		if (CommonConstants.SUCCESS.equals(result)) {
-			
+			HttpSession session = request.getSession();
 			//After logged in userLogin Generic Value available in session
-			GenericValue userLogin = (GenericValue) request.getSession().getAttribute(CommonConstants.USER_LOGIN);
+			GenericValue userLogin = (GenericValue) session.getAttribute(CommonConstants.USER_LOGIN);
 			
 			//Getting partyId available in userLogin GenericValue
 			if(UtilValidate.isNotEmpty(userLogin)) {
@@ -118,12 +195,16 @@ public class OnlineExamEvents {
 				
 				//Storing partyRoleType 
 				if(UtilValidate.isNotEmpty(personRole)&&UtilValidate.isNotEmpty(admin)) {
-					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, "both");
+					session.setAttribute(CommonConstants.ACCESS, CommonConstants.ADMIN_AND_USER);
+					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, CommonConstants.ADMIN_AND_USER);
+					
 				}
 				else if(UtilValidate.isNotEmpty(personRole)) {
+					session.setAttribute(CommonConstants.ACCESS, CommonConstants.USER);
 					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, personRole);
 				}
 				else if(UtilValidate.isNotEmpty(admin)) {
+					session.setAttribute(CommonConstants.ACCESS, CommonConstants.ADMIN);
 					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, admin);
 				}else {
 					request.setAttribute(CommonConstants.PARTY_ROLE_TYPE_ID, "others");

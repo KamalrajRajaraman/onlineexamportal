@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { EditUserContext } from "./EditUser";
 import { useExamContext } from "../exam/ExamData";
 import FormInput from "../../common/FormInput";
-import Swal from "sweetalert2";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { POST,CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION, alert, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+import { useNavigate } from "react-router-dom";
 const AddExamToUser = () => {
+
+  const navigate = useNavigate();
   const { exams, setExams, fetchExam } = useExamContext();
   const { partyId, fetchAllExamsForUser } = useContext(EditUserContext);
   const [formErrors, setFormErrors] = useState({});
@@ -57,26 +59,26 @@ const AddExamToUser = () => {
     console.log("validate called");
     const errors = {};
 
-    if (!formValues.examId || formValues.examId === "00") {
+    if (!values.examId || formValues.examId === "00") {
       errors.examId = "Exam id required!";
     }
-    if (!formValues.allowedAttempts) {
+    if (!values.allowedAttempts) {
       errors.allowedAttempts = "Allowed attempts is required!";
     }
 
-    if (!formValues.timeoutDays) {
+    if (!values.timeoutDays) {
       errors.timeoutDays = "Timeout days is required!";
     }
-    if (!formValues.passwordChangesAuto) {
+    if (!values.passwordChangesAuto) {
       errors.passwordChangesAuto = "Password changes auto is required!";
     }
-    if (!formValues.canSplitExams) {
+    if (!values.canSplitExams) {
       errors.canSplitExams = "Can split exams required!";
     }
-    if (!formValues.canSeeDetailedResults) {
+    if (!values.canSeeDetailedResults) {
       errors.canSeeDetailedResults = "Can see detailed results id required!";
     }
-    if (!formValues.maxSplitAttempts) {
+    if (!values.maxSplitAttempts) {
       errors.maxSplitAttempts = "Max split attempts id required!";
     }
     return errors;
@@ -93,32 +95,24 @@ const AddExamToUser = () => {
   };
 
   const createUserExamMappingRecord = async (formValues) => {
-    console.log("fetchexams for user called");
+ 
     const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createUserExamMappingRecord",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formValues),
-      }
+      "createUserExamMappingRecord",{...POST, body: JSON.stringify(formValues),}
     );
 
+    if (res.status === 401) {
+      navigate("/login");
+    }
     const data = await res.json();
+
     if (data.result === "success") {
-      Swal.fire({
-        title: "Good job!",
-        text: "Exam added to user  successfully!",
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+      vanishAlert("Good job!","Exam added to user  successfully!","success",2000,false);
       fetchAllExamsForUser();
       setFormValues(initialValues);
+    }else if (data.result==="error"){
+      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
     }
-    console.log(data);
+   
   };
 
   return (

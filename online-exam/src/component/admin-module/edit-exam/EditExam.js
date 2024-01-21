@@ -1,13 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MainContent from "../../common/MainContent"
 import ExamTopicTable from "./ExamTopicTable";
-import Swal from "sweetalert2";
 import ViewExam from "../exam/ViewExam";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import { swalFireAlert ,POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, vanishAlert, WEB_APPLICATION } from "../../common/CommonConstants";
+
 
 export const EditExamContext = createContext();
+
 const EditExam = () => {
+  const navigate = useNavigate();
   //examId is retrieved from url 
   const { examId } = useParams();
   const examRecord =useLocation().state;
@@ -36,38 +38,27 @@ const EditExam = () => {
   const onCreateExamTopicMappingMaster = async (examTopicMappingDetails) => {
     console.log(examTopicMappingDetails);
     const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createExamTopicMappingMasterRecord",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(examTopicMappingDetails),
-      }
+      "createExamTopicMappingMasterRecord",{...POST,  body: JSON.stringify(examTopicMappingDetails)}
     );
+
+    //Unauthorized
+    if (res.status === 401) {
+      navigate("/login");
+    }
+    
     const data = await res.json();
 
     if(data.result==="success"){
-      Swal.fire({
-        title: "Good job!",
-        text: "Topic is added to exam created successfully!",
-        icon: "success",
-        timer:2000,
-        showConfirmButton:false
-      });
+      vanishAlert( "Good job!","Topic is added to exam created successfully!", "success",2000,false);
       
       setFormValues(initialValue);
       const { examTopicMappingMasterRecord } = data;
       setExamTopicMap([...examTopicMap, examTopicMappingMasterRecord]);
     }
     else if (data.result==="error"){
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: data._ERROR_MESSAGE_,
-      });
+      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
     }
+
   };
 
   return (
@@ -91,7 +82,7 @@ const EditExam = () => {
         to="add-topic-to-Exam"
         back={`/admin/exam/edit/examId/${examId}`}
       />
-     { examTopicMap.length ? <ExamTopicTable examId={examId} examTopicMap={examTopicMap} setExamTopicMap={setExamTopicMap}/>:"No Topic mapped to Exam.Please Add Topic To This Exam"}
+     <ExamTopicTable examId={examId} examTopicMap={examTopicMap} setExamTopicMap={setExamTopicMap}/>
      
     </EditExamContext.Provider>
   );

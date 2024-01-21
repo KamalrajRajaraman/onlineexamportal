@@ -21,6 +21,14 @@ public interface CommonConstants {
 	public static final String RESULT_MAP ="resultMap";
 	public static final String RESPOND_EMPTY = "empty";
 	
+	//ACCESS
+	public static final String ACCESS = "ACCESS";
+	public static final String USER = "USER";
+	public static final String ADMIN_AND_USER = "ADMIN_AND_USER";
+	
+	
+	
+	
 	//Session Common Attribute 
 	public static final String USER_LOGIN="userLogin";
 	
@@ -217,5 +225,36 @@ public interface CommonConstants {
 	public static final String NO_OF_CORRECTED_QUESTIONS_BY_TOPIC_ID = "noOfCorrectedQuestionsByTopicId";
 	public static final String UPDATED_USER_ATTEMPT_TOPIC_MASTER_LIST = "updatedUserAttemptTopicMasterList";
 	
+	//----------------------------------request URI---------------------------------------------------
+	
+	//Admin Request URI
+	public static final String FIND_ALL_EXAMS_URI ="/onlineexam/control/findAllExams";
+	public static final String CREATE_EXAM_URI ="/onlineexam/control/createExam";
+	public static final String EDIT_EXAM_URI ="/onlineexam/control/editExam";
+	public static final String DELETE_EXAM_URI ="/onlineexam/control/deleteExam";
+	public static final String FIND_EXAM_BY_ID_URI ="/onlineexam/control/findExamById";
+	public static final String FIND_ALL_TOPICS_URI ="/onlineexam/control/findAllTopics";
+	public static final String  DELETE_TOPIC_URI="/onlineexam/control/deleteTopic";	
+	public static final String CREATE_QUESTION_URI ="/onlineexam/control/createQuestion";
+	public static final String FIND_ALL_QUESTIONS_URI ="/onlineexam/control/findAllQuestions";
+	public static final String DELETE_QUESTION_URI ="/onlineexam/control/deleteQuestion";
+	public static final String CREATE_EXAM_TOPIC_MAPPING_MASTER_RECORD_URI ="/onlineexam/control/createExamTopicMappingMasterRecord";
+	public static final String UPDATE_EXAM_TOPIC_MAPPING_MASTER_RECORD_URI ="/onlineexam/control/updateExamTopicMappingRecord";
+	public static final String FIND_ALL_EXAM_TOPIC_MAPPING_MASTER_RECORD_BY_EXAM_ID_URI ="/onlineexam/control/findAllExamTopicMappingMasterRecordByExamId";
+	public static final String FIND_ALL_USERS_URI ="/onlineexam/control/findAllUsers";
+	public static final String DELETE_USER_URI="/onlineexam/control/deleteUser";
+	public static final String CREATE_USER_EXAM_MAPPING_RECORD_URI ="/onlineexam/control/createUserExamMappingRecord";
+	
 
+	public static final String CREATE_ATTEMPT_MASTER_RECORDS_URI="/onlineexam/control/createAttemptMasterRecords";
+	public static final String FIND_ALL_USER_ATTEMPT_BY_PARTY_ID_URI="/onlineexam/control/findAllUserAttemptByPartyId";
+	public static final String FIND_USER_ATTEMPT_TOPIC_MASTER_BY_PERFORMANCE_ID_URI="/onlineexam/control/findUserAttemptTopicMasterByPerforamceId";
+	public static final String UPDATE_ANSWER_IN_USER_ATTEMPT_ANSWER_MASTER_URI="/onlineexam/control/updateAnswerInUserAttemptAnswerMaster";
+	
+	public static final String RETURN_JSON_RESPONSE_URI = "/control/returnJsonResponse";
+	
+	
+	
+	
+	
 }

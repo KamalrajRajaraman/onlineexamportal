@@ -6,7 +6,7 @@ import Alert from "../../common/Alert";
 import FormInput from "../../common/FormInput";
 
 const Topics = () => {
-  const {getTopics, topics, setTopics, fetchTopic, onDelete, alert, setAlert,onEdit } = useTopicContext();
+  const {getTopics, topics, setTopics,  onDelete, alert, setAlert,onEdit } = useTopicContext();
 
   const initialValue = {
     topicId: "",

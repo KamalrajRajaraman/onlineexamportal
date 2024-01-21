@@ -4,10 +4,11 @@ import { BiDetail } from "react-icons/bi";
 import {
   CONTROL_SERVLET,
   DOMAIN_NAME,
+  GET,
   PORT_NO,
   PROTOCOL,
   WEB_APPLICATION,
-} from "../../common/CommonConstant";
+} from "../../common/CommonConstants";
 import { useNavigate } from "react-router-dom";
 
 const PerformanceReport = () => {
@@ -25,7 +26,7 @@ const PerformanceReport = () => {
         WEB_APPLICATION +
         CONTROL_SERVLET +
         "findAllUserAttemptByPartyId",
-      { credentials: "include" }
+    GET
     );
     const data = await res.json();
     if(data.result==="success"){

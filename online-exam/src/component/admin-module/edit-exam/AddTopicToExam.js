@@ -57,7 +57,7 @@ const AddTopicToExam = () => {
     examTopicMap.forEach((examTopicRecord) =>
       unique.push(examTopicRecord.topicId)
     );
-    topicList.forEach((topic) => {
+    topicList && topicList.forEach((topic) => {
       if (!unique.includes(topic.topicId)) {
         topics.push(topic);
       }
@@ -111,7 +111,7 @@ const AddTopicToExam = () => {
                   onChange={handleChange}
                 >
                   <option value="">None</option>
-                  {topics.map((topic) => (
+                  {topics && topics.map((topic) => (
                     <option key={topic.topicId} value={topic.topicId}>
                       {topic.topicName}
                     </option>

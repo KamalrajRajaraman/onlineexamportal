@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstant";
+import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION } from "../../common/CommonConstants";
+
+
 const Question = ({
   question,
   onSequenceNumClick,
@@ -19,17 +21,9 @@ const Question = ({
     questionViewed(question.sequenceNum);
   }, [question]);
 
-  const submitAnswerAndNext = async (answeredQuestion, sequenceNum) => {
+  const submitAnswer = async (answeredQuestion, sequenceNum) => {
     const response = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "updateAnswerInUserAttemptAnswerMaster",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(answeredQuestion),
-      }
+      "updateAnswerInUserAttemptAnswerMaster",{...POST,body: JSON.stringify(answeredQuestion)}
     );
     if (response.status === 200) {
       const data = await response.json();
@@ -61,12 +55,7 @@ const Question = ({
        
       }
     }
-    if (response.status === 401) {
-      console.log("ClientSide error");
-    }
-    if (response.status === 500) {
-      console.log("SERVER_ERROR");
-    }
+   
   };
 
   const onSave = (sequenceNum) => {
@@ -74,7 +63,7 @@ const Question = ({
     questions.forEach((question) => {
       if (question.sequenceNum === sequenceNum) {
         const answeredQuestion = { ...question, submittedAnswer };
-        submitAnswerAndNext(answeredQuestion, sequenceNum);
+        submitAnswer(answeredQuestion, sequenceNum);
       }
     });
   };
@@ -83,7 +72,7 @@ const Question = ({
     questions.forEach(
       (question) =>
         question.sequenceNum === sequenceNum &&
-        submitAnswerAndNext({ ...question, submittedAnswer: "" }, sequenceNum)
+        submitAnswer({ ...question, submittedAnswer: "" }, sequenceNum)
     );
   };
 
@@ -92,7 +81,7 @@ const Question = ({
     questions.forEach(
       (question) =>
         question.sequenceNum === sequenceNum &&
-        submitAnswerAndNext({ ...question, isFlagged: flagValue }, sequenceNum)
+        submitAnswer({ ...question, isFlagged: flagValue }, sequenceNum)
     );
   };
   const moveNext = (sequenceNum) => {
