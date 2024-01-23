@@ -110,10 +110,10 @@ class UserAttemptEvents {
 				.checkValidationErrors(userAttemptMasterValidator, UserAttemptAnswerMasterCheck.class);
 		boolean hasValidationError = HibernateHelper.validateFormSubmission(delegator,
 				userAttemptMasterValidationErrors, request, locale, "MissingRequiredFieldsErrMsg",
-				CommonConstants.RESOURCE_ERROR, false);
+				CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 
 		if (hasValidationError) {
-			errMsg = UtilProperties.getMessage(CommonConstants.RESOURCE_ERROR, "MissingRequiredFieldsErrMsg", locale);
+			errMsg = UtilProperties.getMessage(CommonConstants.ONLINE_EXAM_UI_LABELS, "MissingRequiredFieldsErrMsg", locale);
 			Debug.logError(errMsg, module);
 			request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 			request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);
