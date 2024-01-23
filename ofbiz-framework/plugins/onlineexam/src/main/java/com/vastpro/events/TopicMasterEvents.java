@@ -44,7 +44,7 @@ public class TopicMasterEvents {
 				.checkValidationErrors(topicForm, TopicMasterCheck.class);
 		
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
-				locale, "MandatoryFieldErrMsgTopicForm", CommonConstants.RESOURCE_ERROR, false);
+				locale, "MandatoryFieldErrMsgTopicForm", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 

@@ -52,7 +52,7 @@ public class QuestionMasterEvents {
 				.checkValidationErrors(questionForm, QuestionMasterCheck.class);
 
 		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request,
-				locale, "MandatoryFieldErrMsgQuestionForm", CommonConstants.RESOURCE_ERROR, false);
+				locale, "MandatoryFieldErrMsgQuestionForm", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		// Checking form has errors or not

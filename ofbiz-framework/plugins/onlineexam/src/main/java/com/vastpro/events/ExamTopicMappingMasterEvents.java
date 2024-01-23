@@ -29,7 +29,12 @@ import com.vastpro.validator.ExamTopicMappingCheck;
 import com.vastpro.validator.ExamTopicMappingValidator;
 import com.vastpro.validator.HibernateHelper;
 
-
+/**
+ * ExamTopicMappingMasterEvents class  contains methods related to ExamTopicMappingMaster Entity.
+ * 
+ * @author Kamalraj
+ *
+ */
 public class ExamTopicMappingMasterEvents {
 
 	public static final String module = ExamTopicMappingMasterEvents.class.getName();
@@ -46,13 +51,15 @@ public class ExamTopicMappingMasterEvents {
 		Delegator delegator = (Delegator) request.getAttribute(CommonConstants.DELEGATOR);
 		Map<String, Object> combinedMap = UtilHttp.getCombinedMap(request);
 		Locale locale = UtilHttp.getLocale(request);
-
+		
+		//Hibernate Validation
 		ExamTopicMappingValidator examTopicMappingForm 
 			= HibernateHelper.populateBeanFromMap(combinedMap,ExamTopicMappingValidator.class);
 		
 		Set<ConstraintViolation<ExamTopicMappingValidator>> checkValidationErrors
 			= HibernateHelper.checkValidationErrors(examTopicMappingForm, ExamTopicMappingCheck.class);
 
+		
 		boolean hasFormErrors = HibernateHelper
 								.validateFormSubmission
 								(delegator,	
@@ -60,7 +67,7 @@ public class ExamTopicMappingMasterEvents {
 									request, 
 									locale, 
 									"MandatoryFieldErrMsg", 
-									CommonConstants.RESOURCE_ERROR,false);
+									CommonConstants.ONLINE_EXAM_UI_LABELS,false);
 		
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 		
@@ -138,7 +145,7 @@ public class ExamTopicMappingMasterEvents {
 				
 				//If No more  Topic can be added  to exam ,returning error
 				if(availablePercent==0) {
-					String errMsg = UtilProperties.getMessage(CommonConstants.RESOURCE_ERROR,"MaxTopicError", locale);
+					String errMsg = UtilProperties.getMessage(CommonConstants.ONLINE_EXAM_UI_LABELS,"MaxTopicError", locale);
 					Debug.logError( errMsg, module);	
 					request.setAttribute(CommonConstants._ERROR_MESSAGE_, errMsg);
 					request.setAttribute(CommonConstants.RESULT, CommonConstants.ERROR);

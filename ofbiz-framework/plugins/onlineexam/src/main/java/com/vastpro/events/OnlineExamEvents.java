@@ -126,7 +126,7 @@ public class OnlineExamEvents {
 		LoginValidator loginForm = HibernateHelper.populateBeanFromMap(combinedMap, LoginValidator.class);
 		Set<ConstraintViolation<LoginValidator>> checkValidationErrors = HibernateHelper.checkValidationErrors(loginForm, Loggable.class);
 		
-		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
+		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, checkValidationErrors, request, locale,"MandatoryFieldErrMsgLoginForm", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 		
 		if(hasFormErrors) {
@@ -230,7 +230,7 @@ public class OnlineExamEvents {
 		//populates the Bean class with values from the combined map
 		RegisterValidator registerValidator = HibernateHelper.populateBeanFromMap(combinedMap, RegisterValidator.class);
 		Set<ConstraintViolation<RegisterValidator>> validationErrors = HibernateHelper.checkValidationErrors(registerValidator, RegisterCheck.class);
-		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale, "MandatoryFieldErrMsgLoginForm", CommonConstants.RESOURCE_ERROR, false);
+		boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale, "MandatoryFieldErrMsgLoginForm", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		
 		if(hasFormErrors) {
 			String errMsg = "Errors in  createExam Form Validation";

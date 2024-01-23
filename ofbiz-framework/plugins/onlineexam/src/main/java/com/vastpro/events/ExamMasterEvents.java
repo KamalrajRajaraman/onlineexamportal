@@ -39,7 +39,7 @@ public class ExamMasterEvents {
 		//Hibernate Validation for creating exam
 		ExamMasterValidator createExamForm =HibernateHelper.populateBeanFromMap(combinedMap, ExamMasterValidator.class);	
 		Set<ConstraintViolation<ExamMasterValidator>> createExamvalidationErrors =HibernateHelper.checkValidationErrors(createExamForm, ExamMasterCheck.class);
-		Boolean hasformErrors= HibernateHelper.validateFormSubmission(delegator, createExamvalidationErrors , request, locale, "InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
+		Boolean hasformErrors= HibernateHelper.validateFormSubmission(delegator, createExamvalidationErrors , request, locale, "InvalidErrMsg", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasformErrors);
 		if(hasformErrors){
 			String errMsg= "Errors in  createExam Form Validation";

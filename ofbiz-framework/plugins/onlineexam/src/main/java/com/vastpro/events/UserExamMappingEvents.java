@@ -48,7 +48,7 @@ public class UserExamMappingEvents {
 		Set<ConstraintViolation<UserExamMappingValidator>> validationErrors = HibernateHelper
 				.checkValidationErrors(validateUserExamMapping, CreateUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
-				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
+				"InvalidErrMsg", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		if (hasFormErrors) {
@@ -165,7 +165,7 @@ public class UserExamMappingEvents {
 		Set<ConstraintViolation<UserExamMappingValidator>> validationErrors = HibernateHelper
 				.checkValidationErrors(userExamMappingValidator, FindUserExamMappingCheck.class);
 		Boolean hasFormErrors = HibernateHelper.validateFormSubmission(delegator, validationErrors, request, locale,
-				"InvalidErrMsg", CommonConstants.RESOURCE_ERROR, false);
+				"InvalidErrMsg", CommonConstants.ONLINE_EXAM_UI_LABELS, false);
 		request.setAttribute(CommonConstants.HAS_FORM_ERROR, hasFormErrors);
 
 		if (hasFormErrors) {
