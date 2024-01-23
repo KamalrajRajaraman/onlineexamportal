@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { POST,CONTROL_SERVLET, DOMAIN_NAME, PORT_NO,  PROTOCOL, WEB_APPLICATION, vanishAlert } from "../../common/CommonConstants";
 import { useNavigate } from 'react-router-dom';
+
+
 const ViewExam = ({ examDetails,setExamDetails }) => {
     const navigate = useNavigate();
     const [examId, setExamId] = useState(examDetails.examId);

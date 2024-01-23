@@ -41,6 +41,7 @@ const Login = () => {
   const [pass, setPass] = useState("");
 
   const onLogin = (userDetails) => {
+    console.log(userDetails);
     dispatch({ type: "FETCHING" });
     fetch(
       PROTOCOL +
@@ -69,7 +70,7 @@ const Login = () => {
     const { _LOGIN_PASSED_, USERNAME, partyRoleTypeId, _ERROR_MESSAGE_ } =
       fetchedData.data;
     if (_LOGIN_PASSED_ === "TRUE") {
-      console.log("hi");
+      
       auth.login(USERNAME, partyRoleTypeId);
 
       if (partyRoleTypeId === "PERSON_ROLE") {

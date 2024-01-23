@@ -11,7 +11,9 @@ import {
 } from "../../common/CommonConstants";
 import { useNavigate } from "react-router-dom";
 
+
 const EditExamTopic = ({ obj }) => {
+  
   const navigate = useNavigate();
   const { refresh, setRefresh } = useContext(EditExamContext);
   const examId = obj["examId"];

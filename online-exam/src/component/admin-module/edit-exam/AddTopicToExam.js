@@ -46,12 +46,12 @@ const AddTopicToExam = () => {
   //topics are retrived from backend
   const getTopics = async () => {
     const topicList = await fetchTopic();
-    const topics = distincttopicList(topicList);
+    const topics = distinctTopicList(topicList);
     setTopics(topics);
   };
 
   //filters the topic already mapped to exam
-  const distincttopicList = (topicList) => {
+  const distinctTopicList = (topicList) => {
     let unique = [];
     let topics = [];
     examTopicMap.forEach((examTopicRecord) =>

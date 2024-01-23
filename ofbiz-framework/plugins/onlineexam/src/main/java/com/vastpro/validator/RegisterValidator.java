@@ -20,6 +20,7 @@ public class RegisterValidator {
 	@NotEmpty(message="currentPassword is empty", groups= {RegisterCheck.class})
 	private String currentPassword;
 	
+	
 	@NotEmpty(message="currentPasswordVerify is empty", groups= {RegisterCheck.class})
 	private String currentPasswordVerify;
 

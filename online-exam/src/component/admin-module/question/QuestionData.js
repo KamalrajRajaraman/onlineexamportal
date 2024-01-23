@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { PUT,CONTROL_SERVLET, DELETE, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
+import { POST,PUT,CONTROL_SERVLET, DELETE, DOMAIN_NAME, GET, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
 
 import { useNavigate } from "react-router-dom";
 const QuestionContext = createContext(null);
@@ -9,7 +9,33 @@ export const QuestionProvider =({children})=>{
     const [questions, setQuestions] = useState([]);
     const [question, setQuestion] = useState(null);
 
+    
 
+    const onCreateQuestion = async (questionDetail) => {
+      console.log(questionDetail)
+      try{
+       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
+         "createQuestion",{...POST,body: JSON.stringify(questionDetail)});
+       if (res.status === 401) {
+         navigate("/login");
+       }
+       const data = await res.json();
+   
+       if(data.result==="success"){
+         vanishAlert("Good job!","Question created successfully!","success",2000,false);
+         return data;
+        
+   
+       } 
+       else if (data.result==="error"){
+         swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
+       }
+       
+      }catch(error){
+       console.error('error occured in creating question ', error);
+      }
+     
+     };
     const onDelete=async(id)=>{
       const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+`deleteQuestion?questionId=${id}`,
       DELETE);
@@ -77,7 +103,7 @@ export const QuestionProvider =({children})=>{
       
     }
     
-    return<QuestionContext.Provider value={{setQuestion,question,questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
+    return<QuestionContext.Provider value={{onCreateQuestion,setQuestion,question,questions,setQuestions,onDelete,onEdit,fetchQuestion}}>
         {children}
     </QuestionContext.Provider>
      

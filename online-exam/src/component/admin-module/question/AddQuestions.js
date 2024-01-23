@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FormInput from "../../common/FormInput";
 import { useTopicContext } from "../topic/TopicData";
 import { useQuestionContext } from "./QuestionData";
-import {POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, WEB_APPLICATION, vanishAlert, swalFireAlert } from "../../common/CommonConstants";
-import { useNavigate } from "react-router-dom";
+
 const AddQuestions = (props) => {
-  const navigate = useNavigate();
-  const {questions, setQuestions} = useQuestionContext();
+  const {fetchQuestionbyTopicId,topicId,isTopicWiseAddQuestion} =props;
+  const {questions, setQuestions,onCreateQuestion} = useQuestionContext();
   const { topics,setTopics,getTopics } = useTopicContext();
 
   const initialValue ={
@@ -47,34 +46,10 @@ const AddQuestions = (props) => {
 
  
 
-  const onCreateQuestion = async (questionDetail) => {
-   console.log(questionDetail)
-   try{
-    const res = await fetch(PROTOCOL +DOMAIN_NAME+PORT_NO+WEB_APPLICATION+CONTROL_SERVLET+
-      "createQuestion",{...POST,body: JSON.stringify(questionDetail)});
-    if (res.status === 401) {
-      navigate("/login");
-    }
-    const data = await res.json();
-
-    if(data.result==="success"){
-      vanishAlert("Good job!","Question created successfully!","success",2000,false);
-      setFormValues(initialValue);
-      const {question} =data;
-      setQuestions([...questions,question])
-    } 
-    else if (data.result==="error"){
-      swalFireAlert(  "Error",data._ERROR_MESSAGE_, "error");
-    }
-    
-   }catch(error){
-    console.error('error occured in creating question ', error);
-   }
   
-  };
 
   const handleChange =(e)=>{
-    
+    //name,value = <input name="" valu=""/>
     const {name,value}=e.target;
     setFormValues({...formValues,[name]:value});
    
@@ -82,11 +57,21 @@ const AddQuestions = (props) => {
 
   useEffect(()=>{
     if(Object.keys(formErrors).length === 0 && isSumbit ){
-      onCreateQuestion(formValues);
-     
+      createQuestion(formValues);   
     }
   },[formErrors])
   
+
+  const createQuestion=async(formValues)=>{
+    const fetchData =await onCreateQuestion(formValues);
+    if(isTopicWiseAddQuestion){
+      fetchQuestionbyTopicId(topicId);
+    }else{
+      setFormValues(initialValue);
+      const {question} = await fetchData;
+      setQuestions([...questions,question])
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();

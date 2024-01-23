@@ -27,7 +27,6 @@ import ShowExam from "./component/admin-module/user/ShowExam";
 import RequiredAuth from "./component/common/RequiredAuth";
 import Error from "./component/common/Error";
 import ResultPage from "./component/userModule/exam-page/ResultPage";
-import Alert from "./component/common/Alert";
 import { useState } from "react";
 import PerformanceReport from "./component/userModule/performance-report/PerformanceReport";
 import AttemptDetails from "./component/userModule/performance-report/AttemptDetails";
@@ -107,10 +106,8 @@ function App() {
          
           <Route path="performance-report/view-details/:performanceId" element={<AttemptDetails />} />
         </Route>
-      
         <Route path="user-dashboard/exams/exam-page/:examId" element={<ExamPage />} />
         <Route path="exam-page" element={<ExamPage />} />
-      
         <Route path="*" element={<NoMatch />} />
        
       </Routes>

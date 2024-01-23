@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-
 import Question from "./Question";
-
 import QuestionPalette from "./QuestionPalette";
 import { useNavigate, useParams } from "react-router-dom";
 import useStateRef from "react-usestateref";
@@ -15,10 +13,12 @@ import {
   PROTOCOL,
   WEB_APPLICATION,
   swalFireAlert,
- 
+
 } from "../../common/CommonConstants";
 
 const AttendExam = () => {
+
+  
   const navigate = useNavigate();
   const { examId } = useParams();
   const [questions, setQuestions, questionsRef] = useStateRef([]);
@@ -32,6 +32,7 @@ const AttendExam = () => {
   useEffect(() => {
     fetchQuestions();
   }, []);
+
 
   useEffect(() => {
     const timer = setInterval(() => {

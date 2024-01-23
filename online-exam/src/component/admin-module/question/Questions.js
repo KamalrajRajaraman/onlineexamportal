@@ -53,7 +53,7 @@ const Questions = () => {
   };
 
   
-  const HandleDeleteQuestion =async (id)=>{
+  const handleDeleteQuestion =async (id)=>{
     const result = await onDelete(id);
    if(result==="success"){
      fetchQuestion();
@@ -75,7 +75,7 @@ const Questions = () => {
         id={"questionId"}
         name={"questionDetail"}
         onEdit={modalEdit}
-        onDelete={HandleDeleteQuestion}
+        onDelete={handleDeleteQuestion}
       />:"No Questions.Please Add Question"}
        {question && <EditQuestion question={question} setQuestion={setQuestion}/>}
     </>

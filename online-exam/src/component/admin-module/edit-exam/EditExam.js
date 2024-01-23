@@ -9,6 +9,7 @@ import { swalFireAlert ,POST, CONTROL_SERVLET, DOMAIN_NAME, PORT_NO, PROTOCOL, v
 export const EditExamContext = createContext();
 
 const EditExam = () => {
+  
   const navigate = useNavigate();
   //examId is retrieved from url 
   const { examId } = useParams();

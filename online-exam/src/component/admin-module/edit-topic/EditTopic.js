@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 import { useLocation, useParams } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import useStateRef from 'react-usestateref';
 import { useQuestionContext } from '../question/QuestionData';
 import EditQuestion from '../question/EditQuestion';
 
-
+export const EditTopicContext = createContext(null);
 const EditTopic = () => {
    const {topicId} = useParams();
     const topicRecord =useLocation().state;
@@ -17,8 +17,7 @@ const EditTopic = () => {
     const [questions, setQuestions, questionRef] = useStateRef([]);
     
     const {question, setQuestion, onDelete, onEdit} = useQuestionContext();
-    console.log("topicIdddd::", topicId);
-    console.log('topicDetails::', topicDetails);
+   
 
     const text = {
         header: topicDetails.topicName,
@@ -44,7 +43,7 @@ const EditTopic = () => {
     
         if (data.result === "success") {
           const questionList = data.questionList;
-          console.log('questionList:::', questionList);
+         
           setQuestions(questionList);
         }else{
           setQuestions([]);
@@ -65,7 +64,7 @@ const EditTopic = () => {
 
     return (
        
-        <div>
+        <EditTopicContext.Provider value={{fetchQuestion}}>
             <MainContent
         text={text}
         to="add-question-to-topic"
@@ -80,7 +79,7 @@ const EditTopic = () => {
       />:"No Questions.Please Add Question"}
       {question && <EditQuestion question={question} setQuestion={setQuestion}/>}
       
-        </div>
+        </EditTopicContext.Provider>
     )
 }
 

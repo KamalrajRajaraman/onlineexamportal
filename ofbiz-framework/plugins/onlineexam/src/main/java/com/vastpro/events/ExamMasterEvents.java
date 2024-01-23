@@ -149,6 +149,7 @@ public class ExamMasterEvents {
 		}
 		 
 		String responseMessage = (String) findAllExamsResp.get(CommonConstants.RESPONSE_MESSAGE);
+		
 		if(responseMessage.equals(CommonConstants.RESPOND_EMPTY)) {
 			String errMsg = (String) findAllExamsResp.get(CommonConstants.SUCCESS_MESSAGE);
 			Debug.logError(errMsg, module);
